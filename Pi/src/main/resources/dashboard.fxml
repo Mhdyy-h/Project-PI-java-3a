@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.DashboardController">
+    <top>
+        <!-- Header -->
+        <VBox style="-fx-background-color: linear-gradient(to right, #3498db, #2ecc71); -fx-padding: 20;">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <children>
+                        <Label text="BioSync" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Label fx:id="welcomeLabel" text="Bienvenue!" style="-fx-font-size: 16px; -fx-text-fill: white;"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+    
+    <center>
+        <!-- Main Content -->
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+            <children>
+                <Label text="Tableau de Bord" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                
+                <Label fx:id="userInfoLabel" text="" style="-fx-font-size: 18px; -fx-text-fill: #555;"/>
+                
+                <!-- Action Buttons -->
+                <VBox spacing="15" alignment="CENTER">
+                    <children>
+                        <Button fx:id="profileButton" text="Mon Profil" onAction="#handleProfile" prefWidth="200" prefHeight="45" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                        
+                        <Button fx:id="usersButton" text="Gestion des Utilisateurs" onAction="#handleUsers" prefWidth="200" prefHeight="45" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                        
+                        <Button fx:id="settingsButton" text="Paramètres" onAction="#handleSettings" prefWidth="200" prefHeight="45" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                        
+                        <Button fx:id="logoutButton" text="Déconnexion" onAction="#handleLogout" prefWidth="200" prefHeight="45" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                    </children>
+                </VBox>
+                
+                <!-- Status Area -->
+                <Label fx:id="statusLabel" text="Prêt" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
