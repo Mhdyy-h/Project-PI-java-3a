@@ -119,15 +119,6 @@ public class LoginController {
         User user = UserDAO.login(email, password);
         
         if (user != null) {
-            statusLabel.setText("Connexion reussite!");
-            statusLabel.setStyle("-fx-text-fill: green;");
-            navigateToDashboard(event, user);
-        } else {
-            statusLabel.setText("Email ou mot de passe incorrect");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
-        
-        if (user != null) {
             statusLabel.setText("Connexion réussie!");
             statusLabel.setStyle("-fx-text-fill: green;");
             navigateToDashboard(event, user);
@@ -177,12 +168,17 @@ public class LoginController {
     
     @FXML
     public void handleHealthProLink(ActionEvent event) {
-        // Show health professional certification dialog
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Professionnel de Santé");
-        alert.setHeaderText("Certification Professionnelle");
-        alert.setContentText("La fonctionnalité de certification pour professionnels de santé sera bientôt disponible.\n\nVeuillez contacter l'administrateur pour plus d'informations.");
-        alert.showAndWait();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/certification_request.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 520, 750);
+            stage.setScene(scene);
+            stage.setTitle("BioSync Pro - Certification");
+        } catch (IOException e) {
+            statusLabel.setText("Erreur navigation: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     private void navigateToDashboard(ActionEvent event, User user) {
@@ -190,13 +186,14 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
             Parent root = loader.load();
             
-            DashboardController controller = loader.getController();
+            AdminController controller = loader.getController();
             controller.setUser(user);
             
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1100, 700);
             stage.setScene(scene);
-            stage.setTitle("BioSync - Tableau de Bord");
+            stage.setTitle("BioSync - Administration");
+            stage.centerOnScreen();
             stage.show();
             
         } catch (IOException e) {
