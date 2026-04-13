@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.CertificationsAdminController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #f0f2f8;">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              style="-fx-padding: 28 36 20 36; -fx-background-color: #f0f2f8;">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Certifications BioSync"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                <Label text="Gérez les demandes de certification professionnelle"
+                       style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+            </VBox>
+            <Button text="← Retour" onAction="#handleRetour"
+                    style="-fx-background-color: white; -fx-text-fill: #6b7280; -fx-font-size: 13px; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 10; -fx-border-width: 1;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 0 36 32 36;">
+
+            <!-- Stats row -->
+            <HBox spacing="20">
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);"
+                      HBox.hgrow="ALWAYS">
+                    <StackPane minWidth="44" minHeight="44"
+                               style="-fx-background-color: #fef3c7; -fx-background-radius: 12;">
+                        <Label text="⏳" style="-fx-font-size: 20px;"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="pendingCountLabel" text="0"
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                        <Label text="En attente" style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);"
+                      HBox.hgrow="ALWAYS">
+                    <StackPane minWidth="44" minHeight="44"
+                               style="-fx-background-color: #d1fae5; -fx-background-radius: 12;">
+                        <Label text="✅" style="-fx-font-size: 20px;"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="acceptedCountLabel" text="0"
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                        <Label text="Acceptées" style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-background-color: white; -fx-background-radius: 14; -fx-padding: 20 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);"
+                      HBox.hgrow="ALWAYS">
+                    <StackPane minWidth="44" minHeight="44"
+                               style="-fx-background-color: #fee2e2; -fx-background-radius: 12;">
+                        <Label text="❌" style="-fx-font-size: 20px;"/>
+                    </StackPane>
+                    <VBox spacing="2">
+                        <Label fx:id="refusedCountLabel" text="0"
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                        <Label text="Refusées" style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+
+            <!-- Table -->
+            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);">
+
+                <!-- Table Header -->
+                <HBox style="-fx-padding: 14 24; -fx-border-color: transparent transparent #f0f2f8 transparent; -fx-border-width: 0 0 1 0; -fx-background-color: #f8fafc; -fx-background-radius: 16 16 0 0;">
+                    <Label text="DEMANDEUR" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="240"/>
+                    <Label text="SPÉCIALITÉ" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="140"/>
+                    <Label text="MOTIVATION" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="260" HBox.hgrow="ALWAYS"/>
+                    <Label text="DATE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="110"/>
+                    <Label text="STATUT" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="110"/>
+                    <Label text="ACTIONS" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="140"/>
+                </HBox>
+
+                <ScrollPane fitToWidth="true" prefHeight="380"
+                            style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                    <VBox fx:id="certsContainer" spacing="0"/>
+                </ScrollPane>
+
+                <Label fx:id="statusLabel" text="Chargement..."
+                       style="-fx-font-size: 12px; -fx-text-fill: #9ca3af; -fx-padding: 8 24 12 24;"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

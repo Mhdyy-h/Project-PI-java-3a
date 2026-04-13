@@ -46,14 +46,14 @@ public class DashboardController {
     
     private void updateUserInfo() {
         if (currentUser != null) {
-            welcomeLabel.setText("Bienvenue, " + currentUser.getUsername() + "!");
+            welcomeLabel.setText("Bienvenue, " + currentUser.getNomComplet() + "!");
             userInfoLabel.setText("Email: " + currentUser.getEmail() + " | ID: " + currentUser.getId());
         }
     }
     
     @FXML
     public void handleProfile(ActionEvent event) {
-        statusLabel.setText("Profil utilisateur - " + currentUser.getUsername());
+        statusLabel.setText("Profil utilisateur - " + currentUser.getNomComplet());
         // You could create a profile page here
         showProfileDialog();
     }
@@ -88,7 +88,7 @@ public class DashboardController {
         alert.setTitle("Mon Profil");
         alert.setHeaderText("Informations du Profil");
         
-        String content = "Nom: " + currentUser.getUsername() + "\n" +
+        String content = "Nom: " + currentUser.getNomComplet() + "\n" +
                         "Email: " + currentUser.getEmail() + "\n" +
                         "ID Utilisateur: " + currentUser.getId() + "\n" +
                         "Statut: Actif";
@@ -116,7 +116,7 @@ public class DashboardController {
             
             for (User user : users) {
                 sb.append("ID: ").append(user.getId())
-                  .append(" | Nom: ").append(user.getUsername())
+                  .append(" | Nom: ").append(user.getNomComplet())
                   .append(" | Email: ").append(user.getEmail())
                   .append("\n");
             }

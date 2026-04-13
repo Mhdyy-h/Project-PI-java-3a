@@ -91,15 +91,26 @@ public class UserDAO {
         try {
             Connection connection = DatabaseConnection.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM utilisateur");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM utilisateur ORDER BY id DESC");
             
             while (resultSet.next()) {
+                int scoreGlobal = 0;
+                String dateInscription = null;
+                try { scoreGlobal = resultSet.getInt("score_global"); } catch (SQLException ignored) {}
+                try {
+                    java.sql.Date d = resultSet.getDate("date_inscription");
+                    if (d != null) {
+                        dateInscription = String.format("%02d/%02d/%04d", d.getDate(), d.getMonth() + 1, d.getYear() + 1900);
+                    }
+                } catch (SQLException ignored) {}
                 User user = new User(
                     resultSet.getInt("id"),
                     resultSet.getString("nom_complet"),
                     resultSet.getString("email"),
                     resultSet.getString("mot_de_passe"),
-                    resultSet.getString("roles")
+                    resultSet.getString("roles"),
+                    scoreGlobal,
+                    dateInscription
                 );
                 users.add(user);
             }
@@ -112,6 +123,23 @@ public class UserDAO {
         }
         
         return users;
+    }
+
+    // Delete user by ID
+    public static boolean deleteUser(int id) {
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                "DELETE FROM utilisateur WHERE id = ?"
+            );
+            statement.setInt(1, id);
+            int rows = statement.executeUpdate();
+            statement.close();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.err.println("Error deleting user: " + e.getMessage());
+            return false;
+        }
     }
     
     // Get user by ID
@@ -161,12 +189,23 @@ public class UserDAO {
             ResultSet resultSet = statement.executeQuery();
             
             if (resultSet.next()) {
+                int scoreGlobal = 0;
+                String dateInscription = null;
+                try { scoreGlobal = resultSet.getInt("score_global"); } catch (SQLException ignored) {}
+                try {
+                    java.sql.Date d = resultSet.getDate("date_inscription");
+                    if (d != null) {
+                        dateInscription = String.format("%02d/%02d/%04d", d.getDate(), d.getMonth() + 1, d.getYear() + 1900);
+                    }
+                } catch (SQLException ignored) {}
                 User user = new User(
                     resultSet.getInt("id"),
                     resultSet.getString("nom_complet"),
                     resultSet.getString("email"),
                     resultSet.getString("mot_de_passe"),
-                    resultSet.getString("roles")
+                    resultSet.getString("roles"),
+                    scoreGlobal,
+                    dateInscription
                 );
                 resultSet.close();
                 statement.close();
@@ -181,5 +220,37 @@ public class UserDAO {
         }
         
         return null;
+    }
+
+    // Update an existing user (optionally skip password update)
+    public static boolean updateUser(User user, boolean skipPassword) {
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement;
+            if (skipPassword) {
+                statement = connection.prepareStatement(
+                    "UPDATE utilisateur SET nom_complet = ?, email = ?, roles = ? WHERE id = ?"
+                );
+                statement.setString(1, user.getNomComplet());
+                statement.setString(2, user.getEmail());
+                statement.setString(3, user.getRoles());
+                statement.setInt(4, user.getId());
+            } else {
+                statement = connection.prepareStatement(
+                    "UPDATE utilisateur SET nom_complet = ?, email = ?, mot_de_passe = ?, roles = ? WHERE id = ?"
+                );
+                statement.setString(1, user.getNomComplet());
+                statement.setString(2, user.getEmail());
+                statement.setString(3, user.getMotDePasse());
+                statement.setString(4, user.getRoles());
+                statement.setInt(5, user.getId());
+            }
+            int rows = statement.executeUpdate();
+            statement.close();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating user: " + e.getMessage());
+            return false;
+        }
     }
 }
