@@ -148,6 +148,24 @@ public class AdminController {
         navigateToUtilisateurs();
     }
 
+    @FXML
+    private void handleValidationsPro(MouseEvent event) {
+        // Navigate to certifications admin page - same as sidebar Certifications
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/certifications_admin.fxml"));
+            Parent root = loader.load();
+            CertificationsAdminController ctrl = loader.getController();
+            ctrl.setCurrentUser(currentUser);
+            Stage stage = (Stage) adminNameLabel.getScene().getWindow();
+            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
+            stage.setScene(scene);
+            stage.setTitle("BioSync - Certifications");
+        } catch (IOException e) {
+            statusLabel.setText("Erreur: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void navigateToUtilisateurs() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/utilisateurs.fxml"));

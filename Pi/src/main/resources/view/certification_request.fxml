@@ -129,8 +129,9 @@
 
         <!-- Footer links -->
         <HBox alignment="CENTER" spacing="5" style="-fx-padding: 16 0 0 0;">
-            <Button text="← Retour à la connexion" onAction="#handleGoToLogin"
-                    style="-fx-background-color: white; -fx-text-fill: #6b7280; -fx-font-size: 13px; -fx-background-radius: 10; -fx-padding: 8 16; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 10; -fx-border-width: 1;"/>
+            <Label text="Vous avez déjà un compte?" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+            <Hyperlink text="Se connecter" onAction="#handleGoToLogin"
+                       style="-fx-font-size: 13px; -fx-text-fill: #4C6FFF;"/>
         </HBox>
 
         <Label text="© 2026 BioSync - Santé, Science &amp; Bien-être"

@@ -66,7 +66,7 @@
                 <Button fx:id="createAccountButton" text="Créer mon compte" onAction="#handleCreateAccount" prefWidth="300" prefHeight="45" style="-fx-background-color: linear-gradient(to right, #3498db, #2ecc71); -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 25; -fx-cursor: hand;"/>
                 
                 <!-- Already have account link -->
-                <HBox fx:id="loginPromptBox" alignment="CENTER" spacing="5">
+                <HBox alignment="CENTER" spacing="5">
                     <children>
                         <Label text="Vous avez déjà un compte?" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
                         <Hyperlink fx:id="loginLink" text="Se connecter" onAction="#handleLoginLink" style="-fx-font-size: 14px; -fx-text-fill: #3498db;"/>
@@ -76,10 +76,14 @@
                 <!-- Health professional link -->
                 <Hyperlink fx:id="healthProLink" text="Vous êtes un professionnel de santé? Demander une certification" onAction="#handleHealthProLink" style="-fx-font-size: 12px; -fx-text-fill: #666;" wrapText="true"/>
                 
+                <!-- Back button (visible in login mode) -->
+                <Button fx:id="backButton" text="Retour" onAction="#handleBack" prefWidth="300" prefHeight="40" visible="false" managed="false" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5; -fx-cursor: hand;"/>
+                
                 <!-- Register link (visible in login mode) -->
-                <HBox fx:id="registerPromptBox" alignment="CENTER" spacing="5" visible="false" managed="false">
+                <HBox fx:id="registerBox" alignment="CENTER" spacing="5" visible="false" managed="false">
                     <children>
-                        <Button fx:id="registerLink" text="← Retour à l'inscription" onAction="#handleRegisterLink" style="-fx-background-color: #f8f9fa; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-text-fill: #3498db; -fx-font-size: 14px; -fx-cursor: hand; -fx-padding: 8 16;"/>
+                        <Label text="Pas encore de compte?" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
+                        <Hyperlink fx:id="registerLink" text="S'inscrire" onAction="#handleRegisterLink" style="-fx-font-size: 14px; -fx-text-fill: #3498db;"/>
                     </children>
                 </HBox>
                 

@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.dao.UserDAO;
@@ -52,13 +53,13 @@ public class LoginController {
     private VBox termsBox;
     
     @FXML
-    private Button registerLink;
+    private Hyperlink registerLink;
     
     @FXML
-    private HBox loginPromptBox;
+    private HBox registerBox;
     
     @FXML
-    private HBox registerPromptBox;
+    private Button backButton;
     
     private boolean isLoginMode = false;
     
@@ -144,10 +145,12 @@ public class LoginController {
         termsBox.setManaged(false);
         healthProLink.setVisible(false);
         healthProLink.setManaged(false);
-        loginPromptBox.setVisible(false);
-        loginPromptBox.setManaged(false);
-        registerPromptBox.setVisible(true);
-        registerPromptBox.setManaged(true);
+        loginLink.setVisible(false);
+        loginLink.setManaged(false);
+        registerBox.setVisible(true);
+        registerBox.setManaged(true);
+        backButton.setVisible(true);
+        backButton.setManaged(true);
         createAccountButton.setText("Se connecter");
         statusLabel.setText("");
     }
@@ -163,32 +166,30 @@ public class LoginController {
         termsBox.setManaged(true);
         healthProLink.setVisible(true);
         healthProLink.setManaged(true);
-        loginPromptBox.setVisible(true);
-        loginPromptBox.setManaged(true);
-        registerPromptBox.setVisible(false);
-        registerPromptBox.setManaged(false);
+        loginLink.setVisible(true);
+        loginLink.setManaged(true);
+        registerBox.setVisible(false);
+        registerBox.setManaged(false);
+        backButton.setVisible(false);
+        backButton.setManaged(false);
         createAccountButton.setText("Créer mon compte");
         statusLabel.setText("");
     }
     
     @FXML
+    public void handleBack(ActionEvent event) {
+        // Return to registration mode
+        handleRegisterLink(event);
+    }
+    
+    @FXML
     public void handleHealthProLink(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/certification_request.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 520, 750);
-            stage.setScene(scene);
-            stage.setTitle("BioSync Pro - Certification");
-        } catch (IOException e) {
-            statusLabel.setText("Erreur navigation: " + e.getMessage());
-            e.printStackTrace();
-        }
+        statusLabel.setText("Veuillez vous connecter d'abord pour demander une certification");
     }
     
     private void navigateToDashboard(ActionEvent event, User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
             Parent root = loader.load();
             
             AdminController controller = loader.getController();
