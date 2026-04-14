@@ -106,6 +106,19 @@ public class CertificationsAdminController {
         actions.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         actions.setPrefWidth(140);
 
+        if (req.getCheminPdf() != null && !req.getCheminPdf().isEmpty()) {
+            Button viewPdfBtn = new Button("📄 Voir");
+            viewPdfBtn.setStyle("-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 5 10; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 8;");
+            viewPdfBtn.setOnAction(e -> {
+                try {
+                    java.awt.Desktop.getDesktop().open(new java.io.File(req.getCheminPdf()));
+                } catch (Exception ex) {
+                    System.err.println("Cannot open PDF: " + ex.getMessage());
+                }
+            });
+            actions.getChildren().add(viewPdfBtn);
+        }
+
         boolean isPending = "EN_ATTENTE".equals(req.getStatut());
         if (isPending) {
             Button acceptBtn = new Button("✅ Accepter");
@@ -148,7 +161,7 @@ public class CertificationsAdminController {
                     : "[\"ROLE_SPECIALISTE\"]";
         }
 
-        boolean ok = CertificationDAO.updateStatut(req.getId(), decision, req.getEmail(), newRole);
+        boolean ok = CertificationDAO.updateStatut(req, decision, newRole);
         if (ok) {
             req.setStatut(decision);
             // Refresh

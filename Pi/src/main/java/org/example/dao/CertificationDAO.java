@@ -38,7 +38,11 @@ public class CertificationDAO {
                 "ALTER TABLE certification ADD COLUMN IF NOT EXISTS specialite VARCHAR(50) NOT NULL DEFAULT 'COACH'",
                 "ALTER TABLE certification ADD COLUMN IF NOT EXISTS motivation TEXT",
                 "ALTER TABLE certification ADD COLUMN IF NOT EXISTS statut VARCHAR(20) DEFAULT 'EN_ATTENTE'",
-                "ALTER TABLE certification ADD COLUMN IF NOT EXISTS date_envoi TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+                "ALTER TABLE certification ADD COLUMN IF NOT EXISTS date_envoi TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+                "ALTER TABLE certification ADD COLUMN IF NOT EXISTS numero_enregistrement VARCHAR(50) DEFAULT 'NON_FOURNI'",
+                "ALTER TABLE certification ADD COLUMN IF NOT EXISTS chemin_pdf VARCHAR(255)",
+                "ALTER TABLE certification ALTER COLUMN type SET DEFAULT 'PROFESSIONNEL'",
+                "ALTER TABLE certification MODIFY utilisateur_id INT NULL"
             };
 
             for (String sql : alterCols) {
@@ -57,13 +61,15 @@ public class CertificationDAO {
         try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO certification (nom_complet, email, specialite, motivation, statut) VALUES (?, ?, ?, ?, 'EN_ATTENTE')",
+                "INSERT INTO certification (nom_complet, email, specialite, motivation, statut, type, numero_enregistrement, chemin_pdf, diplome_filename, utilisateur_id) VALUES (?, ?, ?, ?, 'EN_ATTENTE', 'PROFESSIONNEL', 'NON_FOURNI', ?, ?, NULL)",
                 Statement.RETURN_GENERATED_KEYS
             );
             ps.setString(1, req.getNomComplet());
             ps.setString(2, req.getEmail());
             ps.setString(3, req.getSpecialite());
             ps.setString(4, req.getMotivation());
+            ps.setString(5, req.getCheminPdf() != null ? req.getCheminPdf() : "");
+            ps.setString(6, req.getCheminPdf() != null ? req.getCheminPdf() : "NON_FOURNI");
             int rows = ps.executeUpdate();
             if (rows > 0) {
                 ResultSet keys = ps.getGeneratedKeys();
@@ -105,7 +111,8 @@ public class CertificationDAO {
                     safeGetString(rs, "specialite"),
                     safeGetString(rs, "motivation"),
                     safeGetString(rs, "statut"),
-                    dateEnvoi
+                    dateEnvoi,
+                    safeGetString(rs, "chemin_pdf")
                 );
                 list.add(r);
             }
@@ -134,13 +141,12 @@ public class CertificationDAO {
     }
 
     /**
-     * Update statut and optionally update user role in utilisateur table.
-     * @param certId    the certification request id
+     * Update statut and optionally update user role in utilisateur table or create new user.
+     * @param req       the certification request object
      * @param statut    "ACCEPTE" or "REFUSE"
-     * @param email     user email to match in utilisateur
      * @param newRole   role string e.g. "[\"ROLE_COACH\"]" or "[\"ROLE_SPECIALISTE\"]"
      */
-    public static boolean updateStatut(int certId, String statut, String email, String newRole) {
+    public static boolean updateStatut(CertificationRequest req, String statut, String newRole) {
         try {
             Connection conn = DatabaseConnection.getConnection();
 
@@ -149,19 +155,32 @@ public class CertificationDAO {
                 "UPDATE certification SET statut = ? WHERE id = ?"
             );
             ps1.setString(1, statut);
-            ps1.setInt(2, certId);
+            ps1.setInt(2, req.getId());
             ps1.executeUpdate();
             ps1.close();
 
             // 2) If accepted, update user role
-            if ("ACCEPTE".equals(statut) && email != null && newRole != null) {
+            if ("ACCEPTE".equals(statut) && req.getEmail() != null && newRole != null) {
                 PreparedStatement ps2 = conn.prepareStatement(
                     "UPDATE utilisateur SET roles = ? WHERE email = ?"
                 );
                 ps2.setString(1, newRole);
-                ps2.setString(2, email);
-                ps2.executeUpdate();
+                ps2.setString(2, req.getEmail());
+                int rowsAffected = ps2.executeUpdate();
                 ps2.close();
+
+                // 3) If no user exists with this email, create one
+                if (rowsAffected == 0) {
+                    PreparedStatement ps3 = conn.prepareStatement(
+                        "INSERT INTO utilisateur (nom_complet, email, mot_de_passe, score_global, date_inscription, roles) VALUES (?, ?, ?, 0, CURDATE(), ?)"
+                    );
+                    ps3.setString(1, req.getNomComplet() == null || req.getNomComplet().isEmpty() ? "Utilisateur" : req.getNomComplet());
+                    ps3.setString(2, req.getEmail());
+                    ps3.setString(3, "password123"); // Default password
+                    ps3.setString(4, newRole);
+                    ps3.executeUpdate();
+                    ps3.close();
+                }
             }
 
             return true;

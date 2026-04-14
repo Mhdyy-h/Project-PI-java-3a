@@ -52,8 +52,13 @@ public class LoginController {
     private VBox termsBox;
     
     @FXML
-    private Hyperlink registerLink;
+    private Button registerLink;
     
+    @FXML
+    private HBox loginPromptBox;
+    
+    @FXML
+    private HBox registerPromptBox;
     
     private boolean isLoginMode = false;
     
@@ -139,10 +144,10 @@ public class LoginController {
         termsBox.setManaged(false);
         healthProLink.setVisible(false);
         healthProLink.setManaged(false);
-        loginLink.setVisible(false);
-        loginLink.setManaged(false);
-        registerLink.setVisible(true);
-        registerLink.setManaged(true);
+        loginPromptBox.setVisible(false);
+        loginPromptBox.setManaged(false);
+        registerPromptBox.setVisible(true);
+        registerPromptBox.setManaged(true);
         createAccountButton.setText("Se connecter");
         statusLabel.setText("");
     }
@@ -158,10 +163,10 @@ public class LoginController {
         termsBox.setManaged(true);
         healthProLink.setVisible(true);
         healthProLink.setManaged(true);
-        loginLink.setVisible(true);
-        loginLink.setManaged(true);
-        registerLink.setVisible(false);
-        registerLink.setManaged(false);
+        loginPromptBox.setVisible(true);
+        loginPromptBox.setManaged(true);
+        registerPromptBox.setVisible(false);
+        registerPromptBox.setManaged(false);
         createAccountButton.setText("Créer mon compte");
         statusLabel.setText("");
     }

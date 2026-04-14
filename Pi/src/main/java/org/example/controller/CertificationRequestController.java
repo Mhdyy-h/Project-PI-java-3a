@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 import org.example.dao.CertificationDAO;
 import org.example.model.CertificationRequest;
 
+import java.io.File;
 import java.io.IOException;
+import javafx.stage.FileChooser;
 
 public class CertificationRequestController {
 
@@ -21,6 +23,9 @@ public class CertificationRequestController {
     @FXML private ComboBox<String> specialiteCombo;
     @FXML private TextArea motivationField;
     @FXML private Label statusLabel;
+    @FXML private Label pdfNameLabel;
+
+    private File selectedPdf;
 
     @FXML
     public void initialize() {
@@ -32,14 +37,27 @@ public class CertificationRequestController {
     }
 
     @FXML
+    private void handleSelectPdf(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir le document justificatif (PDF)");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+        File file = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
+        if (file != null) {
+            selectedPdf = file;
+            pdfNameLabel.setText(file.getName());
+            pdfNameLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #10b981; -fx-font-weight: bold;");
+        }
+    }
+
+    @FXML
     private void handleSubmit() {
         String nom = nomField.getText().trim();
         String email = emailField.getText().trim();
         String specialiteDisplay = specialiteCombo.getValue();
         String motivation = motivationField.getText().trim();
 
-        if (nom.isEmpty() || email.isEmpty() || specialiteDisplay == null) {
-            statusLabel.setText("Veuillez remplir le nom, l'email et choisir une spécialité.");
+        if (nom.isEmpty() || email.isEmpty() || specialiteDisplay == null || selectedPdf == null) {
+            statusLabel.setText("Veuillez remplir le nom, l'email, la spécialité et choisir un PDF.");
             statusLabel.setStyle("-fx-text-fill: #ef4444;");
             return;
         }
@@ -58,6 +76,21 @@ public class CertificationRequestController {
         req.setSpecialite(specialiteDB);
         req.setMotivation(motivation.isEmpty() ? null : motivation);
 
+        String cheminPdf = null;
+        try {
+            File uploadDir = new File("uploads/certifications");
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+            String newFileName = System.currentTimeMillis() + "_" + selectedPdf.getName();
+            File dest = new File(uploadDir, newFileName);
+            java.nio.file.Files.copy(selectedPdf.toPath(), dest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            cheminPdf = dest.getAbsolutePath();
+        } catch (IOException e) {
+            statusLabel.setText("Erreur lors de l'enregistrement du PDF.");
+            statusLabel.setStyle("-fx-text-fill: #ef4444;");
+            return;
+        }
+        req.setCheminPdf(cheminPdf);
+
         boolean ok = CertificationDAO.insertRequest(req);
         if (ok) {
             statusLabel.setText("✓ Votre demande a été envoyée! Elle sera examinée sous 48-72h.");
@@ -67,6 +100,9 @@ public class CertificationRequestController {
             emailField.clear();
             motivationField.clear();
             specialiteCombo.getSelectionModel().select(0);
+            selectedPdf = null;
+            pdfNameLabel.setText("Aucun fichier sélectionné");
+            pdfNameLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #9ca3af;");
         } else {
             statusLabel.setText("Erreur lors de l'envoi. Veuillez réessayer.");
             statusLabel.setStyle("-fx-text-fill: #ef4444;");

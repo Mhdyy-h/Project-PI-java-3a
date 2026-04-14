@@ -8,12 +8,13 @@ public class CertificationRequest {
     private String motivation;
     private String statut;       // "EN_ATTENTE", "ACCEPTE", "REFUSE"
     private String dateEnvoi;
+    private String cheminPdf;
 
     public CertificationRequest() {}
 
     public CertificationRequest(int id, String nomComplet, String email,
                                  String specialite, String motivation,
-                                 String statut, String dateEnvoi) {
+                                 String statut, String dateEnvoi, String cheminPdf) {
         this.id = id;
         this.nomComplet = nomComplet;
         this.email = email;
@@ -21,6 +22,7 @@ public class CertificationRequest {
         this.motivation = motivation;
         this.statut = statut;
         this.dateEnvoi = dateEnvoi;
+        this.cheminPdf = cheminPdf;
     }
 
     public int getId() { return id; }
@@ -43,6 +45,9 @@ public class CertificationRequest {
 
     public String getDateEnvoi() { return dateEnvoi; }
     public void setDateEnvoi(String dateEnvoi) { this.dateEnvoi = dateEnvoi; }
+
+    public String getCheminPdf() { return cheminPdf; }
+    public void setCheminPdf(String cheminPdf) { this.cheminPdf = cheminPdf; }
 
     @Override
     public String toString() {
