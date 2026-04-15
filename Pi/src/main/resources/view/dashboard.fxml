@@ -78,11 +78,15 @@
                     <Label text="Sports" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Mental - NOT clickable -->
-                <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                <!-- Mental - CLICKABLE -->
+                <HBox fx:id="mentalNavItem" alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavMental">
                     <Label text="🧠" style="-fx-font-size: 14px;"/>
-                    <Label text="Mental" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <VBox spacing="1">
+                        <Label text="Mental" style="-fx-font-size: 13px; -fx-text-fill: #1D9E75; -fx-font-weight: bold;"/>
+                        <Label text="Quiz &amp; Bien-être" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
                 </HBox>
 
                 <!-- IA Mentale - NOT clickable -->

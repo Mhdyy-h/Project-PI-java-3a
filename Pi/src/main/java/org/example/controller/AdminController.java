@@ -9,6 +9,7 @@ import org.example.model.User;
 import org.example.service.DashboardService;
 import org.example.service.NavigationService;
 import org.example.service.UserService;
+import org.example.service.QuizService;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class AdminController {
 
     @FXML private Label adminNameLabel;
     @FXML private Label adminInitialLabel;
+    @FXML private HBox  mentalNavItem;
     @FXML private Label activeUsersLabel;
     @FXML private Label certCountLabel;
     @FXML private VBox recentUsersContainer;
@@ -103,6 +105,11 @@ public class AdminController {
     @FXML
     private void handleValidationsPro(MouseEvent event) {
         navigationService.navigateToCertifications(adminNameLabel, currentUser);
+    }
+
+    @FXML
+    private void handleNavMental(MouseEvent event) {
+        navigationService.navigateToMental(adminNameLabel, currentUser);
     }
 
     @FXML

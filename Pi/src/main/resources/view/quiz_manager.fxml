@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controller.QuizController"
+      prefHeight="720.0" prefWidth="1200.0"
+      style="-fx-background-color: #F5F7FA;">
+
+    <stylesheets>
+        <URL value="@/styles/style.css"/>
+    </stylesheets>
+
+            <!-- Top Bar -->
+            <HBox style="-fx-background-color: white; -fx-padding: 16 24 16 24; -fx-spacing: 12;
+                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 4, 0, 0, 2);"
+                  alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Gestion des Quiz Mentaux"
+                           style="-fx-font-size: 20px; -fx-font-weight: 600; -fx-text-fill: #1A1A1A;"/>
+                    <Label text="Créez et gérez les évaluations cognitives"
+                           style="-fx-font-size: 13px; -fx-text-fill: #6B7280;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Navigation Buttons -->
+                <Button text="Tableau de Bord" onAction="#handleDashboard"
+                        style="-fx-background-color: transparent; -fx-text-fill: #4B5563;
+                               -fx-font-size: 13px; -fx-font-weight: 500;
+                               -fx-padding: 8 16 8 16; -fx-cursor: hand;
+                               -fx-background-radius: 6;"/>
+                <Button text="Quiz Mentaux"
+                        style="-fx-background-color: #DBEAFE; -fx-text-fill: #4285F4;
+                               -fx-font-size: 13px; -fx-font-weight: bold;
+                               -fx-padding: 8 16 8 16; -fx-background-radius: 6;"/>
+                <Button text="Utilisateurs" onAction="#handleUsers"
+                        style="-fx-background-color: transparent; -fx-text-fill: #4B5563;
+                               -fx-font-size: 13px; -fx-font-weight: 500;
+                               -fx-padding: 8 16 8 16; -fx-cursor: hand;
+                               -fx-background-radius: 6;"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Nouveau Quiz" onAction="#handleNewQuiz"
+                        style="-fx-background-color: #4285F4; -fx-text-fill: white;
+                               -fx-font-size: 14px; -fx-font-weight: 500;
+                               -fx-background-radius: 8; -fx-padding: 10 20 10 20;
+                               -fx-cursor: hand;
+                               -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.4), 8, 0, 0, 2);"/>
+                <Button text="⟳ Actualiser" onAction="#handleRefresh"
+                        style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151;
+                               -fx-font-size: 13px; -fx-background-radius: 8;
+                               -fx-padding: 10 16 10 16; -fx-cursor: hand;"/>
+            </HBox>
+
+            <!-- Stats Row -->
+            <HBox style="-fx-padding: 20 24 16 24; -fx-spacing: 16;">
+
+                <HBox style="-fx-background-color: white; -fx-background-radius: 12;
+                              -fx-padding: 18 20 18 20; -fx-spacing: 14;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);"
+                      alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                    <Label text="📚" style="-fx-font-size: 28px;"/>
+                    <VBox>
+                        <Label fx:id="totalCountLabel" text="0"
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1A1A1A;"/>
+                        <Label text="Total Quiz"
+                               style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox style="-fx-background-color: white; -fx-background-radius: 12;
+                              -fx-padding: 18 20 18 20; -fx-spacing: 14;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);"
+                      alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                    <Label text="✅" style="-fx-font-size: 28px;"/>
+                    <VBox>
+                        <Label fx:id="activeCountLabel" text="0"
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #6EC5A6;"/>
+                        <Label text="Actifs"
+                               style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox style="-fx-background-color: white; -fx-background-radius: 12;
+                              -fx-padding: 18 20 18 20; -fx-spacing: 14;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);"
+                      alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                    <Label text="⏸" style="-fx-font-size: 28px;"/>
+                    <VBox>
+                        <Label fx:id="inactiveCountLabel" text="0"
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #F59E0B;"/>
+                        <Label text="Inactifs"
+                               style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
+                    </VBox>
+                </HBox>
+
+            </HBox>
+
+            <!-- Filter Bar -->
+            <HBox style="-fx-background-color: white; -fx-padding: 14 24 14 24; -fx-spacing: 12;
+                          -fx-border-color: #E5E7EB; -fx-border-width: 1 0 1 0;"
+                  alignment="CENTER_LEFT">
+
+                <TextField fx:id="searchField" onKeyTyped="#handleSearch"
+                           promptText="🔍  Rechercher un quiz..."
+                           prefWidth="260"
+                           style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB;
+                                  -fx-border-radius: 8; -fx-background-radius: 8;
+                                  -fx-padding: 10 14 10 14; -fx-font-size: 13px;"/>
+
+                <Label text="Catégorie:"
+                       style="-fx-font-size: 13px; -fx-text-fill: #6B7280; -fx-font-weight: 500;"/>
+                <ComboBox fx:id="categoryFilter" prefWidth="150"
+                          style="-fx-background-color: white; -fx-border-color: #D1D5DB;
+                                 -fx-border-radius: 8; -fx-background-radius: 8;"/>
+
+                <Label text="Difficulté:"
+                       style="-fx-font-size: 13px; -fx-text-fill: #6B7280; -fx-font-weight: 500;"/>
+                <ComboBox fx:id="difficultyFilter" prefWidth="130"
+                          style="-fx-background-color: white; -fx-border-color: #D1D5DB;
+                                 -fx-border-radius: 8; -fx-background-radius: 8;"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="statusLabel"
+                       style="-fx-font-size: 13px; -fx-text-fill: #6B7280;"/>
+            </HBox>
+
+            <!-- Table -->
+            <VBox style="-fx-padding: 20 24 20 24;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="quizTable"
+                           style="-fx-background-color: white; -fx-background-radius: 12;
+                                  -fx-border-radius: 12; -fx-border-color: #E5E7EB;
+                                  -fx-border-width: 1;"
+                           VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="idColumn"          text="ID"         prefWidth="55"/>
+                        <TableColumn fx:id="titleColumn"       text="Titre"       prefWidth="280"/>
+                        <TableColumn fx:id="categoryColumn"    text="Catégorie"   prefWidth="130"/>
+                        <TableColumn fx:id="difficultyColumn"  text="Difficulté"  prefWidth="110"/>
+                        <TableColumn fx:id="passingScoreColumn" text="Score min." prefWidth="90"/>
+                        <TableColumn fx:id="statusColumn"      text="Statut"      prefWidth="90"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="Aucun quiz trouvé. Créez votre premier quiz !"
+                               style="-fx-text-fill: #9CA3AF; -fx-font-size: 14px;"/>
+                    </placeholder>
+                </TableView>
+            </VBox>
+
+</VBox>

@@ -106,6 +106,62 @@ public class NavigationService {
         });
     }
 
+    // ── Mental Wellness ────────────────────────────────────────
+
+    /** Ouvre la liste des quiz (admin). */
+    public void navigateToMental(Node sourceNode, User currentUser) {
+        navigateToQuizManager(sourceNode, currentUser);
+    }
+
+    /** Quiz Manager – liste et gestion des quiz. */
+    public void navigateToQuizManager(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/quiz_manager.fxml", "BioSync - Quiz Mentaux", 1200, 720, ctrl -> {
+            if (ctrl instanceof org.example.controller.QuizController) {
+                ((org.example.controller.QuizController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    /**
+     * Quiz Form – création (quiz == null) ou édition (quiz != null).
+     */
+    public void navigateToQuizForm(Node sourceNode, User currentUser,
+                                   org.example.model.Quiz quiz) {
+        navigateFrom(sourceNode, "/view/quiz_form.fxml", "BioSync - Formulaire Quiz", 760, 680, ctrl -> {
+            if (ctrl instanceof org.example.controller.QuizFormController qfc) {
+                qfc.setCurrentUser(currentUser);
+                if (quiz != null) qfc.setQuiz(quiz);
+            }
+        });
+    }
+
+    /**
+     * Question Manager – gestion des questions d'un quiz.
+     */
+    public void navigateToQuestionManager(Node sourceNode, User currentUser,
+                                          org.example.model.Quiz quiz) {
+        navigateFrom(sourceNode, "/view/question_manager.fxml", "BioSync - Questions", 1200, 720, ctrl -> {
+            if (ctrl instanceof org.example.controller.QuestionManagerController qmc) {
+                qmc.setCurrentUser(currentUser);
+                qmc.setQuiz(quiz);
+            }
+        });
+    }
+
+    /**
+     * Quiz Player – VIEW 1 (sélection) si quiz == null,
+     *               VIEW 2 (jeu direct) si quiz != null.
+     */
+    public void navigateToQuizPlayer(Node sourceNode, User currentUser,
+                                     org.example.model.Quiz quiz) {
+        navigateFrom(sourceNode, "/view/quiz_player.fxml", "BioSync - Jouer", 1000, 720, ctrl -> {
+            if (ctrl instanceof org.example.controller.QuizPlayerController qpc) {
+                qpc.setCurrentUser(currentUser);
+                if (quiz != null) qpc.setQuiz(quiz);
+            }
+        });
+    }
+
     public static class NavigationException extends RuntimeException {
         public NavigationException(String message, Throwable cause) {
             super(message, cause);
