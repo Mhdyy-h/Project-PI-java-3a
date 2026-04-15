@@ -20,6 +20,9 @@ import java.util.List;
  *       passing_score INT DEFAULT 50,
  *       actif        BOOLEAN DEFAULT TRUE
  *   );
+ *
+ * Si la colonne 'description' manque, exécutez :
+ *   ALTER TABLE quiz_mental ADD COLUMN description TEXT AFTER titre;
  */
 public class QuizService {
 
