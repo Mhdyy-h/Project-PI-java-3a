@@ -6,9 +6,10 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.controller.NouvelUtilisateurController"
+            fx:controller="org.example.controller.UtilisateurController"
             prefWidth="1100" prefHeight="700"
-            style="-fx-background-color: #f0f2f8;">
+            style="-fx-background-color: #f0f2f8;"
+            stylesheets="@../styles.css">
 
     <top>
         <HBox alignment="CENTER_LEFT"
