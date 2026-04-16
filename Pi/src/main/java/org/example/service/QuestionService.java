@@ -12,16 +12,12 @@ import java.util.List;
  *
  * Table attendue :
  *   CREATE TABLE IF NOT EXISTS question (
- *       id           INT AUTO_INCREMENT PRIMARY KEY,
- *       quiz_id      INT NOT NULL,
- *       contenu      TEXT NOT NULL,
- *       option_a     VARCHAR(255),
- *       option_b     VARCHAR(255),
- *       option_c     VARCHAR(255),
- *       option_d     VARCHAR(255),
- *       bonne_reponse VARCHAR(10) NOT NULL,   -- "A" | "B" | "C" | "D"
- *       points       INT DEFAULT 1,
- *       explication  TEXT,
+ *       id               INT AUTO_INCREMENT PRIMARY KEY,
+ *       quiz_id          INT NOT NULL,
+ *       enonce           TEXT NOT NULL,
+ *       reponse_correcte VARCHAR(255) NOT NULL,
+ *       options_fausses  TEXT,
+ *       points_valeur    INT DEFAULT 50,
  *       FOREIGN KEY (quiz_id) REFERENCES quiz_mental(id) ON DELETE CASCADE
  *   );
  */
@@ -35,18 +31,14 @@ public class QuestionService {
 
     public boolean ajouterQuestion(Question question) {
         String sql = "INSERT INTO question "
-                   + "(quiz_id, contenu, option_a, option_b, option_c, option_d, bonne_reponse, points, explication) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                   + "(quiz_id, enonce, reponse_correcte, options_fausses, points_valeur) "
+                   + "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = getConn().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, question.getQuizId());
-            ps.setString(2, question.getContenu());
-            ps.setString(3, question.getOptionA());
-            ps.setString(4, question.getOptionB());
-            ps.setString(5, question.getOptionC());
-            ps.setString(6, question.getOptionD());
-            ps.setString(7, question.getBonneReponse());
-            ps.setInt(8, question.getPoints());
-            ps.setString(9, question.getExplication());
+            ps.setString(2, question.getEnonce());
+            ps.setString(3, question.getReponseCorrecte());
+            ps.setString(4, question.getOptionsFausses());
+            ps.setInt(5, question.getPointsValeur());
 
             if (ps.executeUpdate() > 0) {
                 try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -93,18 +85,14 @@ public class QuestionService {
     // ── UPDATE ─────────────────────────────────────────────────
 
     public boolean modifierQuestion(Question question) {
-        String sql = "UPDATE question SET contenu=?, option_a=?, option_b=?, option_c=?, option_d=?, "
-                   + "bonne_reponse=?, points=?, explication=? WHERE id=?";
+        String sql = "UPDATE question SET enonce=?, reponse_correcte=?, options_fausses=?, "
+                   + "points_valeur=? WHERE id=?";
         try (PreparedStatement ps = getConn().prepareStatement(sql)) {
-            ps.setString(1, question.getContenu());
-            ps.setString(2, question.getOptionA());
-            ps.setString(3, question.getOptionB());
-            ps.setString(4, question.getOptionC());
-            ps.setString(5, question.getOptionD());
-            ps.setString(6, question.getBonneReponse());
-            ps.setInt(7, question.getPoints());
-            ps.setString(8, question.getExplication());
-            ps.setInt(9, question.getId());
+            ps.setString(1, question.getEnonce());
+            ps.setString(2, question.getReponseCorrecte());
+            ps.setString(3, question.getOptionsFausses());
+            ps.setInt(4, question.getPointsValeur());
+            ps.setInt(5, question.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("[QuestionService] modifierQuestion : " + e.getMessage());
@@ -143,7 +131,7 @@ public class QuestionService {
     // ── SUM POINTS BY QUIZ ──────────────────────────────────────
 
     public int sumPointsByQuiz(int quizId) {
-        String sql = "SELECT COALESCE(SUM(points), 0) FROM question WHERE quiz_id = ?";
+        String sql = "SELECT COALESCE(SUM(points_valeur), 0) FROM question WHERE quiz_id = ?";
         try (PreparedStatement ps = getConn().prepareStatement(sql)) {
             ps.setInt(1, quizId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -161,14 +149,10 @@ public class QuestionService {
         Question q = new Question();
         q.setId(rs.getInt("id"));
         q.setQuizId(rs.getInt("quiz_id"));
-        q.setContenu(rs.getString("contenu"));
-        q.setOptionA(rs.getString("option_a"));
-        q.setOptionB(rs.getString("option_b"));
-        q.setOptionC(rs.getString("option_c"));
-        q.setOptionD(rs.getString("option_d"));
-        q.setBonneReponse(rs.getString("bonne_reponse"));
-        q.setPoints(rs.getInt("points"));
-        q.setExplication(rs.getString("explication"));
+        q.setEnonce(rs.getString("enonce"));
+        q.setReponseCorrecte(rs.getString("reponse_correcte"));
+        q.setOptionsFausses(rs.getString("options_fausses"));
+        q.setPointsValeur(rs.getInt("points_valeur"));
         return q;
     }
 }

@@ -105,6 +105,13 @@ public class QuizFormController {
         quiz.setPassingScore(Integer.parseInt(passingScore.trim()));
         quiz.setActif(activeCheckBox.isSelected());
 
+        // Set utilisateur_id from current user
+        if (currentUser != null) {
+            quiz.setUtilisateurId(currentUser.getId());
+        } else {
+            quiz.setUtilisateurId(1); // Default fallback
+        }
+
         boolean success;
         String  message;
 
