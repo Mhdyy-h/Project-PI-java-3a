@@ -207,10 +207,8 @@ public class QuizController {
     }
 
     @FXML
-    private void handleUsers() {
-        if (currentUser != null) {
-            NavigationService.getInstance().navigateToUtilisateurs(quizTable, currentUser);
-        }
+    private void ouvrirVueUtilisateur() {
+        NavigationService.getInstance().navigateToVueUtilisateur(quizTable, currentUser);
     }
 
     // ── Actions sur une ligne ────────────────────────────────────

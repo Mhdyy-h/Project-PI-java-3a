@@ -162,6 +162,15 @@ public class NavigationService {
         });
     }
 
+    /** Vue Utilisateur – interface patient pour passer les quiz. */
+    public void navigateToVueUtilisateur(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/vue_utilisateur.fxml", "BioSync – Quiz Patient", 940, 720, ctrl -> {
+            if (ctrl instanceof org.example.controller.VueUtilisateurController vuc) {
+                vuc.setCurrentUser(currentUser);
+            }
+        });
+    }
+
     public static class NavigationException extends RuntimeException {
         public NavigationException(String message, Throwable cause) {
             super(message, cause);

@@ -37,11 +37,12 @@
                         style="-fx-background-color: #DBEAFE; -fx-text-fill: #4285F4;
                                -fx-font-size: 13px; -fx-font-weight: bold;
                                -fx-padding: 8 16 8 16; -fx-background-radius: 6;"/>
-                <Button text="Utilisateurs" onAction="#handleUsers"
-                        style="-fx-background-color: transparent; -fx-text-fill: #4B5563;
-                               -fx-font-size: 13px; -fx-font-weight: 500;
+                <Button text="Vue Utilisateur" onAction="#ouvrirVueUtilisateur"
+                        style="-fx-background-color: #ECFDF5; -fx-text-fill: #1D9E75;
+                               -fx-font-size: 13px; -fx-font-weight: bold;
                                -fx-padding: 8 16 8 16; -fx-cursor: hand;
-                               -fx-background-radius: 6;"/>
+                               -fx-background-radius: 6; -fx-border-color: #A7F3D0;
+                               -fx-border-width: 1; -fx-border-radius: 6;"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
                 <Button text="+ Nouveau Quiz" onAction="#handleNewQuiz"
