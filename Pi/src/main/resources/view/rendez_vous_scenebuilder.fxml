@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- Scene Builder Friendly Version - Enhanced with proper IDs and structure -->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.RendezVousController" 
+      stylesheets="@../styles.css"
+      spacing="15" prefWidth="1000" prefHeight="700">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Header Section -->
+    <HBox fx:id="headerSection" spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="mainTitle" text="Gestion des Rendez-vous" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        <Region fx:id="headerSpacer" HBox.hgrow="ALWAYS"/>
+        <Label fx:id="statusLabel" text="Prêt" 
+               style="-fx-text-fill: #666; -fx-font-size: 14px;"/>
+    </HBox>
+    
+    <!-- Search and Filter Section -->
+    <VBox fx:id="searchFilterSection" spacing="12" 
+          style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <Label fx:id="filterTitle" text="Recherche et Filtres" 
+               style="-fx-font-weight: bold; -fx-text-fill: #495057; -fx-font-size: 14px;"/>
+        
+        <HBox fx:id="filterRow" spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="Rechercher par motif ou lieu..." 
+                       prefWidth="300" prefHeight="35"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+            <ComboBox fx:id="statutFilter" prefWidth="150" prefHeight="35"
+                      style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+            <ComboBox fx:id="specialisteFilter" prefWidth="200" prefHeight="35"
+                      style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+            <Button fx:id="searchButton" text="Rechercher" prefWidth="120" prefHeight="35"
+                    styleClass="primary-button"
+                    style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+            <Button fx:id="clearSearchButton" text="Effacer" prefWidth="100" prefHeight="35"
+                    style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+        </HBox>
+    </VBox>
+    
+    <!-- Action Buttons Section -->
+    <HBox fx:id="actionButtonsSection" spacing="10">
+        <Button fx:id="addButton" text="Nouveau Rendez-vous" prefWidth="180" prefHeight="40"
+                styleClass="btn-appointment"
+                style="-fx-background-radius: 5; -fx-border-radius: 5;">
+            <graphic>
+                <Label text="+" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            </graphic>
+        </Button>
+        <Button fx:id="editButton" text="Modifier" prefWidth="120" prefHeight="40" disable="true"
+                style="-fx-background-radius: 5; -fx-border-radius: 5;">
+            <graphic>
+                <Label text="&#9998;" style="-fx-font-size: 14px;"/>
+            </graphic>
+        </Button>
+        <Button fx:id="deleteButton" text="Supprimer" prefWidth="120" prefHeight="40" disable="true"
+                styleClass="danger-button"
+                style="-fx-background-radius: 5; -fx-border-radius: 5;">
+            <graphic>
+                <Label text="&#128465;" style="-fx-font-size: 14px;"/>
+            </graphic>
+        </Button>
+        <Region fx:id="actionSpacer" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="refreshButton" text="Actualiser" prefWidth="120" prefHeight="40"
+                style="-fx-background-radius: 5; -fx-border-radius: 5;">
+            <graphic>
+                <Label text="&#8635;" style="-fx-font-size: 14px;"/>
+            </graphic>
+        </Button>
+    </HBox>
+    
+    <!-- Table Section -->
+    <TableView fx:id="rendezVousTable" VBox.vgrow="ALWAYS" prefHeight="400"
+               styleClass="appointment-table"
+               style="-fx-background-radius: 8; -fx-border-radius: 8;">
+        <columns>
+            <TableColumn fx:id="dateColumn" text="Date/Heure" prefWidth="150"/>
+            <TableColumn fx:id="motifColumn" text="Motif" prefWidth="200"/>
+            <TableColumn fx:id="statutColumn" text="Statut" prefWidth="100"/>
+            <TableColumn fx:id="modeColumn" text="Mode" prefWidth="120"/>
+            <TableColumn fx:id="patientColumn" text="Patient" prefWidth="150"/>
+            <TableColumn fx:id="specialisteColumn" text="Spécialiste" prefWidth="150"/>
+            <TableColumn fx:id="lieuColumn" text="Lieu" prefWidth="150"/>
+            <TableColumn fx:id="urgenceColumn" text="Urgence" prefWidth="80"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+    
+    <!-- Footer Section -->
+    <HBox fx:id="footerSection" spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="countLabel" text="Total: 0 rendez-vous" 
+               style="-fx-text-fill: #666; -fx-font-style: italic; -fx-font-size: 12px;"/>
+        <Region fx:id="footerSpacer" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="exportButton" text="Exporter en PDF" prefWidth="140" prefHeight="35"
+                style="-fx-background-radius: 5; -fx-border-radius: 5;">
+            <graphic>
+                <Label text="&#128196;" style="-fx-font-size: 12px;"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+</VBox>

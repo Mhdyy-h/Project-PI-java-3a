@@ -64,11 +64,15 @@
                     <Label text="Nutrition" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Gestion RDV - NOT clickable -->
-                <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
-                    <Label text="📅" style="-fx-font-size: 14px;"/>
-                    <Label text="Gestion RDV" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                <!-- Gestion RDV - CLICKABLE -->
+                <HBox fx:id="rendezVousNavItem" alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavRendezVous">
+                    <Label text="&#128197;" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Gestion RDV" style="-fx-font-size: 13px; -fx-text-fill: #10b981; -fx-font-weight: bold;"/>
+                        <Label text="Prise de RDV" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
                 </HBox>
 
                 <!-- Sports - NOT clickable -->

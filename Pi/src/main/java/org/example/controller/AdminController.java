@@ -96,6 +96,11 @@ public class AdminController {
     }
 
     @FXML
+    private void handleNavRendezVous(MouseEvent event) {
+        navigationService.navigateToRendezVous(adminNameLabel, currentUser);
+    }
+
+    @FXML
     private void handleGererMembres(MouseEvent event) {
         navigationService.navigateToUtilisateurs(adminNameLabel, currentUser);
     }

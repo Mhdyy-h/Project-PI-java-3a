@@ -106,6 +106,14 @@ public class NavigationService {
         });
     }
 
+    public void navigateToRendezVous(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/rendez_vous_enhanced.fxml", "BioSync - Gestion des Rendez-vous", 1100, 750, ctrl -> {
+            if (ctrl instanceof org.example.controller.RendezVousController) {
+                ((org.example.controller.RendezVousController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
     public static class NavigationException extends RuntimeException {
         public NavigationException(String message, Throwable cause) {
             super(message, cause);

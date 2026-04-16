@@ -62,6 +62,19 @@ public class User {
 
     public String getDateInscription() { return dateInscription; }
     public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
+    
+    // Utility methods
+    public boolean isSpecialiste() {
+        return roles != null && roles.contains("ROLE_SPECIALISTE");
+    }
+    
+    public boolean isAdmin() {
+        return roles != null && roles.contains("ROLE_ADMIN");
+    }
+    
+    public boolean isPatient() {
+        return !isSpecialiste() && !isAdmin();
+    }
 
     @Override
     public String toString() {

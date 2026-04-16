@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- Enhanced RDV Dialog - Professional BioSync Design -->
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.RendezVousDialogController" 
+      stylesheets="@../styles.css"
+      spacing="20" prefWidth="650" prefHeight="700"
+      style="-fx-background-color: #f0f2f8; -fx-background-radius: 16;">
+    
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+    
+    <!-- Header Section -->
+    <VBox fx:id="headerSection" spacing="8" alignment="CENTER_LEFT">
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <StackPane minWidth="48" minHeight="48"
+                       style="-fx-background-color: #dcfce7; -fx-background-radius: 12;">
+                <Label text="📅" style="-fx-font-size: 24px;"/>
+            </StackPane>
+            <VBox spacing="4">
+                <Label fx:id="titleLabel" text="Nouveau Rendez-vous" 
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                <Label fx:id="subtitleLabel" text="Remplissez les informations du rendez-vous" 
+                       style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+            </VBox>
+        </HBox>
+    </VBox>
+    
+    <!-- Error Message Section -->
+    <VBox fx:id="errorSection" visible="false" managed="false" 
+           style="-fx-background-color: #fee2e2; -fx-background-radius: 8; -fx-padding: 12 16 12 16;">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="⚠️" style="-fx-font-size: 16px;"/>
+            <Label fx:id="errorLabel" text="" 
+                   style="-fx-text-fill: #991b1b; -fx-font-size: 13px; -fx-font-weight: 500; -fx-wrap-text: true;"/>
+        </HBox>
+    </VBox>
+    
+    <!-- Form Section -->
+    <VBox fx:id="formSection" spacing="20" 
+           style="-fx-background-color: white; -fx-padding: 24; -fx-border-radius: 12; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);">
+        
+        <!-- Patient & Specialist Row -->
+        <HBox spacing="20">
+            <!-- Patient Selection -->
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="👤" style="-fx-font-size: 14px;"/>
+                    <Label text="PATIENT" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                </HBox>
+                <ComboBox fx:id="patientComboBox" prefHeight="40"
+                          style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+            </VBox>
+            
+            <!-- Specialist Selection -->
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="👨‍⚕️" style="-fx-font-size: 14px;"/>
+                    <Label text="SPÉCIALISTE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                </HBox>
+                <ComboBox fx:id="specialisteComboBox" prefHeight="40"
+                          style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+            </VBox>
+        </HBox>
+        
+        <!-- Date & Time Row -->
+        <HBox spacing="20">
+            <!-- Date Selection -->
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="📆" style="-fx-font-size: 14px;"/>
+                    <Label text="DATE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                </HBox>
+                <DatePicker fx:id="datePicker" prefHeight="40"
+                           style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+            </VBox>
+            
+            <!-- Time Selection -->
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="🕐" style="-fx-font-size: 14px;"/>
+                    <Label text="HEURE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                </HBox>
+                <ComboBox fx:id="timeComboBox" prefHeight="40"
+                          style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+            </VBox>
+        </HBox>
+        
+        <!-- Status & Mode Row -->
+        <HBox spacing="20">
+            <!-- Status Selection -->
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="📊" style="-fx-font-size: 14px;"/>
+                    <Label text="STATUT" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                </HBox>
+                <ComboBox fx:id="statutComboBox" prefHeight="40"
+                          style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+            </VBox>
+            
+            <!-- Mode Selection -->
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <HBox spacing="6" alignment="CENTER_LEFT">
+                    <Label text="💻" style="-fx-font-size: 14px;"/>
+                    <Label text="MODE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                </HBox>
+                <ComboBox fx:id="modeComboBox" prefHeight="40"
+                          style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+            </VBox>
+        </HBox>
+        
+        <!-- Urgency Level -->
+        <VBox spacing="8">
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label text="🚨" style="-fx-font-size: 14px;"/>
+                <Label text="NIVEAU D'URGENCE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+            </HBox>
+            <ComboBox fx:id="urgenceComboBox" prefHeight="40"
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px;"/>
+        </VBox>
+        
+        <!-- Location (for in-person appointments) -->
+        <VBox fx:id="locationSection" spacing="8">
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label text="📍" style="-fx-font-size: 14px;"/>
+                <Label text="LIEU" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+            </HBox>
+            <TextField fx:id="lieuTextField" prefHeight="40" promptText="Adresse du cabinet médical..."
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px; -fx-prompt-text-fill: #9ca3af;"/>
+        </VBox>
+        
+        <!-- Motif -->
+        <VBox spacing="8">
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <Label text="📝" style="-fx-font-size: 14px;"/>
+                <Label text="MOTIF DU RENDEZ-VOUS" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+            </HBox>
+            <TextArea fx:id="motifTextArea" prefHeight="100" prefWidth="580" wrapText="true"
+                      promptText="Décrivez le motif du rendez-vous en détail..."
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 14px; -fx-prompt-text-fill: #9ca3af;"/>
+        </VBox>
+        
+        <!-- Validation Info -->
+        <VBox fx:id="validationSection" spacing="4" 
+               style="-fx-background-color: #f0f9ff; -fx-background-radius: 8; -fx-padding: 12 16 12 16;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="ℹ️" style="-fx-font-size: 14px;"/>
+                <Label text="INFORMATIONS DE VALIDATION" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+            </HBox>
+            <Label fx:id="validationLabel" text="" 
+                   style="-fx-text-fill: #1e40af; -fx-font-size: 12px; -fx-wrap-text: true;"/>
+        </VBox>
+    </VBox>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #f1f5f9; -fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 12 24 12 24; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 10; -fx-border-width: 1;"/>
+        <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave"
+                style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 12 24 12 24; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.3), 8, 0, 0, 3);"/>
+    </HBox>
+    
+</VBox>
