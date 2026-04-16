@@ -1,38 +1,25 @@
 package org.example;
 
-import org.example.DatabaseConnection;
-import org.example.dao.UserDAO;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+public class Main extends Application {
 
-public class Main {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+        Parent root = loader.load();
+
+        primaryStage.setTitle("BioSync - Bienvenue");
+        primaryStage.setScene(new Scene(root, 400, 600));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        System.out.println("Hello and welcome!");
-        System.out.println("Testing database connection...");
-        
-        boolean isConnected = UserDAO.testConnection();
-        
-        if (isConnected) {
-            System.out.println("Connection test passed!");
-            
-            // Show table structure
-            try {
-                Connection conn = DatabaseConnection.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("DESCRIBE utilisateur");
-                System.out.println("\n--- Structure of 'utilisateur' table ---");
-                while (rs.next()) {
-                    System.out.println(rs.getString("Field") + " - " + rs.getString("Type") + " - " + rs.getString("Null") + " - " + rs.getString("Key"));
-                }
-                rs.close();
-                stmt.close();
-            } catch (Exception e) {
-                System.err.println("Error: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Connection test failed!");
-        }
+        launch(args);
     }
 }

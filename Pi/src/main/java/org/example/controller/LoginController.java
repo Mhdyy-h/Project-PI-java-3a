@@ -13,192 +13,152 @@ import org.example.dao.UserDAO;
 import org.example.model.User;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class LoginController {
-    
+
+    @FXML private TextField fullNameField;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private PasswordField confirmPasswordField;
+    @FXML private CheckBox termsCheckBox;
+    @FXML private Button mainButton;
+    @FXML private Label statusLabel;
+    @FXML private Label titleLabel;
+
+    @FXML private VBox fullNameBox;
+    @FXML private VBox confirmPasswordBox;
+    @FXML private VBox termsBox;
+
+    private boolean isLoginMode = true;
+
     @FXML
-    private TextField fullNameField;
-    
-    @FXML
-    private TextField emailField;
-    
-    @FXML
-    private PasswordField passwordField;
-    
-    @FXML
-    private PasswordField confirmPasswordField;
-    
-    @FXML
-    private CheckBox termsCheckBox;
-    
-    @FXML
-    private Button createAccountButton;
-    @FXML
-    private Hyperlink loginLink;
-    
-    @FXML
-    private Hyperlink healthProLink;
-    
-    @FXML
-    private Label statusLabel;
-    
-    @FXML
-    private VBox fullNameBox;
-    
-    @FXML
-    private VBox confirmPasswordBox;
-    
-    @FXML
-    private VBox termsBox;
-    
-    @FXML
-    private Hyperlink registerLink;
-    
-    
-    private boolean isLoginMode = false;
-    
-    @FXML
-    public void handleCreateAccount(ActionEvent event) {
-        if (isLoginMode) {
-            handleLogin(event);
-            return;
-        }
-        
-        String fullName = fullNameField.getText().trim();
-        String email = emailField.getText().trim();
-        String password = passwordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
-        
-        // Validation
-        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            statusLabel.setText("Veuillez remplir tous les champs");
-            return;
-        }
-        
-        if (!password.equals(confirmPassword)) {
-            statusLabel.setText("Les mots de passe ne correspondent pas");
-            return;
-        }
-        
-        if (!termsCheckBox.isSelected()) {
-            statusLabel.setText("Veuillez accepter les conditions d'utilisation");
-            return;
-        }
-        
-        if (!email.contains("@") || !email.contains(".")) {
-            statusLabel.setText("Veuillez entrer une adresse email valide");
-            return;
-        }
-        
-        // Create user with password
-        User newUser = new User(0, fullName, email, password);
-        newUser.setRoles("[\"ROLE_USER\"]");
-        boolean success = UserDAO.insertUser(newUser);
-        
-        if (success) {
-            statusLabel.setText("Compte créé avec succès!");
-            statusLabel.setStyle("-fx-text-fill: green;");
-            
-            // Navigate to dashboard after successful registration
-            navigateToDashboard(event, newUser);
-        } else {
-            statusLabel.setText("Erreur lors de la création du compte");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
+    public void initialize() {
+        handleLoginLink();
     }
-    
-    private void handleLogin(ActionEvent event) {
+
+    @FXML
+    public void handleMainAction(ActionEvent event) {
+        if (isLoginMode) processLogin(event);
+        else processRegistration(event);
+    }
+
+    private void processLogin(ActionEvent event) {
         String email = emailField.getText().trim();
-        String password = passwordField.getText();
-        
-        if (email.isEmpty() || password.isEmpty()) {
-            statusLabel.setText("Veuillez remplir tous les champs");
+        String pass  = passwordField.getText();
+
+        if (email.isEmpty() || pass.isEmpty()) {
+            showStatus("Veuillez remplir tous les champs.", "#ef4444");
             return;
         }
-        
-        User user = UserDAO.login(email, password);
-        
+
+        User user = UserDAO.login(email, pass);
         if (user != null) {
-            statusLabel.setText("Connexion réussie!");
-            statusLabel.setStyle("-fx-text-fill: green;");
             navigateToDashboard(event, user);
         } else {
-            statusLabel.setText("Email ou mot de passe incorrect");
-            statusLabel.setStyle("-fx-text-fill: red;");
+            showStatus("Email ou mot de passe incorrect.", "#ef4444");
         }
     }
-    
+
+    private void processRegistration(ActionEvent event) {
+        String nom = fullNameField.getText().trim();
+        String email = emailField.getText().trim();
+        String pass = passwordField.getText();
+        String confirm = confirmPasswordField.getText();
+
+        if (nom.isEmpty() || email.isEmpty() || pass.isEmpty()) {
+            showStatus("Tous les champs sont obligatoires.", "#ef4444");
+            return;
+        }
+        if (!pass.equals(confirm)) {
+            showStatus("Les mots de passe ne correspondent pas.", "#ef4444");
+            return;
+        }
+        if (!termsCheckBox.isSelected()) {
+            showStatus("Veuillez accepter les conditions.", "#ef4444");
+            return;
+        }
+
+        User newUser = new User(0, nom, email, pass, "UTILISATEUR");
+        if (UserDAO.insertUser(newUser)) {
+            navigateToDashboard(event, newUser);
+        } else {
+            showStatus("Erreur : Email déjà utilisé.", "#ef4444");
+        }
+    }
+
+    private void navigateToDashboard(ActionEvent event, User user) {
+        try {
+            // SAFE PATH CHECK: This tries to find the file in /view/ or in root
+            String path = "/view/dashboard.fxml";
+            URL fxmlLocation = getClass().getResource(path);
+
+            if (fxmlLocation == null) {
+                // Try without the /view/ folder if the first one fails
+                path = "/dashboard.fxml";
+                fxmlLocation = getClass().getResource(path);
+            }
+
+            if (fxmlLocation == null) {
+                showStatus("Erreur : Fichier dashboard.fxml introuvable.", "#ef4444");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            Parent root = loader.load();
+
+            AdminController controller = loader.getController();
+            controller.setUser(user);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1100, 700));
+            stage.centerOnScreen();
+            stage.setTitle("BioSync - Dashboard");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showStatus("Erreur de chargement : " + e.getMessage(), "#ef4444");
+        }
+    }
+
     @FXML
-    public void handleLoginLink(ActionEvent event) {
+    public void handleLoginLink() {
         isLoginMode = true;
-        fullNameBox.setVisible(false);
-        fullNameBox.setManaged(false);
-        confirmPasswordBox.setVisible(false);
-        confirmPasswordBox.setManaged(false);
-        termsBox.setVisible(false);
-        termsBox.setManaged(false);
-        healthProLink.setVisible(false);
-        healthProLink.setManaged(false);
-        loginLink.setVisible(false);
-        loginLink.setManaged(false);
-        registerLink.setVisible(true);
-        registerLink.setManaged(true);
-        createAccountButton.setText("Se connecter");
-        statusLabel.setText("");
+        titleLabel.setText("Connexion");
+        mainButton.setText("Se connecter");
+        toggleFields(false);
     }
-    
+
     @FXML
-    public void handleRegisterLink(ActionEvent event) {
+    public void handleRegisterLink() {
         isLoginMode = false;
-        fullNameBox.setVisible(true);
-        fullNameBox.setManaged(true);
-        confirmPasswordBox.setVisible(true);
-        confirmPasswordBox.setManaged(true);
-        termsBox.setVisible(true);
-        termsBox.setManaged(true);
-        healthProLink.setVisible(true);
-        healthProLink.setManaged(true);
-        loginLink.setVisible(true);
-        loginLink.setManaged(true);
-        registerLink.setVisible(false);
-        registerLink.setManaged(false);
-        createAccountButton.setText("Créer mon compte");
-        statusLabel.setText("");
+        titleLabel.setText("Inscription");
+        mainButton.setText("Créer mon compte");
+        toggleFields(true);
     }
-    
+
+    private void toggleFields(boolean isRegister) {
+        fullNameBox.setVisible(isRegister);
+        fullNameBox.setManaged(isRegister);
+        confirmPasswordBox.setVisible(isRegister);
+        confirmPasswordBox.setManaged(isRegister);
+        termsBox.setVisible(isRegister);
+        termsBox.setManaged(isRegister);
+    }
+
+    private void showStatus(String message, String color) {
+        statusLabel.setText(message);
+        statusLabel.setStyle("-fx-text-fill: " + color + ";");
+    }
+
     @FXML
     public void handleHealthProLink(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/certification_request.fxml"));
-            Parent root = loader.load();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/certification_request.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 520, 750);
-            stage.setScene(scene);
-            stage.setTitle("BioSync Pro - Certification");
+            stage.getScene().setRoot(root);
         } catch (IOException e) {
-            statusLabel.setText("Erreur navigation: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    private void navigateToDashboard(ActionEvent event, User user) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
-            Parent root = loader.load();
-            
-            AdminController controller = loader.getController();
-            controller.setUser(user);
-            
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1100, 700);
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Administration");
-            stage.centerOnScreen();
-            stage.show();
-            
-        } catch (IOException e) {
-            statusLabel.setText("Erreur lors de la navigation: " + e.getMessage());
-            e.printStackTrace();
+            showStatus("Erreur : Page certification introuvable.", "#ef4444");
         }
     }
 }

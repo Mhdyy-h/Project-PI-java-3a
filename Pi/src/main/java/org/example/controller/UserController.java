@@ -4,52 +4,47 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.example.dao.UserDAO;
+import org.example.model.User;
 
 public class UserController {
-    
-    @FXML
-    private TextField usernameField;
-    
-    @FXML
-    private TextField emailField;
-    
-    @FXML
-    private Label statusLabel;
-    
+
+    @FXML private TextField usernameField;
+    @FXML private TextField emailField;
+    @FXML private Label statusLabel;
+
     @FXML
     public void testDatabaseConnection() {
-        try {
-            boolean isConnected = UserDAO.testConnection();
-            if (isConnected) {
-                statusLabel.setText("✅ Database connection successful!");
-                statusLabel.setStyle("-fx-text-fill: green;");
-            } else {
-                statusLabel.setText("❌ Database connection failed!");
-                statusLabel.setStyle("-fx-text-fill: red;");
-            }
-        } catch (Exception e) {
-            statusLabel.setText("Error: " + e.getMessage());
-            statusLabel.setStyle("-fx-text-fill: red;");
+        if (UserDAO.testConnection()) {
+            statusLabel.setText("✅ Database connection successful!");
+            statusLabel.setStyle("-fx-text-fill: #10b981;");
+        } else {
+            statusLabel.setText("❌ Database connection failed!");
+            statusLabel.setStyle("-fx-text-fill: #ef4444;");
         }
     }
-    
+
     @FXML
     public void saveUser() {
-        String username = usernameField.getText();
-        String email = emailField.getText();
-        
+        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
+
         if (username.isEmpty() || email.isEmpty()) {
-            statusLabel.setText("Please fill all fields!");
-            statusLabel.setStyle("-fx-text-fill: orange;");
+            statusLabel.setText("Veuillez remplir tous les champs!");
+            statusLabel.setStyle("-fx-text-fill: #f59e0b;");
             return;
         }
-        
-        // TODO: Implement save user logic
-        statusLabel.setText("User saved: " + username + " (" + email + ")");
-        statusLabel.setStyle("-fx-text-fill: green;");
-        
-        // Clear fields
-        usernameField.clear();
-        emailField.clear();
+
+        User user = new User(0, username, email, "default123");
+        user.setRoles("UTILISATEUR");
+
+        if (UserDAO.insertUser(user)) {
+            statusLabel.setText("Utilisateur enregistré !");
+            statusLabel.setStyle("-fx-text-fill: #10b981;");
+            usernameField.clear();
+            emailField.clear();
+        } else {
+            statusLabel.setText("Erreur lors de la sauvegarde.");
+            statusLabel.setStyle("-fx-text-fill: #ef4444;");
+        }
     }
 }

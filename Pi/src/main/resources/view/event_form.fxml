@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="650.0" prefWidth="800.0" style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.EventFormController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: transparent transparent #e2e8f0 transparent;">
+            <Button onAction="#handleCancel" text="← Retour" style="-fx-background-color: transparent; -fx-text-fill: #64748b; -fx-font-weight: bold; -fx-cursor: hand;"/>
+            <Label fx:id="formTitle" text="Planifier un Événement" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="15" maxWidth="500" alignment="CENTER_LEFT" style="-fx-padding: 30;">
+                <VBox spacing="5">
+                    <Label text="Titre de l'événement *" />
+                    <TextField fx:id="titreField" prefHeight="40" style="-fx-background-radius: 8;"/>
+                </VBox>
+                <HBox spacing="10">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="Date *" />
+                        <DatePicker fx:id="datePicker" prefHeight="40" prefWidth="250" />
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="Points BioSync *" />
+                        <TextField fx:id="pointsField" prefHeight="40" promptText="Ex: 50" />
+                    </VBox>
+                </HBox>
+                <VBox spacing="5">
+                    <Label text="Groupe associé *" />
+                    <ComboBox fx:id="groupCombo" prefHeight="40" prefWidth="500" />
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Lieu (Nom) *" />
+                    <TextField fx:id="locationField" prefHeight="40" />
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Adresse complète" />
+                    <TextField fx:id="addressField" prefHeight="40" />
+                </VBox>
+                <Label fx:id="statusLabel" wrapText="true" />
+                <Button onAction="#handleSave" prefHeight="45" prefWidth="500" text="Enregistrer l'événement" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

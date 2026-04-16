@@ -34,7 +34,7 @@
                     <Label text="Dashboard" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Utilisateurs - CLICKABLE -->
+                <!-- Utilisateurs -->
                 <HBox fx:id="utilisateursNavItem" alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
                       onMouseClicked="#handleNavUtilisateurs">
@@ -45,7 +45,7 @@
                     </VBox>
                 </HBox>
 
-                <!-- Certifications - CLICKABLE -->
+                <!-- Certifications -->
                 <HBox fx:id="certificationsNavItem" alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
                       onMouseClicked="#handleNavCertifications">
@@ -56,46 +56,50 @@
                     </VBox>
                 </HBox>
 
-                <!-- Nutrition - NOT clickable -->
+                <!-- Nutrition -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
                     <Label text="🥗" style="-fx-font-size: 14px;"/>
                     <Label text="Nutrition" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Gestion RDV - NOT clickable -->
+                <!-- Gestion RDV -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
                     <Label text="📅" style="-fx-font-size: 14px;"/>
                     <Label text="Gestion RDV" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Sports - NOT clickable -->
+                <!-- Sports -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
                     <Label text="⚡" style="-fx-font-size: 14px;"/>
                     <Label text="Sports" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Mental - NOT clickable -->
+                <!-- Mental -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
                     <Label text="🧠" style="-fx-font-size: 14px;"/>
                     <Label text="Mental" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- IA Mentale - NOT clickable -->
+                <!-- IA Mentale -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
                     <Label text="🤖" style="-fx-font-size: 14px;"/>
                     <Label text="IA Mentale" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Community - NOT clickable -->
-                <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                <!-- Community - NOW CLICKABLE -->
+                <HBox fx:id="communityNavItem" alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavCommunity">
                     <Label text="👥" style="-fx-font-size: 14px;"/>
-                    <Label text="Community" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <VBox spacing="1">
+                        <Label text="Community" style="-fx-font-size: 13px; -fx-text-fill: #f59e0b; -fx-font-weight: bold;"/>
+                        <Label text="Groupes &amp; Entraide" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
                 </HBox>
 
                 <Region VBox.vgrow="ALWAYS"/>
@@ -110,8 +114,7 @@
                     </StackPane>
                     <VBox spacing="1">
                         <Label fx:id="adminNameLabel" text="Admin" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
-                        <Label text="Administrateur" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
-                    </VBox>
+                        <Label fx:id="userRoleLabel" text="Rôle" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>                    </VBox>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="6" onMouseClicked="#handleLogout"
                       style="-fx-cursor: hand; -fx-padding: 6 0 0 0;">

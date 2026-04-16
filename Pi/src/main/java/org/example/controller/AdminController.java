@@ -14,154 +14,138 @@ import org.example.dao.UserDAO;
 import org.example.model.User;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public class AdminController {
 
     @FXML private Label adminNameLabel;
     @FXML private Label adminInitialLabel;
+    @FXML private Label userRoleLabel;
     @FXML private Label activeUsersLabel;
     @FXML private Label certCountLabel;
     @FXML private VBox recentUsersContainer;
-    @FXML private Label statusLabel;
+
+    @FXML private HBox utilisateursNavItem;
+    @FXML private HBox certificationsNavItem;
 
     private User currentUser;
 
     public void setUser(User user) {
         this.currentUser = user;
-        updateHeader();
+        updateUI();
         loadStats();
         loadRecentUsers();
     }
 
-    private void updateHeader() {
-        if (currentUser != null) {
-            adminNameLabel.setText(currentUser.getNomComplet());
-            String name = currentUser.getNomComplet();
-            String initials = name.length() >= 2
-                    ? (name.substring(0, 1) + name.charAt(name.indexOf(' ') > 0 ? name.indexOf(' ') + 1 : 1)).toUpperCase()
-                    : name.substring(0, Math.min(2, name.length())).toUpperCase();
-            adminInitialLabel.setText(initials);
+    private void updateUI() {
+        if (currentUser == null) return;
+        adminNameLabel.setText(currentUser.getNomComplet());
+        String roles = (currentUser.getRoles() != null) ? currentUser.getRoles().toUpperCase() : "";
+        boolean isAdmin = roles.contains("ADMIN");
+        userRoleLabel.setText(isAdmin ? "Administrateur BioSync" : "Utilisateur BioSync");
+
+        if (utilisateursNavItem != null) {
+            utilisateursNavItem.setVisible(isAdmin);
+            utilisateursNavItem.setManaged(isAdmin);
+        }
+        if (certificationsNavItem != null) {
+            certificationsNavItem.setVisible(isAdmin);
+            certificationsNavItem.setManaged(isAdmin);
+        }
+
+        if (currentUser.getNomComplet() != null && !currentUser.getNomComplet().isEmpty()) {
+            adminInitialLabel.setText(currentUser.getNomComplet().substring(0, 1).toUpperCase());
         }
     }
 
     private void loadStats() {
         try {
-            List<User> users = UserDAO.getAllUsers();
-            activeUsersLabel.setText(String.valueOf(users.size()));
-            int pending = CertificationDAO.countPending();
-            certCountLabel.setText(String.valueOf(pending));
+            activeUsersLabel.setText(String.valueOf(UserDAO.getAllUsers().size()));
+            certCountLabel.setText(String.valueOf(CertificationDAO.countPending()));
         } catch (Exception e) {
-            activeUsersLabel.setText("?");
+            if (activeUsersLabel != null) activeUsersLabel.setText("?");
         }
     }
 
     private void loadRecentUsers() {
         try {
             List<User> users = UserDAO.getAllUsers();
+            if (recentUsersContainer == null) return;
             recentUsersContainer.getChildren().clear();
-
             int count = Math.min(users.size(), 5);
             for (int i = 0; i < count; i++) {
-                User u = users.get(i);
-                HBox row = buildRecentUserRow(u, i % 2 == 0);
-                recentUsersContainer.getChildren().add(row);
+                recentUsersContainer.getChildren().add(buildRecentUserRow(users.get(i), i % 2 == 0));
             }
-
-            if (users.isEmpty()) {
-                statusLabel.setText("Aucun utilisateur trouvé");
-            } else {
-                statusLabel.setText("");
-            }
-        } catch (Exception e) {
-            statusLabel.setText("Erreur: " + e.getMessage());
-        }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     private HBox buildRecentUserRow(User user, boolean alternate) {
         HBox row = new HBox();
-        row.setStyle("-fx-padding: 14 16 14 16; -fx-border-color: transparent transparent #f8fafc transparent; -fx-border-width: 0 0 1 0;"
-                + (alternate ? "-fx-background-color: white;" : "-fx-background-color: #fafbfd;"));
-
-        // Name
-        Label nameLbl = new Label(user.getNomComplet());
-        nameLbl.setStyle("-fx-font-size: 13px; -fx-text-fill: #1a1a2e; -fx-font-weight: bold;");
-        nameLbl.setPrefWidth(200);
-
-        // Email
-        Label emailLbl = new Label(user.getEmail());
-        emailLbl.setStyle("-fx-font-size: 13px; -fx-text-fill: #4C6FFF;");
-        emailLbl.setPrefWidth(300);
-
-        // Role badge
-        String role = extractDisplayRole(user.getRoles());
-        Label roleLbl = new Label(role);
-        roleLbl.setStyle(getRoleBadgeStyle(role));
-        roleLbl.setPrefWidth(120);
-
-        row.getChildren().addAll(nameLbl, emailLbl, roleLbl);
+        row.setStyle("-fx-padding: 10 16; -fx-background-color: " + (alternate ? "white" : "#fafbfd") + ";");
+        Label name = new Label(user.getNomComplet());
+        name.setPrefWidth(200);
+        Label email = new Label(user.getEmail());
+        email.setPrefWidth(300);
+        row.getChildren().addAll(name, email);
         return row;
     }
 
-    private String extractDisplayRole(String roles) {
-        if (roles == null) return "UTILISATEUR";
-        if (roles.contains("ADMIN")) return "ADMIN";
-        if (roles.contains("COACH")) return "COACH";
-        if (roles.contains("SPECIALISTE")) return "SPÉCIALISTE";
-        return "UTILISATEUR";
-    }
-
-    private String getRoleBadgeStyle(String role) {
-        String base = "-fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 4 12 4 12; -fx-text-fill: white;";
-        return switch (role) {
-            case "ADMIN" -> base + " -fx-background-color: #ef4444;";
-            case "COACH" -> base + " -fx-background-color: #10b981;";
-            case "SPÉCIALISTE" -> base + " -fx-background-color: #f59e0b;";
-            default -> base + " -fx-background-color: #6b7280;";
-        };
-    }
-
     @FXML
-    private void handleNavUtilisateurs(MouseEvent event) {
-        navigateToUtilisateurs();
-    }
-
-    @FXML
-    private void handleNavCertifications(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/certifications_admin.fxml"));
-            Parent root = loader.load();
-            CertificationsAdminController ctrl = loader.getController();
-            ctrl.setCurrentUser(currentUser);
-            Stage stage = (Stage) adminNameLabel.getScene().getWindow();
-            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Certifications");
-        } catch (IOException e) {
-            statusLabel.setText("Erreur: " + e.getMessage());
-            e.printStackTrace();
+    private void handleNavCommunity(MouseEvent event) {
+        System.out.println("DEBUG: Community button clicked!");
+        if (currentUser == null) {
+            System.err.println("DEBUG: currentUser is null, cannot navigate!");
+            return;
         }
+
+        String roles = (currentUser.getRoles() != null) ? currentUser.getRoles().toUpperCase() : "";
+        System.out.println("DEBUG: Current User Roles: " + roles);
+
+        String fxmlPath;
+        if (roles.contains("ADMIN")) {
+            fxmlPath = "/view/community_home.fxml";
+        } else {
+            fxmlPath = "/view/user_community.fxml";
+        }
+
+        System.out.println("DEBUG: Attempting to navigate to: " + fxmlPath);
+        navigateTo(fxmlPath, "Communauté");
     }
 
-    @FXML
-    private void handleGererMembres(MouseEvent event) {
-        navigateToUtilisateurs();
-    }
+    @FXML private void handleNavUtilisateurs(MouseEvent event) { navigateTo("/view/utilisateurs.fxml", "Utilisateurs"); }
+    @FXML private void handleNavCertifications(MouseEvent event) { navigateTo("/view/certifications_admin.fxml", "Certifications"); }
+    @FXML private void handleGererMembres(MouseEvent event) { navigateTo("/view/utilisateurs.fxml", "Utilisateurs"); }
 
-    private void navigateToUtilisateurs() {
+    private void navigateTo(String fxmlPath, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/utilisateurs.fxml"));
+            URL location = getClass().getResource(fxmlPath);
+            if (location == null) {
+                // TRY FALLBACK (if not in /view/ folder)
+                String altPath = fxmlPath.replace("/view", "");
+                location = getClass().getResource(altPath);
+                if (location == null) {
+                    System.err.println("CRITICAL ERROR: Could not find FXML at " + fxmlPath + " or " + altPath);
+                    return;
+                }
+            }
+
+            FXMLLoader loader = new FXMLLoader(location);
             Parent root = loader.load();
 
-            UtilisateursController ctrl = loader.getController();
-            ctrl.setCurrentUser(currentUser);
+            Object controller = loader.getController();
+            System.out.println("DEBUG: Controller loaded: " + controller.getClass().getSimpleName());
+
+            if (controller instanceof CommunityController) ((CommunityController) controller).setCurrentUser(currentUser);
+            if (controller instanceof UserCommunityController) ((UserCommunityController) controller).setCurrentUser(currentUser);
 
             Stage stage = (Stage) adminNameLabel.getScene().getWindow();
-            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Utilisateurs");
+            stage.getScene().setRoot(root);
+            stage.setTitle("BioSync - " + title);
+            System.out.println("DEBUG: Navigation successful!");
+
         } catch (IOException e) {
-            statusLabel.setText("Erreur: " + e.getMessage());
+            System.err.println("DEBUG: Failed to load FXML: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -169,15 +153,12 @@ public class AdminController {
     @FXML
     private void handleLogout(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-            Parent root = loader.load();
-
+            URL loc = getClass().getResource("/view/login.fxml");
+            if (loc == null) loc = getClass().getResource("/login.fxml");
+            Parent root = FXMLLoader.load(loc);
             Stage stage = (Stage) adminNameLabel.getScene().getWindow();
-            Scene scene = new Scene(root, 400, 550);
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Inscription");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            stage.setScene(new Scene(root, 400, 600));
+            stage.centerOnScreen();
+        } catch (IOException e) { e.printStackTrace(); }
     }
 }

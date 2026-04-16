@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #F5F7FA;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.CommunityController">
+    <children>
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="1000.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);" spacing="20">
+            <padding><Insets left="30" right="30"/></padding>
+            <Label text="BioSync Community" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <TextField fx:id="searchField" prefWidth="300.0" promptText="Rechercher un groupe ou un thème..."
+                       style="-fx-background-radius: 20; -fx-padding: 8 15; -fx-background-color: #f1f5f9; -fx-border-color: #e2e8f0; -fx-border-radius: 20;" />
+        </HBox>
+
+        <HBox layoutY="85.0" prefHeight="600.0" prefWidth="1000.0" spacing="25">
+            <padding><Insets left="25" right="25" bottom="25"/></padding>
+
+            <!-- List View (4pts CRUD: Read) -->
+            <VBox spacing="15" HBox.hgrow="ALWAYS">
+                <Label text="Groupes de Soutien" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #475569;" />
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                    <VBox fx:id="groupsContainer" spacing="12">
+                        <!-- Cards injected here -->
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Form View (4pts CRUD: Create + 2pts Validation) -->
+            <VBox prefWidth="350.0" spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 5);">
+                <Label text="Créer un nouveau groupe" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" />
+
+                <VBox spacing="5">
+                    <Label text="Nom du Groupe *" style="-fx-font-size: 12px; -fx-text-fill: #64748b;" />
+                    <TextField fx:id="nomField" style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-radius: 8;" />
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Thématique *" style="-fx-font-size: 12px; -fx-text-fill: #64748b;" />
+                    <ComboBox fx:id="themeCombo" prefWidth="310.0" style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;" />
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Capacité (1-20) *" style="-fx-font-size: 12px; -fx-text-fill: #64748b;" />
+                    <TextField fx:id="capaciteField" style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;" />
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Description" style="-fx-font-size: 12px; -fx-text-fill: #64748b;" />
+                    <TextArea fx:id="descArea" prefHeight="80.0" style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0;" wrapText="true" />
+                </VBox>
+
+                <Label fx:id="statusLabel" wrapText="true" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button onAction="#handleAddGroup" prefHeight="35.0" prefWidth="140.0" text="Enregistrer"
+                            style="-fx-background-color: #4C6FFF; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;" />
+                    <Button onAction="#clearForm" prefHeight="35.0" prefWidth="140.0" text="Vider"
+                            style="-fx-background-color: #e2e8f0; -fx-text-fill: #475569; -fx-font-weight: bold; -fx-background-radius: 8; -fx-cursor: hand;" />
+                </HBox>
+            </VBox>
+        </HBox>
+    </children>
+</AnchorPane>

@@ -6,37 +6,40 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.dao.UserDAO;
 
 public class TestApp extends Application {
-    
+
     @Override
     public void start(Stage stage) {
         VBox root = new VBox(20);
-        root.setStyle("-fx-padding: 20; -fx-alignment: center;");
-        
-        Label title = new Label("BioSync Test");
-        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-        
-        Button testButton = new Button("Test Database Connection");
+        root.setStyle("-fx-padding: 40; -fx-alignment: center; -fx-background-color: #F5F7FA;");
+
+        Label title = new Label("BioSync System Check");
+        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+        Label dbStatus = new Label("Database Status: Unknown");
+
+        Button testButton = new Button("Check Connection");
+        testButton.setStyle("-fx-background-color: #4285F4; -fx-text-fill: white; -fx-padding: 10 20;");
+
         testButton.setOnAction(e -> {
-            boolean connected = org.example.dao.UserDAO.testConnection();
-            if (connected) {
-                title.setText("??? Connection Successful!");
-                title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: green;");
+            if (UserDAO.testConnection()) {
+                dbStatus.setText("Database Status: ONLINE ✅");
+                dbStatus.setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold;");
             } else {
-                title.setText("??? Connection Failed!");
-                title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: red;");
+                dbStatus.setText("Database Status: OFFLINE ❌");
+                dbStatus.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;");
             }
         });
-        
-        root.getChildren().addAll(title, testButton);
-        
-        Scene scene = new Scene(root, 400, 300);
-        stage.setTitle("BioSync Test");
-        stage.setScene(scene);
+
+        root.getChildren().addAll(title, dbStatus, testButton);
+
+        stage.setScene(new Scene(root, 400, 300));
+        stage.setTitle("BioSync Test Tool");
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
