@@ -37,6 +37,14 @@ public class RendezVousDialogController {
     @FXML private Button cancelButton;
     @FXML private Label titleLabel;
     @FXML private Label errorLabel;
+    @FXML private Label currentDateLabel;
+    @FXML private Label currentTimeLabel;
+    @FXML private Label currentPatientLabel;
+    @FXML private Label currentSpecialisteLabel;
+    @FXML private Label readOnlyPatientLabel;
+    @FXML private Label readOnlySpecialisteLabel;
+    @FXML private Label readOnlyStatusLabel;
+    @FXML private VBox currentInfoSection;
     
     @FXML
     public void initialize() {
@@ -160,6 +168,9 @@ public class RendezVousDialogController {
         this.rendezVous = rendezVous;
         
         if (rendezVous != null) {
+            // Show current appointment info
+            showCurrentAppointmentInfo(rendezVous);
+            
             // Load data into form
             User patient = UserDAO.getUserById(rendezVous.getPatientId());
             if (patient != null) {
@@ -395,6 +406,19 @@ public class RendezVousDialogController {
         int minute = Integer.parseInt(timeParts[1]);
         
         return datePicker.getValue().atTime(hour, minute);
+    }
+    
+    private void showCurrentAppointmentInfo(RendezVous rdv) {
+        if (rdv != null) {
+            currentInfoSection.setVisible(true);
+            currentDateLabel.setText(rdv.getFormattedDateHeure());
+            currentTimeLabel.setText(rdv.getDateHeure().format(DateTimeFormatter.ofPattern("HH:mm")));
+            readOnlyPatientLabel.setText(rdv.getPatientNom());
+            readOnlySpecialisteLabel.setText(rdv.getSpecialisteNom());
+            readOnlyStatusLabel.setText(rdv.getStatut());
+        } else {
+            currentInfoSection.setVisible(false);
+        }
     }
     
     private void showError(String title, String message) {

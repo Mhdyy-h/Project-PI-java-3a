@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="org.example.controller.RendezVousDialogController"
+        prefWidth="500" prefHeight="550"
+        style="-fx-background-color: #f8fafc; -fx-padding: 20;"
+        stylesheets="@../styles.css">
+
+    <!-- Header Section -->
+    <VBox spacing="16" alignment="CENTER_LEFT" style="-fx-padding: 0 0 20 0;">
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <StackPane minWidth="48" minHeight="48"
+                       style="-fx-background-color: #dbeafe; -fx-background-radius: 12;">
+                <Label text="✏️" style="-fx-font-size: 20px;"/>
+            </StackPane>
+            <VBox spacing="4">
+                <Label fx:id="titleLabel" text="Modifier Mon Rendez-vous" 
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+                <Label text="Modifiez uniquement les informations autorisées" 
+                       style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <!-- Current Appointment Info -->
+    <VBox fx:id="currentInfoSection" spacing="12" 
+             style="-fx-background-color: #e0f2fe; -fx-background-radius: 12; -fx-padding: 16; -fx-border-color: #3b82f6; -fx-border-radius: 12; -fx-border-width: 1;" 
+             managed="false" visible="false">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="ℹ️" style="-fx-font-size: 14px;"/>
+            <Label text="RENDEZ-VOUS ACTUEL" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+        </HBox>
+        <GridPane hgap="12" vgap="8">
+            <Label text="Date:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+                   style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #374151;"/>
+            <Label fx:id="currentDateLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   style="-fx-font-size: 13px; -fx-text-fill: #1e293b; -fx-font-weight: 500;"/>
+            
+            <Label text="Heure:" GridPane.rowIndex="1" GridPane.columnIndex="0" 
+                   style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #374151;"/>
+            <Label fx:id="currentTimeLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   style="-fx-font-size: 13px; -fx-text-fill: #1e293b; -fx-font-weight: 500;"/>
+            
+            <Label text="Spécialiste:" GridPane.rowIndex="2" GridPane.columnIndex="0" 
+                   style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #374151;"/>
+            <Label fx:id="currentSpecialisteLabel" text="" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                   style="-fx-font-size: 13px; -fx-text-fill: #1e293b; -fx-font-weight: 500;"/>
+        </GridPane>
+    </VBox>
+
+    <!-- Error Message Section -->
+    <VBox fx:id="errorSection" spacing="8" alignment="CENTER_LEFT" 
+             style="-fx-background-color: #fef2f2; -fx-background-radius: 8; -fx-padding: 12; -fx-border-color: #fecaca; -fx-border-radius: 8; -fx-border-width: 1;" 
+             managed="false" visible="false">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="⚠️" style="-fx-font-size: 14px;"/>
+            <Label fx:id="errorLabel" text="" 
+                   style="-fx-text-fill: #dc2626; -fx-font-size: 12px; -fx-font-weight: 500;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Editable Content -->
+    <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);" VBox.vgrow="ALWAYS">
+
+        <!-- Date & Time Row - PATIENT CAN EDIT -->
+        <HBox spacing="16">
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="📅 Nouvelle Date" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                <DatePicker fx:id="datePicker" prefHeight="40"
+                           style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+            </VBox>
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="🕐 Nouvelle Heure" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                <ComboBox fx:id="timeComboBox" prefHeight="40"
+                          style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Motif Section - PATIENT CAN EDIT -->
+        <VBox spacing="8">
+            <Label text="📝 Nouveau Motif" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+            <TextArea fx:id="motifTextArea" prefHeight="80" wrapText="true"
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px;"/>
+        </VBox>
+
+        <!-- Mode Section - PATIENT CAN EDIT -->
+        <VBox spacing="8">
+            <Label text="🏥 Mode de consultation" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+            <ComboBox fx:id="modeComboBox" prefHeight="40"
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+        </VBox>
+
+        <!-- Location Section - PATIENT CAN EDIT -->
+        <VBox spacing="8">
+            <Label text="📍 Lieu" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+            <TextField fx:id="lieuTextField" prefHeight="40"
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 13px;"/>
+        </VBox>
+
+        <!-- Urgency Section - PATIENT CAN EDIT -->
+        <VBox spacing="8">
+            <Label text="🚨 Niveau d'urgence" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+            <ComboBox fx:id="urgenceComboBox" prefHeight="40"
+                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+        </VBox>
+
+        <!-- Read-Only Fields - PATIENT CANNOT EDIT -->
+        <VBox spacing="12" style="-fx-background-color: #f1f5f9; -fx-background-radius: 8; -fx-padding: 12; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="🔒" style="-fx-font-size: 14px;"/>
+                <Label text="INFORMATIONS NON MODIFIABLES" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #6b7280;"/>
+            </HBox>
+            <GridPane hgap="12" vgap="8">
+                <Label text="Patient:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+                       style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #6b7280;"/>
+                <Label fx:id="readOnlyPatientLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                       style="-fx-font-size: 13px; -fx-text-fill: #374151; -fx-font-style: italic;"/>
+                
+                <Label text="Spécialiste:" GridPane.rowIndex="1" GridPane.columnIndex="0" 
+                       style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #6b7280;"/>
+                <Label fx:id="readOnlySpecialisteLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                       style="-fx-font-size: 13px; -fx-text-fill: #374151; -fx-font-style: italic;"/>
+                
+                <Label text="Statut:" GridPane.rowIndex="2" GridPane.columnIndex="0" 
+                       style="-fx-font-size: 13px; -fx-font-weight: 600; -fx-text-fill: #6b7280;"/>
+                <Label fx:id="readOnlyStatusLabel" text="" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                       style="-fx-font-size: 13px; -fx-text-fill: #374151; -fx-font-style: italic;"/>
+            </GridPane>
+        </VBox>
+
+        <!-- Validation Info Section -->
+        <VBox spacing="8" alignment="CENTER_LEFT" 
+             style="-fx-background-color: #eff6ff; -fx-background-radius: 8; -fx-padding: 12; -fx-border-color: #dbeafe; -fx-border-radius: 8; -fx-border-width: 1;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="ℹ️" style="-fx-font-size: 14px;"/>
+                <Label text="CE QUE VOUS POUVEZ MODIFIER" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+            </HBox>
+            <VBox spacing="4">
+                <Label text="✓ Date et heure du rendez-vous" style="-fx-font-size: 11px; -fx-text-fill: #374151;"/>
+                <Label text="✓ Motif de consultation" style="-fx-font-size: 11px; -fx-text-fill: #374151;"/>
+                <Label text="✓ Mode (présentiel/téléconsultation)" style="-fx-font-size: 11px; -fx-text-fill: #374151;"/>
+                <Label text="✓ Lieu de consultation" style="-fx-font-size: 11px; -fx-text-fill: #374151;"/>
+                <Label text="✓ Niveau d'urgence" style="-fx-font-size: 11px; -fx-text-fill: #374151;"/>
+            </VBox>
+        </VBox>
+
+    </VBox>
+
+    <!-- Action Buttons -->
+    <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 0 0;">
+        <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #02203dff; -fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 12 24 12 24; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 10; -fx-border-width: 1;"/>
+        <Button fx:id="saveButton" text="Enregistrer" onAction="#handleSave"
+                style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 12 24 12 24; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.3), 8, 0, 0, 3);"/>
+    </HBox>
+
+</VBox>

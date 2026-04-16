@@ -33,18 +33,26 @@ public class RendezVousController {
     @FXML private TableColumn<RendezVous, String> lieuColumn;
     @FXML private TableColumn<RendezVous, Integer> urgenceColumn;
     
-    @FXML private TextField searchField;
-    @FXML private ComboBox<String> statutFilter;
-    @FXML private ComboBox<Specialiste> specialisteFilter;
     @FXML private Button addButton;
     @FXML private Button editButton;
     @FXML private Button deleteButton;
     @FXML private Button refreshButton;
+    @FXML private Button exportPdfButton;
+    @FXML private Button newRdvButton;
+    @FXML private TextField searchField;
+    @FXML private ComboBox<String> statutFilter;
+    @FXML private ComboBox<Specialiste> specialisteFilter;
     @FXML private Button searchButton;
-    @FXML private Button clearSearchButton;
+    @FXML private Button clearButton;
+    @FXML private Label countLabel;
+    @FXML private Label selectedRdvLabel;
+    @FXML private Label todayCountLabel;
+    @FXML private Label weekCountLabel;
+    @FXML private Label pendingCountLabel;
+    @FXML private Label confirmedCountLabel;
     
     @FXML private Label statusLabel;
-    @FXML private Label countLabel;
+    @FXML private Label headerStatusLabel;
     
     private User currentUser;
     private ObservableList<RendezVous> rendezVousList = FXCollections.observableArrayList();
@@ -58,6 +66,72 @@ public class RendezVousController {
         setupButtonActions();
         setupTableSelection();
         loadRendezVous();
+    }
+    
+    private void setupTableSelection() {
+        rendezVousTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            updateSelectedRdvLabel(newSelection);
+            updateButtonStates(newSelection);
+        });
+    }
+    
+    private void updateSelectedRdvLabel(RendezVous selected) {
+        if (selected != null) {
+            selectedRdvLabel.setText("Sélectionné: " + selected.getMotif() + " - " + selected.getFormattedDateHeure());
+        } else {
+            selectedRdvLabel.setText("Aucun rendez-vous sélectionné");
+        }
+    }
+    
+    private void updateButtonStates(RendezVous selected) {
+        boolean hasSelection = selected != null;
+        editButton.setDisable(!hasSelection);
+        deleteButton.setDisable(!hasSelection);
+        
+        // Role-based permissions
+        if (currentUser != null && hasSelection) {
+            boolean canEdit = currentUser.isAdmin() || 
+                            (currentUser.isSpecialiste() && selected.getSpecialisteId() == currentUser.getId()) ||
+                            (currentUser.isPatient() && selected.getPatientId() == currentUser.getId());
+            boolean canDelete = currentUser.isAdmin() || 
+                               (currentUser.isPatient() && selected.getPatientId() == currentUser.getId());
+            
+            editButton.setDisable(!canEdit);
+            deleteButton.setDisable(!canDelete);
+        }
+    }
+    
+    private void updateStatistics() {
+        if (rendezVousList == null) return;
+        
+        int todayCount = 0;
+        int weekCount = 0;
+        int pendingCount = 0;
+        int confirmedCount = 0;
+        
+        for (RendezVous rdv : rendezVousList) {
+            // Count today's appointments
+            if (rdv.isToday()) {
+                todayCount++;
+            }
+            
+            // Count this week's appointments
+            if (rdv.isThisWeek()) {
+                weekCount++;
+            }
+            
+            // Count by status
+            if ("en attente".equals(rdv.getStatut())) {
+                pendingCount++;
+            } else if ("confirmé".equals(rdv.getStatut())) {
+                confirmedCount++;
+            }
+        }
+        
+        todayCountLabel.setText(String.valueOf(todayCount));
+        weekCountLabel.setText(String.valueOf(weekCount));
+        pendingCountLabel.setText(String.valueOf(pendingCount));
+        confirmedCountLabel.setText(String.valueOf(confirmedCount));
     }
     
     private void setupTableColumns() {
@@ -172,6 +246,7 @@ public class RendezVousController {
             
             updateStatusLabel("Données chargées avec succès");
             updateCountLabel(rendezVous.size());
+            updateStatistics();
             
         } catch (Exception e) {
             showError("Erreur de chargement", "Impossible de charger les rendez-vous: " + e.getMessage());
@@ -342,11 +417,53 @@ public class RendezVousController {
         }
     }
     
+    // Add action method
+    @FXML
+    private void handleAddAction() {
+        showAddDialog();
+    }
+    
+    // Edit action method
+    @FXML
+    private void handleEditAction() {
+        showEditDialog();
+    }
+    
+    // Delete action method
+    @FXML
+    private void handleDeleteAction() {
+        deleteSelectedRendezVous();
+    }
+    
+    // Search action method
+    @FXML
+    private void handleSearchAction() {
+        searchRendezVous();
+    }
+    
+    // Clear search action method
+    @FXML
+    private void handleClearSearchAction() {
+        clearSearch();
+    }
+    
+    // Retour action method
+    @FXML
+    private void handleRetour() {
+        // Navigate back to dashboard
+        try {
+            Stage stage = (Stage) rendezVousTable.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            showError("Erreur", "Impossible de retourner: " + e.getMessage());
+        }
+    }
+    
     // Set current user
     public void setCurrentUser(User user) {
         this.currentUser = user;
         if (user != null) {
-            statusLabel.setText("Connecté en tant que: " + user.getNomComplet());
+            headerStatusLabel.setText("Connecté en tant que: " + user.getNomComplet());
         }
     }
 }

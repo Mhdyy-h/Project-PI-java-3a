@@ -8,7 +8,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.controller.RendezVousController"
-            prefWidth="1100" prefHeight="700"
+            prefWidth="1100" prefHeight="750"
             style="-fx-background-color: #f0f2f8;"
             stylesheets="@../styles.css">
 
@@ -131,7 +131,7 @@
                                   style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
                         <ComboBox fx:id="specialisteFilter" prefWidth="180" prefHeight="35"
                                   style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
-                        <ComboBox fx:id="dateFilter" prefWidth="140" prefHeight="35"
+                        <ComboBox fx:id="dateRangeFilter" prefWidth="140" prefHeight="35"
                                   style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8;"/>
                     </HBox>
                 </VBox>
@@ -139,14 +139,10 @@
 
             <!-- Action Buttons Row -->
             <HBox spacing="12" alignment="CENTER_LEFT">
-                <Button fx:id="editButton" text="✏️ Modifier" onAction="#handleEditAction" disable="true"
-                        style="-fx-background-color: #f59e0b; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand;"/>
-                <Button fx:id="deleteButton" text="🗑️ Supprimer" onAction="#handleDeleteAction" disable="true"
-                        style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand;"/>
                 <Button fx:id="refreshButton" text="🔄 Actualiser" onAction="#handleRefreshAction"
                         style="-fx-background-color: #6b7280; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand;"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
+                <Label fx:id="headerStatusLabel" text="Prêt" style="-fx-text-fill: #6b7280; -fx-font-size: 13px;"/>
             </HBox>
 
             <!-- Table Section -->
@@ -178,5 +174,33 @@
             </VBox>
         </VBox>
     </center>
+
+    <bottom>
+        <!-- Patient Action Bar -->
+        <HBox alignment="CENTER" spacing="16" 
+              style="-fx-padding: 20 36 24 36; -fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 1 0 0 0;">
+            
+            <VBox spacing="4" alignment="CENTER">
+                <StackPane minWidth="48" minHeight="48"
+                           style="-fx-background-color: #fef2f2; -fx-background-radius: 12;">
+                    <Label text="×" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #dc2626;"/>
+                </StackPane>
+                <Label text="Annuler ma demande" style="-fx-font-size: 11px; -fx-text-fill: #dc2626; -fx-font-weight: 600;"/>
+            </VBox>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <VBox spacing="8" alignment="CENTER_RIGHT">
+                <Label fx:id="selectedRdvLabel" text="Aucun rendez-vous sélectionné" 
+                       style="-fx-text-fill: #6b7280; -fx-font-size: 12px; -fx-font-style: italic;"/>
+                <HBox spacing="12">
+                    <Button fx:id="editButton" text="Modifier" onAction="#handleEditAction"
+                            style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.3), 6, 0, 0, 2);"/>
+                    <Button fx:id="deleteButton" text="Supprimer" onAction="#handleDeleteAction"
+                            style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(239,68,68,0.3), 6, 0, 0, 2);"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </bottom>
 
 </BorderPane>

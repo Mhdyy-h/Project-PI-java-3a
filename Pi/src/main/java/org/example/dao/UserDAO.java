@@ -253,4 +253,47 @@ public class UserDAO {
             return false;
         }
     }
+    
+    // Get all patients (users who are not specialists or admins) - FOR SPECIALISTS TO BOOK APPOINTMENTS
+    public static List<User> getAllPatients() {
+        List<User> patients = new ArrayList<>();
+        
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(
+                "SELECT * FROM utilisateur WHERE roles NOT LIKE '%SPECIALISTE%' AND roles NOT LIKE '%ADMIN%' ORDER BY nom_complet ASC"
+            );
+            
+            while (resultSet.next()) {
+                int scoreGlobal = 0;
+                String dateInscription = null;
+                try { scoreGlobal = resultSet.getInt("score_global"); } catch (SQLException ignored) {}
+                try {
+                    java.sql.Date sqlDate = resultSet.getDate("date_inscription");
+                    if (sqlDate != null) {
+                        dateInscription = sqlDate.toString();
+                    }
+                } catch (SQLException ignored) {}
+                
+                User user = new User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("nom_complet"),
+                    resultSet.getString("email"),
+                    resultSet.getString("mot_de_passe"),
+                    resultSet.getString("roles") != null ? resultSet.getString("roles") : "[\"ROLE_USER\"]",
+                    scoreGlobal,
+                    dateInscription
+                );
+                patients.add(user);
+            }
+            resultSet.close();
+            statement.close();
+            
+        } catch (SQLException e) {
+            System.err.println("Error getting patients: " + e.getMessage());
+        }
+        
+        return patients;
+    }
 }
