@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.AjouterExerciceController"
+            style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="22"
+          style="-fx-background-color: linear-gradient(to bottom right, #f0e6ff, #ffffff, #fff8e7);
+                 -fx-padding: 45;">
+
+        <!-- Header Card -->
+        <VBox style="-fx-background-color: linear-gradient(to right, #4a235a, #7d3c98);
+                     -fx-background-radius: 20;
+                     -fx-padding: 25 30;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.5), 25, 0, 0, 8);">
+            <HBox spacing="18" alignment="CENTER_LEFT">
+                <Label text="💪" style="-fx-font-size: 45px;"/>
+                <VBox spacing="5">
+                    <Label text="Ajouter un Exercice"
+                           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    <Label text="Remplissez toutes les informations de votre exercice sportif"
+                           style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.7);"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Section Informations principales -->
+        <VBox spacing="15"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 25;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.12), 20, 0, 0, 6);">
+
+            <Label text="📋  Informations principales"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;
+                          -fx-text-fill: #4a235a;
+                          -fx-border-color: #d4af37; -fx-border-width: 0 0 0 4;
+                          -fx-padding: 0 0 0 10;"/>
+
+            <!-- Nom seul pleine largeur -->
+            <VBox spacing="7">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text=" 📝 "
+                           style="-fx-background-color: #4a235a; -fx-text-fill: white;
+                                  -fx-font-size: 11px; -fx-background-radius: 8;
+                                  -fx-padding: 4 10;"/>
+                    <Label text="Nom de l'exercice"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                </HBox>
+                <TextField fx:id="nomField" promptText="Ex: Pompes, Squat, Course..."
+                           maxWidth="Infinity"
+                           style="-fx-background-color: #faf8ff; -fx-text-fill: #4a235a;
+                                  -fx-border-color: #d4af37; -fx-border-radius: 12;
+                                  -fx-background-radius: 12; -fx-pref-height: 46;
+                                  -fx-font-size: 13px; -fx-padding: 0 16;"/>
+            </VBox>
+
+            <!-- Intensité seule pleine largeur -->
+            <VBox spacing="7">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text=" ⚡ "
+                           style="-fx-background-color: #e67e22; -fx-text-fill: white;
+                                  -fx-font-size: 11px; -fx-background-radius: 8;
+                                  -fx-padding: 4 10;"/>
+                    <Label text="Intensité"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                </HBox>
+                <ComboBox fx:id="intensiteBox" promptText="Choisir l'intensité..."
+                          maxWidth="Infinity"
+                          style="-fx-background-color: #fff8f0;
+                                 -fx-border-color: #e67e22; -fx-border-radius: 12;
+                                 -fx-background-radius: 12; -fx-pref-height: 46;
+                                 -fx-font-size: 13px;"/>
+            </VBox>
+
+            <!-- Calories + ID Séance côte à côte -->
+            <HBox spacing="20">
+                <VBox spacing="7" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text=" 🔥 "
+                               style="-fx-background-color: #e94560; -fx-text-fill: white;
+                                      -fx-font-size: 11px; -fx-background-radius: 8;
+                                      -fx-padding: 4 10;"/>
+                        <Label text="Calories par minute"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                    </HBox>
+                    <TextField fx:id="caloriesField" promptText="Ex: 8.5, 12.0..."
+                               maxWidth="Infinity"
+                               style="-fx-background-color: #fff0f3; -fx-text-fill: #4a235a;
+                                      -fx-border-color: #e94560; -fx-border-radius: 12;
+                                      -fx-background-radius: 12; -fx-pref-height: 46;
+                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                </VBox>
+
+                <VBox spacing="7" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text=" 🏋️ "
+                               style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                                      -fx-font-size: 11px; -fx-background-radius: 8;
+                                      -fx-padding: 4 10;"/>
+                        <Label text="ID Séance associée"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                    </HBox>
+                    <TextField fx:id="seanceIdField" promptText="Ex: 1, 2, 3..."
+                               maxWidth="Infinity"
+                               style="-fx-background-color: #f0fff6; -fx-text-fill: #4a235a;
+                                      -fx-border-color: #27ae60; -fx-border-radius: 12;
+                                      -fx-background-radius: 12; -fx-pref-height: 46;
+                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                </VBox>
+            </HBox>
+
+        </VBox>
+
+        <!-- Section Guide intensités -->
+        <VBox spacing="10"
+              style="-fx-background-color: #f8f4ff;
+                     -fx-background-radius: 15;
+                     -fx-padding: 18;
+                     -fx-border-color: #d4af37; -fx-border-width: 1;
+                     -fx-border-radius: 15;">
+            <Label text="💡  Guide des intensités"
+                   style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+            <HBox spacing="20">
+                <VBox spacing="4" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: #e8ffe8; -fx-background-radius: 10;
+                             -fx-padding: 10;">
+                    <Label text="🟢 Faible"
+                           style="-fx-font-weight: bold; -fx-text-fill: #27ae60; -fx-font-size: 12px;"/>
+                    <Label text="Marche, Yoga, Étirements"
+                           style="-fx-text-fill: #555; -fx-font-size: 11px;" wrapText="true"/>
+                    <Label text="1 - 5 cal/min"
+                           style="-fx-text-fill: #27ae60; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox spacing="4" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: #fff8e8; -fx-background-radius: 10;
+                             -fx-padding: 10;">
+                    <Label text="🟡 Moyenne"
+                           style="-fx-font-weight: bold; -fx-text-fill: #e67e22; -fx-font-size: 12px;"/>
+                    <Label text="Vélo, Natation, Jogging"
+                           style="-fx-text-fill: #555; -fx-font-size: 11px;" wrapText="true"/>
+                    <Label text="5 - 10 cal/min"
+                           style="-fx-text-fill: #e67e22; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox spacing="4" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: #ffe8e8; -fx-background-radius: 10;
+                             -fx-padding: 10;">
+                    <Label text="🔴 Élevée"
+                           style="-fx-font-weight: bold; -fx-text-fill: #e94560; -fx-font-size: 12px;"/>
+                    <Label text="HIIT, Sprint, Boxe"
+                           style="-fx-text-fill: #555; -fx-font-size: 11px;" wrapText="true"/>
+                    <Label text="10 - 20 cal/min"
+                           style="-fx-text-fill: #e94560; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Message -->
+        <Label fx:id="messageLabel"
+               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 0 5;"/>
+
+        <!-- Boutons -->
+        <HBox spacing="15"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 20 25;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.1), 15, 0, 0, 4);">
+            <Button text="✅  Ajouter l'exercice" onAction="#ajouterExercice"
+                    style="-fx-background-color: linear-gradient(to right, #4a235a, #7d3c98);
+                           -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-pref-width: 200; -fx-pref-height: 46;
+                           -fx-background-radius: 14; -fx-cursor: hand;
+                           -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.5), 15, 0, 0, 4);"/>
+            <Button fx:id="btnVoirListe" text="📋  Voir la liste" onAction="#ouvrirAfficher"
+                    style="-fx-background-color: white; -fx-text-fill: #4a235a;
+                           -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-pref-width: 160; -fx-pref-height: 46;
+                           -fx-background-radius: 14; -fx-cursor: hand;
+                           -fx-border-color: #d4af37; -fx-border-width: 2;
+                           -fx-border-radius: 14;"/>
+            <Button fx:id="btnMenu" text="🏠  Menu" onAction="#ouvrirMenu"
+                    style="-fx-background-color: linear-gradient(to right, #d4af37, #b8960c);
+                           -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-pref-width: 130; -fx-pref-height: 46;
+                           -fx-background-radius: 14; -fx-cursor: hand;"/>
+        </HBox>
+
+    </VBox>
+</ScrollPane>

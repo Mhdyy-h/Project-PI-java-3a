@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.MenuController"
+            style="-fx-background-color: #f0eef8;
+                   -fx-background: #f0eef8;
+                   -fx-border-color: transparent;
+                   -fx-padding: 0;">
+
+    <VBox spacing="0"
+          style="-fx-background-color: #f0eef8;">
+
+        <!-- ══════════ NAVBAR ══════════ -->
+        <HBox alignment="CENTER_LEFT" spacing="8"
+              style="-fx-background-color: #1a0f4f;
+                     -fx-padding: 0 32;
+                     -fx-min-height: 64px;
+                     -fx-max-height: 64px;">
+
+            <!-- Logo + Titre -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="🏆"
+                       style="-fx-font-size: 22px;"/>
+                <Label text="GESTION SPORT"
+                       style="-fx-font-size: 15px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;
+                              -fx-letter-spacing: 2px;"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Nav Links -->
+            <HBox spacing="4" alignment="CENTER">
+                <Button text="🏠  Accueil"
+                        style="-fx-background-color: rgba(255,255,255,0.18);
+                               -fx-text-fill: white;
+                               -fx-font-size: 13px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;
+                               -fx-padding: 9 20;
+                               -fx-border-color: rgba(255,255,255,0.25);
+                               -fx-border-radius: 8;
+                               -fx-border-width: 1;"/>
+
+                <Button text="🏃  Séances"
+                        onAction="#ouvrirSeancesNav"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: rgba(255,255,255,0.75);
+                               -fx-font-size: 13px;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;
+                               -fx-padding: 9 20;"/>
+
+                <Button text="💪  Exercices"
+                        onAction="#ouvrirExercicesNav"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: rgba(255,255,255,0.75);
+                               -fx-font-size: 13px;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;
+                               -fx-padding: 9 20;"/>
+
+                <Button text="⚙️  Back Office"
+                        onAction="#ouvrirAdminNav"
+                        style="-fx-background-color: #c9a227;
+                               -fx-text-fill: #1a0f4f;
+                               -fx-font-size: 13px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;
+                               -fx-padding: 9 22;"/>
+            </HBox>
+        </HBox>
+
+        <!-- ══════════ HERO SECTION ══════════ -->
+        <VBox alignment="CENTER" spacing="6"
+              style="-fx-background-color: linear-gradient(to bottom, #1a0f4f, #2d1b69);
+                     -fx-padding: 48 40 40 40;">
+
+            <Label text="🏆  GESTION SPORT"
+                   style="-fx-font-size: 38px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: white;"/>
+
+            <Label text="Plateforme de gestion sportive professionnelle"
+                   style="-fx-font-size: 14px;
+                          -fx-text-fill: rgba(255,255,255,0.6);
+                          -fx-padding: 4 0 0 0;"/>
+
+            <!-- Séparateur doré -->
+            <HBox alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+                <Region style="-fx-background-color: #c9a227;
+                               -fx-min-height: 2; -fx-max-height: 2;
+                               -fx-min-width: 60; -fx-max-width: 60;
+                               -fx-background-radius: 2;"/>
+            </HBox>
+        </VBox>
+
+        <!-- ══════════ STATS CARDS ══════════ -->
+        <HBox spacing="16" alignment="CENTER"
+              style="-fx-padding: 32 60 24 60;
+                     -fx-background-color: #f0eef8;">
+
+            <!-- Séances -->
+            <VBox alignment="CENTER" spacing="8" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 16;
+                         -fx-padding: 24 20;
+                         -fx-border-color: #f0eef8;
+                         -fx-border-width: 2;
+                         -fx-border-radius: 16;
+                         -fx-effect: dropshadow(gaussian, rgba(45,27,105,0.10), 16, 0, 0, 4);">
+                <Label text="🏃"
+                       style="-fx-font-size: 32px;"/>
+                <Label fx:id="totalSeancesLabel" text="—"
+                       style="-fx-font-size: 36px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #c9a227;"/>
+                <Label text="SÉANCES"
+                       style="-fx-font-size: 11px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #aaa;
+                              -fx-letter-spacing: 1.5px;"/>
+                <Region style="-fx-background-color: #c9a227;
+                               -fx-min-height: 3; -fx-max-height: 3;
+                               -fx-min-width: 40; -fx-max-width: 40;
+                               -fx-background-radius: 2;"/>
+            </VBox>
+
+            <!-- Exercices -->
+            <VBox alignment="CENTER" spacing="8" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 16;
+                         -fx-padding: 24 20;
+                         -fx-border-color: #f0eef8;
+                         -fx-border-width: 2;
+                         -fx-border-radius: 16;
+                         -fx-effect: dropshadow(gaussian, rgba(45,27,105,0.10), 16, 0, 0, 4);">
+                <Label text="💪"
+                       style="-fx-font-size: 32px;"/>
+                <Label fx:id="totalExercicesLabel" text="—"
+                       style="-fx-font-size: 36px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #7d3c98;"/>
+                <Label text="EXERCICES"
+                       style="-fx-font-size: 11px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #aaa;
+                              -fx-letter-spacing: 1.5px;"/>
+                <Region style="-fx-background-color: #7d3c98;
+                               -fx-min-height: 3; -fx-max-height: 3;
+                               -fx-min-width: 40; -fx-max-width: 40;
+                               -fx-background-radius: 2;"/>
+            </VBox>
+
+            <!-- Durée moyenne -->
+            <VBox alignment="CENTER" spacing="8" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 16;
+                         -fx-padding: 24 20;
+                         -fx-border-color: #f0eef8;
+                         -fx-border-width: 2;
+                         -fx-border-radius: 16;
+                         -fx-effect: dropshadow(gaussian, rgba(45,27,105,0.10), 16, 0, 0, 4);">
+                <Label text="⏱️"
+                       style="-fx-font-size: 32px;"/>
+                <Label fx:id="moyenneDureeLabel" text="—"
+                       style="-fx-font-size: 36px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #1a8a5a;"/>
+                <Label text="MIN / SÉANCE"
+                       style="-fx-font-size: 11px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #aaa;
+                              -fx-letter-spacing: 1.5px;"/>
+                <Region style="-fx-background-color: #1a8a5a;
+                               -fx-min-height: 3; -fx-max-height: 3;
+                               -fx-min-width: 40; -fx-max-width: 40;
+                               -fx-background-radius: 2;"/>
+            </VBox>
+
+            <!-- Médailles Or -->
+            <VBox alignment="CENTER" spacing="8" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 16;
+                         -fx-padding: 24 20;
+                         -fx-border-color: #f0eef8;
+                         -fx-border-width: 2;
+                         -fx-border-radius: 16;
+                         -fx-effect: dropshadow(gaussian, rgba(45,27,105,0.10), 16, 0, 0, 4);">
+                <Label text="🥇"
+                       style="-fx-font-size: 32px;"/>
+                <Label fx:id="totalMedaillesLabel" text="—"
+                       style="-fx-font-size: 36px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #e94560;"/>
+                <Label text="MÉDAILLES OR"
+                       style="-fx-font-size: 11px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #aaa;
+                              -fx-letter-spacing: 1.5px;"/>
+                <Region style="-fx-background-color: #e94560;
+                               -fx-min-height: 3; -fx-max-height: 3;
+                               -fx-min-width: 40; -fx-max-width: 40;
+                               -fx-background-radius: 2;"/>
+            </VBox>
+
+        </HBox>
+
+        <!-- ══════════ NAVIGATION CARDS ══════════ -->
+        <HBox spacing="20" alignment="CENTER"
+              style="-fx-padding: 0 60 40 60;
+                     -fx-background-color: #f0eef8;">
+
+            <!-- Carte Séances -->
+            <VBox alignment="CENTER" spacing="14"
+                  onMouseClicked="#ouvrirSeances"
+                  HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 20;
+                         -fx-padding: 40 30;
+                         -fx-cursor: hand;
+                         -fx-effect: dropshadow(gaussian, rgba(45,27,105,0.12), 20, 0, 0, 6);">
+
+                <StackPane style="-fx-background-color: #fff8e7;
+                                  -fx-background-radius: 50;
+                                  -fx-min-width: 72; -fx-max-width: 72;
+                                  -fx-min-height: 72; -fx-max-height: 72;">
+                    <Label text="🏃"
+                           style="-fx-font-size: 34px;"/>
+                </StackPane>
+
+                <Label text="Séances Sport"
+                       style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #1a0f4f;"/>
+                <Label text="Gérer vos séances d'entraînement"
+                       style="-fx-font-size: 12px;
+                              -fx-text-fill: #999;
+                              -fx-wrap-text: true;"
+                       wrapText="true"/>
+
+                <HBox alignment="CENTER"
+                      style="-fx-background-color: #c9a227;
+                             -fx-background-radius: 10;
+                             -fx-padding: 10 28;
+                             -fx-cursor: hand;">
+                    <Label text="Accéder →"
+                           style="-fx-font-size: 13px;
+                                  -fx-font-weight: bold;
+                                  -fx-text-fill: white;"/>
+                </HBox>
+            </VBox>
+
+            <!-- Carte Exercices -->
+            <VBox alignment="CENTER" spacing="14"
+                  onMouseClicked="#ouvrirExercices"
+                  HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 20;
+                         -fx-padding: 40 30;
+                         -fx-cursor: hand;
+                         -fx-effect: dropshadow(gaussian, rgba(45,27,105,0.12), 20, 0, 0, 6);">
+
+                <StackPane style="-fx-background-color: #f5eeff;
+                                  -fx-background-radius: 50;
+                                  -fx-min-width: 72; -fx-max-width: 72;
+                                  -fx-min-height: 72; -fx-max-height: 72;">
+                    <Label text="💪"
+                           style="-fx-font-size: 34px;"/>
+                </StackPane>
+
+                <Label text="Exercices"
+                       style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: #1a0f4f;"/>
+                <Label text="Gérer vos exercices physiques"
+                       style="-fx-font-size: 12px;
+                              -fx-text-fill: #999;"
+                       wrapText="true"/>
+
+                <HBox alignment="CENTER"
+                      style="-fx-background-color: #7d3c98;
+                             -fx-background-radius: 10;
+                             -fx-padding: 10 28;
+                             -fx-cursor: hand;">
+                    <Label text="Accéder →"
+                           style="-fx-font-size: 13px;
+                                  -fx-font-weight: bold;
+                                  -fx-text-fill: white;"/>
+                </HBox>
+            </VBox>
+
+            <!-- Carte Back Office -->
+            <VBox alignment="CENTER" spacing="14"
+                  onMouseClicked="#ouvrirAdmin"
+                  HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: #1a0f4f;
+                         -fx-background-radius: 20;
+                         -fx-padding: 40 30;
+                         -fx-cursor: hand;
+                         -fx-effect: dropshadow(gaussian, rgba(26,15,79,0.35), 24, 0, 0, 8);">
+
+                <StackPane style="-fx-background-color: rgba(201,162,39,0.18);
+                                  -fx-background-radius: 50;
+                                  -fx-min-width: 72; -fx-max-width: 72;
+                                  -fx-min-height: 72; -fx-max-height: 72;">
+                    <Label text="⚙️"
+                           style="-fx-font-size: 34px;"/>
+                </StackPane>
+
+                <Label text="Back Office"
+                       style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+                <Label text="Administration et statistiques avancées"
+                       style="-fx-font-size: 12px;
+                              -fx-text-fill: rgba(255,255,255,0.55);"
+                       wrapText="true"/>
+
+                <HBox alignment="CENTER"
+                      style="-fx-background-color: #c9a227;
+                             -fx-background-radius: 10;
+                             -fx-padding: 10 28;
+                             -fx-cursor: hand;">
+                    <Label text="Accéder →"
+                           style="-fx-font-size: 13px;
+                                  -fx-font-weight: bold;
+                                  -fx-text-fill: #1a0f4f;"/>
+                </HBox>
+            </VBox>
+
+        </HBox>
+
+        <!-- ══════════ FOOTER ══════════ -->
+        <HBox alignment="CENTER"
+              style="-fx-background-color: #1a0f4f;
+                     -fx-padding: 14;">
+            <Label text="PiDev 3A  •  Sprint Java  •  Gestion Sport"
+                   style="-fx-font-size: 11px;
+                          -fx-text-fill: rgba(255,255,255,0.35);"/>
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

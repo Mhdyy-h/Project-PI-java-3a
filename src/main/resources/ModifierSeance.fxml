@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.ModifierSeanceController"
+            style="-fx-background-color: transparent; -fx-background: transparent;">
+
+    <VBox spacing="22"
+          style="-fx-background-color: linear-gradient(to bottom right, #f0e6ff, #ffffff, #fff8e7);
+                 -fx-padding: 45;">
+
+        <!-- Header Card -->
+        <VBox style="-fx-background-color: linear-gradient(to right, #b8960c, #d4af37);
+                     -fx-background-radius: 20;
+                     -fx-padding: 25 30;
+                     -fx-effect: dropshadow(gaussian, rgba(184,150,12,0.5), 25, 0, 0, 8);">
+            <HBox spacing="18" alignment="CENTER_LEFT">
+                <Label text="✏️" style="-fx-font-size: 45px;"/>
+                <VBox spacing="5">
+                    <Label text="Modifier une Séance"
+                           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    <Label text="Modifiez les informations de la séance sélectionnée"
+                           style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.8);"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Section Informations principales -->
+        <VBox spacing="15"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 25;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.12), 20, 0, 0, 6);">
+
+            <Label text="📋  Informations principales"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;
+                          -fx-text-fill: #4a235a;
+                          -fx-border-color: #d4af37; -fx-border-width: 0 0 0 4;
+                          -fx-padding: 0 0 0 10;"/>
+
+            <!-- Nom pleine largeur -->
+            <VBox spacing="7">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text=" 📝 "
+                           style="-fx-background-color: #4a235a; -fx-text-fill: white;
+                                  -fx-font-size: 11px; -fx-background-radius: 8;
+                                  -fx-padding: 4 10;"/>
+                    <Label text="Nom de la séance"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                </HBox>
+                <TextField fx:id="nomField" promptText="Ex: Cardio Matin, Football..."
+                           maxWidth="Infinity"
+                           style="-fx-background-color: #faf8ff; -fx-text-fill: #4a235a;
+                                  -fx-border-color: #d4af37; -fx-border-radius: 12;
+                                  -fx-background-radius: 12; -fx-pref-height: 46;
+                                  -fx-font-size: 13px; -fx-padding: 0 16;"/>
+            </VBox>
+
+            <!-- Heure début + Durée -->
+            <HBox spacing="20">
+                <VBox spacing="7" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text=" ⏰ "
+                               style="-fx-background-color: #1a6b8a; -fx-text-fill: white;
+                                      -fx-font-size: 11px; -fx-background-radius: 8;
+                                      -fx-padding: 4 10;"/>
+                        <Label text="Heure début (HH:MM:SS)"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                    </HBox>
+                    <TextField fx:id="heureDebutField" promptText="Ex: 08:30:00"
+                               maxWidth="Infinity"
+                               style="-fx-background-color: #f0f9ff; -fx-text-fill: #4a235a;
+                                      -fx-border-color: #1a6b8a; -fx-border-radius: 12;
+                                      -fx-background-radius: 12; -fx-pref-height: 46;
+                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                </VBox>
+                <VBox spacing="7" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text=" ⏱️ "
+                               style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                                      -fx-font-size: 11px; -fx-background-radius: 8;
+                                      -fx-padding: 4 10;"/>
+                        <Label text="Durée (minutes)"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                    </HBox>
+                    <TextField fx:id="dureeField" promptText="Ex: 45, 60, 90..."
+                               maxWidth="Infinity"
+                               style="-fx-background-color: #f0fff6; -fx-text-fill: #4a235a;
+                                      -fx-border-color: #27ae60; -fx-border-radius: 12;
+                                      -fx-background-radius: 12; -fx-pref-height: 46;
+                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Date pleine largeur -->
+            <VBox spacing="7">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text=" 📅 "
+                           style="-fx-background-color: #e67e22; -fx-text-fill: white;
+                                  -fx-font-size: 11px; -fx-background-radius: 8;
+                                  -fx-padding: 4 10;"/>
+                    <Label text="Date (YYYY-MM-DD)"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                </HBox>
+                <TextField fx:id="dateField" promptText="Ex: 2026-04-15"
+                           maxWidth="Infinity"
+                           style="-fx-background-color: #fff8f0; -fx-text-fill: #4a235a;
+                                  -fx-border-color: #e67e22; -fx-border-radius: 12;
+                                  -fx-background-radius: 12; -fx-pref-height: 46;
+                                  -fx-font-size: 13px; -fx-padding: 0 16;"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- Section Détails supplémentaires -->
+        <VBox spacing="15"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 25;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.12), 20, 0, 0, 6);">
+
+            <Label text="⚙️  Détails supplémentaires"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;
+                          -fx-text-fill: #4a235a;
+                          -fx-border-color: #7d3c98; -fx-border-width: 0 0 0 4;
+                          -fx-padding: 0 0 0 10;"/>
+
+            <!-- Médaille pleine largeur -->
+            <VBox spacing="7">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text=" 🥇 "
+                           style="-fx-background-color: #d4af37; -fx-text-fill: white;
+                                  -fx-font-size: 11px; -fx-background-radius: 8;
+                                  -fx-padding: 4 10;"/>
+                    <Label text="Médaille obtenue"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                </HBox>
+                <ComboBox fx:id="medailleBox" promptText="Choisir une médaille..."
+                          maxWidth="Infinity"
+                          style="-fx-background-color: #fffdf0;
+                                 -fx-border-color: #d4af37; -fx-border-radius: 12;
+                                 -fx-background-radius: 12; -fx-pref-height: 46;
+                                 -fx-font-size: 13px;"/>
+            </VBox>
+
+            <!-- ID Utilisateur + Heure réelle -->
+            <HBox spacing="20">
+                <VBox spacing="7" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text=" 👤 "
+                               style="-fx-background-color: #8e44ad; -fx-text-fill: white;
+                                      -fx-font-size: 11px; -fx-background-radius: 8;
+                                      -fx-padding: 4 10;"/>
+                        <Label text="ID Utilisateur"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                    </HBox>
+                    <TextField fx:id="utilisateurIdField" promptText="Ex: 1, 2, 15..."
+                               maxWidth="Infinity"
+                               style="-fx-background-color: #fdf0ff; -fx-text-fill: #4a235a;
+                                      -fx-border-color: #8e44ad; -fx-border-radius: 12;
+                                      -fx-background-radius: 12; -fx-pref-height: 46;
+                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                </VBox>
+                <VBox spacing="7" HBox.hgrow="ALWAYS">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text=" 🕐 "
+                               style="-fx-background-color: #2980b9; -fx-text-fill: white;
+                                      -fx-font-size: 11px; -fx-background-radius: 8;
+                                      -fx-padding: 4 10;"/>
+                        <Label text="Heure réelle (optionnelle)"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                    </HBox>
+                    <TextField fx:id="heureDebutReelleField" promptText="Ex: 08:45:00"
+                               maxWidth="Infinity"
+                               style="-fx-background-color: #f0f7ff; -fx-text-fill: #4a235a;
+                                      -fx-border-color: #2980b9; -fx-border-radius: 12;
+                                      -fx-background-radius: 12; -fx-pref-height: 46;
+                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Alerte pleine largeur -->
+            <VBox spacing="7">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text=" 🔔 "
+                           style="-fx-background-color: #e94560; -fx-text-fill: white;
+                                  -fx-font-size: 11px; -fx-background-radius: 8;
+                                  -fx-padding: 4 10;"/>
+                    <Label text="Alerte envoyée"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
+                </HBox>
+                <ComboBox fx:id="alerteBox" promptText="Choisir le statut..."
+                          maxWidth="Infinity"
+                          style="-fx-background-color: #fff0f3;
+                                 -fx-border-color: #e94560; -fx-border-radius: 12;
+                                 -fx-background-radius: 12; -fx-pref-height: 46;
+                                 -fx-font-size: 13px;"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- Message -->
+        <Label fx:id="messageLabel"
+               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 0 5;"/>
+
+        <!-- Boutons -->
+        <HBox spacing="15"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 20 25;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.1), 15, 0, 0, 4);">
+            <Button fx:id="btnSauvegarder" text="💾  Sauvegarder" onAction="#sauvegarder"
+                    style="-fx-background-color: linear-gradient(to right, #d4af37, #b8960c);
+                           -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-pref-width: 200; -fx-pref-height: 46;
+                           -fx-background-radius: 14; -fx-cursor: hand;
+                           -fx-effect: dropshadow(gaussian, rgba(184,150,12,0.5), 15, 0, 0, 4);"/>
+            <Button fx:id="btnRetour" text="◀  Retour" onAction="#retour"
+                    style="-fx-background-color: white; -fx-text-fill: #4a235a;
+                           -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-pref-width: 160; -fx-pref-height: 46;
+                           -fx-background-radius: 14; -fx-cursor: hand;
+                           -fx-border-color: #7d3c98; -fx-border-width: 2;
+                           -fx-border-radius: 14;"/>
+            <Button fx:id="btnMenu" text="🏠  Menu" onAction="#ouvrirMenu"
+                    style="-fx-background-color: #4a235a; -fx-text-fill: white;
+                           -fx-font-size: 14px; -fx-font-weight: bold;
+                           -fx-pref-width: 130; -fx-pref-height: 46;
+                           -fx-background-radius: 14; -fx-cursor: hand;"/>
+        </HBox>
+
+    </VBox>
+</ScrollPane>
