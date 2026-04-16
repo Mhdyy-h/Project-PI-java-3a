@@ -106,6 +106,10 @@ public class NavigationService {
         });
     }
 
+    public void navigateToCertificationRequest(Node sourceNode) {
+        navigateFrom(sourceNode, "/view/certification_request.fxml", "BioSync - Demande de Certification", 520, 750);
+    }
+
     public static class NavigationException extends RuntimeException {
         public NavigationException(String message, Throwable cause) {
             super(message, cause);

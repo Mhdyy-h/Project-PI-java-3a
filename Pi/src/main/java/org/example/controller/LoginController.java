@@ -86,7 +86,7 @@ public class LoginController {
 
     @FXML
     public void handleHealthProLink(ActionEvent event) {
-        statusLabel.setText("Veuillez vous connecter d'abord pour demander une certification");
+        navigationService.navigateToCertificationRequest((Node) event.getSource());
     }
 
     private void setLoginMode(boolean login) {

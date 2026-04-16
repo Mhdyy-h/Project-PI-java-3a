@@ -11,6 +11,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.dao.CertificationDAO;
 import org.example.model.CertificationRequest;
+import org.example.service.ValidationService;
+import org.example.service.ValidationResult;
+import org.example.service.NavigationService;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +29,8 @@ public class CertificationRequestController {
     @FXML private Label pdfNameLabel;
 
     private File selectedPdf;
+    private final ValidationService validationService = ValidationService.getInstance();
+    private final NavigationService navigationService = NavigationService.getInstance();
 
     @FXML
     public void initialize() {
@@ -51,19 +56,40 @@ public class CertificationRequestController {
 
     @FXML
     private void handleSubmit() {
+        clearFieldErrors();
+        
         String nom = nomField.getText().trim();
         String email = emailField.getText().trim();
         String specialiteDisplay = specialiteCombo.getValue();
         String motivation = motivationField.getText().trim();
 
-        if (nom.isEmpty() || email.isEmpty() || specialiteDisplay == null || selectedPdf == null) {
-            statusLabel.setText("Veuillez remplir le nom, l'email, la spécialité et choisir un PDF.");
+        // Validation du nom
+        ValidationResult nomValid = validationService.validateName(nom, "Le nom complet");
+        if (nomValid.hasError()) {
+            showFieldError(nomField, nomValid.getMessage());
+            return;
+        }
+
+        // Validation de l'email
+        ValidationResult emailValid = validationService.validateEmail(email);
+        if (emailValid.hasError()) {
+            showFieldError(emailField, emailValid.getMessage());
+            return;
+        }
+
+        // Validation de la spécialité
+        if (specialiteDisplay == null || specialiteDisplay.isEmpty()) {
+            statusLabel.setText("Veuillez sélectionner une spécialité.");
             statusLabel.setStyle("-fx-text-fill: #ef4444;");
             return;
         }
-        if (!email.contains("@") || !email.contains(".")) {
-            statusLabel.setText("Adresse email invalide.");
+
+        // Validation du PDF
+        if (selectedPdf == null) {
+            statusLabel.setText("Veuillez choisir un document PDF justificatif.");
             statusLabel.setStyle("-fx-text-fill: #ef4444;");
+            pdfNameLabel.setText("⚠ Document obligatoire");
+            pdfNameLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #ef4444;");
             return;
         }
 
@@ -111,15 +137,36 @@ public class CertificationRequestController {
 
     @FXML
     private void handleGoToLogin(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 400, 550);
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Connexion");
-        } catch (IOException e) {
-            e.printStackTrace();
+        navigationService.navigateToLogin((Node) event.getSource());
+    }
+
+    // ==================== VALIDATION HELPERS ====================
+    private void showFieldError(TextField field, String message) {
+        if (field != null) {
+            field.setStyle("-fx-border-color: #ef4444; -fx-border-width: 2; -fx-border-radius: 8;");
+            field.setTooltip(new Tooltip(message));
+            field.requestFocus();
+        }
+        statusLabel.setText(message);
+        statusLabel.setStyle("-fx-text-fill: #ef4444;");
+    }
+
+    private void clearFieldErrors() {
+        clearFieldStyle(nomField);
+        clearFieldStyle(emailField);
+        statusLabel.setText("");
+        if (selectedPdf != null) {
+            pdfNameLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #10b981; -fx-font-weight: bold;");
+        } else {
+            pdfNameLabel.setText("Aucun fichier sélectionné");
+            pdfNameLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #9ca3af;");
+        }
+    }
+
+    private void clearFieldStyle(TextField field) {
+        if (field != null) {
+            field.setStyle("-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8;");
+            field.setTooltip(null);
         }
     }
 }
