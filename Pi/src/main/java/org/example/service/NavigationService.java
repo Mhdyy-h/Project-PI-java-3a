@@ -87,7 +87,7 @@ public class NavigationService {
     }
 
     public void navigateToLogin(Node sourceNode) {
-        navigateFrom(sourceNode, "/view/login.fxml", "BioSync - Inscription", 400, 550);
+        navigateFrom(sourceNode, "/view/login.fxml", "BioSync - Connexion", 480, 680);
     }
 
     public void navigateToUtilisateurs(Node sourceNode, User currentUser) {
@@ -108,6 +108,22 @@ public class NavigationService {
 
     public void navigateToCertificationRequest(Node sourceNode) {
         navigateFrom(sourceNode, "/view/certification_request.fxml", "BioSync - Demande de Certification", 520, 750);
+    }
+
+    public void navigateToLogs(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/logs_view.fxml", "BioSync - Historique des Logs", 1200, 750, ctrl -> {
+            if (ctrl instanceof org.example.controller.LogsController) {
+                ((org.example.controller.LogsController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    public void navigateToLogStats(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/logs_stats.fxml", "BioSync - Statistiques des Logs", 1200, 750, ctrl -> {
+            if (ctrl instanceof org.example.controller.LogsStatsController) {
+                ((org.example.controller.LogsStatsController) ctrl).setCurrentUser(currentUser);
+            }
+        });
     }
 
     public static class NavigationException extends RuntimeException {

@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dao.ActivityLogDAO;
 import org.example.dao.UserDAO;
 import org.example.model.User;
 
@@ -49,10 +50,14 @@ public class AuthService {
         // Create user
         User newUser = new User(0, fullName, email, password);
         newUser.setRoles("[\"ROLE_USER\"]");
-        
+
         boolean success = UserDAO.insertUser(newUser);
-        
+
         if (success) {
+            // Log the registration
+            ActivityLogDAO.insertLog(new org.example.model.ActivityLog(
+                newUser.getId(), fullName, email, "[\"ROLE_USER\"]", "Inscription"
+            ));
             return AuthResult.success(newUser, "Compte créé avec succès!");
         } else {
             return AuthResult.failure("Erreur lors de la création du compte");
@@ -67,10 +72,36 @@ public class AuthService {
         User user = UserDAO.login(email, password);
 
         if (user != null) {
+            // Log successful login
+            ActivityLogDAO.insertLog(new org.example.model.ActivityLog(
+                user.getId(), user.getNomComplet(), user.getEmail(),
+                user.getRoles() != null ? user.getRoles() : "",
+                "Connexion réussie"
+            ));
             return AuthResult.success(user, "Connexion réussie!");
         } else {
+            // Log failed login — try to find user by email to get the name
+            User found = UserDAO.getUserByEmail(email);
+            String nom = found != null ? found.getNomComplet() : "Inconnu";
+            String roles = found != null && found.getRoles() != null ? found.getRoles() : "";
+            ActivityLogDAO.insertLog(new org.example.model.ActivityLog(
+                found != null ? found.getId() : 0, nom, email, roles, "Connexion échouée"
+            ));
             return AuthResult.failure("Email ou mot de passe incorrect");
         }
+    }
+
+    public AuthResult loginByFaceId(String email) {
+        User user = UserDAO.getUserByEmail(email);
+        if (user != null) {
+            ActivityLogDAO.insertLog(new org.example.model.ActivityLog(
+                user.getId(), user.getNomComplet(), user.getEmail(),
+                user.getRoles() != null ? user.getRoles() : "",
+                "Connexion Face ID"
+            ));
+            return AuthResult.success(user, "Connexion Face ID réussie!");
+        }
+        return AuthResult.failure("Utilisateur non trouvé pour ce Face ID");
     }
 
     public static class AuthResult {
@@ -92,16 +123,8 @@ public class AuthService {
             return new AuthResult(false, null, message);
         }
 
-        public boolean isSuccess() {
-            return success;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public String getMessage() {
-            return message;
-        }
+        public boolean isSuccess() { return success; }
+        public User getUser() { return user; }
+        public String getMessage() { return message; }
     }
 }

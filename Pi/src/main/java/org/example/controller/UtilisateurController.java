@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -46,6 +48,7 @@ public class UtilisateurController {
     @FXML private Label pageSubtitleLabel;
     @FXML private Label avatarLabel;
     @FXML private Circle avatarCircle;
+    @FXML private ImageView avatarImage;
     @FXML private Label userNameDisplay;
     @FXML private Label userIdDisplay;
     @FXML private TextField nomField;
@@ -63,6 +66,7 @@ public class UtilisateurController {
     private List<User> allUsers = new ArrayList<>();
     private String currentSort = "nom";
     private String currentView = "list"; // "list", "create", "edit"
+    private String chosenPhotoPath = null;  // path chosen by user for profile photo
 
     // ==================== NAVIGATION ====================
     @FXML
@@ -513,6 +517,20 @@ public class UtilisateurController {
         String roleClass = getAvatarRoleClass(targetUser.getRoles());
         avatarCircle.getStyleClass().add(roleClass);
 
+        // Show profile photo if available
+        if (avatarImage != null && targetUser.getPhotoProfil() != null && !targetUser.getPhotoProfil().isEmpty()) {
+            java.io.File photoFile = new java.io.File(targetUser.getPhotoProfil());
+            if (photoFile.exists()) {
+                try {
+                    Image img = new Image(photoFile.toURI().toString());
+                    avatarImage.setImage(img);
+                    avatarImage.setVisible(true);
+                    avatarLabel.setVisible(false);
+                    avatarCircle.setVisible(false);
+                } catch (Exception ignored) {}
+            }
+        }
+
         String roles = targetUser.getRoles() != null ? targetUser.getRoles() : "";
         roleUtilisateur.setSelected(roles.contains("ROLE_USER") || roles.contains("UTILISATEUR") || (!roles.contains("COACH") && !roles.contains("ADMIN") && !roles.contains("SPECIALISTE")));
         roleCoach.setSelected(roles.contains("COACH"));
@@ -524,6 +542,7 @@ public class UtilisateurController {
         nomField.clear();
         emailField.clear();
         passwordField.clear();
+        chosenPhotoPath = null;
         roleUtilisateur.setSelected(true);
         roleCoach.setSelected(false);
         roleSpecialiste.setSelected(false);
@@ -574,6 +593,49 @@ public class UtilisateurController {
             statusLabel.setText(message);
             statusLabel.getStyleClass().removeAll("status-success", "status-error", "status-warning");
             statusLabel.getStyleClass().add("status-" + type);
+        }
+    }
+
+    // ==================== PHOTO PROFIL ====================
+    @FXML
+    private void handleChoosePhoto() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une photo de profil");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+        Stage stage = (Stage) (nomField != null ? nomField.getScene().getWindow() :
+                              (searchField != null ? searchField.getScene().getWindow() : null));
+        if (stage == null) return;
+        File selected = fileChooser.showOpenDialog(stage);
+        if (selected == null) return;
+
+        chosenPhotoPath = selected.getAbsolutePath();
+
+        // Copy to uploads folder
+        try {
+            java.nio.file.Path uploadsDir = java.nio.file.Paths.get("uploads");
+            java.nio.file.Files.createDirectories(uploadsDir);
+            String ext = selected.getName().contains(".") ?
+                selected.getName().substring(selected.getName().lastIndexOf('.')) : ".jpg";
+            String fileName = "avatar_" + System.currentTimeMillis() + ext;
+            java.nio.file.Path dest = uploadsDir.resolve(fileName);
+            java.nio.file.Files.copy(selected.toPath(), dest,
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            chosenPhotoPath = dest.toAbsolutePath().toString();
+        } catch (Exception e) {
+            System.err.println("Photo copy error: " + e.getMessage());
+        }
+
+        // Preview in avatar
+        if (avatarImage != null) {
+            try {
+                Image img = new Image(new java.io.File(chosenPhotoPath).toURI().toString());
+                avatarImage.setImage(img);
+                avatarImage.setVisible(true);
+                if (avatarLabel != null) avatarLabel.setVisible(false);
+                if (avatarCircle != null) avatarCircle.setVisible(false);
+            } catch (Exception ignored) {}
         }
     }
 

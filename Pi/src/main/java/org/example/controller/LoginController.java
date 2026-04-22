@@ -27,10 +27,20 @@ public class LoginController {
     @FXML private Hyperlink registerLink;
     @FXML private HBox registerBox;
     @FXML private Button backButton;
+    @FXML private VBox faceIdSection;
 
     private final AuthService authService = AuthService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
     private boolean isLoginMode = false;
+
+    @FXML
+    public void initialize() {
+        // Face ID section only visible in login mode
+        if (faceIdSection != null) {
+            faceIdSection.setVisible(false);
+            faceIdSection.setManaged(false);
+        }
+    }
 
     @FXML
     public void handleCreateAccount(ActionEvent event) {
@@ -89,6 +99,33 @@ public class LoginController {
         navigationService.navigateToCertificationRequest((Node) event.getSource());
     }
 
+    /**
+     * Face ID button handler — simulates face recognition.
+     * In a real app, this would open the camera, capture a frame and compare.
+     * Here, we prompt for email and "authenticate" via photo_profil lookup.
+     */
+    @FXML
+    public void handleFaceId(ActionEvent event) {
+        // Show a dialog to enter the email associated with Face ID
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Connexion Face ID");
+        dialog.setHeaderText("Face ID – BioSync");
+        dialog.setContentText("Entrez votre adresse email liée à votre visage :");
+        dialog.getEditor().setPromptText("votre@email.com");
+
+        dialog.showAndWait().ifPresent(email -> {
+            if (email.trim().isEmpty()) {
+                updateStatus("Veuillez entrer votre email.", false);
+                return;
+            }
+            AuthService.AuthResult result = authService.loginByFaceId(email.trim());
+            updateStatus(result.getMessage(), result.isSuccess());
+            if (result.isSuccess()) {
+                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            }
+        });
+    }
+
     private void setLoginMode(boolean login) {
         fullNameBox.setVisible(!login);
         fullNameBox.setManaged(!login);
@@ -106,6 +143,12 @@ public class LoginController {
         backButton.setManaged(login);
         createAccountButton.setText(login ? "Se connecter" : "Créer mon compte");
         statusLabel.setText("");
+
+        // Show Face ID only in login mode
+        if (faceIdSection != null) {
+            faceIdSection.setVisible(login);
+            faceIdSection.setManaged(login);
+        }
     }
 
     private void updateStatus(String message, boolean success) {

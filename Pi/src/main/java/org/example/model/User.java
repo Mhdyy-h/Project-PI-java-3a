@@ -8,6 +8,7 @@ public class User {
     private String roles;
     private int scoreGlobal;
     private String dateInscription;
+    private String photoProfil;   // chemin vers la photo de profil
 
     public User() {}
 
@@ -62,6 +63,9 @@ public class User {
 
     public String getDateInscription() { return dateInscription; }
     public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
+
+    public String getPhotoProfil() { return photoProfil; }
+    public void setPhotoProfil(String photoProfil) { this.photoProfil = photoProfil; }
 
     @Override
     public String toString() {
