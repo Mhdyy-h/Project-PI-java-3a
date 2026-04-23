@@ -144,13 +144,14 @@
                             </children>
                         </HBox>
 
-                        <!-- Mot de passe oublié (login mode) -->
-                        <HBox alignment="CENTER_LEFT">
+                        <!-- Demande de certification (toujours visible) -->
+                        <HBox alignment="CENTER" style="-fx-padding: 8 0 0 0;">
                             <children>
                                 <Hyperlink fx:id="healthProLink"
-                                           text="🔒 Mot de passe oublié?"
+                                           text="Vous êtes un professionnel de santé? Demander une certification"
                                            onAction="#handleHealthProLink"
-                                           style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+                                           style="-fx-font-size: 12px; -fx-text-fill: #4C6FFF; -fx-font-weight: bold;"
+                                           wrapText="true"/>
                             </children>
                         </HBox>
 
