@@ -1,0 +1,356 @@
+/* ═══════════════════════════════════════════════════════════════
+   BioSync – Module Mental Wellness
+   Thème : vert/teal (#1D9E75) + bleu (#4285F4)
+   Fichier référencé dans quiz_manager, quiz_form, question_manager,
+   quiz_player et result.fxml via  <String value="/styles/style.css"/>
+═══════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────
+   ROOT / FOND
+────────────────────────────────────────────────────────────── */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-background-color: #F5F7FA;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   SIDEBAR
+────────────────────────────────────────────────────────────── */
+.sidebar {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 2, 0);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   HEADER QUIZ (titre de page)
+────────────────────────────────────────────────────────────── */
+.quiz-header {
+    -fx-background-color: #1D9E75;
+    -fx-padding: 15px;
+}
+
+.quiz-title-label {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TABLE VIEW
+────────────────────────────────────────────────────────────── */
+.table-view {
+    -fx-border-color: #9FE1CB;
+    -fx-border-radius: 8;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+}
+
+.table-view .column-header {
+    -fx-background-color: #E1F5EE;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0F6E56;
+    -fx-padding: 10 14 10 14;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #E1F5EE;
+}
+
+.table-view .table-row-cell {
+    -fx-border-color: transparent transparent #F3F4F6 transparent;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #DBEAFE;
+    -fx-text-fill: #1E40AF;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #F0FDF4;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   BOUTONS PRIMAIRES
+────────────────────────────────────────────────────────────── */
+.btn-primary {
+    -fx-background-color: #1D9E75;
+    -fx-text-fill: white;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0F6E56;
+}
+
+.btn-blue {
+    -fx-background-color: #4285F4;
+    -fx-text-fill: white;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+}
+
+.btn-blue:hover {
+    -fx-background-color: #2563EB;
+}
+
+.btn-danger {
+    -fx-background-color: #E24B4A;
+    -fx-text-fill: white;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #B91C1C;
+}
+
+.btn-warning {
+    -fx-background-color: #EF9F27;
+    -fx-text-fill: white;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+}
+
+.btn-warning:hover {
+    -fx-background-color: #D97706;
+}
+
+.btn-secondary {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #374151;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #E5E7EB;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   CHAMPS DE FORMULAIRE
+────────────────────────────────────────────────────────────── */
+.text-field, .text-area, .combo-box {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #D1D5DB;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .text-area:focused, .combo-box:focused {
+    -fx-border-color: #4285F4;
+    -fx-border-width: 2;
+}
+
+.text-field-valid {
+    -fx-border-color: #1D9E75;
+    -fx-border-width: 2;
+}
+
+.text-field-invalid {
+    -fx-border-color: #E24B4A;
+    -fx-border-width: 2;
+}
+
+.form-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #085041;
+    -fx-font-size: 13px;
+}
+
+.error-label {
+    -fx-text-fill: #EF4444;
+    -fx-font-size: 12px;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   CARTES STATISTIQUES
+────────────────────────────────────────────────────────────── */
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);
+    -fx-padding: 18 20 18 20;
+}
+
+.stat-number {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A1A1A;
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B7280;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   SCORE / RÉSULTAT
+────────────────────────────────────────────────────────────── */
+.score-label {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1D9E75;
+}
+
+.score-percentage {
+    -fx-font-size: 52px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #4285F4;
+}
+
+.medal-badge {
+    -fx-background-color: linear-gradient(to right, #FCD34D, #F59E0B);
+    -fx-background-radius: 30;
+    -fx-padding: 16 40 16 40;
+}
+
+.result-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.09), 18, 0, 0, 6);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   OPTIONS DE RÉPONSE (quiz player)
+────────────────────────────────────────────────────────────── */
+.option-button {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #D1D5DB;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0 20 0 20;
+    -fx-cursor: hand;
+    -fx-text-fill: #1A1A1A;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 2;
+}
+
+.option-button:hover {
+    -fx-background-color: #EFF6FF;
+    -fx-border-color: #93C5FD;
+}
+
+.option-button-selected {
+    -fx-background-color: #DBEAFE;
+    -fx-border-color: #4285F4;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0 20 0 20;
+    -fx-cursor: hand;
+    -fx-text-fill: #1E40AF;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 2;
+}
+
+.option-button-correct {
+    -fx-background-color: #D1FAE5;
+    -fx-border-color: #059669;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0 20 0 20;
+    -fx-text-fill: #065F46;
+    -fx-font-weight: bold;
+    -fx-border-width: 2;
+}
+
+.option-button-wrong {
+    -fx-background-color: #FEE2E2;
+    -fx-border-color: #DC2626;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0 20 0 20;
+    -fx-text-fill: #991B1B;
+    -fx-font-weight: bold;
+    -fx-border-width: 2;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   PROGRESS BAR
+────────────────────────────────────────────────────────────── */
+.progress-bar > .bar {
+    -fx-background-color: #4285F4;
+    -fx-background-radius: 6;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #E5E7EB;
+    -fx-background-radius: 6;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   CARTES QUIZ (vue sélection dans quiz_player)
+────────────────────────────────────────────────────────────── */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1;
+    -fx-border-radius: 14;
+    -fx-padding: 18 24 18 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+.quiz-card:hover {
+    -fx-border-color: #4285F4;
+    -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.15), 10, 0, 0, 3);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   BADGES DIFFICULTÉ
+────────────────────────────────────────────────────────────── */
+.badge-facile {
+    -fx-background-color: #D1FAE5;
+    -fx-text-fill: #065F46;
+    -fx-background-radius: 12;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.badge-moyen {
+    -fx-background-color: #FEF3C7;
+    -fx-text-fill: #92400E;
+    -fx-background-radius: 12;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.badge-difficile {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #991B1B;
+    -fx-background-radius: 12;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   SÉPARATEUR
+────────────────────────────────────────────────────────────── */
+.separator {
+    -fx-opacity: 0.5;
+}
