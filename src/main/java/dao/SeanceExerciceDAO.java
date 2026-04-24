@@ -1,4 +1,7 @@
-package org.example;
+package dao;
+
+import model.Exercice;
+import model.SeanceExercice;
 
 import java.sql.*;
 import java.util.ArrayList;

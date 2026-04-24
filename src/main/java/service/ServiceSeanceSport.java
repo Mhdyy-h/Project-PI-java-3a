@@ -1,11 +1,14 @@
-package org.example;
+package service;
+
+import model.SeanceSport;
+import dao.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ServiceSeanceSport {
 
-    Connection conn = MyConnection.getConnection();
+    Connection conn = DatabaseConnection.getConnection();
 
     // 🟢 AJOUTER
     public void ajouter(SeanceSport s) throws SQLException {

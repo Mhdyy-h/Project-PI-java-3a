@@ -1,48 +1,53 @@
-package org.example;
+package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import model.SeanceSelection;
+import model.SeanceSport;
+import service.ServiceSeanceSport;
+
 import java.io.IOException;
 
-public class SupprimerExerciceController {
+public class SupprimerSeanceController {
 
     @FXML private Label nomLabel;
-    @FXML private Label intensiteLabel;
-    @FXML private Label caloriesLabel;
+    @FXML private Label dureeLabel;
+    @FXML private Label dateLabel;
     @FXML private Label messageLabel;
     @FXML private Button btnConfirmer;
     @FXML private Button btnAnnuler;
     @FXML private Button btnMenu;
 
-    private Exercice exerciceASupprimer;
+    private SeanceSport seanceASupprimer;
 
     @FXML
     public void initialize() {
-        exerciceASupprimer = ExerciceSelection.exercice;
-        if (exerciceASupprimer != null) {
-            nomLabel.setText(exerciceASupprimer.getNomExercice());
-            intensiteLabel.setText("💪 " + exerciceASupprimer.getIntensite());
-            caloriesLabel.setText("🔥 " + exerciceASupprimer.getCaloriesParMinute() + " cal/min");
+        seanceASupprimer = SeanceSelection.seance;
+        if (seanceASupprimer != null) {
+            nomLabel.setText(seanceASupprimer.getNomSeance());
+            dureeLabel.setText("⏱️ " + seanceASupprimer.getDureeMinutes() + " min");
+            dateLabel.setText("📅 " + seanceASupprimer.getDateSeance());
         }
     }
 
     @FXML
     public void confirmerSuppression(ActionEvent event) {
         try {
-            new ServiceExercice().delete(exerciceASupprimer.getId());
+            new ServiceSeanceSport().delete(seanceASupprimer.getId());
             messageLabel.setStyle("-fx-text-fill: #27ae60; -fx-font-size: 13px; -fx-font-weight: bold;");
-            messageLabel.setText("✅ Exercice supprimé avec succès !");
+            messageLabel.setText("✅ Séance supprimée avec succès !");
             btnConfirmer.setDisable(true);
 
+            // Retour automatique après 1.5s
             new Thread(() -> {
                 try {
                     Thread.sleep(1500);
                     javafx.application.Platform.runLater(() -> {
                         try {
-                            Parent root = FXMLLoader.load(getClass().getResource("/AfficherExercice.fxml"));
+                            Parent root = FXMLLoader.load(getClass().getResource("/AfficherSeance.fxml"));
                             btnAnnuler.getScene().setRoot(root);
                         } catch (IOException e) {
                             System.err.println(e.getMessage());
@@ -62,7 +67,7 @@ public class SupprimerExerciceController {
     @FXML
     public void annuler(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/AfficherExercice.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/AfficherSeance.fxml"));
             btnAnnuler.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());

@@ -5,9 +5,9 @@
 <?import javafx.geometry.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.DetailSeanceController"
-      spacing="0" style="-fx-background-color: #f5f0ff;">
-
+      fx:controller="controller.DetailSeanceController"
+      spacing="0" style="-fx-background-color: #f5f0ff;"
+      stylesheets="@style.css">
     <!-- NAVBAR -->
     <HBox style="-fx-background-color: #2d1b69; -fx-padding: 15 25;"
           alignment="CENTER_LEFT" spacing="20">

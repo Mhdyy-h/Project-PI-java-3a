@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import model.SeanceSelection;
+import model.SeanceSport;
+import service.ServiceSeanceSport;
+
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;

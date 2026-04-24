@@ -1,11 +1,14 @@
-package org.example;
+package service;
+
+import model.Exercice;
+import dao.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ServiceExercice {
 
-    Connection conn = MyConnection.getConnection();
+    Connection conn = DatabaseConnection.getConnection();
 
     // 🟢 AJOUTER
     public void ajouter(Exercice e) throws SQLException {

@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +8,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import model.Exercice;
+import model.ExerciceSelection;
+import service.ServiceExercice;
+
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -109,7 +113,6 @@ public class AfficherExerciceController {
     }
 
     private VBox creerCard(Exercice exercice) {
-        // Couleur selon intensité
         String couleurBord = switch (
                 exercice.getIntensite() != null
                         ? exercice.getIntensite() : "Faible") {
@@ -126,7 +129,6 @@ public class AfficherExerciceController {
             default        -> "🟢";
         };
 
-        // Card principale
         VBox card = new VBox(10);
         card.setStyle(
                 "-fx-background-color: white;" +
@@ -139,41 +141,24 @@ public class AfficherExerciceController {
                         "-fx-pref-width: 240;"
         );
 
-        // Nom
         Label nomLabel = new Label("💪 " + exercice.getNomExercice());
-        nomLabel.setStyle(
-                "-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"
-        );
+        nomLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4a235a;");
 
-        // Intensité
-        Label intensiteLabel = new Label(
-                emojiBord + "  " + (exercice.getIntensite() != null
-                        ? exercice.getIntensite() : "Faible"));
-        intensiteLabel.setStyle(
-                "-fx-font-size: 12px; -fx-font-weight: bold;" +
-                        "-fx-text-fill: " + couleurBord + ";"
-        );
+        Label intensiteLabel = new Label(emojiBord + "  " + (exercice.getIntensite() != null
+                ? exercice.getIntensite() : "Faible"));
+        intensiteLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: " + couleurBord + ";");
 
-        // Calories
-        Label caloriesLabel = new Label(
-                "🔥  " + exercice.getCaloriesParMinute() + " cal/min");
-        caloriesLabel.setStyle(
-                "-fx-font-size: 12px; -fx-text-fill: #e94560;"
-        );
+        Label caloriesLabel = new Label("🔥  " + exercice.getCaloriesParMinute() + " cal/min");
+        caloriesLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #e94560;");
 
-        // ID Séance
-        Label seanceLabel = new Label(
-                "🏋️  Séance #" + exercice.getSeanceId());
-        seanceLabel.setStyle(
-                "-fx-font-size: 12px; -fx-text-fill: #8e44ad;"
-        );
+        Label seanceLabel = new Label("🏋️  Séance #" + exercice.getSeanceId());
+        seanceLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #8e44ad;");
 
-        // Séparateur
         Label sep = new Label("─────────────────");
         sep.setStyle("-fx-text-fill: #e8dff5; -fx-font-size: 10px;");
 
-        // Boutons
         HBox boutons = new HBox(8);
+
         Button btnModifier = new Button("✏️ Modifier");
         btnModifier.setStyle(
                 "-fx-background-color: linear-gradient(to right, #d4af37, #b8960c);" +
@@ -193,11 +178,7 @@ public class AfficherExerciceController {
         btnSupprimer.setOnAction(e -> supprimerExercice(exercice));
 
         boutons.getChildren().addAll(btnModifier, btnSupprimer);
-        card.getChildren().addAll(
-                nomLabel, intensiteLabel,
-                caloriesLabel, seanceLabel,
-                sep, boutons
-        );
+        card.getChildren().addAll(nomLabel, intensiteLabel, caloriesLabel, seanceLabel, sep, boutons);
 
         return card;
     }
@@ -216,8 +197,7 @@ public class AfficherExerciceController {
     // ── Tri ───────────────────────────────────────────────────
     @FXML public void trierNomAZ() {
         FXCollections.sort(tousLesExercices,
-                Comparator.comparing(e -> e.getNomExercice() != null
-                        ? e.getNomExercice() : ""));
+                Comparator.comparing(e -> e.getNomExercice() != null ? e.getNomExercice() : ""));
         appliquerFiltres();
     }
 
@@ -274,8 +254,7 @@ public class AfficherExerciceController {
     private void modifierExercice(Exercice exercice) {
         try {
             ExerciceSelection.exercice = exercice;
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/ModifierExercice.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/ModifierExercice.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -285,8 +264,7 @@ public class AfficherExerciceController {
     private void supprimerExercice(Exercice exercice) {
         try {
             ExerciceSelection.exercice = exercice;
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/SupprimerExercice.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/SupprimerExercice.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -295,18 +273,16 @@ public class AfficherExerciceController {
 
     @FXML public void ouvrirAjouter(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/AjouterExercice.fxml"));
-            btnAjouter.getScene().setRoot(root);
+            Parent root = FXMLLoader.load(getClass().getResource("/AjouterExercice.fxml"));
+            btnMenu.getScene().setRoot(root); // ✅ FIX
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Erreur ouvrirAjouter: " + e.getMessage());
         }
     }
 
     @FXML public void ouvrirMenu(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/Menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Menu.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());

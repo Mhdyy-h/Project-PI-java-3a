@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -6,7 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import model.SeanceSport;
+import service.ServiceSeanceSport;
+
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AjouterSeanceController {
 
@@ -282,6 +288,29 @@ public class AjouterSeanceController {
     // ── Navigation ────────────────────────────────────────────
 
     @FXML
+    public void lancerAnalyseIA() {
+        try {
+            List<SeanceSport> seances = new ServiceSeanceSport().afficherAll();
+            if (seances.size() < 2) {
+                new Alert(Alert.AlertType.WARNING, "⚠️ Il faut au moins 2 séances !").showAndWait();
+                return;
+            }
+            List<Double> historique = seances.stream()
+                    .mapToDouble(s -> (double) s.getDureeMinutes())
+                    .boxed()
+                    .collect(Collectors.toList());
+            metier.service.SeanceSportService service = new metier.service.SeanceSportService();
+            metier.service.SeanceSportService.RapportProgression rapport =
+                    service.predireProgression("user_01", "Séance Sport", historique, 4);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("🤖 Analyse IA");
+            alert.setHeaderText("Prédiction sur 4 séances");
+            alert.setContentText(rapport.toString());
+            alert.showAndWait();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "❌ " + e.getMessage()).showAndWait();
+        }
+    }
     public void naviguerVersAfficher(ActionEvent e) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/AfficherSeance.fxml"));

@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Exercice;
+import model.SeanceSport;
+import service.ServiceExercice;
+import service.ServiceSeanceSport;
 
 import java.io.IOException;
 import java.util.List;

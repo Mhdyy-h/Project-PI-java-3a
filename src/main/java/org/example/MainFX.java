@@ -13,7 +13,11 @@ public class MainFX extends Application {
         Parent root = FXMLLoader.load(
                 getClass().getResource("/Menu.fxml"));
         primaryStage.setTitle("Gestion Séances Sport");
-        primaryStage.setScene(new Scene(root));
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
+        primaryStage.setScene(scene);
         primaryStage.setWidth(1280);
         primaryStage.setHeight(800);
         primaryStage.setMinWidth(1000);

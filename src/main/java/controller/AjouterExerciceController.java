@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import model.Exercice;
+import service.ServiceExercice;
+
 import java.io.IOException;
 
 public class AjouterExerciceController {
@@ -41,10 +44,19 @@ public class AjouterExerciceController {
         intensiteBox.setItems(FXCollections.observableArrayList(
                 "Faible", "Moyenne", "Élevée"));
 
-        // Validation temps réel
-        nomField.textProperty().addListener((obs, old, val) -> validerNom(val));
-        caloriesField.textProperty().addListener((obs, old, val) -> validerCalories(val));
-        seanceIdField.textProperty().addListener((obs, old, val) -> validerSeanceId(val));
+        // Validation temps réel — uniquement si le champ n'est pas vide
+        nomField.textProperty().addListener((obs, old, val) -> {
+            if (val != null && !val.isEmpty()) validerNom(val);
+            else nomField.setStyle(STYLE_NORMAL);
+        });
+        caloriesField.textProperty().addListener((obs, old, val) -> {
+            if (val != null && !val.isEmpty()) validerCalories(val);
+            else caloriesField.setStyle(STYLE_NORMAL);
+        });
+        seanceIdField.textProperty().addListener((obs, old, val) -> {
+            if (val != null && !val.isEmpty()) validerSeanceId(val);
+            else seanceIdField.setStyle(STYLE_NORMAL);
+        });
     }
 
     // ── Validations ───────────────────────────────────────────
@@ -93,7 +105,7 @@ public class AjouterExerciceController {
             return true;
         } catch (NumberFormatException e) {
             caloriesField.setStyle(STYLE_ERREUR);
-            setMsg("⚠ Nombre décimal requis  (ex: 8.5)", false);
+            setMsg("⚠ Nombre décimal requis (ex: 8.5)", false);
             return false;
         }
     }
@@ -123,29 +135,32 @@ public class AjouterExerciceController {
 
     @FXML
     public void ajouterExercice(ActionEvent event) {
-        boolean ok = true;
-        ok &= validerNom(nomField.getText());
-        ok &= validerCalories(caloriesField.getText());
-        ok &= validerSeanceId(seanceIdField.getText());
 
-        if (intensiteBox.getValue() == null) {
+        // Valider chaque champ indépendamment
+        boolean nomOk      = validerNom(nomField.getText());
+        boolean calOk      = validerCalories(caloriesField.getText());
+        boolean seanceOk   = validerSeanceId(seanceIdField.getText());
+        boolean intensiteOk = intensiteBox.getValue() != null;
+
+        if (!intensiteOk) {
             setMsg("⚠ Choisissez une intensité !", false);
-            ok = false;
         }
 
-        if (!ok) {
-            setMsg("❌ Corrigez les erreurs avant de soumettre.", false);
+        // Si un champ est invalide, on s'arrête sans écraser les messages
+        if (!nomOk || !calOk || !seanceOk || !intensiteOk) {
             return;
         }
 
         try {
-            double cal = Double.parseDouble(caloriesField.getText().trim().replace(",", "."));
+            double cal     = Double.parseDouble(caloriesField.getText().trim().replace(",", "."));
+            int    idSeance = Integer.parseInt(seanceIdField.getText().trim());
+
             Exercice ex = new Exercice(
                     0,
                     nomField.getText().trim(),
                     intensiteBox.getValue(),
                     cal,
-                    Integer.parseInt(seanceIdField.getText().trim())
+                    idSeance
             );
             new ServiceExercice().ajouter(ex);
             setMsg("✅ Exercice ajouté avec succès !", true);
@@ -153,6 +168,7 @@ public class AjouterExerciceController {
 
         } catch (Exception e) {
             setMsg("❌ Erreur : " + e.getMessage(), false);
+            e.printStackTrace(); // voir console pour détails
         }
     }
 
@@ -164,6 +180,7 @@ public class AjouterExerciceController {
         nomField.setStyle(STYLE_NORMAL);
         caloriesField.setStyle(STYLE_NORMAL);
         seanceIdField.setStyle(STYLE_NORMAL);
+        messageLabel.setText("");
     }
 
     // ── Navigation ────────────────────────────────────────────

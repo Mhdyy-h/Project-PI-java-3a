@@ -1,5 +1,6 @@
 package org.example;
 
+import model.Exercice;
 import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.stream.Collectors;

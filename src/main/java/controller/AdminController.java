@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,6 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import model.Exercice;
+import model.ExerciceSelection;
+import model.SeanceSelection;
+import model.SeanceSport;
+import service.ServiceExercice;
+import service.ServiceSeanceSport;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -50,7 +57,7 @@ public class AdminController {
     @FXML private Label supprDetail;
 
     private SeanceSport seanceASupprimer;
-    private Exercice    exerciceASupprimer;
+    private Exercice exerciceASupprimer;
     private String      retourApresSuppr;
 
     // ── STYLES SIDEBAR ───────────────────────────────────────────

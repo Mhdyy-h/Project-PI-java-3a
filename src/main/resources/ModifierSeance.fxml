@@ -4,9 +4,9 @@
 
 <ScrollPane fitToWidth="true"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.ModifierSeanceController"
-            style="-fx-background-color: transparent; -fx-background: transparent;">
-
+            fx:controller="controller.ModifierSeanceController"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            stylesheets="@style.css">
     <VBox spacing="22"
           style="-fx-background-color: linear-gradient(to bottom right, #f0e6ff, #ffffff, #fff8e7);
                  -fx-padding: 45;">

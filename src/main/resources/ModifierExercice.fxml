@@ -4,8 +4,9 @@
 
 <VBox spacing="20"
       style="-fx-background-color: #f8f6ff; -fx-padding: 50;"
+      stylesheets="@style.css"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.ModifierExerciceController">
+      fx:controller="controller.ModifierExerciceController">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" spacing="15">

@@ -1,5 +1,6 @@
 package org.example;
 
+import model.SeanceSport;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 

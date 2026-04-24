@@ -1,5 +1,7 @@
-package org.example;
+package controller;
 
+import dao.DatabaseConnection;
+import dao.SeanceExerciceDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import model.Exercice;
+import model.SeanceExercice;
+import model.SeanceSport;
+import service.ServiceExercice;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -35,7 +42,7 @@ public class DetailSeanceController {
 
     private void chargerExercices(int seanceId) {
         try {
-            SeanceExerciceDAO dao = new SeanceExerciceDAO(MyConnection.getConnection());
+            SeanceExerciceDAO dao = new SeanceExerciceDAO(DatabaseConnection.getConnection());
             List<SeanceExercice> liste = dao.getParSeance(seanceId);
 
             listExercices.getItems().clear();

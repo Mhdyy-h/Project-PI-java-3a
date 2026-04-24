@@ -1,4 +1,4 @@
-package org.example;
+package controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -6,6 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import model.Exercice;
+import model.ExerciceSelection;
+import service.ServiceExercice;
+
 import java.io.IOException;
 
 public class ModifierExerciceController {

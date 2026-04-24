@@ -1,4 +1,4 @@
-package org.example;
+package model;
 
 public class SeanceExercice {
     private int id;

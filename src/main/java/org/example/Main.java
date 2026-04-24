@@ -1,5 +1,11 @@
 package org.example;
 
+import model.Exercice;
+import model.SeanceSport;
+import dao.DatabaseConnection;
+import service.ServiceExercice;
+import service.ServiceSeanceSport;
+
 import java.sql.SQLException;
 
 public class Main {
@@ -50,7 +56,7 @@ public class Main {
         }
 
         // Fermer la connexion
-        MyConnection.getConnection().close();
+        DatabaseConnection.getConnection().close();
         System.out.println("✅ Connexion fermee !");
     }
 }

@@ -1,5 +1,6 @@
 package org.example;
 
+import model.SeanceSport;
 import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.stream.Collectors;
