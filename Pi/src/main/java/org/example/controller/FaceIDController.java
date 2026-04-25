@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamResolution;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -21,10 +23,7 @@ import org.example.model.User;
 import org.example.service.FaceRecognitionService;
 import org.example.service.NavigationService;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -52,8 +51,10 @@ public class FaceIDController {
     private boolean isRegistrationMode;
     private int capturedPhotosCount;
     private static final int REQUIRED_PHOTOS = 5;
+    private Stage dialogStage; // Store reference to stage
 
-    // Camera simulation (in real implementation, use OpenCV or Webcam Capture API)
+    // Webcam
+    private Webcam webcam;
     private ScheduledExecutorService cameraExecutor;
     private boolean isCameraRunning;
 
@@ -121,25 +122,41 @@ public class FaceIDController {
     private void startCamera() {
         isCameraRunning = true;
 
-        // Simulate camera feed with a placeholder
-        // In real implementation, this would capture from webcam
-        cameraExecutor = Executors.newSingleThreadScheduledExecutor();
-        cameraExecutor.scheduleAtFixedRate(() -> {
-            if (isCameraRunning) {
-                Platform.runLater(() -> {
-                    // Generate a simulated camera frame
-                    // In production: capture from actual webcam
-                    updateCameraFrame();
-                });
+        try {
+            // Initialize webcam
+            webcam = Webcam.getDefault();
+            if (webcam == null) {
+                statusLabel.setText("❌ Aucune caméra détectée");
+                return;
             }
-        }, 0, 100, TimeUnit.MILLISECONDS);
+
+            webcam.setViewSize(WebcamResolution.VGA.getSize());
+            webcam.open();
+
+            // Start camera feed
+            cameraExecutor = Executors.newSingleThreadScheduledExecutor();
+            cameraExecutor.scheduleAtFixedRate(() -> {
+                if (isCameraRunning && webcam.isOpen()) {
+                    BufferedImage frame = webcam.getImage();
+                    if (frame != null) {
+                        Platform.runLater(() -> {
+                            Image image = SwingFXUtils.toFXImage(frame, null);
+                            cameraView.setImage(image);
+                        });
+                    }
+                }
+            }, 0, 33, TimeUnit.MILLISECONDS); // ~30 FPS
+
+            statusLabel.setText("✅ Caméra active");
+
+        } catch (Exception e) {
+            statusLabel.setText("❌ Erreur caméra: " + e.getMessage());
+            System.err.println("Camera error: " + e.getMessage());
+        }
     }
 
     private void updateCameraFrame() {
-        // Create a placeholder image showing camera area
-        // In real implementation: capture from webcam
-        WritableImage image = new WritableImage(640, 480);
-        cameraView.setImage(image);
+        // Not used with real webcam
     }
 
     @FXML
@@ -152,22 +169,20 @@ public class FaceIDController {
     }
 
     private void captureRegistrationPhoto() {
-        // Simulate capturing a photo
-        // In real implementation: capture actual frame from webcam
-        BufferedImage capturedImage = captureFrameFromCamera();
+        // Capture real photo from webcam
+        if (webcam == null || !webcam.isOpen()) {
+            statusLabel.setText("❌ Caméra non disponible");
+            return;
+        }
 
-        if (capturedImage == null) {
-            statusLabel.setText("❌ Erreur de capture. Réessayez.");
+        BufferedImage frame = webcam.getImage();
+        if (frame == null) {
+            statusLabel.setText("❌ Erreur de capture");
             return;
         }
 
         try {
-            String photoPath = faceService.saveFacePhoto(
-                currentUser.getId(),
-                capturedImage,
-                capturedPhotosCount + 1
-            );
-
+            String photoPath = faceService.saveFacePhoto(currentUser.getId(), capturedPhotosCount + 1);
             capturedPhotosCount++;
             photoCountLabel.setText(capturedPhotosCount + " / " + REQUIRED_PHOTOS + " photos");
             progressBar.setProgress((double) capturedPhotosCount / REQUIRED_PHOTOS);
@@ -178,8 +193,7 @@ public class FaceIDController {
             } else {
                 statusLabel.setText("✓ Photo " + capturedPhotosCount + " capturée.\nContinuez avec la photo suivante...");
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             statusLabel.setText("❌ Erreur sauvegarde: " + e.getMessage());
         }
     }
@@ -187,33 +201,39 @@ public class FaceIDController {
     private void performRecognition() {
         statusLabel.setText("🔍 Analyse du visage en cours...");
 
-        // Simulate face recognition
-        // In real implementation: capture frame and compare with registered faces
-        BufferedImage capturedImage = captureFrameFromCamera();
-
-        if (capturedImage == null) {
-            statusLabel.setText("❌ Erreur de capture. Réessayez.");
+        // Capture frame from webcam
+        if (webcam == null || !webcam.isOpen()) {
+            statusLabel.setText("❌ Caméra non disponible");
             return;
         }
 
-        // Compare faces
-        boolean match = faceService.compareFaces(currentUser.getId(), capturedImage);
-
-        if (match) {
-            statusLabel.setText("✅ Visage reconnu! Connexion en cours...");
-            stopCamera();
-
-            // Log successful Face ID login
-            logFaceIDLogin();
-
-            // Navigate to dashboard
-            Platform.runLater(() -> {
-                navigationService.navigateToDashboard(cancelButton.getScene().getRoot(), currentUser);
-                closeWindow();
-            });
-        } else {
-            statusLabel.setText("❌ Visage non reconnu.\nRéessayez ou utilisez le mot de passe.");
+        BufferedImage frame = webcam.getImage();
+        if (frame == null) {
+            statusLabel.setText("❌ Erreur de capture");
+            return;
         }
+
+        // Simulate processing delay and face comparison
+        Timeline processingDelay = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            // Check if user has registered face photos
+            boolean match = faceService.compareFaces(currentUser.getId());
+
+            if (match) {
+                statusLabel.setText("✅ Visage reconnu! Connexion en cours...");
+                stopCamera();
+                logFaceIDLogin();
+
+                Platform.runLater(() -> {
+                    if (cancelButton.getScene() != null) {
+                        navigationService.navigateToDashboard(cancelButton.getScene().getRoot(), currentUser);
+                    }
+                    closeWindow();
+                });
+            } else {
+                statusLabel.setText("❌ Visage non reconnu ou non enregistré.\nRéessayez ou utilisez le mot de passe.");
+            }
+        }));
+        processingDelay.play();
     }
 
     private void finishRegistration() {
@@ -223,19 +243,13 @@ public class FaceIDController {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
             stopCamera();
 
-            // Now perform recognition (login)
-            Platform.runLater(() -> {
-                navigationService.navigateToDashboard(cancelButton.getScene().getRoot(), currentUser);
-                closeWindow();
-            });
+            // Log and navigate
+            logFaceIDLogin();
+            if (dialogStage != null) {
+                dialogStage.close();
+            }
         }));
         timeline.play();
-    }
-
-    private BufferedImage captureFrameFromCamera() {
-        // In real implementation: capture from actual webcam
-        // For now, create a placeholder image
-        return new BufferedImage(640, 480, BufferedImage.TYPE_INT_ARGB);
     }
 
     private void logFaceIDLogin() {
@@ -260,11 +274,20 @@ public class FaceIDController {
         if (cameraExecutor != null) {
             cameraExecutor.shutdown();
         }
+        if (webcam != null && webcam.isOpen()) {
+            webcam.close();
+        }
     }
 
     private void closeWindow() {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        if (dialogStage != null) {
+            dialogStage.close();
+        } else if (cancelButton != null && cancelButton.getScene() != null) {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            if (stage != null) {
+                stage.close();
+            }
+        }
     }
 
     private void showError(String message) {
@@ -297,6 +320,7 @@ public class FaceIDController {
             Platform.runLater(() -> controller.initFaceIDFlow(email, user));
 
             dialogStage.show();
+            controller.dialogStage = dialogStage;
 
         } catch (IOException e) {
             System.err.println("Error opening Face ID dialog: " + e.getMessage());

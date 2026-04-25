@@ -129,15 +129,17 @@ public class LogsController {
     }
 
     private String getRoleBadgeStyle(String role) {
-        String color;
+        String bg, fg;
         switch (role) {
-            case "ROLE_ADMIN": color = "#fce7f3; -fx-text-fill: #9d174d"; break;
-            case "ROLE_COACH": color = "#fef3c7; -fx-text-fill: #92400e"; break;
-            case "ROLE_SPECIALISTE": color = "#ffedd5; -fx-text-fill: #c2410c"; break;
-            default: color = "#e0e7ff; -fx-text-fill: #3730a3"; break;
+            case "ROLE_ADMIN": bg = "#fce7f3"; fg = "#9d174d"; break;
+            case "ROLE_COACH": bg = "#fef3c7"; fg = "#92400e"; break;
+            case "ROLE_SPECIALISTE": bg = "#ffedd5"; fg = "#c2410c"; break;
+            default: bg = "#e0e7ff"; fg = "#3730a3"; break;
         }
-        return "-fx-background-color: #" + color.split("#")[1] +
-               "; -fx-background-radius: 12; -fx-padding: 4 12; -fx-font-size: 11px; -fx-font-weight: bold;";
+        return String.format(
+            "-fx-background-color: %s; -fx-text-fill: %s; -fx-background-radius: 12; -fx-padding: 4 12; -fx-font-size: 11px; -fx-font-weight: bold;",
+            bg, fg
+        );
     }
 
     private String getActionBadgeStyle(String action) {
