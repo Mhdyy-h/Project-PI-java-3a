@@ -18,6 +18,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import org.example.model.User;
 import org.example.service.FaceRecognitionService;
@@ -181,8 +182,14 @@ public class FaceIDController {
             return;
         }
 
+        // Check if face is detected
+        if (!faceService.detectFace(frame)) {
+            statusLabel.setText("❌ Aucun visage détecté.\nPositionnez votre visage devant la caméra.");
+            return;
+        }
+
         try {
-            String photoPath = faceService.saveFacePhoto(currentUser.getId(), capturedPhotosCount + 1);
+            String photoPath = faceService.saveFacePhoto(currentUser.getId(), capturedPhotosCount + 1, frame);
             capturedPhotosCount++;
             photoCountLabel.setText(capturedPhotosCount + " / " + REQUIRED_PHOTOS + " photos");
             progressBar.setProgress((double) capturedPhotosCount / REQUIRED_PHOTOS);
@@ -191,7 +198,7 @@ public class FaceIDController {
                 statusLabel.setText("✅ Enregistrement terminé!");
                 finishRegistration();
             } else {
-                statusLabel.setText("✓ Photo " + capturedPhotosCount + " capturée.\nContinuez avec la photo suivante...");
+                statusLabel.setText("✓ Photo " + capturedPhotosCount + " capturée (visage détecté).\nContinuez avec la photo suivante...");
             }
         } catch (Exception e) {
             statusLabel.setText("❌ Erreur sauvegarde: " + e.getMessage());
@@ -207,16 +214,16 @@ public class FaceIDController {
             return;
         }
 
-        BufferedImage frame = webcam.getImage();
-        if (frame == null) {
+        final BufferedImage capturedFrame = webcam.getImage();
+        if (capturedFrame == null) {
             statusLabel.setText("❌ Erreur de capture");
             return;
         }
 
         // Simulate processing delay and face comparison
         Timeline processingDelay = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
-            // Check if user has registered face photos
-            boolean match = faceService.compareFaces(currentUser.getId());
+            // Check if there's a face in the captured image and compare with registered faces
+            boolean match = faceService.compareFaces(currentUser.getId(), capturedFrame);
 
             if (match) {
                 statusLabel.setText("✅ Visage reconnu! Connexion en cours...");
@@ -224,8 +231,25 @@ public class FaceIDController {
                 logFaceIDLogin();
 
                 Platform.runLater(() -> {
-                    if (cancelButton.getScene() != null) {
-                        navigationService.navigateToDashboard(cancelButton.getScene().getRoot(), currentUser);
+                    // Navigate using the owner stage (main window), not the dialog
+                    if (dialogStage != null && dialogStage.getOwner() != null) {
+                        Window ownerWindow = dialogStage.getOwner();
+                        if (ownerWindow instanceof Stage) {
+                            Stage ownerStage = (Stage) ownerWindow;
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
+                                javafx.scene.Parent root = loader.load();
+                                Object ctrl = loader.getController();
+                                if (ctrl instanceof org.example.controller.AdminController) {
+                                    ((org.example.controller.AdminController) ctrl).setUser(currentUser);
+                                }
+                                ownerStage.setScene(new javafx.scene.Scene(root, 1100, 700));
+                                ownerStage.setTitle("BioSync - Administration");
+                                ownerStage.centerOnScreen();
+                            } catch (Exception ex) {
+                                System.err.println("Navigation error: " + ex.getMessage());
+                            }
+                        }
                     }
                     closeWindow();
                 });
@@ -239,15 +263,33 @@ public class FaceIDController {
     private void finishRegistration() {
         captureButton.setDisable(true);
 
-        // Wait 1.5 seconds then close
+        // Wait 1.5 seconds then close and navigate
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
             stopCamera();
-
-            // Log and navigate
             logFaceIDLogin();
-            if (dialogStage != null) {
-                dialogStage.close();
+
+            // Navigate to dashboard using owner stage
+            if (dialogStage != null && dialogStage.getOwner() != null) {
+                Window ownerWindow = dialogStage.getOwner();
+                if (ownerWindow instanceof Stage) {
+                    Stage ownerStage = (Stage) ownerWindow;
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
+                        javafx.scene.Parent root = loader.load();
+                        Object ctrl = loader.getController();
+                        if (ctrl instanceof org.example.controller.AdminController) {
+                            ((org.example.controller.AdminController) ctrl).setUser(currentUser);
+                        }
+                        ownerStage.setScene(new javafx.scene.Scene(root, 1100, 700));
+                        ownerStage.setTitle("BioSync - Administration");
+                        ownerStage.centerOnScreen();
+                    } catch (Exception ex) {
+                        System.err.println("Navigation error: " + ex.getMessage());
+                    }
+                }
             }
+
+            closeWindow();
         }));
         timeline.play();
     }
