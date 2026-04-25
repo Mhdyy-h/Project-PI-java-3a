@@ -1,4 +1,4 @@
-package org.example.controller;
+package controller.controller;
 
 import javafx.animation.*;
 import javafx.event.ActionEvent;

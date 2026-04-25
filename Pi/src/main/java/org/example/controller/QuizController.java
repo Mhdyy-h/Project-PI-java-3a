@@ -1,4 +1,4 @@
-package org.example.controller;
+package controller.controller;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
