@@ -28,8 +28,7 @@ public class LogsController {
     @FXML private TextField searchField;
     @FXML private ComboBox<String> roleFilter;
     @FXML private ComboBox<String> actionFilter;
-    @FXML private DatePicker dateDebutPicker;
-    @FXML private DatePicker dateFinPicker;
+    @FXML private ComboBox<String> periodeFilter;
     @FXML private Label statusLabel;
     @FXML private Label totalLogsLabel;
 
@@ -53,6 +52,7 @@ public class LogsController {
                 "Tous les rôles", "ROLE_ADMIN", "ROLE_COACH", "ROLE_SPECIALISTE", "ROLE_USER"
             );
             roleFilter.setValue("Tous les rôles");
+            roleFilter.setOnAction(e -> applyFilters());
         }
         if (actionFilter != null) {
             actionFilter.getItems().addAll(
@@ -60,6 +60,14 @@ public class LogsController {
                 "Déconnexion", "Inscription", "Connexion Face ID", "Changement de mot de passe"
             );
             actionFilter.setValue("Toutes les actions");
+            actionFilter.setOnAction(e -> applyFilters());
+        }
+        if (periodeFilter != null) {
+            periodeFilter.getItems().addAll(
+                "Toutes les périodes", "Aujourd'hui", "Cette semaine", "Ce mois", "Cette année"
+            );
+            periodeFilter.setValue("Toutes les périodes");
+            periodeFilter.setOnAction(e -> applyFilters());
         }
     }
 
@@ -162,35 +170,46 @@ public class LogsController {
     @FXML
     private void handleReset(MouseEvent event) {
         searchField.clear();
-        roleFilter.setValue("Tous les rôles");
-        actionFilter.setValue("Toutes les actions");
-        dateDebutPicker.setValue(null);
-        dateFinPicker.setValue(null);
+        if (roleFilter != null) roleFilter.setValue("Tous les rôles");
+        if (actionFilter != null) actionFilter.setValue("Toutes les actions");
+        if (periodeFilter != null) periodeFilter.setValue("Toutes les périodes");
         renderLogs(allLogs);
         updateTotalLabel(allLogs.size());
     }
 
     private void applyFilters() {
-        String search = searchField.getText().toLowerCase().trim();
-        String role = roleFilter.getValue();
-        String action = actionFilter.getValue();
-        LocalDate debut = dateDebutPicker.getValue();
-        LocalDate fin = dateFinPicker.getValue();
+        String search = searchField != null ? searchField.getText().toLowerCase().trim() : "";
+        String role = roleFilter != null ? roleFilter.getValue() : null;
+        String action = actionFilter != null ? actionFilter.getValue() : null;
+        String periode = periodeFilter != null ? periodeFilter.getValue() : null;
 
-        LocalDateTime debutDT = debut != null ? debut.atStartOfDay() : null;
-        LocalDateTime finDT = fin != null ? fin.atTime(23, 59, 59) : null;
+        // Calculate period bounds
+        LocalDateTime debutDT = null;
+        LocalDateTime finDT = null;
+        if (periode != null && !periode.equals("Toutes les périodes")) {
+            finDT = LocalDateTime.now();
+            switch (periode) {
+                case "Aujourd'hui": debutDT = LocalDate.now().atStartOfDay(); break;
+                case "Cette semaine": debutDT = LocalDate.now().minusDays(7).atStartOfDay(); break;
+                case "Ce mois": debutDT = LocalDate.now().minusDays(30).atStartOfDay(); break;
+                case "Cette année": debutDT = LocalDate.now().minusDays(365).atStartOfDay(); break;
+            }
+        }
+
+        final LocalDateTime finalDebut = debutDT;
+        final LocalDateTime finalFin = finDT;
 
         List<ActivityLog> filtered = allLogs.stream()
             .filter(log -> search.isEmpty() ||
-                log.getNomUtilisateur().toLowerCase().contains(search) ||
-                log.getEmail().toLowerCase().contains(search) ||
-                log.getAction().toLowerCase().contains(search))
+                (log.getNomUtilisateur() != null && log.getNomUtilisateur().toLowerCase().contains(search)) ||
+                (log.getEmail() != null && log.getEmail().toLowerCase().contains(search)) ||
+                (log.getAction() != null && log.getAction().toLowerCase().contains(search)))
             .filter(log -> role == null || role.equals("Tous les rôles") ||
                 (log.getRoles() != null && log.getRoles().contains(role.replace("ROLE_", ""))))
             .filter(log -> action == null || action.equals("Toutes les actions") ||
-                log.getAction().equals(action))
-            .filter(log -> debutDT == null || log.getDateHeure() == null || !log.getDateHeure().isBefore(debutDT))
-            .filter(log -> finDT == null || log.getDateHeure() == null || !log.getDateHeure().isAfter(finDT))
+                (log.getAction() != null && log.getAction().equals(action)))
+            .filter(log -> finalDebut == null || log.getDateHeure() == null || !log.getDateHeure().isBefore(finalDebut))
+            .filter(log -> finalFin == null || log.getDateHeure() == null || !log.getDateHeure().isAfter(finalFin))
             .collect(Collectors.toList());
 
         renderLogs(filtered);

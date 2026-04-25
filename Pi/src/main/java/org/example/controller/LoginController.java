@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.model.User;
 import org.example.service.AuthService;
+import org.example.service.FaceRecognitionService;
 import org.example.service.NavigationService;
 
 public class LoginController {
@@ -31,6 +32,7 @@ public class LoginController {
 
     private final AuthService authService = AuthService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final FaceRecognitionService faceService = FaceRecognitionService.getInstance();
     private boolean isLoginMode = false;
 
     @FXML
@@ -100,29 +102,41 @@ public class LoginController {
     }
 
     /**
-     * Face ID button handler — simulates face recognition.
-     * In a real app, this would open the camera, capture a frame and compare.
-     * Here, we prompt for email and "authenticate" via photo_profil lookup.
+     * Face ID button handler — New flow:
+     * 1. Enter email
+     * 2. Check if Face ID is registered
+     * 3. If registered → open camera for recognition
+     * 4. If NOT registered → open camera for registration (5-6 photos)
      */
     @FXML
     public void handleFaceId(ActionEvent event) {
-        // Show a dialog to enter the email associated with Face ID
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Connexion Face ID");
-        dialog.setHeaderText("Face ID – BioSync");
-        dialog.setContentText("Entrez votre adresse email liée à votre visage :");
-        dialog.getEditor().setPromptText("votre@email.com");
+        // Step 1: Show dialog to enter email
+        TextInputDialog emailDialog = new TextInputDialog();
+        emailDialog.setTitle("Connexion Face ID");
+        emailDialog.setHeaderText("Face ID – BioSync");
+        emailDialog.setContentText("Entrez votre adresse email :");
+        emailDialog.getEditor().setPromptText("votre@email.com");
 
-        dialog.showAndWait().ifPresent(email -> {
+        emailDialog.showAndWait().ifPresent(email -> {
             if (email.trim().isEmpty()) {
                 updateStatus("Veuillez entrer votre email.", false);
                 return;
             }
-            AuthService.AuthResult result = authService.loginByFaceId(email.trim());
-            updateStatus(result.getMessage(), result.isSuccess());
-            if (result.isSuccess()) {
-                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+
+            String trimmedEmail = email.trim();
+
+            // Step 2: Check if user exists
+            User user = faceService.getUserByEmail(trimmedEmail);
+            if (user == null) {
+                updateStatus("Aucun compte trouvé pour cet email.", false);
+                return;
             }
+
+            // Step 3: Check if Face ID is already registered
+            boolean isFaceIdRegistered = faceService.isFaceIdRegistered(user.getId());
+
+            // Step 4: Open Face ID dialog (for recognition or registration)
+            FaceIDController.openFaceIDDialog(trimmedEmail, user, (Node) event.getSource());
         });
     }
 

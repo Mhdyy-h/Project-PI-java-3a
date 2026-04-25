@@ -115,17 +115,50 @@ public class UserDAO {
         return users;
     }
 
-    // Delete user by ID
+    // Delete user by ID (also deletes related records first)
     public static boolean deleteUser(int id) {
         try {
             Connection connection = DatabaseConnection.getConnection();
+
+            // First, delete related activity logs
+            try {
+                PreparedStatement deleteLogs = connection.prepareStatement("DELETE FROM activity_log WHERE user_id = ?");
+                deleteLogs.setInt(1, id);
+                deleteLogs.executeUpdate();
+                deleteLogs.close();
+            } catch (SQLException e) {
+                // Table might not exist, continue
+            }
+
+            // Delete related certification requests
+            try {
+                PreparedStatement deleteCertifications = connection.prepareStatement("DELETE FROM certification WHERE utilisateur_id = ?");
+                deleteCertifications.setInt(1, id);
+                deleteCertifications.executeUpdate();
+                deleteCertifications.close();
+            } catch (SQLException e) {
+                // Table might not exist, continue
+            }
+
+            // Delete related log_event records
+            try {
+                PreparedStatement deleteLogEvents = connection.prepareStatement("DELETE FROM log_event WHERE utilisateur_id = ?");
+                deleteLogEvents.setInt(1, id);
+                deleteLogEvents.executeUpdate();
+                deleteLogEvents.close();
+            } catch (SQLException e) {
+                // Table might not exist, continue
+            }
+
+            // Then delete the user
             PreparedStatement statement = connection.prepareStatement("DELETE FROM utilisateur WHERE id = ?");
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
             statement.close();
             return rows > 0;
         } catch (SQLException e) {
-            System.err.println("Error deleting user: " + e.getMessage());
+            System.err.println("Error deleting user ID " + id + ": " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
