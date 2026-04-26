@@ -1,0 +1,592 @@
+/**
+ * BioSync - Mental Quiz System
+ * Global Design System CSS
+ * Modern SaaS-style design with clean aesthetics
+ */
+
+/* ========================================
+   CSS VARIABLES (Design Tokens)
+   ======================================== */
+.root {
+    /* Primary Colors */
+    -bs-primary: #4285F4;
+    -bs-primary-light: #E8F0FE;
+    -bs-primary-dark: #3367D6;
+    
+    /* Success Colors */
+    -bs-success: #6EC5A6;
+    -bs-success-light: #E6F7F1;
+    -bs-success-dark: #4A9F7F;
+    
+    /* Warning Colors */
+    -bs-warning: #F59E0B;
+    -bs-warning-light: #FEF3C7;
+    -bs-warning-dark: #D97706;
+    
+    /* Error Colors */
+    -bs-error: #EF4444;
+    -bs-error-light: #FEE2E2;
+    -bs-error-dark: #DC2626;
+    
+    /* Info Colors */
+    -bs-info: #06B6D4;
+    -bs-info-light: #CFFAFE;
+    -bs-info-dark: #0891B2;
+    
+    /* Neutral Colors */
+    -bs-background: #F5F7FA;
+    -bs-surface: #FFFFFF;
+    -bs-surface-hover: #F8FAFC;
+    -bs-border: #E5E7EB;
+    -bs-divider: #F3F4F6;
+    
+    /* Text Colors */
+    -bs-text-primary: #1A1A2E;
+    -bs-text-secondary: #6B7280;
+    -bs-text-muted: #9CA3AF;
+    -bs-text-inverse: #FFFFFF;
+    
+    /* Shadows */
+    -bs-shadow-sm: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+    -bs-shadow: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
+    -bs-shadow-md: dropshadow(gaussian, rgba(0,0,0,0.1), 12, 0, 0, 3);
+    -bs-shadow-lg: dropshadow(gaussian, rgba(0,0,0,0.12), 16, 0, 0, 4);
+    -bs-shadow-xl: dropshadow(gaussian, rgba(0,0,0,0.15), 24, 0, 0, 8);
+    
+    /* Border Radius */
+    -bs-radius-sm: 6px;
+    -bs-radius: 10px;
+    -bs-radius-md: 12px;
+    -bs-radius-lg: 16px;
+    -bs-radius-xl: 20px;
+    -bs-radius-full: 100px;
+    
+    /* Spacing */
+    -bs-space-1: 4px;
+    -bs-space-2: 8px;
+    -bs-space-3: 12px;
+    -bs-space-4: 16px;
+    -bs-space-5: 20px;
+    -bs-space-6: 24px;
+    -bs-space-8: 32px;
+    -bs-space-10: 40px;
+    -bs-space-12: 48px;
+    
+    /* Typography */
+    -bs-font-sans: "Segoe UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    -bs-font-mono: "SF Mono", "Fira Code", "JetBrains Mono", Consolas, monospace;
+}
+
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+.root {
+    -fx-font-family: -bs-font-sans;
+    -fx-background-color: -bs-background;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+.text-heading-1 {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-heading-2 {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-heading-3 {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-heading-4 {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-body {
+    -fx-font-size: 14px;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-body-small {
+    -fx-font-size: 13px;
+    -fx-text-fill: -bs-text-secondary;
+}
+
+.text-caption {
+    -fx-font-size: 11px;
+    -fx-text-fill: -bs-text-muted;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+.card {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-effect: -bs-shadow;
+    -fx-padding: -bs-space-6;
+}
+
+.card-hover {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-effect: -bs-shadow;
+    -fx-padding: -bs-space-6;
+    -fx-cursor: hand;
+}
+
+.card-hover:hover {
+    -fx-background-color: -bs-surface-hover;
+    -fx-effect: -bs-shadow-md;
+    -fx-translate-y: -2px;
+}
+
+.card-flat {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius;
+    -fx-padding: -bs-space-4;
+    -fx-border-color: -bs-border;
+    -fx-border-width: 1;
+    -fx-border-radius: -bs-radius;
+}
+
+.stat-card {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-padding: -bs-space-6;
+    -fx-effect: -bs-shadow;
+    -fx-min-width: 200px;
+}
+
+.stat-card-icon {
+    -fx-min-width: 52px;
+    -fx-min-height: 52px;
+    -fx-background-radius: -bs-radius-md;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn {
+    -fx-background-radius: -bs-radius;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease;
+}
+
+.btn-primary {
+    -fx-background-color: -bs-primary;
+    -fx-text-fill: -bs-text-inverse;
+    -fx-background-radius: -bs-radius;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: -bs-primary-dark;
+    -fx-effect: -bs-shadow-md;
+}
+
+.btn-secondary {
+    -fx-background-color: -bs-surface;
+    -fx-text-fill: -bs-text-primary;
+    -fx-border-color: -bs-border;
+    -fx-border-width: 1;
+    -fx-background-radius: -bs-radius;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: -bs-surface-hover;
+    -fx-border-color: -bs-primary;
+    -fx-text-fill: -bs-primary;
+}
+
+.btn-success {
+    -fx-background-color: -bs-success;
+    -fx-text-fill: -bs-text-inverse;
+    -fx-background-radius: -bs-radius;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-success:hover {
+    -fx-background-color: -bs-success-dark;
+}
+
+.btn-danger {
+    -fx-background-color: -bs-error;
+    -fx-text-fill: -bs-text-inverse;
+    -fx-background-radius: -bs-radius;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-danger:hover {
+    -fx-background-color: -bs-error-dark;
+}
+
+.btn-ghost {
+    -fx-background-color: transparent;
+    -fx-text-fill: -bs-text-secondary;
+    -fx-background-radius: -bs-radius;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.btn-ghost:hover {
+    -fx-background-color: -bs-divider;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.btn-icon {
+    -fx-background-color: transparent;
+    -fx-background-radius: -bs-radius-sm;
+    -fx-padding: 8px;
+    -fx-min-width: 36px;
+    -fx-min-height: 36px;
+    -fx-cursor: hand;
+}
+
+.btn-icon:hover {
+    -fx-background-color: -bs-divider;
+}
+
+/* ========================================
+   FORM CONTROLS
+   ======================================== */
+.text-field {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius;
+    -fx-border-color: -bs-border;
+    -fx-border-width: 1;
+    -fx-border-radius: -bs-radius;
+    -fx-padding: 10px 14px;
+    -fx-font-size: 13px;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-field:focused {
+    -fx-border-color: -bs-primary;
+    -fx-effect: -bs-shadow-sm;
+}
+
+.text-area {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius;
+    -fx-border-color: -bs-border;
+    -fx-border-width: 1;
+    -fx-border-radius: -bs-radius;
+    -fx-padding: 10px 14px;
+    -fx-font-size: 13px;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.text-area:focused {
+    -fx-border-color: -bs-primary;
+}
+
+.combo-box {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius;
+    -fx-border-color: -bs-border;
+    -fx-border-width: 1;
+    -fx-border-radius: -bs-radius;
+    -fx-padding: 4px 8px;
+}
+
+.combo-box:focused {
+    -fx-border-color: -bs-primary;
+}
+
+/* ========================================
+   SIDEBAR NAVIGATION
+   ======================================== */
+.sidebar {
+    -fx-background-color: -bs-surface;
+    -fx-effect: -bs-shadow;
+    -fx-min-width: 240px;
+    -fx-padding: 0;
+}
+
+.sidebar-logo {
+    -fx-padding: -bs-space-6 -bs-space-5;
+    -fx-border-color: transparent transparent -bs-divider transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.sidebar-nav-item {
+    -fx-padding: 12px 20px;
+    -fx-background-radius: -bs-radius;
+    -fx-cursor: hand;
+    -fx-spacing: 12px;
+}
+
+.sidebar-nav-item:hover {
+    -fx-background-color: -bs-divider;
+}
+
+.sidebar-nav-item.active {
+    -fx-background-color: -bs-primary-light;
+}
+
+.sidebar-nav-item.active .text {
+    -fx-text-fill: -bs-primary;
+    -fx-font-weight: bold;
+}
+
+.sidebar-footer {
+    -fx-padding: -bs-space-5;
+    -fx-border-color: -bs-divider transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* ========================================
+   TABLES
+   ======================================== */
+.table-view {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-border-color: -bs-border;
+    -fx-border-width: 1;
+    -fx-border-radius: -bs-radius-lg;
+    -fx-effect: -bs-shadow-sm;
+}
+
+.table-view .column-header {
+    -fx-background-color: -bs-divider;
+    -fx-padding: 12px 16px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-text-secondary;
+    -fx-border-color: transparent transparent -bs-border transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .table-row-cell {
+    -fx-padding: 12px 16px;
+    -fx-border-color: transparent transparent -bs-divider transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: -bs-surface-hover;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: -bs-primary-light;
+}
+
+/* ========================================
+   BADGES & TAGS
+   ======================================== */
+.badge {
+    -fx-background-radius: -bs-radius-full;
+    -fx-padding: 4px 12px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.badge-primary {
+    -fx-background-color: -bs-primary-light;
+    -fx-text-fill: -bs-primary;
+}
+
+.badge-success {
+    -fx-background-color: -bs-success-light;
+    -fx-text-fill: -bs-success-dark;
+}
+
+.badge-warning {
+    -fx-background-color: -bs-warning-light;
+    -fx-text-fill: -bs-warning-dark;
+}
+
+.badge-error {
+    -fx-background-color: -bs-error-light;
+    -fx-text-fill: -bs-error-dark;
+}
+
+/* ========================================
+   PROGRESS COMPONENTS
+   ======================================== */
+.progress-bar {
+    -fx-background-color: -bs-divider;
+    -fx-background-radius: -bs-radius-full;
+    -fx-pref-height: 8px;
+}
+
+.progress-bar .bar {
+    -fx-background-color: -bs-primary;
+    -fx-background-radius: -bs-radius-full;
+}
+
+/* ========================================
+   CHART STYLES
+   ======================================== */
+.chart {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-padding: -bs-space-5;
+    -fx-effect: -bs-shadow-sm;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-text-primary;
+}
+
+.chart-legend {
+    -fx-font-size: 11px;
+}
+
+/* ========================================
+   DIALOG & MODAL
+   ======================================== */
+.dialog-pane {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-padding: -bs-space-6;
+    -fx-effect: -bs-shadow-lg;
+}
+
+.dialog-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   SCROLLBAR
+   ======================================== */
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -bs-text-muted;
+    -fx-background-radius: 4px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: -bs-text-secondary;
+}
+
+/* ========================================
+   SPECIAL COMPONENTS
+   ======================================== */
+.quiz-card {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-padding: -bs-space-6;
+    -fx-effect: -bs-shadow;
+    -fx-min-width: 280px;
+    -fx-max-width: 320px;
+}
+
+.quiz-card:hover {
+    -fx-effect: -bs-shadow-md;
+    -fx-translate-y: -2px;
+}
+
+.question-card {
+    -fx-background-color: -bs-surface;
+    -fx-background-radius: -bs-radius-lg;
+    -fx-padding: -bs-space-8;
+    -fx-effect: -bs-shadow;
+    -fx-min-width: 600px;
+    -fx-max-width: 800px;
+}
+
+.score-display {
+    -fx-font-size: 64px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bs-primary;
+}
+
+.medal-icon {
+    -fx-font-size: 48px;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.fade-in {
+    -fx-opacity: 0;
+    -fx-animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        -fx-opacity: 1;
+    }
+}
+
+.slide-up {
+    -fx-translate-y: 20px;
+    -fx-opacity: 0;
+    -fx-animation: slideUp 0.4s ease forwards;
+}
+
+@keyframes slideUp {
+    to {
+        -fx-translate-y: 0;
+        -fx-opacity: 1;
+    }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.bg-primary { -fx-background-color: -bs-primary; }
+.bg-success { -fx-background-color: -bs-success; }
+.bg-warning { -fx-background-color: -bs-warning; }
+.bg-error { -fx-background-color: -bs-error; }
+.bg-surface { -fx-background-color: -bs-surface; }
+.bg-background { -fx-background-color: -bs-background; }
+
+.text-primary { -fx-text-fill: -bs-text-primary; }
+.text-secondary { -fx-text-fill: -bs-text-secondary; }
+.text-muted { -fx-text-fill: -bs-text-muted; }
+.text-inverse { -fx-text-fill: -bs-text-inverse; }
+.text-primary-color { -fx-text-fill: -bs-primary; }
+.text-success { -fx-text-fill: -bs-success; }
+.text-warning { -fx-text-fill: -bs-warning; }
+.text-error { -fx-text-fill: -bs-error; }
+
+.p-1 { -fx-padding: -bs-space-1; }
+.p-2 { -fx-padding: -bs-space-2; }
+.p-3 { -fx-padding: -bs-space-3; }
+.p-4 { -fx-padding: -bs-space-4; }
+.p-5 { -fx-padding: -bs-space-5; }
+.p-6 { -fx-padding: -bs-space-6; }
+
+.rounded { -fx-background-radius: -bs-radius; }
+.rounded-lg { -fx-background-radius: -bs-radius-lg; }
+.rounded-full { -fx-background-radius: -bs-radius-full; }
+
+.shadow { -fx-effect: -bs-shadow; }
+.shadow-md { -fx-effect: -bs-shadow-md; }
+.shadow-lg { -fx-effect: -bs-shadow-lg; }

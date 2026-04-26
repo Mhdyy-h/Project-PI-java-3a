@@ -5,15 +5,18 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.example.model.User;
 import org.example.service.DashboardService;
-import org.example.service.NavigationService;
 import org.example.service.UserService;
-import org.example.service.QuizService;
 
 import java.util.List;
 
-public class AdminController {
+/**
+ * AdminController - Dashboard for administrators
+ * Extends BaseController for standardized navigation and utilities
+ */
+public class AdminController extends BaseController {
 
     @FXML private Label adminNameLabel;
     @FXML private Label adminInitialLabel;
@@ -24,20 +27,18 @@ public class AdminController {
     @FXML private Label statusLabel;
 
     private final DashboardService dashboardService = DashboardService.getInstance();
-    private final NavigationService navigationService = NavigationService.getInstance();
-    private User currentUser;
 
-    public void setUser(User user) {
-        this.currentUser = user;
-        updateHeader();
+    @Override
+    public void initializeWithUser(User user) {
+        updateHeader(user);
         loadStats();
         loadRecentUsers();
     }
 
-    private void updateHeader() {
-        if (currentUser != null) {
-            adminNameLabel.setText(currentUser.getNomComplet());
-            adminInitialLabel.setText(dashboardService.getUserInitials(currentUser.getNomComplet()));
+    private void updateHeader(User user) {
+        if (user != null) {
+            adminNameLabel.setText(user.getNomComplet());
+            adminInitialLabel.setText(dashboardService.getUserInitials(user.getNomComplet()));
         }
     }
 
@@ -89,31 +90,32 @@ public class AdminController {
 
     @FXML
     private void handleNavUtilisateurs(MouseEvent event) {
-        navigationService.navigateToUtilisateurs(adminNameLabel, currentUser);
+        loadPage(VIEW_USERS, "BioSync - Utilisateurs", 1200, 800);
     }
 
     @FXML
     private void handleNavCertifications(MouseEvent event) {
-        navigationService.navigateToCertifications(adminNameLabel, currentUser);
+        loadPage(VIEW_CERTIFICATIONS, "BioSync - Certifications", 1200, 800);
     }
 
     @FXML
     private void handleGererMembres(MouseEvent event) {
-        navigationService.navigateToUtilisateurs(adminNameLabel, currentUser);
+        loadPage(VIEW_USERS, "BioSync - Gestion Membres", 1200, 800);
     }
 
     @FXML
     private void handleValidationsPro(MouseEvent event) {
-        navigationService.navigateToCertifications(adminNameLabel, currentUser);
+        loadPage(VIEW_CERTIFICATIONS, "BioSync - Validations Pro", 1200, 800);
     }
 
     @FXML
     private void handleNavMental(MouseEvent event) {
-        navigationService.navigateToMental(adminNameLabel, currentUser);
+        loadPage(VIEW_QUIZ_MANAGER, "BioSync - Mental Wellness", 1200, 800);
     }
 
     @FXML
     private void handleLogout(MouseEvent event) {
-        navigationService.navigateToLogin(adminNameLabel);
+        Stage currentStage = (Stage) adminNameLabel.getScene().getWindow();
+        navigateToLogin(currentStage);
     }
 }

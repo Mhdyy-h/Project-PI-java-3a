@@ -80,33 +80,52 @@ public class QuizController {
         actionsCol.setPrefWidth(320);
         actionsCol.setSortable(false);
 
-        actionsCol.setCellFactory(col -> new TableCell<Quiz, Void>() {
-            final Button btnModifier  = styledBtn("✏ Modifier",   "#4285F4");
-            final Button btnQuestions = styledBtn("❓ Questions",  "#6EC5A6");
-            final Button btnJouer     = styledBtn("▶ Jouer",      "#F59E0B");
-            final Button btnSupprimer = styledBtn("🗑 Suppr.",     "#EF4444");
+        actionsCol.setCellFactory(col -> {
+            TableCell<Quiz, Void> cell = new TableCell<Quiz, Void>() {
+                final Button btnModifier  = styledBtn("✏ Modifier",   "#4285F4");
+                final Button btnQuestions = styledBtn("❓ Questions",  "#6EC5A6");
+                final Button btnJouer     = styledBtn("▶ Jouer",      "#F59E0B");
+                final Button btnSupprimer = styledBtn("🗑 Suppr.",     "#EF4444");
 
-            {
-                btnModifier.setOnAction(e -> handleModifier(getItem(getTableRow())));
-                btnQuestions.setOnAction(e -> handleGererQuestions(getItem(getTableRow())));
-                btnJouer.setOnAction(e -> handleJouer(getItem(getTableRow())));
-                btnSupprimer.setOnAction(e -> handleSupprimer(getItem(getTableRow())));
-            }
-
-            private Quiz getItem(TableRow<?> row) {
-                return quizTable.getItems().get(getIndex());
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getIndex() >= quizTable.getItems().size()) {
-                    setGraphic(null);
-                } else {
-                    HBox box = new HBox(6, btnModifier, btnQuestions, btnJouer, btnSupprimer);
-                    setGraphic(box);
+                {
+                    btnModifier.setOnAction(e -> {
+                        int idx = getIndex();
+                        if (idx >= 0 && idx < quizTable.getItems().size()) {
+                            handleModifier(quizTable.getItems().get(idx));
+                        }
+                    });
+                    btnQuestions.setOnAction(e -> {
+                        int idx = getIndex();
+                        if (idx >= 0 && idx < quizTable.getItems().size()) {
+                            handleGererQuestions(quizTable.getItems().get(idx));
+                        }
+                    });
+                    btnJouer.setOnAction(e -> {
+                        int idx = getIndex();
+                        if (idx >= 0 && idx < quizTable.getItems().size()) {
+                            handleJouer(quizTable.getItems().get(idx));
+                        }
+                    });
+                    btnSupprimer.setOnAction(e -> {
+                        int idx = getIndex();
+                        if (idx >= 0 && idx < quizTable.getItems().size()) {
+                            handleSupprimer(quizTable.getItems().get(idx));
+                        }
+                    });
                 }
-            }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || getIndex() >= quizTable.getItems().size()) {
+                        setGraphic(null);
+                    } else {
+                        HBox box = new HBox(6, btnModifier, btnQuestions, btnJouer, btnSupprimer);
+                        setGraphic(box);
+                    }
+                }
+            };
+            return cell;
         });
 
         quizTable.getColumns().add(actionsCol);

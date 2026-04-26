@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
@@ -20,10 +21,6 @@
            fx:id="rootPane"
            prefWidth="940" prefHeight="720"
            style="-fx-background-color: #F0FDF8;">
-
-    <stylesheets>
-        <String value="/styles/vue_utilisateur_style.css"/>
-    </stylesheets>
 
     <!-- ═══════════════════════════════════════════════════════
          ÉCRAN 1 – Sélection du Quiz

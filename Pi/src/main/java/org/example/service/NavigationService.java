@@ -1,5 +1,6 @@
 package org.example.service;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -8,8 +9,13 @@ import javafx.stage.Stage;
 import org.example.model.User;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Consumer;
 
+/**
+ * NavigationService - Centralized navigation management for JavaFX application
+ * Provides singleton-based and static utility navigation methods
+ */
 public class NavigationService {
 
     private static NavigationService instance;
@@ -22,6 +28,60 @@ public class NavigationService {
             instance = new NavigationService();
         }
         return instance;
+    }
+
+    /**
+     * Static utility method to load a page from an ActionEvent
+     * @param fxml Path to FXML file (e.g., "/view/dashboard.fxml")
+     * @param event ActionEvent to get source stage
+     * @return true if navigation succeeded
+     */
+    public static boolean loadPage(String fxml, ActionEvent event) {
+        try {
+            Node source = (Node) event.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
+
+            FXMLLoader loader = new FXMLLoader(NavigationService.class.getResource(
+                Objects.requireNonNull(fxml, "FXML path cannot be null")));
+            Parent root = loader.load();
+
+            currentStage.setScene(new Scene(root));
+            currentStage.show();
+            return true;
+        } catch (IOException | NullPointerException e) {
+            System.err.println("Navigation error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Static utility method to load a page with specific dimensions
+     * @param fxml Path to FXML file
+     * @param title Window title
+     * @param width Window width
+     * @param height Window height
+     * @param event ActionEvent to get source stage
+     * @return true if navigation succeeded
+     */
+    public static boolean loadPage(String fxml, String title, double width, double height, ActionEvent event) {
+        try {
+            Node source = (Node) event.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
+
+            FXMLLoader loader = new FXMLLoader(NavigationService.class.getResource(
+                Objects.requireNonNull(fxml, "FXML path cannot be null")));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root, width, height);
+            currentStage.setScene(scene);
+            currentStage.setTitle(title);
+            currentStage.centerOnScreen();
+            currentStage.show();
+            return true;
+        } catch (IOException | NullPointerException e) {
+            System.err.println("Navigation error: " + e.getMessage());
+            return false;
+        }
     }
 
     public void setMainStage(Stage stage) {
@@ -81,7 +141,7 @@ public class NavigationService {
     public void navigateToDashboard(Node sourceNode, User currentUser) {
         navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Administration", 1100, 700, ctrl -> {
             if (ctrl instanceof org.example.controller.AdminController) {
-                ((org.example.controller.AdminController) ctrl).setUser(currentUser);
+                ((org.example.controller.AdminController) ctrl).initializeWithUser(currentUser);
             }
         });
     }

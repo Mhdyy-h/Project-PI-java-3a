@@ -12,7 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.util.Duration;
-import javafx.util.Interpolator;
+
 import org.example.model.Question;
 import org.example.model.Quiz;
 import org.example.model.User;
@@ -117,7 +117,7 @@ public class VueUtilisateurController {
 
     private void chargerQuizActifs() {
         quizActifs = quizService.getAllQuiz().stream()
-                .filter(Quiz::isActif)
+                .filter(q -> q.isActif())
                 .collect(Collectors.toList());
 
         if (quizActifs.isEmpty()) {
@@ -207,8 +207,9 @@ public class VueUtilisateurController {
         this.quizSelectionne = quiz;
 
         introTitre.setText(quiz.getTitre() != null ? quiz.getTitre() : "—");
-        introDescription.setText(quiz.getDescription() != null && !quiz.getDescription().isBlank()
-                ? quiz.getDescription() : "Évaluez vos capacités cognitives.");
+        String desc = quiz.getDescription();
+        introDescription.setText(desc != null && !desc.trim().isEmpty()
+                ? desc : "Évaluez vos capacités cognitives.");
         introDifficulte.setText(String.valueOf(quiz.getNiveauStressCible()));
 
         int nbQ = questionService.countQuestionsByQuiz(quiz.getId());
@@ -280,7 +281,7 @@ public class VueUtilisateurController {
             String txt  = textes[i] != null ? textes[i] : "";
             btn.setText(txt);
 
-            boolean visible = !txt.isBlank();
+            boolean visible = !txt.trim().isEmpty();
             btn.setVisible(visible);
             btn.setManaged(visible);
             btn.setDisable(false);

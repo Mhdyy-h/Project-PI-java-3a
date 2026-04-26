@@ -2,15 +2,19 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.example.model.User;
 import org.example.service.AuthService;
-import org.example.service.NavigationService;
+import org.example.util.UserSession;
 
-public class LoginController {
+/**
+ * LoginController - Handles user authentication (login and registration)
+ * Extends BaseController for standardized navigation
+ */
+public class LoginController extends BaseController {
 
     @FXML private TextField fullNameField;
     @FXML private TextField emailField;
@@ -29,7 +33,6 @@ public class LoginController {
     @FXML private Button backButton;
 
     private final AuthService authService = AuthService.getInstance();
-    private final NavigationService navigationService = NavigationService.getInstance();
     private boolean isLoginMode = false;
 
     @FXML
@@ -50,7 +53,11 @@ public class LoginController {
         updateStatus(result.getMessage(), result.isSuccess());
 
         if (result.isSuccess()) {
-            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            User user = result.getUser();
+            UserSession.getInstance().startSession(user);
+            log("User registered: " + user.getEmail());
+            navigateToDashboard();
+            closeCurrentWindow(event);
         }
     }
 
@@ -63,7 +70,11 @@ public class LoginController {
         updateStatus(result.getMessage(), result.isSuccess());
 
         if (result.isSuccess()) {
-            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            User user = result.getUser();
+            UserSession.getInstance().startSession(user);
+            log("User registered and logged in: " + user.getEmail());
+            navigateToDashboard();
+            closeCurrentWindow(event);
         }
     }
 
@@ -86,7 +97,26 @@ public class LoginController {
 
     @FXML
     public void handleHealthProLink(ActionEvent event) {
-        statusLabel.setText("Veuillez vous connecter d'abord pour demander une certification");
+        showInfoAlert("Certification Pro", 
+            "Veuillez vous connecter ou créer un compte pour demander une certification professionnelle.");
+    }
+
+    private void showInfoAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Closes the current window after navigation
+     */
+    private void closeCurrentWindow(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        if (stage != null) {
+            stage.close();
+        }
     }
 
     private void setLoginMode(boolean login) {

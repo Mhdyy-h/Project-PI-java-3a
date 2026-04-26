@@ -14,11 +14,12 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import org.example.dao.UserDAO;
 import org.example.model.User;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +29,11 @@ import org.example.service.PdfReportService;
 import org.example.service.ValidationResult;
 import org.example.service.ValidationService;
 
-public class UtilisateurController {
+/**
+ * UtilisateurController - User management controller
+ * Extends BaseController for standardized navigation
+ */
+public class UtilisateurController extends BaseController {
 
     // ==================== SERVICES ====================
     private final ValidationService validationService = ValidationService.getInstance();
@@ -384,33 +389,13 @@ public class UtilisateurController {
     }
 
     private void navigateToList() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/utilisateurs.fxml"));
-            Parent root = loader.load();
-            UtilisateurController ctrl = loader.getController();
-            ctrl.setCurrentUser(currentUser);
-            Stage stage = (Stage) nomField.getScene().getWindow();
-            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Utilisateurs");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadPage(VIEW_USERS, "BioSync - Utilisateurs", 1100, 700);
     }
 
-    private void navigateToDashboard() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
-            Parent root = loader.load();
-            AdminController ctrl = loader.getController();
-            ctrl.setUser(currentUser);
-            Stage stage = (Stage) searchField.getScene().getWindow();
-            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Administration");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    @Override
+    protected void navigateToDashboard() {
+        loadPage(VIEW_DASHBOARD, "BioSync - Administration", 1100, 700);
     }
 
     // ==================== UI HELPERS ====================

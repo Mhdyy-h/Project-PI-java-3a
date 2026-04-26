@@ -9,6 +9,8 @@ import java.util.Properties;
 
 public class DatabaseConnection {
     private static Connection connection = null;
+    private static Connection testConnection = null;
+    private static boolean testMode = false;
     private static Properties properties = new Properties();
 
     static {
@@ -26,6 +28,9 @@ public class DatabaseConnection {
     }
 
     public static Connection getConnection() {
+        if (testMode && testConnection != null) {
+            return testConnection;
+        }
         if (connection == null) {
             try {
                 String url = properties.getProperty("db.url");
@@ -42,6 +47,31 @@ public class DatabaseConnection {
             }
         }
         return connection;
+    }
+
+    /**
+     * Set test connection for unit testing
+     * @param conn Test database connection
+     */
+    public static void setTestConnection(Connection conn) {
+        testConnection = conn;
+        testMode = (conn != null);
+    }
+
+    /**
+     * Check if running in test mode
+     * @return true if using test connection
+     */
+    public static boolean isTestMode() {
+        return testMode;
+    }
+
+    /**
+     * Reset to production mode
+     */
+    public static void resetTestMode() {
+        testMode = false;
+        testConnection = null;
     }
 
     public static void closeConnection() {

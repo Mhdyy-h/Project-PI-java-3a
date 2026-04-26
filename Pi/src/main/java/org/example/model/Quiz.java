@@ -57,14 +57,38 @@ public class Quiz {
 
     // ── Méthodes de compatibilité (alias pour ancien code) ──────────────────────────────────────
 
-    public String getCategorie() { return String.valueOf(niveauStressCible); }
+    public String getCategorie() { return getNiveauStressLabel(); }
     public void setCategorie(String categorie) {
-        try { this.niveauStressCible = Integer.parseInt(categorie); } catch (Exception e) {}
+        this.niveauStressCible = parseNiveauStressLabel(categorie);
     }
 
-    public String getDifficulte() { return String.valueOf(niveauStressCible); }
+    public String getDifficulte() { return getNiveauStressLabel(); }
     public void setDifficulte(String difficulte) {
-        try { this.niveauStressCible = Integer.parseInt(difficulte); } catch (Exception e) {}
+        this.niveauStressCible = parseNiveauStressLabel(difficulte);
+    }
+
+    private String getNiveauStressLabel() {
+        switch (niveauStressCible) {
+            case 0: return "Faible";
+            case 1: case 2: return "Léger";
+            case 3: case 4: case 5: return "Modéré";
+            case 6: case 7: return "Élevé";
+            case 8: case 9: case 10: return "Sévère";
+            default: return "Modéré";
+        }
+    }
+
+    private int parseNiveauStressLabel(String label) {
+        if (label == null) return 0;
+        switch (label.toLowerCase()) {
+            case "faible": return 0;
+            case "léger": case "leger": return 2;
+            case "modéré": case "modere": return 5;
+            case "élevé": case "eleve": return 7;
+            case "sévère": case "severe": return 10;
+            default: 
+                try { return Integer.parseInt(label); } catch (Exception e) { return 0; }
+        }
     }
 
     public int getPassingScore() { return scoreResultat; }
