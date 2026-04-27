@@ -31,16 +31,9 @@ public class LoginController {
     // New: Forgot password
     @FXML private HBox forgotPasswordBox;
     @FXML private Hyperlink forgotPasswordLink;
-    // New: reCAPTCHA
-    @FXML private HBox captchaBox;
-    @FXML private ProgressIndicator captchaProgress;
-    @FXML private Label captchaLabel;
-
     private final AuthService authService = AuthService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
     private final FaceRecognitionService faceService = FaceRecognitionService.getInstance();
-    private final RecaptchaService recaptchaService = RecaptchaService.getInstance();
-    private final RecaptchaWebView recaptchaWebView = new RecaptchaWebView();
     private boolean isLoginMode = false;
 
     @FXML
@@ -53,10 +46,6 @@ public class LoginController {
             forgotPasswordBox.setVisible(false);
             forgotPasswordBox.setManaged(false);
         }
-        if (captchaBox != null) {
-            captchaBox.setVisible(false);
-            captchaBox.setManaged(false);
-        }
     }
 
     @FXML
@@ -66,81 +55,28 @@ public class LoginController {
             return;
         }
 
-        // reCAPTCHA check before register
-        executeWithRecaptcha("register", event, () -> {
-            AuthService.AuthResult result = authService.register(
-                fullNameField.getText().trim(),
-                emailField.getText().trim(),
-                passwordField.getText(),
-                confirmPasswordField.getText(),
-                termsCheckBox.isSelected()
-            );
-            updateStatus(result.getMessage(), result.isSuccess());
-            if (result.isSuccess()) {
-                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
-            }
-        });
+        AuthService.AuthResult result = authService.register(
+            fullNameField.getText().trim(),
+            emailField.getText().trim(),
+            passwordField.getText(),
+            confirmPasswordField.getText(),
+            termsCheckBox.isSelected()
+        );
+        updateStatus(result.getMessage(), result.isSuccess());
+        if (result.isSuccess()) {
+            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+        }
     }
 
     private void handleLogin(ActionEvent event) {
-        // reCAPTCHA check before login
-        executeWithRecaptcha("login", event, () -> {
-            AuthService.AuthResult result = authService.login(
-                emailField.getText().trim(),
-                passwordField.getText()
-            );
-            updateStatus(result.getMessage(), result.isSuccess());
-            if (result.isSuccess()) {
-                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
-            }
-        });
-    }
-
-    /**
-     * Exécute reCAPTCHA v3 puis lance l'action si le score est suffisant.
-     * Si reCAPTCHA n'est pas configuré, exécute directement.
-     */
-    private void executeWithRecaptcha(String action, ActionEvent event, Runnable onSuccess) {
-        if (!recaptchaService.isConfigured()) {
-            // reCAPTCHA non configuré, exécuter directement
-            onSuccess.run();
-            return;
+        AuthService.AuthResult result = authService.login(
+            emailField.getText().trim(),
+            passwordField.getText()
+        );
+        updateStatus(result.getMessage(), result.isSuccess());
+        if (result.isSuccess()) {
+            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
         }
-
-        // Afficher l'indicateur de chargement
-        if (captchaBox != null) {
-            captchaBox.setVisible(true);
-            captchaBox.setManaged(true);
-        }
-        createAccountButton.setDisable(true);
-        updateStatus("", true);
-
-        recaptchaWebView.execute(action).thenAccept(token -> {
-            Platform.runLater(() -> {
-                if (captchaBox != null) {
-                    captchaBox.setVisible(false);
-                    captchaBox.setManaged(false);
-                }
-                createAccountButton.setDisable(false);
-
-                if (token.startsWith("ERROR:") || token.equals("NOT_CONFIGURED")) {
-                    // En cas d'erreur reCAPTCHA, laisser passer (fallback)
-                    System.out.println("[reCAPTCHA] Erreur/non-configuré, fallback: " + token);
-                    onSuccess.run();
-                    return;
-                }
-
-                // Vérifier le token côté serveur
-                double score = recaptchaService.verify(token);
-                if (score >= recaptchaService.getThreshold()) {
-                    System.out.println("[reCAPTCHA] Score OK: " + score);
-                    onSuccess.run();
-                } else {
-                    updateStatus("⚠ Vérification de sécurité échouée (score: " +
-                        String.format("%.1f", score) + "). Veuillez réessayer.", false);
-                }
-            });
-        });
     }
 
     @FXML
