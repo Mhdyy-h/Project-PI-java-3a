@@ -1,3 +1,4 @@
+
 package org.example.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,20 +91,28 @@ public class MailjetEmailService {
 
         try {
             // Corps JSON Mailjet v3.1
-            Map<String, Object> emailData = Map.of(
-                "Messages", List.of(Map.of(
-                    "From", Map.of(
-                        "Email", fromEmail,
-                        "Name", fromName
-                    ),
-                    "To", List.of(Map.of(
-                        "Email", toEmail,
-                        "Name", userName
-                    )),
-                    "Subject", "Réinitialisation de votre mot de passe - BioSync",
-                    "HTMLPart", buildEmailHtml(userName, code)
-                ))
-            );
+            Map<String, Object> fromMap = new java.util.HashMap<>();
+            fromMap.put("Email", fromEmail);
+            fromMap.put("Name", fromName);
+
+            Map<String, Object> toMap = new java.util.HashMap<>();
+            toMap.put("Email", toEmail);
+            toMap.put("Name", userName);
+
+            java.util.List<Map<String, Object>> toList = new java.util.ArrayList<>();
+            toList.add(toMap);
+
+            Map<String, Object> messageMap = new java.util.HashMap<>();
+            messageMap.put("From", fromMap);
+            messageMap.put("To", toList);
+            messageMap.put("Subject", "Réinitialisation de votre mot de passe - BioSync");
+            messageMap.put("HTMLPart", buildEmailHtml(userName, code));
+
+            java.util.List<Map<String, Object>> messagesList = new java.util.ArrayList<>();
+            messagesList.add(messageMap);
+
+            Map<String, Object> emailData = new java.util.HashMap<>();
+            emailData.put("Messages", messagesList);
 
             String json = mapper.writeValueAsString(emailData);
 

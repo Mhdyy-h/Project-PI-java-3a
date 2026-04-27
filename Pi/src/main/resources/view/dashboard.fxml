@@ -69,6 +69,17 @@
                     </VBox>
                 </HBox>
 
+                <!-- Rate Limiting - CLICKABLE -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleRateLimiter">
+                    <Label text="🔒" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Sécurité" style="-fx-font-size: 13px; -fx-text-fill: #ef4444; -fx-font-weight: bold;"/>
+                        <Label text="Blocages" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+
                 <!-- Nutrition - NOT clickable -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">

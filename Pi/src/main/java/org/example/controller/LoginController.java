@@ -34,6 +34,7 @@ public class LoginController {
     private final AuthService authService = AuthService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
     private final FaceRecognitionService faceService = FaceRecognitionService.getInstance();
+    private final RateLimiterService rateLimiter = RateLimiterService.getInstance();
     private boolean isLoginMode = false;
 
     @FXML
@@ -55,26 +56,56 @@ public class LoginController {
             return;
         }
 
+        String email = emailField.getText().trim();
+
+        // Vérifier le rate limiting
+        if (!rateLimiter.isAllowed(email)) {
+            String errorMsg = rateLimiter.getErrorMessage(email);
+            updateStatus(errorMsg != null ? errorMsg :
+                "Trop de tentatives. Veuillez réessayer plus tard.", false);
+            return;
+        }
+
         AuthService.AuthResult result = authService.register(
             fullNameField.getText().trim(),
-            emailField.getText().trim(),
+            email,
             passwordField.getText(),
             confirmPasswordField.getText(),
             termsCheckBox.isSelected()
         );
+
+        // Enregistrer la tentative
+        rateLimiter.recordAttempt(email);
+
         updateStatus(result.getMessage(), result.isSuccess());
         if (result.isSuccess()) {
+            rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
             navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
         }
     }
 
     private void handleLogin(ActionEvent event) {
+        String email = emailField.getText().trim();
+
+        // Vérifier le rate limiting
+        if (!rateLimiter.isAllowed(email)) {
+            String errorMsg = rateLimiter.getErrorMessage(email);
+            updateStatus(errorMsg != null ? errorMsg :
+                "Trop de tentatives. Veuillez réessayer plus tard.", false);
+            return;
+        }
+
         AuthService.AuthResult result = authService.login(
-            emailField.getText().trim(),
+            email,
             passwordField.getText()
         );
+
+        // Enregistrer la tentative
+        rateLimiter.recordAttempt(email);
+
         updateStatus(result.getMessage(), result.isSuccess());
         if (result.isSuccess()) {
+            rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
             navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
         }
     }

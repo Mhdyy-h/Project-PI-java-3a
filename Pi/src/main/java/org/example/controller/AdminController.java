@@ -12,7 +12,12 @@ import javafx.scene.shape.Circle;
 import org.example.model.User;
 import org.example.service.DashboardService;
 import org.example.service.NavigationService;
+import org.example.service.RateLimiterService;
 import org.example.service.UserService;
+import javafx.scene.control.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import java.time.format.DateTimeFormatter;
 
 import java.io.File;
 import java.util.List;
@@ -31,6 +36,7 @@ public class AdminController {
 
     private final DashboardService dashboardService = DashboardService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final RateLimiterService rateLimiter = RateLimiterService.getInstance();
     private User currentUser;
 
     public void setUser(User user) {
@@ -134,5 +140,103 @@ public class AdminController {
     @FXML
     private void handleLogout(MouseEvent event) {
         navigationService.navigateToLogin(adminNameLabel);
+    }
+
+    @FXML
+    private void handleRateLimiter(MouseEvent event) {
+        showRateLimiterDialog();
+    }
+
+    /**
+     * Affiche une fenêtre de gestion des utilisateurs bloqués par rate limiting.
+     */
+    private void showRateLimiterDialog() {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Gestion du Rate Limiting");
+        dialog.setHeaderText("Utilisateurs bloqués (trop de tentatives de connexion)");
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
+
+        // TableView pour afficher les utilisateurs bloqués
+        TableView<RateLimiterService.BlockedUserInfo> table = new TableView<>();
+        table.setPrefSize(600, 300);
+
+        TableColumn<RateLimiterService.BlockedUserInfo, String> emailCol = new TableColumn<>("Email");
+        emailCol.setCellValueFactory(cellData ->
+            new javafx.beans.property.SimpleStringProperty(cellData.getValue().email));
+        emailCol.setPrefWidth(250);
+
+        TableColumn<RateLimiterService.BlockedUserInfo, Integer> attemptsCol = new TableColumn<>("Tentatives");
+        attemptsCol.setCellValueFactory(cellData ->
+            new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().attemptCount));
+        attemptsCol.setPrefWidth(100);
+
+        TableColumn<RateLimiterService.BlockedUserInfo, String> remainingCol = new TableColumn<>("Temps restant");
+        remainingCol.setCellValueFactory(cellData -> {
+            long minutes = cellData.getValue().remainingMinutes;
+            return new javafx.beans.property.SimpleStringProperty(minutes + " min");
+        });
+        remainingCol.setPrefWidth(100);
+
+        TableColumn<RateLimiterService.BlockedUserInfo, Void> actionCol = new TableColumn<>("Action");
+        actionCol.setPrefWidth(120);
+        actionCol.setCellFactory(col -> new TableCell<>() {
+            private final Button unblockBtn = new Button("Débloquer");
+            {
+                unblockBtn.setOnAction(e -> {
+                    RateLimiterService.BlockedUserInfo user = getTableView().getItems().get(getIndex());
+                    if (rateLimiter.unblockUser(user.email)) {
+                        getTableView().getItems().remove(user);
+                        showInfo("Utilisateur débloqué", user.email + " a été débloqué avec succès.");
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : unblockBtn);
+            }
+        });
+
+        table.getColumns().addAll(emailCol, attemptsCol, remainingCol, actionCol);
+
+        // Charger les utilisateurs bloqués
+        ObservableList<RateLimiterService.BlockedUserInfo> blockedUsers = FXCollections.observableArrayList(
+            rateLimiter.getBlockedUsers().values()
+        );
+        table.setItems(blockedUsers);
+
+        if (blockedUsers.isEmpty()) {
+            Label noDataLabel = new Label("Aucun utilisateur bloqué actuellement.");
+            noDataLabel.setStyle("-fx-padding: 20; -fx-font-size: 14;");
+            dialog.getDialogPane().setContent(noDataLabel);
+        } else {
+            dialog.getDialogPane().setContent(table);
+        }
+
+        // Bouton de rafraîchissement
+        ButtonType refreshType = new ButtonType("Rafraîchir", ButtonBar.ButtonData.LEFT);
+        dialog.getDialogPane().getButtonTypes().add(0, refreshType);
+
+        dialog.setResultConverter(buttonType -> {
+            if (buttonType == refreshType) {
+                // Rafraîchir la liste
+                ObservableList<RateLimiterService.BlockedUserInfo> refreshed = FXCollections.observableArrayList(
+                    rateLimiter.getBlockedUsers().values()
+                );
+                table.setItems(refreshed);
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
+
+    private void showInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

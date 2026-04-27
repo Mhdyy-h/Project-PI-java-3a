@@ -30,7 +30,7 @@ public class DashboardService {
                 users
             );
         } catch (Exception e) {
-            return new DashboardStats(0, 0, List.of());
+            return new DashboardStats(0, 0, java.util.Collections.emptyList());
         }
     }
 
