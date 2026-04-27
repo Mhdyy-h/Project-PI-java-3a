@@ -26,7 +26,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.example.service.AvatarGeneratorService;
 import org.example.service.PdfReportService;
 import org.example.service.ValidationResult;
 import org.example.service.ValidationService;
@@ -35,7 +34,6 @@ public class UtilisateurController {
 
     // ==================== SERVICES ====================
     private final ValidationService validationService = ValidationService.getInstance();
-    private final AvatarGeneratorService avatarService = AvatarGeneratorService.getInstance();
     
     // ==================== LISTE UTILISATEURS ====================
     @FXML private TextField searchField;
@@ -299,6 +297,9 @@ public class UtilisateurController {
         targetUser.setRoles(roleStr);
         if (!password.isEmpty()) {
             targetUser.setMotDePasse(password);
+        }
+        if (chosenPhotoPath != null && !chosenPhotoPath.isEmpty()) {
+            targetUser.setPhotoProfil(chosenPhotoPath);
         }
 
         boolean ok = UserDAO.updateUser(targetUser, password.isEmpty());
@@ -632,91 +633,86 @@ public class UtilisateurController {
         // Preview in avatar
         showAvatarPreview(chosenPhotoPath);
 
-        // Ask if user wants to generate a stylized avatar from this photo
-        Alert avatarProposal = new Alert(Alert.AlertType.CONFIRMATION);
-        avatarProposal.setTitle("Générer un avatar");
-        avatarProposal.setHeaderText("🎨 Avatar stylisé");
-        avatarProposal.setContentText("Voulez-vous générer un avatar stylisé à partir de cette photo ?\n" +
-            "L'avatar sera un recadrage circulaire avec bordure dégradée.");
-
-        ButtonType btnOui = new ButtonType("Oui, générer");
-        ButtonType btnNon = new ButtonType("Non, garder la photo", ButtonBar.ButtonData.CANCEL_CLOSE);
-        avatarProposal.getButtonTypes().setAll(btnOui, btnNon);
-
-        avatarProposal.showAndWait().ifPresent(response -> {
-            if (response == btnOui) {
-                generateAvatarFromPhoto();
-            }
-        });
+        // If editing existing user, update database immediately
+        if (targetUser != null) {
+            targetUser.setPhotoProfil(chosenPhotoPath);
+            org.example.dao.UserDAO.updateUserPhoto(targetUser.getId(), chosenPhotoPath);
+            notifyUserPhotoUpdated();
+        }
     }
 
-    // ==================== AVATAR GENERATOR ====================
+    // ==================== AVATAR CUSTOMIZER ====================
     @FXML
-    private void handleGenerateAvatar() {
-        String name = nomField != null ? nomField.getText().trim() : "";
+    private void handleOpenAvatarCustomizer() {
+        try {
+            javafx.scene.control.Dialog<ButtonType> dialog = new javafx.scene.control.Dialog<>();
+            dialog.setTitle("Personnaliser l'avatar");
+            dialog.setHeaderText(null);
 
-        // If a photo is already selected, propose from photo
-        if (chosenPhotoPath != null && !chosenPhotoPath.isEmpty()) {
-            Alert choice = new Alert(Alert.AlertType.CONFIRMATION);
-            choice.setTitle("Générer un avatar");
-            choice.setHeaderText("🎨 Source de l'avatar");
-            choice.setContentText("Voulez-vous générer l'avatar à partir de :\n" +
-                "• La photo sélectionnée\n• Ou de votre nom (initiales + motifs) ?");
+            // Load the FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/avatar_customization.fxml"));
+            javafx.scene.control.DialogPane dialogPane = loader.load();
+            dialog.setDialogPane(dialogPane);
 
-            ButtonType btnPhoto = new ButtonType("Depuis la photo");
-            ButtonType btnNom = new ButtonType("Depuis le nom");
-            ButtonType btnCancel = new ButtonType("Annuler", ButtonBar.ButtonData.CANCEL_CLOSE);
-            choice.getButtonTypes().setAll(btnPhoto, btnNom, btnCancel);
+            AvatarCustomizationController controller = loader.getController();
+            String seed = targetUser != null ? targetUser.getEmail() : 
+                         (emailField != null ? emailField.getText() : "user");
+            controller.setSeed(seed);
 
-            choice.showAndWait().ifPresent(response -> {
-                if (response == btnPhoto) {
-                    generateAvatarFromPhoto();
-                } else if (response == btnNom) {
-                    generateAvatarFromName(name);
+            // Show dialog and wait for result
+            java.util.Optional<ButtonType> result = dialog.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Get the generated avatar image
+                Image avatarImage_generated = controller.getGeneratedAvatar();
+                if (avatarImage_generated != null) {
+                    // Save the avatar to a file
+                    String avatarPath = saveAvatarImage(avatarImage_generated);
+                    if (avatarPath != null) {
+                        chosenPhotoPath = avatarPath;
+                        showAvatarPreview(avatarPath);
+
+                        // If editing existing user, update database immediately
+                        if (targetUser != null) {
+                            targetUser.setPhotoProfil(avatarPath);
+                            org.example.dao.UserDAO.updateUserPhoto(targetUser.getId(), avatarPath);
+
+                                // If editing own profile, update currentUser too
+                            if (currentUser != null && targetUser.getId() == currentUser.getId()) {
+                                currentUser.setPhotoProfil(avatarPath);
+                            }
+                            notifyUserPhotoUpdated();
+                        }
+
+                        updateStatus("✓ Avatar personnalisé créé et sauvegardé!", "success");
+                    }
                 }
-            });
-        } else {
-            // No photo, generate from name
-            if (name.isEmpty()) {
-                updateStatus("Veuillez d'abord entrer un nom pour générer l'avatar.", "error");
-                return;
             }
-            generateAvatarFromName(name);
+        } catch (Exception e) {
+            System.err.println("[Avatar] Erreur ouverture customizer: " + e.getMessage());
+            e.printStackTrace();
+            updateStatus("Erreur lors de l'ouverture du personnalisateur d'avatar.", "error");
         }
     }
 
-    private void generateAvatarFromName(String name) {
-        int userId = targetUser != null ? targetUser.getId() : (int)(System.currentTimeMillis() % 100000);
-        String avatarPath = avatarService.generateAvatarFromName(userId, name);
-        if (avatarPath != null) {
-            chosenPhotoPath = avatarPath;
-            showAvatarPreview(avatarPath);
-            // Save to DB if editing existing user
-            if (targetUser != null) {
-                targetUser.setPhotoProfil(avatarPath);
-                org.example.dao.UserDAO.updateUserPhoto(targetUser.getId(), avatarPath);
-            }
-            updateStatus("✓ Avatar généré avec succès!", "success");
-        } else {
-            updateStatus("Erreur lors de la génération de l'avatar.", "error");
-        }
-    }
+    private String saveAvatarImage(Image image) {
+        try {
+            // Create uploads directory
+            java.nio.file.Path uploadsDir = java.nio.file.Paths.get("uploads");
+            java.nio.file.Files.createDirectories(uploadsDir);
 
-    private void generateAvatarFromPhoto() {
-        if (chosenPhotoPath == null || chosenPhotoPath.isEmpty()) return;
-        String name = nomField != null ? nomField.getText().trim() : "User";
-        int userId = targetUser != null ? targetUser.getId() : (int)(System.currentTimeMillis() % 100000);
-        String avatarPath = avatarService.generateAvatarFromPhoto(userId, chosenPhotoPath, name);
-        if (avatarPath != null) {
-            chosenPhotoPath = avatarPath;
-            showAvatarPreview(avatarPath);
-            if (targetUser != null) {
-                targetUser.setPhotoProfil(avatarPath);
-                org.example.dao.UserDAO.updateUserPhoto(targetUser.getId(), avatarPath);
-            }
-            updateStatus("✓ Avatar stylisé généré avec succès!", "success");
-        } else {
-            updateStatus("Erreur lors de la génération de l'avatar.", "error");
+            // Generate filename
+            String fileName = "avatar_custom_" + System.currentTimeMillis() + ".png";
+            java.nio.file.Path dest = uploadsDir.resolve(fileName);
+
+            // Convert JavaFX Image to BufferedImage and save
+            java.awt.image.BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(image, null);
+            javax.imageio.ImageIO.write(bufferedImage, "PNG", dest.toFile());
+
+            return dest.toAbsolutePath().toString();
+        } catch (Exception e) {
+            System.err.println("[Avatar] Erreur sauvegarde: " + e.getMessage());
+            return null;
         }
     }
 
@@ -730,6 +726,15 @@ public class UtilisateurController {
                 if (avatarCircle != null) avatarCircle.setVisible(false);
             } catch (Exception ignored) {}
         }
+    }
+
+    /**
+     * Notify all controllers that the user photo was updated.
+     * Sets a flag on AdminController so it refreshes when navigated back.
+     */
+    private void notifyUserPhotoUpdated() {
+        // Mark that photo was updated so AdminController refreshes on next navigation
+        AdminController.setPhotoUpdatedFlag(true);
     }
 
     // ==================== VALIDATION HELPERS ====================

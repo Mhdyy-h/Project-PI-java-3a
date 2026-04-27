@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import org.example.model.User;
+import org.example.service.AvatarService;
 import org.example.service.DashboardService;
 import org.example.service.NavigationService;
 import org.example.service.RateLimiterService;
@@ -38,9 +39,28 @@ public class AdminController {
     private final NavigationService navigationService = NavigationService.getInstance();
     private final RateLimiterService rateLimiter = RateLimiterService.getInstance();
     private User currentUser;
+    private static boolean photoUpdatedFlag = false;
+
+    public static void setPhotoUpdatedFlag(boolean flag) {
+        photoUpdatedFlag = flag;
+    }
 
     public void setUser(User user) {
         this.currentUser = user;
+
+        // If photo was updated elsewhere, reload user data from DB
+        if (photoUpdatedFlag && user != null) {
+            try {
+                org.example.model.User refreshed = org.example.dao.UserDAO.getUserById(user.getId());
+                if (refreshed != null) {
+                    this.currentUser = refreshed;
+                }
+            } catch (Exception e) {
+                System.err.println("[Admin] Error refreshing user: " + e.getMessage());
+            }
+            photoUpdatedFlag = false;
+        }
+
         updateHeader();
         loadStats();
         loadRecentUsers();
@@ -51,22 +71,43 @@ public class AdminController {
             adminNameLabel.setText(currentUser.getNomComplet());
             adminInitialLabel.setText(dashboardService.getUserInitials(currentUser.getNomComplet()));
 
-            // Show profile photo if available
-            if (adminAvatarImage != null && currentUser.getPhotoProfil() != null && !currentUser.getPhotoProfil().isEmpty()) {
-                File photoFile = new File(currentUser.getPhotoProfil());
-                if (photoFile.exists()) {
+            // Display user's photo if available, otherwise generate avatar
+            if (adminAvatarImage != null) {
+                Image avatarImage = null;
+
+                // Try user photo first
+                if (currentUser.getPhotoProfil() != null && !currentUser.getPhotoProfil().isEmpty()) {
                     try {
-                        Image img = new Image(photoFile.toURI().toString());
-                        adminAvatarImage.setImage(img);
-                        adminAvatarImage.setVisible(true);
-                        if (adminInitialLabel != null) adminInitialLabel.setVisible(false);
-                        if (adminAvatarCircle != null) adminAvatarCircle.setVisible(false);
+                        java.io.File photoFile = new java.io.File(currentUser.getPhotoProfil());
+                        if (photoFile.exists()) {
+                            avatarImage = new Image(photoFile.toURI().toString());
+                        }
                     } catch (Exception e) {
-                        // fallback to initials
+                        System.err.println("[Admin] Error loading photo: " + e.getMessage());
                     }
+                }
+
+                // Fall back to generated avatar if no photo
+                if (avatarImage == null && currentUser.getEmail() != null) {
+                    AvatarService avatarService = AvatarService.getInstance();
+                    avatarImage = avatarService.generateAvatar(currentUser.getEmail());
+                }
+
+                if (avatarImage != null) {
+                    adminAvatarImage.setImage(avatarImage);
+                    adminAvatarImage.setVisible(true);
+                    if (adminInitialLabel != null) adminInitialLabel.setVisible(false);
+                    if (adminAvatarCircle != null) adminAvatarCircle.setVisible(false);
                 }
             }
         }
+    }
+
+    /**
+     * Refresh the header - called when user data changes (e.g., photo upload)
+     */
+    public void refreshHeader() {
+        updateHeader();
     }
 
     private void loadStats() {
@@ -230,6 +271,26 @@ public class AdminController {
         });
 
         dialog.showAndWait();
+    }
+
+    @FXML
+    private void handleGenerateAvatar() {
+        if (currentUser != null && currentUser.getEmail() != null) {
+            AvatarService avatarService = AvatarService.getInstance();
+            // Generate avatar with random style
+            Image newAvatar = avatarService.regenerateWithRandomStyle(currentUser.getEmail());
+
+            if (newAvatar != null && !newAvatar.isError()) {
+                adminAvatarImage.setImage(newAvatar);
+                adminAvatarImage.setVisible(true);
+                if (adminInitialLabel != null) adminInitialLabel.setVisible(false);
+                if (adminAvatarCircle != null) adminAvatarCircle.setVisible(false);
+
+                showInfo("Avatar généré", "Votre nouvel avatar cartoon a été généré avec succès !");
+            } else {
+                showInfo("Erreur", "Impossible de générer l'avatar. Vérifiez votre connexion internet.");
+            }
+        }
     }
 
     private void showInfo(String title, String message) {
