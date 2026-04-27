@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -36,15 +37,27 @@
 
                     <!-- Avatar placeholder -->
                     <VBox alignment="CENTER" spacing="8" style="-fx-padding: 0 0 28 0;">
-                        <StackPane alignment="CENTER">
-                            <Circle radius="40" fill="#7c3aed"/>
-                            <Label text="NU"
+                        <StackPane alignment="CENTER" fx:id="avatarStackPane">
+                            <Circle radius="40" fx:id="avatarCircle" fill="#7c3aed"/>
+                            <Label fx:id="avatarLabel" text="NU"
                                    style="-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                            <ImageView fx:id="avatarImage" fitWidth="80" fitHeight="80"
+                                       visible="false" managed="true" preserveRatio="true">
+                                <clip>
+                                    <Circle radius="40" centerX="40" centerY="40"/>
+                                </clip>
+                            </ImageView>
                         </StackPane>
                         <Label text="Nouvel Utilisateur"
                                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                         <Label text="Remplissez les informations ci-dessous"
                                style="-fx-font-size: 12px; -fx-text-fill: #4C6FFF;"/>
+                        <HBox spacing="8" alignment="CENTER">
+                            <Button text="📷 Choisir une photo" onAction="#handleChoosePhoto"
+                                    style="-fx-background-color: #f3f4f6; -fx-text-fill: #4C6FFF; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 14; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1;"/>
+                            <Button text="🎨 Générer Avatar" onAction="#handleGenerateAvatar"
+                                    style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 14; -fx-cursor: hand;"/>
+                        </HBox>
                     </VBox>
 
                     <Separator style="-fx-opacity: 0.2;"/>

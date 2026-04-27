@@ -126,6 +126,10 @@ public class NavigationService {
         });
     }
 
+    public void navigateToForgotPassword(Node sourceNode) {
+        navigateFrom(sourceNode, "/view/forgot_password.fxml", "BioSync - Mot de passe oublié", 480, 680);
+    }
+
     public static class NavigationException extends RuntimeException {
         public NavigationException(String message, Throwable cause) {
             super(message, cause);

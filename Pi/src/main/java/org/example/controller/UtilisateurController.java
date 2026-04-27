@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.example.service.AvatarGeneratorService;
 import org.example.service.PdfReportService;
 import org.example.service.ValidationResult;
 import org.example.service.ValidationService;
@@ -34,6 +35,7 @@ public class UtilisateurController {
 
     // ==================== SERVICES ====================
     private final ValidationService validationService = ValidationService.getInstance();
+    private final AvatarGeneratorService avatarService = AvatarGeneratorService.getInstance();
     
     // ==================== LISTE UTILISATEURS ====================
     @FXML private TextField searchField;
@@ -628,9 +630,100 @@ public class UtilisateurController {
         }
 
         // Preview in avatar
-        if (avatarImage != null) {
+        showAvatarPreview(chosenPhotoPath);
+
+        // Ask if user wants to generate a stylized avatar from this photo
+        Alert avatarProposal = new Alert(Alert.AlertType.CONFIRMATION);
+        avatarProposal.setTitle("Générer un avatar");
+        avatarProposal.setHeaderText("🎨 Avatar stylisé");
+        avatarProposal.setContentText("Voulez-vous générer un avatar stylisé à partir de cette photo ?\n" +
+            "L'avatar sera un recadrage circulaire avec bordure dégradée.");
+
+        ButtonType btnOui = new ButtonType("Oui, générer");
+        ButtonType btnNon = new ButtonType("Non, garder la photo", ButtonBar.ButtonData.CANCEL_CLOSE);
+        avatarProposal.getButtonTypes().setAll(btnOui, btnNon);
+
+        avatarProposal.showAndWait().ifPresent(response -> {
+            if (response == btnOui) {
+                generateAvatarFromPhoto();
+            }
+        });
+    }
+
+    // ==================== AVATAR GENERATOR ====================
+    @FXML
+    private void handleGenerateAvatar() {
+        String name = nomField != null ? nomField.getText().trim() : "";
+
+        // If a photo is already selected, propose from photo
+        if (chosenPhotoPath != null && !chosenPhotoPath.isEmpty()) {
+            Alert choice = new Alert(Alert.AlertType.CONFIRMATION);
+            choice.setTitle("Générer un avatar");
+            choice.setHeaderText("🎨 Source de l'avatar");
+            choice.setContentText("Voulez-vous générer l'avatar à partir de :\n" +
+                "• La photo sélectionnée\n• Ou de votre nom (initiales + motifs) ?");
+
+            ButtonType btnPhoto = new ButtonType("Depuis la photo");
+            ButtonType btnNom = new ButtonType("Depuis le nom");
+            ButtonType btnCancel = new ButtonType("Annuler", ButtonBar.ButtonData.CANCEL_CLOSE);
+            choice.getButtonTypes().setAll(btnPhoto, btnNom, btnCancel);
+
+            choice.showAndWait().ifPresent(response -> {
+                if (response == btnPhoto) {
+                    generateAvatarFromPhoto();
+                } else if (response == btnNom) {
+                    generateAvatarFromName(name);
+                }
+            });
+        } else {
+            // No photo, generate from name
+            if (name.isEmpty()) {
+                updateStatus("Veuillez d'abord entrer un nom pour générer l'avatar.", "error");
+                return;
+            }
+            generateAvatarFromName(name);
+        }
+    }
+
+    private void generateAvatarFromName(String name) {
+        int userId = targetUser != null ? targetUser.getId() : (int)(System.currentTimeMillis() % 100000);
+        String avatarPath = avatarService.generateAvatarFromName(userId, name);
+        if (avatarPath != null) {
+            chosenPhotoPath = avatarPath;
+            showAvatarPreview(avatarPath);
+            // Save to DB if editing existing user
+            if (targetUser != null) {
+                targetUser.setPhotoProfil(avatarPath);
+                org.example.dao.UserDAO.updateUserPhoto(targetUser.getId(), avatarPath);
+            }
+            updateStatus("✓ Avatar généré avec succès!", "success");
+        } else {
+            updateStatus("Erreur lors de la génération de l'avatar.", "error");
+        }
+    }
+
+    private void generateAvatarFromPhoto() {
+        if (chosenPhotoPath == null || chosenPhotoPath.isEmpty()) return;
+        String name = nomField != null ? nomField.getText().trim() : "User";
+        int userId = targetUser != null ? targetUser.getId() : (int)(System.currentTimeMillis() % 100000);
+        String avatarPath = avatarService.generateAvatarFromPhoto(userId, chosenPhotoPath, name);
+        if (avatarPath != null) {
+            chosenPhotoPath = avatarPath;
+            showAvatarPreview(avatarPath);
+            if (targetUser != null) {
+                targetUser.setPhotoProfil(avatarPath);
+                org.example.dao.UserDAO.updateUserPhoto(targetUser.getId(), avatarPath);
+            }
+            updateStatus("✓ Avatar stylisé généré avec succès!", "success");
+        } else {
+            updateStatus("Erreur lors de la génération de l'avatar.", "error");
+        }
+    }
+
+    private void showAvatarPreview(String path) {
+        if (avatarImage != null && path != null) {
             try {
-                Image img = new Image(new java.io.File(chosenPhotoPath).toURI().toString());
+                Image img = new Image(new java.io.File(path).toURI().toString());
                 avatarImage.setImage(img);
                 avatarImage.setVisible(true);
                 if (avatarLabel != null) avatarLabel.setVisible(false);

@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -7,9 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.model.User;
-import org.example.service.AuthService;
-import org.example.service.FaceRecognitionService;
-import org.example.service.NavigationService;
+import org.example.service.*;
 
 public class LoginController {
 
@@ -29,18 +28,34 @@ public class LoginController {
     @FXML private HBox registerBox;
     @FXML private Button backButton;
     @FXML private VBox faceIdSection;
+    // New: Forgot password
+    @FXML private HBox forgotPasswordBox;
+    @FXML private Hyperlink forgotPasswordLink;
+    // New: reCAPTCHA
+    @FXML private HBox captchaBox;
+    @FXML private ProgressIndicator captchaProgress;
+    @FXML private Label captchaLabel;
 
     private final AuthService authService = AuthService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
     private final FaceRecognitionService faceService = FaceRecognitionService.getInstance();
+    private final RecaptchaService recaptchaService = RecaptchaService.getInstance();
+    private final RecaptchaWebView recaptchaWebView = new RecaptchaWebView();
     private boolean isLoginMode = false;
 
     @FXML
     public void initialize() {
-        // Face ID section only visible in login mode
         if (faceIdSection != null) {
             faceIdSection.setVisible(false);
             faceIdSection.setManaged(false);
+        }
+        if (forgotPasswordBox != null) {
+            forgotPasswordBox.setVisible(false);
+            forgotPasswordBox.setManaged(false);
+        }
+        if (captchaBox != null) {
+            captchaBox.setVisible(false);
+            captchaBox.setManaged(false);
         }
     }
 
@@ -51,32 +66,81 @@ public class LoginController {
             return;
         }
 
-        AuthService.AuthResult result = authService.register(
-            fullNameField.getText().trim(),
-            emailField.getText().trim(),
-            passwordField.getText(),
-            confirmPasswordField.getText(),
-            termsCheckBox.isSelected()
-        );
-
-        updateStatus(result.getMessage(), result.isSuccess());
-
-        if (result.isSuccess()) {
-            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
-        }
+        // reCAPTCHA check before register
+        executeWithRecaptcha("register", event, () -> {
+            AuthService.AuthResult result = authService.register(
+                fullNameField.getText().trim(),
+                emailField.getText().trim(),
+                passwordField.getText(),
+                confirmPasswordField.getText(),
+                termsCheckBox.isSelected()
+            );
+            updateStatus(result.getMessage(), result.isSuccess());
+            if (result.isSuccess()) {
+                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            }
+        });
     }
 
     private void handleLogin(ActionEvent event) {
-        AuthService.AuthResult result = authService.login(
-            emailField.getText().trim(),
-            passwordField.getText()
-        );
+        // reCAPTCHA check before login
+        executeWithRecaptcha("login", event, () -> {
+            AuthService.AuthResult result = authService.login(
+                emailField.getText().trim(),
+                passwordField.getText()
+            );
+            updateStatus(result.getMessage(), result.isSuccess());
+            if (result.isSuccess()) {
+                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            }
+        });
+    }
 
-        updateStatus(result.getMessage(), result.isSuccess());
-
-        if (result.isSuccess()) {
-            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+    /**
+     * Exécute reCAPTCHA v3 puis lance l'action si le score est suffisant.
+     * Si reCAPTCHA n'est pas configuré, exécute directement.
+     */
+    private void executeWithRecaptcha(String action, ActionEvent event, Runnable onSuccess) {
+        if (!recaptchaService.isConfigured()) {
+            // reCAPTCHA non configuré, exécuter directement
+            onSuccess.run();
+            return;
         }
+
+        // Afficher l'indicateur de chargement
+        if (captchaBox != null) {
+            captchaBox.setVisible(true);
+            captchaBox.setManaged(true);
+        }
+        createAccountButton.setDisable(true);
+        updateStatus("", true);
+
+        recaptchaWebView.execute(action).thenAccept(token -> {
+            Platform.runLater(() -> {
+                if (captchaBox != null) {
+                    captchaBox.setVisible(false);
+                    captchaBox.setManaged(false);
+                }
+                createAccountButton.setDisable(false);
+
+                if (token.startsWith("ERROR:") || token.equals("NOT_CONFIGURED")) {
+                    // En cas d'erreur reCAPTCHA, laisser passer (fallback)
+                    System.out.println("[reCAPTCHA] Erreur/non-configuré, fallback: " + token);
+                    onSuccess.run();
+                    return;
+                }
+
+                // Vérifier le token côté serveur
+                double score = recaptchaService.verify(token);
+                if (score >= recaptchaService.getThreshold()) {
+                    System.out.println("[reCAPTCHA] Score OK: " + score);
+                    onSuccess.run();
+                } else {
+                    updateStatus("⚠ Vérification de sécurité échouée (score: " +
+                        String.format("%.1f", score) + "). Veuillez réessayer.", false);
+                }
+            });
+        });
     }
 
     @FXML
@@ -101,16 +165,16 @@ public class LoginController {
         navigationService.navigateToCertificationRequest((Node) event.getSource());
     }
 
+    @FXML
+    public void handleForgotPassword(ActionEvent event) {
+        navigationService.navigateToForgotPassword((Node) event.getSource());
+    }
+
     /**
-     * Face ID button handler — New flow:
-     * 1. Enter email
-     * 2. Check if Face ID is registered
-     * 3. If registered → open camera for recognition
-     * 4. If NOT registered → open camera for registration (5-6 photos)
+     * Face ID button handler
      */
     @FXML
     public void handleFaceId(ActionEvent event) {
-        // Step 1: Show dialog to enter email
         TextInputDialog emailDialog = new TextInputDialog();
         emailDialog.setTitle("Connexion Face ID");
         emailDialog.setHeaderText("Face ID – BioSync");
@@ -122,20 +186,13 @@ public class LoginController {
                 updateStatus("Veuillez entrer votre email.", false);
                 return;
             }
-
             String trimmedEmail = email.trim();
-
-            // Step 2: Check if user exists
             User user = faceService.getUserByEmail(trimmedEmail);
             if (user == null) {
                 updateStatus("Aucun compte trouvé pour cet email.", false);
                 return;
             }
-
-            // Step 3: Check if Face ID is already registered
             boolean isFaceIdRegistered = faceService.isFaceIdRegistered(user.getId());
-
-            // Step 4: Open Face ID dialog (for recognition or registration)
             FaceIDController.openFaceIDDialog(trimmedEmail, user, (Node) event.getSource());
         });
     }
@@ -158,7 +215,13 @@ public class LoginController {
         createAccountButton.setText(login ? "Se connecter" : "Créer mon compte");
         statusLabel.setText("");
 
-        // Show Face ID only in login mode
+        // Forgot password: visible only in login mode
+        if (forgotPasswordBox != null) {
+            forgotPasswordBox.setVisible(login);
+            forgotPasswordBox.setManaged(login);
+        }
+
+        // Face ID: visible only in login mode
         if (faceIdSection != null) {
             faceIdSection.setVisible(login);
             faceIdSection.setManaged(login);

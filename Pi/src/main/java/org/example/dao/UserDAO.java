@@ -287,6 +287,24 @@ public class UserDAO {
         return null;
     }
 
+    // Update password by email (for password reset)
+    public static boolean updatePasswordByEmail(String email, String newPassword) {
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
+                "UPDATE utilisateur SET mot_de_passe = ? WHERE email = ?"
+            );
+            statement.setString(1, newPassword);
+            statement.setString(2, email);
+            int rows = statement.executeUpdate();
+            statement.close();
+            return rows > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating password by email: " + e.getMessage());
+            return false;
+        }
+    }
+
     // ==================== HELPER ====================
     private static User mapUser(ResultSet rs) throws SQLException {
         int scoreGlobal = 0;

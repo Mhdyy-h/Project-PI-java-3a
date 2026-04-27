@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.VBox?>
@@ -119,6 +120,16 @@
                             </children>
                         </VBox>
 
+                        <!-- Forgot password link (login mode only) -->
+                        <HBox fx:id="forgotPasswordBox" alignment="CENTER_RIGHT" spacing="4"
+                              visible="false" managed="false">
+                            <children>
+                                <Hyperlink fx:id="forgotPasswordLink" text="Mot de passe oublié ?"
+                                           onAction="#handleForgotPassword"
+                                           style="-fx-font-size: 11px; -fx-text-fill: #ef4444; -fx-font-weight: bold;"/>
+                            </children>
+                        </HBox>
+
                         <!-- Se souvenir de moi (login mode only, hidden initially) -->
                         <HBox fx:id="registerBox" alignment="CENTER_LEFT" spacing="8"
                               visible="false" managed="false"
@@ -166,6 +177,16 @@
                                 <Label text="Pas encore de compte?" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
                                 <Hyperlink fx:id="registerLink" text="S'inscrire" onAction="#handleRegisterLink"
                                            style="-fx-font-size: 12px; -fx-text-fill: #4C6FFF; -fx-font-weight: bold;"/>
+                            </children>
+                        </HBox>
+
+                        <!-- reCAPTCHA indicator -->
+                        <HBox fx:id="captchaBox" alignment="CENTER" spacing="8"
+                              visible="false" managed="false">
+                            <children>
+                                <ProgressIndicator fx:id="captchaProgress" prefWidth="18" prefHeight="18"/>
+                                <Label fx:id="captchaLabel" text="Vérification de sécurité..."
+                                       style="-fx-font-size: 11px; -fx-text-fill: #9ca3af;"/>
                             </children>
                         </HBox>
 
