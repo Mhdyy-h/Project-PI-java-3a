@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.ConnexionController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #f0f2f8;"
+            stylesheets="@style.css">
+
+    <center>
+        <VBox alignment="CENTER" spacing="0"
+              style="-fx-padding: 60 0 60 0;">
+
+            <!-- Carte de connexion centrée -->
+            <VBox alignment="CENTER" spacing="24"
+                  maxWidth="440"
+                  style="-fx-background-color: white;
+                         -fx-background-radius: 20;
+                         -fx-padding: 48 48 40 48;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 24, 0, 0, 4);">
+
+                <!-- Logo + titre -->
+                <VBox alignment="CENTER" spacing="8">
+                    <StackPane alignment="CENTER"
+                               minWidth="64" minHeight="64"
+                               style="-fx-background-color: #1a0f4f;
+                                      -fx-background-radius: 18;">
+                        <Label text="🧠" style="-fx-font-size: 28px;"/>
+                    </StackPane>
+                    <Label text="BioSync Cognitif"
+                           style="-fx-font-size: 22px;
+                                  -fx-font-weight: bold;
+                                  -fx-text-fill: #1a0f4f;"/>
+                    <Label text="Plateforme d'évaluation cognitive"
+                           styleClass="user-email"/>
+                </VBox>
+
+                <!-- Onglets Connexion / Inscription -->
+                <HBox spacing="0" style="-fx-background-color: #f0f2f8;
+                                         -fx-background-radius: 10;">
+                    <Button fx:id="btnOngletConnexion" text="Connexion"
+                            onAction="#afficherConnexion"
+                            style="-fx-background-color: #1a0f4f;
+                                   -fx-text-fill: white;
+                                   -fx-font-weight: bold;
+                                   -fx-background-radius: 8;
+                                   -fx-padding: 8 24;
+                                   -fx-cursor: hand;"
+                            HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button fx:id="btnOngletInscription" text="Inscription"
+                            onAction="#afficherInscription"
+                            style="-fx-background-color: transparent;
+                                   -fx-text-fill: #6b7280;
+                                   -fx-background-radius: 8;
+                                   -fx-padding: 8 24;
+                                   -fx-cursor: hand;"
+                            HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                </HBox>
+
+                <!-- ── Panneau CONNEXION ── -->
+                <VBox fx:id="panneauConnexion" spacing="16" visible="true" managed="true">
+                    <VBox spacing="6">
+                        <Label text="Email"
+                               style="-fx-font-size: 12px;
+                                      -fx-font-weight: bold;
+                                      -fx-text-fill: #374151;"/>
+                        <TextField fx:id="champEmail"
+                                   promptText="votre@email.com"
+                                   style="-fx-background-radius: 8;
+                                          -fx-border-radius: 8;
+                                          -fx-border-color: #d1d5db;
+                                          -fx-padding: 10 14;
+                                          -fx-font-size: 14px;"/>
+                    </VBox>
+
+                    <VBox spacing="6">
+                        <Label text="Mot de passe"
+                               style="-fx-font-size: 12px;
+                                      -fx-font-weight: bold;
+                                      -fx-text-fill: #374151;"/>
+                        <PasswordField fx:id="champMotDePasse"
+                                       promptText="••••••••"
+                                       onAction="#seConnecter"
+                                       style="-fx-background-radius: 8;
+                                              -fx-border-radius: 8;
+                                              -fx-border-color: #d1d5db;
+                                              -fx-padding: 10 14;
+                                              -fx-font-size: 14px;"/>
+                    </VBox>
+
+                    <Label fx:id="msgErreurConnexion" text=""
+                           styleClass="status-error"
+                           style="-fx-font-size: 12px;" wrapText="true"/>
+
+                    <Button text="Se connecter"
+                            onAction="#seConnecter"
+                            style="-fx-background-color: #1a0f4f;
+                                   -fx-text-fill: white;
+                                   -fx-font-weight: bold;
+                                   -fx-background-radius: 10;
+                                   -fx-padding: 12;
+                                   -fx-font-size: 14px;
+                                   -fx-cursor: hand;"
+                            maxWidth="Infinity"/>
+
+                    <!-- Accès rapide démo -->
+                    <Label text="Accès démo : demo@biosync.fr / demo123"
+                           style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"
+                           alignment="CENTER" maxWidth="Infinity"/>
+                </VBox>
+
+                <!-- ── Panneau INSCRIPTION ── -->
+                <VBox fx:id="panneauInscription" spacing="14" visible="false" managed="false">
+                    <HBox spacing="12">
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Nom"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                            <TextField fx:id="champNom" promptText="Dupont"
+                                       style="-fx-background-radius: 8; -fx-border-radius: 8;
+                                              -fx-border-color: #d1d5db; -fx-padding: 10 14;"/>
+                        </VBox>
+                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                            <Label text="Prénom"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                            <TextField fx:id="champPrenom" promptText="Alice"
+                                       style="-fx-background-radius: 8; -fx-border-radius: 8;
+                                              -fx-border-color: #d1d5db; -fx-padding: 10 14;"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="4">
+                        <Label text="Email"
+                               style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                        <TextField fx:id="champEmailInscription" promptText="votre@email.com"
+                                   style="-fx-background-radius: 8; -fx-border-radius: 8;
+                                          -fx-border-color: #d1d5db; -fx-padding: 10 14;"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Mot de passe"
+                               style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                        <PasswordField fx:id="champMdpInscription" promptText="min. 6 caractères"
+                                       style="-fx-background-radius: 8; -fx-border-radius: 8;
+                                              -fx-border-color: #d1d5db; -fx-padding: 10 14;"/>
+                    </VBox>
+
+                    <Label fx:id="msgErreurInscription" text=""
+                           style="-fx-font-size: 12px;" wrapText="true"/>
+
+                    <Button text="Créer mon compte"
+                            onAction="#sInscrire"
+                            style="-fx-background-color: #2563eb;
+                                   -fx-text-fill: white;
+                                   -fx-font-weight: bold;
+                                   -fx-background-radius: 10;
+                                   -fx-padding: 12;
+                                   -fx-font-size: 14px;
+                                   -fx-cursor: hand;"
+                            maxWidth="Infinity"/>
+                </VBox>
+
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>

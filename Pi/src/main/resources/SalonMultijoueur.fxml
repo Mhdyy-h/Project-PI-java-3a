@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.SalonMultijoueurController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #f0f2f8;"
+            stylesheets="@style.css">
+
+    <!-- ===== TOP BAR ===== -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-background-color: white;
+                     -fx-padding: 16 32;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 4, 0, 0, 2);">
+            <Label text="🏆" style="-fx-font-size: 22px;"/>
+            <Label text="Mode Multijoueur"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="labelStatutConnexion" text="Hors ligne"
+                   style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+            <Button text="← Retour"
+                    onAction="#retourDashboard"
+                    style="-fx-background-color: transparent; -fx-text-fill: #6b7280;
+                           -fx-font-size: 13px; -fx-cursor: hand;"/>
+        </HBox>
+    </top>
+
+    <!-- ===== CONTENU CENTRAL : StackPane avec 3 vues ===== -->
+    <center>
+        <StackPane>
+
+            <!-- ── VUE LOBBY ── -->
+            <VBox fx:id="vueLobby" alignment="CENTER" spacing="28"
+                  style="-fx-padding: 40 80;"
+                  visible="true" managed="true">
+
+                <Label text="Choisissez votre mode"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;"/>
+
+                <HBox spacing="24" alignment="CENTER">
+
+                    <!-- Créer une partie -->
+                    <VBox spacing="16" alignment="CENTER" prefWidth="300"
+                          style="-fx-background-color: white; -fx-background-radius: 20;
+                                 -fx-padding: 36 32;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 3);
+                                 -fx-cursor: hand;"
+                          onMouseClicked="#creerPartie">
+                        <StackPane minWidth="64" minHeight="64"
+                                   style="-fx-background-color: #ede9fe; -fx-background-radius: 50%;">
+                            <Label text="🎮" style="-fx-font-size: 28px;"/>
+                        </StackPane>
+                        <Label text="Créer une partie"
+                               style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;"/>
+                        <Label text="Hébergez une partie et invitez vos amis avec un code"
+                               style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;" wrapText="true"
+                               alignment="CENTER"/>
+                        <Button text="Créer →"
+                                onAction="#creerPartie"
+                                style="-fx-background-color: #7c3aed; -fx-text-fill: white;
+                                       -fx-font-weight: bold; -fx-background-radius: 10;
+                                       -fx-padding: 10 28; -fx-cursor: hand;"/>
+                    </VBox>
+
+                    <!-- Rejoindre une partie -->
+                    <VBox spacing="16" alignment="CENTER" prefWidth="300"
+                          style="-fx-background-color: white; -fx-background-radius: 20;
+                                 -fx-padding: 36 32;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 3);">
+                        <StackPane minWidth="64" minHeight="64"
+                                   style="-fx-background-color: #fef3c7; -fx-background-radius: 50%;">
+                            <Label text="🔗" style="-fx-font-size: 28px;"/>
+                        </StackPane>
+                        <Label text="Rejoindre une partie"
+                               style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;"/>
+                        <Label text="Entrez le code partagé par l'hôte"
+                               style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;" wrapText="true"
+                               alignment="CENTER"/>
+                        <TextField fx:id="champCode" promptText="Code (ex: AB3K7P)"
+                                   style="-fx-background-radius: 8; -fx-padding: 8 12;
+                                          -fx-border-color: #e5e7eb; -fx-border-radius: 8;
+                                          -fx-font-size: 16px; -fx-font-weight: bold;
+                                          -fx-alignment: CENTER;"
+                                   maxWidth="160"/>
+                        <Button text="Rejoindre →"
+                                onAction="#rejoindrePartie"
+                                style="-fx-background-color: #d97706; -fx-text-fill: white;
+                                       -fx-font-weight: bold; -fx-background-radius: 10;
+                                       -fx-padding: 10 28; -fx-cursor: hand;"/>
+                    </VBox>
+                </HBox>
+
+                <Label fx:id="labelErreurLobby" text=""
+                       style="-fx-font-size: 13px; -fx-text-fill: #dc2626;" visible="false" managed="false"/>
+            </VBox>
+
+            <!-- ── VUE SALLE D'ATTENTE ── -->
+            <VBox fx:id="vueSalle" alignment="CENTER" spacing="24"
+                  style="-fx-padding: 40 80;"
+                  visible="false" managed="false">
+
+                <!-- Code de la partie -->
+                <VBox alignment="CENTER" spacing="8"
+                      style="-fx-background-color: white; -fx-background-radius: 16;
+                             -fx-padding: 28 40; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 3);"
+                      maxWidth="500">
+                    <Label text="Code de la partie" style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+                    <Label fx:id="labelCode" text="——————"
+                           style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;
+                                  -fx-letter-spacing: 8;"/>
+                    <Label text="Partagez ce code avec vos amis"
+                           style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+                </VBox>
+
+                <!-- Liste des joueurs -->
+                <VBox spacing="12" maxWidth="500"
+                      style="-fx-background-color: white; -fx-background-radius: 16;
+                             -fx-padding: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 2);">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Joueurs connectés" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;"/>
+                        <Label fx:id="labelNbJoueurs" text="(1)"
+                               style="-fx-font-size: 13px; -fx-text-fill: #7c3aed;"/>
+                    </HBox>
+                    <VBox fx:id="listeJoueurs" spacing="8"/>
+                </VBox>
+
+                <HBox spacing="16" alignment="CENTER">
+                    <Button fx:id="btnDemarrer" text="🚀  Démarrer la partie"
+                            onAction="#demarrerPartie"
+                            style="-fx-background-color: #1a0f4f; -fx-text-fill: white;
+                                   -fx-font-weight: bold; -fx-background-radius: 12;
+                                   -fx-padding: 14 32; -fx-font-size: 14px; -fx-cursor: hand;"
+                            visible="false" managed="false"/>
+                    <Button text="Quitter"
+                            onAction="#quitterSalle"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280;
+                                   -fx-font-size: 13px; -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+
+            <!-- ── VUE JEU ── -->
+            <VBox fx:id="vueJeu" alignment="CENTER" spacing="0"
+                  visible="false" managed="false">
+
+                <!-- Barre supérieure jeu -->
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-background-color: #1a0f4f; -fx-padding: 12 28;">
+                    <Label fx:id="labelThemeJeu" text="Informatique"
+                           style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.7);"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="labelTimerJeu" text="30"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    <Label text="s" style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.6);"/>
+                </HBox>
+
+                <HBox VBox.vgrow="ALWAYS">
+
+                    <!-- Zone question -->
+                    <VBox alignment="CENTER" spacing="20" HBox.hgrow="ALWAYS"
+                          style="-fx-padding: 32 40;">
+
+                        <VBox spacing="16" maxWidth="700"
+                              style="-fx-background-color: white; -fx-background-radius: 16;
+                                     -fx-padding: 32; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 3);">
+                            <Label fx:id="labelNumeroQuestion" text="Question 1 / 10"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+                            <Label fx:id="labelEnonceJeu" text=""
+                                   wrapText="true"
+                                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111827;"/>
+                            <VBox fx:id="conteneurOptionsJeu" spacing="10"/>
+                        </VBox>
+
+                        <Label fx:id="labelFeedbackJeu" text=""
+                               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    </VBox>
+
+                    <!-- Tableau des scores -->
+                    <VBox prefWidth="240" minWidth="220"
+                          style="-fx-background-color: white;
+                                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, -2, 0, 0);
+                                 -fx-padding: 20 16;">
+                        <Label text="Classement"
+                               style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;
+                                      -fx-padding: 0 0 12 0;"/>
+                        <VBox fx:id="tableauScores" spacing="8"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- ── VUE FIN DE PARTIE ── -->
+            <VBox fx:id="vueFin" alignment="CENTER" spacing="24"
+                  style="-fx-padding: 40 80;"
+                  visible="false" managed="false">
+
+                <Label text="🏁 Partie terminée !"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a0f4f;"/>
+
+                <VBox fx:id="podium" spacing="8" alignment="CENTER" maxWidth="500"
+                      style="-fx-background-color: white; -fx-background-radius: 16;
+                             -fx-padding: 28; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0, 0, 3);"/>
+
+                <HBox spacing="16" alignment="CENTER">
+                    <Button text="🎯  Rejouer"
+                            onAction="#rejouer"
+                            style="-fx-background-color: #1a0f4f; -fx-text-fill: white;
+                                   -fx-font-weight: bold; -fx-background-radius: 10;
+                                   -fx-padding: 12 28; -fx-cursor: hand;"/>
+                    <Button text="🏠  Dashboard"
+                            onAction="#retourDashboard"
+                            style="-fx-background-color: transparent; -fx-text-fill: #6b7280;
+                                   -fx-font-size: 13px; -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>

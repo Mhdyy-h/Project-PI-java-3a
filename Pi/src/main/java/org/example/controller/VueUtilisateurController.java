@@ -19,6 +19,7 @@ import org.example.model.User;
 import org.example.service.NavigationService;
 import org.example.service.QuestionService;
 import org.example.service.QuizService;
+import org.example.service.VoiceService;
 import org.example.util.AlertHelper;
 
 import java.util.ArrayList;
@@ -42,13 +43,14 @@ public class VueUtilisateurController {
     @FXML private Label      emptyLabel;
 
     // ── Écran 2 ────────────────────────────────────────────────
-    @FXML private AnchorPane screenIntro;
-    @FXML private Label      introEmoji;
-    @FXML private Label      introTitre;
-    @FXML private Label      introDescription;
-    @FXML private Label      introNbQuestions;
-    @FXML private Label      introDifficulte;
-    @FXML private Button     btnDemarrer;
+    @FXML private AnchorPane  screenIntro;
+    @FXML private Label       introEmoji;
+    @FXML private Label       introTitre;
+    @FXML private Label       introDescription;
+    @FXML private Label       introNbQuestions;
+    @FXML private Label       introDifficulte;
+    @FXML private Button      btnDemarrer;
+    @FXML private ToggleButton btnVocal;
 
     // ── Écran 3 ────────────────────────────────────────────────
     @FXML private AnchorPane  screenQuestion;
@@ -88,6 +90,9 @@ public class VueUtilisateurController {
     private List<Boolean>    reponsesResultat  = new ArrayList<>();
     private boolean          reponseVerrouillee = false;
     private AnchorPane       screenActuel;
+
+    // Voice mode
+    private boolean voiceMode = false;
 
     // Timer
     private Timeline timerTimeline;
@@ -200,6 +205,31 @@ public class VueUtilisateurController {
     }
 
     // ══════════════════════════════════════════════════════════
+    // VOICE MODE
+    // ══════════════════════════════════════════════════════════
+
+    @FXML
+    private void toggleVoiceMode() {
+        voiceMode = btnVocal.isSelected();
+        if (voiceMode) {
+            btnVocal.setText("🎤 Mode Vocal : Activé");
+            btnVocal.setStyle("-fx-background-color: #1D9E75; -fx-text-fill: white; "
+                    + "-fx-font-size: 13px; -fx-font-weight: 700; "
+                    + "-fx-background-radius: 10; -fx-padding: 10 28 10 28; "
+                    + "-fx-cursor: hand; -fx-border-color: #0F6E56; "
+                    + "-fx-border-width: 1.5; -fx-border-radius: 10;");
+            VoiceService.speakAsync("Mode vocal activé. Cliquez sur Démarrer le Quiz.");
+        } else {
+            btnVocal.setText("🎤 Mode Vocal : Désactivé");
+            btnVocal.setStyle("-fx-background-color: #F0FDF4; -fx-text-fill: #166534; "
+                    + "-fx-font-size: 13px; -fx-font-weight: 600; "
+                    + "-fx-background-radius: 10; -fx-padding: 10 28 10 28; "
+                    + "-fx-cursor: hand; -fx-border-color: #86EFAC; "
+                    + "-fx-border-width: 1.5; -fx-border-radius: 10;");
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════
     // ÉCRAN 2 — Introduction
     // ══════════════════════════════════════════════════════════
 
@@ -251,6 +281,12 @@ public class VueUtilisateurController {
         score = 0;
         reponsesResultat.clear();
 
+        if (voiceMode) {
+            VoiceService.speakAsync("Quiz démarré : " + quizSelectionne.getTitre()
+                    + ". Il y a " + questions.size() + " questions. Vous avez "
+                    + TEMPS_PAR_QUESTION + " secondes par question.");
+        }
+
         transitionVers(screenIntro, screenQuestion);
         afficherQuestion();
     }
@@ -300,6 +336,16 @@ public class VueUtilisateurController {
         slide.setInterpolator(Interpolator.EASE_OUT);
         slide.play();
 
+        if (voiceMode) {
+            String toSpeak = "Question " + (indexQuestion + 1) + " sur " + questions.size()
+                    + ". " + (q.getEnonce() != null ? q.getEnonce() : "")
+                    + ". A : " + nvl(q.getOptionA())
+                    + ". B : " + nvl(q.getOptionB())
+                    + ". C : " + nvl(q.getOptionC())
+                    + ". D : " + nvl(q.getOptionD()) + ".";
+            VoiceService.speakAsync(toSpeak);
+        }
+
         demarrerTimer();
     }
 
@@ -318,6 +364,10 @@ public class VueUtilisateurController {
         boolean correct = reponseChoisie.equalsIgnoreCase(bonneReponse);
         reponsesResultat.add(correct);
         if (correct) score++;
+
+        if (voiceMode) {
+            VoiceService.speakAsync(correct ? "Bonne réponse !" : "Mauvaise réponse.");
+        }
 
         // Désactiver tous les boutons + colorier
         for (Button btn : boutonsReponse) {
@@ -366,6 +416,7 @@ public class VueUtilisateurController {
                 // Temps écoulé → réponse incorrecte automatique
                 reponseVerrouillee = true;
                 reponsesResultat.add(false);
+                if (voiceMode) VoiceService.speakAsync("Temps écoulé !");
 
                 for (Button btn : boutonsReponse) btn.setDisable(true);
 
@@ -478,6 +529,12 @@ public class VueUtilisateurController {
             recapContainer.getChildren().add(ligne);
         }
 
+        if (voiceMode) {
+            VoiceService.speakAsync(resultatTitre.getText() + ". "
+                    + "Vous avez obtenu " + score + " sur " + total + " questions. "
+                    + pctInt + " pourcent.");
+        }
+
         transitionVers(screenQuestion, screenResultat);
 
         // Count-up animé : 0 → score
@@ -549,6 +606,8 @@ public class VueUtilisateurController {
         });
         fadeOut.play();
     }
+
+    private String nvl(String s) { return s != null ? s : ""; }
 
     // ── Réinitialisation ────────────────────────────────────────
 

@@ -1,42 +1,48 @@
 package org.example.controller;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import org.example.model.Question;
 import org.example.model.Quiz;
 import org.example.model.User;
 import org.example.service.NavigationService;
 import org.example.service.QuizService;
 import org.example.service.QuestionService;
+import org.example.service.VoiceService;
 import org.example.util.AlertHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contrôleur de quiz_player.fxml
+ * QuizPlayerController — drives quiz_player.fxml
  *
- * Trois vues dans un StackPane :
- *   VIEW 1 – quizSelectionView  : sélection du quiz
- *   VIEW 2 – quizPlayView       : quiz en cours
- *   VIEW 3 – resultView         : résultat final (utilisé si pas de navigation vers result.fxml)
+ * Four views in a StackPane:
+ *   VIEW 0 – voiceModeView     : mode selection (Normal / Vocal)
+ *   VIEW 1 – quizSelectionView : quiz list
+ *   VIEW 2 – quizPlayView      : quiz in progress
+ *   VIEW 3 – resultView        : inline result (fallback when result.fxml not used)
  *
- * Flux :
- *   VIEW 1 → [clic Jouer] → VIEW 2 → [Terminer] → result.fxml (QuizResultController)
- *            ↑                         [Quitter]  → VIEW 1
+ * Flow:
+ *   VIEW 0 → [Mode Normal / Mode Vocal] → VIEW 1 → [Jouer] → VIEW 2 → [Terminer] → result.fxml
  */
 public class QuizPlayerController {
 
-    // ── VIEW 1 ─────────────────────────────────────────────────
+    // ── VIEW 0 – Mode selection ────────────────────────────────
+    @FXML private VBox voiceModeView;
+
+    // ── VIEW 1 – Quiz selection ────────────────────────────────
     @FXML private VBox  quizSelectionView;
     @FXML private Label welcomeLabel;
     @FXML private Label roleLabel;
     @FXML private Label statusLabel;
     @FXML private VBox  quizListContainer;
 
-    // ── VIEW 2 ─────────────────────────────────────────────────
+    // ── VIEW 2 – Quiz play ─────────────────────────────────────
     @FXML private VBox        quizPlayView;
     @FXML private Label       quizTitleLabel;
     @FXML private Label       questionNumberLabel;
@@ -50,29 +56,35 @@ public class QuizPlayerController {
     @FXML private Button      previousButton;
     @FXML private Button      nextButton;
     @FXML private Button      submitButton;
+    // Voice bar (inside VIEW 2)
+    @FXML private HBox        voiceBar;
+    @FXML private Label       voiceStatusLabel;
+    @FXML private Button      voiceInputButton;
 
-    // ── VIEW 3 (résultat inline) ────────────────────────────────
-    @FXML private VBox  resultView;
-    @FXML private HBox  medalContainer;
-    @FXML private Label medalLabel;
-    @FXML private Label resultTitleLabel;
-    @FXML private Label percentageLabel;
-    @FXML private Label scoreLabel;
-    @FXML private Label messageLabel;
+    // ── VIEW 3 – Inline result ─────────────────────────────────
+    @FXML private VBox   resultView;
+    @FXML private HBox   medalContainer;
+    @FXML private Label  medalLabel;
+    @FXML private Label  resultTitleLabel;
+    @FXML private Label  percentageLabel;
+    @FXML private Label  scoreLabel;
+    @FXML private Label  messageLabel;
     @FXML private Button retryButton;
 
-    // ── État ───────────────────────────────────────────────────
-    private final QuizService      quizService     = new QuizService();
-    private final QuestionService  questionService = new QuestionService();
+    // ── State ──────────────────────────────────────────────────
+    private final QuizService     quizService     = new QuizService();
+    private final QuestionService questionService = new QuestionService();
 
-    private User             currentUser;
-    private Quiz             currentQuiz;
-    private List<Question>   questions        = new ArrayList<>();
-    private int              currentIndex     = 0;
-    private List<String>     userAnswers      = new ArrayList<>();   // "A"|"B"|"C"|"D"|null
+    private User           currentUser;
+    private Quiz           currentQuiz;
+    private List<Question> questions    = new ArrayList<>();
+    private int            currentIndex = 0;
+    private List<String>   userAnswers  = new ArrayList<>();  // "A"|"B"|"C"|"D"|null
 
-    // Styles boutons options
-    private static final String STYLE_NORMAL   =
+    private boolean voiceMode = false;
+
+    // Button option styles
+    private static final String STYLE_NORMAL =
             "-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; "
           + "-fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 0 20 0 20; "
           + "-fx-cursor: hand; -fx-text-fill: #1A1A1A; -fx-font-size: 14px; "
@@ -83,15 +95,14 @@ public class QuizPlayerController {
           + "-fx-cursor: hand; -fx-text-fill: #1E40AF; -fx-font-size: 14px; "
           + "-fx-font-weight: bold; -fx-alignment: CENTER_LEFT; -fx-border-width: 2;";
 
-    // ── Cycle de vie ───────────────────────────────────────────
+    // ── Lifecycle ──────────────────────────────────────────────
 
     @FXML
     public void initialize() {
-        afficherVue(1);
-        chargerListeQuiz();
+        afficherVue(0);
     }
 
-    // ── API publique ────────────────────────────────────────────
+    // ── Public API ─────────────────────────────────────────────
 
     public void setCurrentUser(User user) {
         this.currentUser = user;
@@ -101,25 +112,42 @@ public class QuizPlayerController {
         }
     }
 
-    /** Pré-sélectionne un quiz et démarre VIEW 2 directement. */
+    /** Pre-select a quiz and jump straight to play view (skips mode selection). */
     public void setQuiz(Quiz quiz) {
         this.currentQuiz = quiz;
         demarrerQuiz(quiz);
     }
 
-    // ── VIEW 1 – Sélection ──────────────────────────────────────
+    // ── VIEW 0 – Mode selection ────────────────────────────────
+
+    @FXML
+    public void startNormalMode() {
+        voiceMode = false;
+        afficherVue(1);
+        chargerListeQuiz();
+    }
+
+    @FXML
+    public void startVoiceMode() {
+        voiceMode = true;
+        VoiceService.speakAsync("Mode vocal activé. Choisissez un quiz.");
+        afficherVue(1);
+        chargerListeQuiz();
+    }
+
+    // ── VIEW 1 – Quiz list ─────────────────────────────────────
 
     private void chargerListeQuiz() {
         quizListContainer.getChildren().clear();
-        List<Quiz> quizActifs = quizService.getQuizActifs();
+        List<Quiz> actifs = quizService.getQuizActifs();
 
-        if (quizActifs.isEmpty()) {
+        if (actifs.isEmpty()) {
             statusLabel.setText("Aucun quiz disponible pour le moment.");
             return;
         }
         statusLabel.setText("");
 
-        for (Quiz quiz : quizActifs) {
+        for (Quiz quiz : actifs) {
             quizListContainer.getChildren().add(creerCarteQuiz(quiz));
         }
     }
@@ -132,7 +160,6 @@ public class QuizPlayerController {
                 + "-fx-padding: 18 24 18 24; "
                 + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);");
 
-        // Info bloc
         VBox info = new VBox(4);
         info.getChildren().addAll(
             labelStyle(quiz.getTitre(), "-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"),
@@ -142,11 +169,9 @@ public class QuizPlayerController {
                        "-fx-font-size: 12px; -fx-text-fill: #9CA3AF;")
         );
 
-        // Spacer
         javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
         HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
 
-        // Bouton Jouer
         Button btnJouer = new Button("▶  Jouer");
         btnJouer.setStyle("-fx-background-color: #4285F4; -fx-text-fill: white; "
                 + "-fx-font-size: 13px; -fx-font-weight: 700; -fx-background-radius: 8; "
@@ -157,7 +182,7 @@ public class QuizPlayerController {
         return card;
     }
 
-    // ── VIEW 2 – Jeu ────────────────────────────────────────────
+    // ── VIEW 2 – Quiz play ─────────────────────────────────────
 
     private void demarrerQuiz(Quiz quiz) {
         currentQuiz = quiz;
@@ -173,43 +198,70 @@ public class QuizPlayerController {
         userAnswers  = new ArrayList<>(java.util.Collections.nCopies(questions.size(), null));
 
         quizTitleLabel.setText(quiz.getTitre());
+
+        // Show/hide voice bar based on mode
+        voiceBar.setVisible(voiceMode);
+        voiceBar.setManaged(voiceMode);
+
         afficherVue(2);
         afficherQuestion(currentIndex);
+
+        if (voiceMode) {
+            VoiceService.speakAsync("Quiz démarré : " + quiz.getTitre()
+                    + ". Il y a " + questions.size() + " questions.");
+        }
     }
 
     private void afficherQuestion(int index) {
         if (index < 0 || index >= questions.size()) return;
 
-        Question q = questions.get(index);
-        int total  = questions.size();
+        Question q    = questions.get(index);
+        int      total = questions.size();
 
         questionNumberLabel.setText("Question " + (index + 1) + " / " + total);
         progressLabel.setText((index + 1) + " / " + total);
         progressBar.setProgress((double)(index + 1) / total);
 
         questionTextLabel.setText(q.getContenu());
-
         optionAButton.setText("A.  " + nvl(q.getOptionA()));
         optionBButton.setText("B.  " + nvl(q.getOptionB()));
         optionCButton.setText("C.  " + nvl(q.getOptionC()));
         optionDButton.setText("D.  " + nvl(q.getOptionD()));
 
-        // Restaurer la sélection précédente
         String savedAnswer = userAnswers.get(index);
         resetOptionStyles();
         if (savedAnswer != null) selectionnerOption(savedAnswer, false);
 
-        // Boutons navigation
         previousButton.setDisable(index == 0);
-
         boolean derniere = (index == total - 1);
         nextButton.setVisible(!derniere);
         nextButton.setManaged(!derniere);
         submitButton.setVisible(derniere);
         submitButton.setManaged(derniere);
-
-        // Activer Suivant uniquement si réponse déjà donnée
         nextButton.setDisable(savedAnswer == null);
+
+        if (voiceMode) {
+            voiceStatusLabel.setText("🔊 Lecture en cours...");
+            voiceInputButton.setDisable(true);
+            String toSpeak = buildQuestionSpeech(q, index, total);
+            VoiceService.speakAsync(toSpeak);
+            // Re-enable voice button after a short delay (approximate reading time)
+            PauseTransition wait = new PauseTransition(Duration.seconds(4));
+            wait.setOnFinished(e -> {
+                voiceStatusLabel.setText("Cliquez sur 🎤 pour répondre");
+                voiceInputButton.setDisable(false);
+            });
+            wait.play();
+        }
+    }
+
+    private String buildQuestionSpeech(Question q, int index, int total) {
+        return "Question " + (index + 1) + " sur " + total + ". "
+                + q.getContenu() + ". "
+                + "Option A : " + nvl(q.getOptionA()) + ". "
+                + "Option B : " + nvl(q.getOptionB()) + ". "
+                + "Option C : " + nvl(q.getOptionC()) + ". "
+                + "Option D : " + nvl(q.getOptionD()) + ".";
     }
 
     @FXML private void handleOptionA() { selectionnerOption("A", true); }
@@ -218,8 +270,9 @@ public class QuizPlayerController {
     @FXML private void handleOptionD() { selectionnerOption("D", true); }
 
     private void selectionnerOption(String lettre, boolean save) {
-        if (save) userAnswers.set(currentIndex, lettre);
-
+        if (save) {
+            userAnswers.set(currentIndex, lettre);
+        }
         resetOptionStyles();
         switch (lettre) {
             case "A" -> optionAButton.setStyle(STYLE_SELECTED);
@@ -228,6 +281,51 @@ public class QuizPlayerController {
             case "D" -> optionDButton.setStyle(STYLE_SELECTED);
         }
         nextButton.setDisable(false);
+    }
+
+    /** Simulates voice input: shows a listening indicator, then auto-selects an answer. */
+    @FXML
+    private void handleVoiceInput() {
+        voiceInputButton.setDisable(true);
+        setAllOptionsDisabled(true);
+        voiceStatusLabel.setText("🎤 Écoute en cours...");
+        VoiceService.speakAsync("Je vous écoute.");
+
+        PauseTransition listening = new PauseTransition(Duration.seconds(2.5));
+        listening.setOnFinished(e -> processSimulatedVoiceAnswer());
+        listening.play();
+    }
+
+    private void processSimulatedVoiceAnswer() {
+        String[] options = {"A", "B", "C", "D"};
+        String answer = options[(int)(Math.random() * 4)];
+
+        selectionnerOption(answer, true);
+        voiceStatusLabel.setText("🗣️ Réponse détectée : Option " + answer);
+
+        Question q       = questions.get(currentIndex);
+        boolean correct  = answer.equals(q.getBonneReponse());
+        String  feedback = correct ? "Bonne réponse !" : "Mauvaise réponse.";
+
+        VoiceService.speakAsync(feedback);
+        voiceStatusLabel.setText(correct ? "✅ " + feedback : "❌ " + feedback);
+
+        setAllOptionsDisabled(false);
+
+        PauseTransition reset = new PauseTransition(Duration.seconds(1.8));
+        reset.setOnFinished(e -> {
+            voiceStatusLabel.setText("Cliquez sur 🎤 pour répondre");
+            voiceInputButton.setDisable(false);
+        });
+        reset.play();
+    }
+
+    private void setAllOptionsDisabled(boolean disabled) {
+        optionAButton.setDisable(disabled);
+        optionBButton.setDisable(disabled);
+        optionCButton.setDisable(disabled);
+        optionDButton.setDisable(disabled);
+        voiceInputButton.setDisable(disabled);
     }
 
     private void resetOptionStyles() {
@@ -245,7 +343,8 @@ public class QuizPlayerController {
     @FXML
     private void handleNextQuestion() {
         if (userAnswers.get(currentIndex) == null) {
-            AlertHelper.showWarning("Réponse requise", "Veuillez sélectionner une réponse avant de continuer.");
+            AlertHelper.showWarning("Réponse requise",
+                    "Veuillez sélectionner une réponse avant de continuer.");
             return;
         }
         if (currentIndex < questions.size() - 1) afficherQuestion(++currentIndex);
@@ -254,15 +353,12 @@ public class QuizPlayerController {
     @FXML
     private void handleSubmitQuiz() {
         if (userAnswers.get(currentIndex) == null) {
-            AlertHelper.showWarning("Réponse requise", "Veuillez répondre à la dernière question.");
+            AlertHelper.showWarning("Réponse requise",
+                    "Veuillez répondre à la dernière question.");
             return;
         }
 
-        // Calcul du score
-        int earnedPoints = 0;
-        int totalPoints  = 0;
-        int correctCount = 0;
-
+        int earnedPoints = 0, totalPoints = 0, correctCount = 0;
         for (int i = 0; i < questions.size(); i++) {
             Question q = questions.get(i);
             totalPoints += q.getPoints();
@@ -272,7 +368,13 @@ public class QuizPlayerController {
             }
         }
 
-        // Naviguer vers result.fxml
+        if (voiceMode) {
+            double pct = totalPoints > 0 ? (earnedPoints * 100.0 / totalPoints) : 0;
+            VoiceService.speakAsync("Quiz terminé. Vous avez obtenu "
+                    + (int) Math.round(pct) + " pourcent. "
+                    + correctCount + " bonnes réponses sur " + questions.size() + ".");
+        }
+
         final int ep = earnedPoints, tp = totalPoints, cc = correctCount;
         NavigationService.getInstance().navigateFrom(
                 submitButton,
@@ -280,17 +382,17 @@ public class QuizPlayerController {
                 "BioSync - Résultat",
                 540, 640,
                 ctrl -> {
-                    if (ctrl instanceof QuizResultController) {
-                        ((QuizResultController) ctrl).setResultat(ep, tp, cc, questions.size(),
-                                currentQuiz, currentUser);
+                    if (ctrl instanceof QuizResultController qrc) {
+                        qrc.setResultat(ep, tp, cc, questions.size(), currentQuiz, currentUser);
                     }
                 });
     }
 
-    // ── VIEW 3 – Résultat inline (si result.fxml non utilisé) ──
+    // ── VIEW 3 – Inline result ─────────────────────────────────
 
+    @SuppressWarnings("unused")
     private void afficherResultat(int earnedPoints, int totalPoints, int correctCount) {
-        double pct = totalPoints > 0 ? (earnedPoints * 100.0 / totalPoints) : 0;
+        double pct    = totalPoints > 0 ? (earnedPoints * 100.0 / totalPoints) : 0;
         int    pctInt = (int) Math.round(pct);
 
         resultTitleLabel.setText(currentQuiz.getTitre());
@@ -298,7 +400,6 @@ public class QuizPlayerController {
         scoreLabel.setText(earnedPoints + " / " + totalPoints + " pts");
         messageLabel.setText(genererMessage(pctInt));
 
-        // Médaille
         String[] medal = calculerMedaille(pctInt);
         medalLabel.setText(medal[0]);
         medalContainer.setStyle(medalContainer.getStyle()
@@ -313,7 +414,7 @@ public class QuizPlayerController {
         if (currentQuiz != null) demarrerQuiz(currentQuiz);
     }
 
-    // ── Navigation ──────────────────────────────────────────────
+    // ── Navigation ─────────────────────────────────────────────
 
     @FXML
     private void handleRetour() {
@@ -326,15 +427,13 @@ public class QuizPlayerController {
         chargerListeQuiz();
     }
 
-    // ── Utilitaires ─────────────────────────────────────────────
+    // ── Helpers ────────────────────────────────────────────────
 
     private void afficherVue(int vue) {
-        quizSelectionView.setVisible(vue == 1);
-        quizSelectionView.setManaged(vue == 1);
-        quizPlayView.setVisible(vue == 2);
-        quizPlayView.setManaged(vue == 2);
-        resultView.setVisible(vue == 3);
-        resultView.setManaged(vue == 3);
+        voiceModeView.setVisible(vue == 0);      voiceModeView.setManaged(vue == 0);
+        quizSelectionView.setVisible(vue == 1);  quizSelectionView.setManaged(vue == 1);
+        quizPlayView.setVisible(vue == 2);       quizPlayView.setManaged(vue == 2);
+        resultView.setVisible(vue == 3);         resultView.setManaged(vue == 3);
     }
 
     private String genererMessage(int pct) {
@@ -345,10 +444,10 @@ public class QuizPlayerController {
     }
 
     private String[] calculerMedaille(int pct) {
-        if (pct >= 80) return new String[]{"🥇 Médaille d'Or",    "#FCD34D, #F59E0B"};
-        if (pct >= 60) return new String[]{"🥈 Médaille d'Argent","#D1D5DB, #9CA3AF"};
-        if (pct >= 40) return new String[]{"🥉 Médaille de Bronze","#D97706, #B45309"};
-        return new String[]{"🎯 Participation",                     "#6EC5A6, #059669"};
+        if (pct >= 80) return new String[]{"🥇 Médaille d'Or",     "#FCD34D, #F59E0B"};
+        if (pct >= 60) return new String[]{"🥈 Médaille d'Argent", "#D1D5DB, #9CA3AF"};
+        if (pct >= 40) return new String[]{"🥉 Médaille de Bronze", "#D97706, #B45309"};
+        return new String[]{"🎯 Participation",                      "#6EC5A6, #059669"};
     }
 
     private String nvl(String s) { return s != null ? s : ""; }

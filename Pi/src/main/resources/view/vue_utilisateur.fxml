@@ -122,6 +122,13 @@
             </HBox>
 
             <!-- Boutons -->
+            <ToggleButton fx:id="btnVocal" text="🎤 Mode Vocal : Désactivé"
+                          onAction="#toggleVoiceMode"
+                          style="-fx-background-color: #F0FDF4; -fx-text-fill: #166534;
+                                 -fx-font-size: 13px; -fx-font-weight: 600;
+                                 -fx-background-radius: 10; -fx-padding: 10 28 10 28;
+                                 -fx-cursor: hand; -fx-border-color: #86EFAC;
+                                 -fx-border-width: 1.5; -fx-border-radius: 10;"/>
             <Button fx:id="btnDemarrer" text="▶   Démarrer le Quiz"
                     onAction="#demarrerQuiz"
                     style="-fx-background-color: #1D9E75; -fx-text-fill: white;
