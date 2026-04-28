@@ -662,7 +662,7 @@ public class UtilisateurController {
             // Show dialog and wait for result
             java.util.Optional<ButtonType> result = dialog.showAndWait();
 
-            if (result.isPresent() && result.get() == ButtonType.OK) {
+            if (result.isPresent() && result.get().getButtonData() == javafx.scene.control.ButtonBar.ButtonData.OK_DONE) {
                 // Get the generated avatar image
                 Image avatarImage_generated = controller.getGeneratedAvatar();
                 if (avatarImage_generated != null) {
