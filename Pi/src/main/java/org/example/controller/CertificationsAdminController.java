@@ -9,6 +9,7 @@ import org.example.model.CertificationRequest;
 import org.example.model.User;
 import org.example.service.CertificationService;
 import org.example.service.NavigationService;
+import org.example.service.ThemeService;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class CertificationsAdminController {
 
     private final CertificationService certificationService = CertificationService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final ThemeService themeService = ThemeService.getInstance();
     private User currentUser;
     private List<CertificationRequest> allRequests;
 
@@ -51,7 +53,9 @@ public class CertificationsAdminController {
         
         statusLabel.setText(allRequests.size() + " demande(s) trouvée(s)");
         for (int i = 0; i < allRequests.size(); i++) {
-            certsContainer.getChildren().add(buildRow(allRequests.get(i), i % 2 == 0));
+            HBox row = buildRow(allRequests.get(i), i % 2 == 0);
+            themeService.applyToNode(row);
+            certsContainer.getChildren().add(row);
         }
     }
 

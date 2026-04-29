@@ -71,6 +71,7 @@ public class AdminController {
         javafx.application.Platform.runLater(() -> {
             if (adminNameLabel != null && adminNameLabel.getScene() != null) {
                 themeService.registerScene(adminNameLabel.getScene());
+                themeService.reapplyCurrentScene(adminNameLabel.getScene()); // Force reapply dark mode when returning
                 updateThemeButtonIcon();
             }
         });
@@ -136,6 +137,7 @@ public class AdminController {
         for (int i = 0; i < count; i++) {
             User u = users.get(i);
             HBox row = buildRecentUserRow(u, i % 2 == 0);
+            themeService.applyToNode(row);
             recentUsersContainer.getChildren().add(row);
         }
 

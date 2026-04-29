@@ -88,9 +88,11 @@ public class LoginController {
         passwordStrengthBox.setVisible(show);
         passwordStrengthBox.setManaged(show);
 
+        // Only show password suggestion button during account creation (not login)
         if (suggestPasswordBtn != null) {
-            suggestPasswordBtn.setVisible(show);
-            suggestPasswordBtn.setManaged(show);
+            boolean showSuggest = show && !isLoginMode;
+            suggestPasswordBtn.setVisible(showSuggest);
+            suggestPasswordBtn.setManaged(showSuggest);
         }
 
         if (!show) return;
@@ -195,21 +197,26 @@ public class LoginController {
             return;
         }
 
-        AuthService.AuthResult result = authService.register(
-            fullNameField.getText().trim(),
-            email,
-            getPasswordText(),
-            getConfirmPasswordText(),
-            termsCheckBox.isSelected()
-        );
+        try {
+            AuthService.AuthResult result = authService.register(
+                fullNameField.getText().trim(),
+                email,
+                getPasswordText(),
+                getConfirmPasswordText(),
+                termsCheckBox.isSelected()
+            );
 
-        // Enregistrer la tentative
-        rateLimiter.recordAttempt(email);
+            // Enregistrer la tentative
+            rateLimiter.recordAttempt(email);
 
-        updateStatus(result.getMessage(), result.isSuccess());
-        if (result.isSuccess()) {
-            rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
-            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            updateStatus(result.getMessage(), result.isSuccess());
+            if (result.isSuccess()) {
+                rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
+                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            }
+        } catch (Exception e) {
+            System.err.println("Registration error: " + e.getMessage());
+            updateStatus("Erreur de connexion à la base de données. Veuillez vérifier que le serveur MySQL est en cours d'exécution.", false);
         }
     }
 
@@ -224,18 +231,23 @@ public class LoginController {
             return;
         }
 
-        AuthService.AuthResult result = authService.login(
-            email,
-            getPasswordText()
-        );
+        try {
+            AuthService.AuthResult result = authService.login(
+                email,
+                getPasswordText()
+            );
 
-        // Enregistrer la tentative
-        rateLimiter.recordAttempt(email);
+            // Enregistrer la tentative
+            rateLimiter.recordAttempt(email);
 
-        updateStatus(result.getMessage(), result.isSuccess());
-        if (result.isSuccess()) {
-            rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
-            navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            updateStatus(result.getMessage(), result.isSuccess());
+            if (result.isSuccess()) {
+                rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
+                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+            }
+        } catch (Exception e) {
+            System.err.println("Login error: " + e.getMessage());
+            updateStatus("Erreur de connexion à la base de données. Veuillez vérifier que le serveur MySQL est en cours d'exécution.", false);
         }
     }
 

@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import org.example.model.User;
 import org.example.service.ActivityLogService;
 import org.example.service.NavigationService;
+import org.example.service.ThemeService;
 
 import java.util.*;
 
@@ -34,6 +35,7 @@ public class LogsStatsController {
     private User currentUser;
     private final ActivityLogService statsService = ActivityLogService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final ThemeService themeService = ThemeService.getInstance();
 
     public void setCurrentUser(User user) {
         this.currentUser = user;
@@ -80,13 +82,13 @@ public class LogsStatsController {
         double chartH = h - padT - padB;
 
         // Grid lines
-        gc.setStroke(Color.web("#e5e7eb"));
+        gc.setStroke(Color.web("#30363d"));
         gc.setLineWidth(1);
         int gridLines = 5;
         for (int i = 0; i <= gridLines; i++) {
             double y = padT + chartH - (i * chartH / gridLines);
             gc.strokeLine(padL, y, padL + chartW, y);
-            gc.setFill(Color.web("#9ca3af"));
+            gc.setFill(Color.web("#8b949e"));
             gc.setFont(javafx.scene.text.Font.font(9));
             gc.fillText(String.valueOf(i * maxVal / gridLines), 2, y + 4);
         }
@@ -134,7 +136,7 @@ public class LogsStatsController {
 
             // X axis label (every 5th)
             if (i % 5 == 0 || i == n - 1) {
-                gc.setFill(Color.web("#6b7280"));
+                gc.setFill(Color.web("#6e7681"));
                 gc.setFont(javafx.scene.text.Font.font(9));
                 gc.fillText(keys.get(i), x - 12, padT + chartH + 14);
             }
@@ -171,7 +173,7 @@ public class LogsStatsController {
             startAngle += sweep;
         }
         // Center hole
-        gc.setFill(Color.WHITE);
+        gc.setFill(Color.web("#161b22"));
         gc.fillOval(cx - innerR, cy - innerR, innerR * 2, innerR * 2);
 
         // Legend (right side)
@@ -181,7 +183,7 @@ public class LogsStatsController {
             String key = keys.get(i);
             gc.setFill(Color.web(colors[i % colors.length]));
             gc.fillOval(legX, legY + i * 22, 10, 10);
-            gc.setFill(Color.web("#374151"));
+            gc.setFill(Color.web("#c9d1d9"));
             gc.setFont(javafx.scene.text.Font.font(11));
             gc.fillText(key, legX + 16, legY + i * 22 + 9);
         }
@@ -221,6 +223,7 @@ public class LogsStatsController {
             countLbl.setStyle("-fx-background-color: #d1fae5; -fx-text-fill: #065f46; -fx-background-radius: 12; -fx-padding: 4 12; -fx-font-size: 11px; -fx-font-weight: bold;");
 
             row.getChildren().addAll(rankPane, nameLbl, countLbl);
+            themeService.applyToNode(row);
             topUsersContainer.getChildren().add(row);
             rank++;
         }
@@ -255,14 +258,14 @@ public class LogsStatsController {
 
             // X label every 2 hours
             if (i % 2 == 0) {
-                gc.setFill(Color.web("#6b7280"));
+                gc.setFill(Color.web("#6e7681"));
                 gc.setFont(javafx.scene.text.Font.font(8));
                 gc.fillText(String.format("%02d:00", i), x - 4, padT + chartH + 16);
             }
         }
 
         // Y axis labels
-        gc.setFill(Color.web("#9ca3af"));
+        gc.setFill(Color.web("#8b949e"));
         gc.setFont(javafx.scene.text.Font.font(9));
         for (int i = 0; i <= 4; i++) {
             double y = padT + chartH - (i * chartH / 4);
@@ -302,7 +305,7 @@ public class LogsStatsController {
             double y = padT + i * gap + (gap - barH) / 2;
 
             // Label (left)
-            gc.setFill(Color.web("#374151"));
+            gc.setFill(Color.web("#c9d1d9"));
             gc.setFont(javafx.scene.text.Font.font(11));
             String label = key.length() > 22 ? key.substring(0, 22) : key;
             gc.fillText(label, 4, y + barH / 2 + 4);
@@ -312,14 +315,14 @@ public class LogsStatsController {
             gc.fillRoundRect(padL, y, bw, barH, 4, 4);
 
             // Value label (right)
-            gc.setFill(Color.web("#374151"));
+            gc.setFill(Color.web("#c9d1d9"));
             gc.setFont(javafx.scene.text.Font.font(11));
             gc.fillText(String.valueOf(val), padL + bw + 6, y + barH / 2 + 4);
         }
     }
 
     private void drawEmpty(GraphicsContext gc, double w, double h, String msg) {
-        gc.setFill(Color.web("#9ca3af"));
+        gc.setFill(Color.web("#8b949e"));
         gc.setFont(javafx.scene.text.Font.font(13));
         gc.fillText(msg, w / 2 - 40, h / 2);
     }

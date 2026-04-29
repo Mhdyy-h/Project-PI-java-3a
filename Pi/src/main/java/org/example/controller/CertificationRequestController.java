@@ -14,6 +14,7 @@ import org.example.model.CertificationRequest;
 import org.example.service.ValidationService;
 import org.example.service.ValidationResult;
 import org.example.service.NavigationService;
+import org.example.service.ThemeService;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class CertificationRequestController {
     private File selectedPdf;
     private final ValidationService validationService = ValidationService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final ThemeService themeService = ThemeService.getInstance();
 
     @FXML
     public void initialize() {
@@ -165,7 +167,11 @@ public class CertificationRequestController {
 
     private void clearFieldStyle(TextField field) {
         if (field != null) {
-            field.setStyle("-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8;");
+            if (themeService.isDarkMode()) {
+                field.setStyle("-fx-background-color: #1e293b; -fx-border-color: #475569; -fx-border-radius: 8;");
+            } else {
+                field.setStyle("-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8;");
+            }
             field.setTooltip(null);
         }
     }

@@ -13,6 +13,7 @@ import org.example.dao.ActivityLogDAO;
 import org.example.model.ActivityLog;
 import org.example.model.User;
 import org.example.service.NavigationService;
+import org.example.service.ThemeService;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -35,6 +36,7 @@ public class LogsController {
     private User currentUser;
     private List<ActivityLog> allLogs;
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final ThemeService themeService = ThemeService.getInstance();
 
     public void setCurrentUser(User user) {
         this.currentUser = user;
@@ -83,6 +85,7 @@ public class LogsController {
         if (logs.isEmpty()) {
             Label empty = new Label("Aucun log trouvé");
             empty.setStyle("-fx-font-size: 14px; -fx-text-fill: #9ca3af; -fx-padding: 40;");
+            themeService.applyToNode(empty);
             logsContainer.getChildren().add(empty);
             return;
         }
@@ -90,6 +93,7 @@ public class LogsController {
         for (int i = 0; i < logs.size(); i++) {
             ActivityLog log = logs.get(i);
             HBox row = buildLogRow(log, i % 2 == 0);
+            themeService.applyToNode(row);
             logsContainer.getChildren().add(row);
         }
     }

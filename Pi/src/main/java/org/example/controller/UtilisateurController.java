@@ -207,6 +207,7 @@ public class UtilisateurController {
         for (int i = 0; i < users.size(); i++) {
             User u = users.get(i);
             HBox row = buildUserRow(u, i % 2 == 0);
+            themeService.applyToNode(row);
             usersContainer.getChildren().add(row);
         }
     }
