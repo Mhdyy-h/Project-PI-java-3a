@@ -64,6 +64,23 @@ public class UserDAO {
         return users;
     }
 
+    public static List<User> getTopUsers(int limit) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM utilisateur ORDER BY score_global DESC LIMIT ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    users.add(mapResultSetToUser(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ UserDAO.getTopUsers: " + e.getMessage());
+        }
+        return users;
+    }
+
     public static boolean updateUser(User user, boolean skipPassword) {
         String sql = skipPassword ?
                 "UPDATE utilisateur SET nom_complet=?, email=?, roles=? WHERE id=?" :

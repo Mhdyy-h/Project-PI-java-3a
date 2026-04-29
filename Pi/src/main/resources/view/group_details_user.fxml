@@ -3,10 +3,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #f0f2f8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.GroupDetailsController">
-
-    <!-- SIDEBAR -->
     <left>
         <VBox prefWidth="220" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 2, 0);">
             <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 24 20 24 20; -fx-border-color: transparent transparent #f0f2f8 transparent; -fx-border-width: 0 0 1 0;">
@@ -26,47 +25,62 @@
         </VBox>
     </left>
 
-    <!-- CONTENT -->
     <center>
         <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
             <VBox spacing="30" style="-fx-padding: 40;">
 
-                <!-- Header with Back Button -->
+                <!-- Header -->
                 <HBox alignment="CENTER_LEFT" spacing="20">
                     <Button onAction="#handleBackToExplorer" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 8 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1); -fx-cursor: hand;" text="← Retour" />
-                    <VBox>
-                        <Label fx:id="groupNameLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" text="Nom du Groupe" />
-                        <Label fx:id="themeLabel" style="-fx-text-fill: #4C6FFF; -fx-font-weight: bold;" text="Thématique" />
-                    </VBox>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button fx:id="actionBtn" onAction="#handleJoinLeave" prefHeight="45" prefWidth="150" style="-fx-background-radius: 12; -fx-font-weight: bold; -fx-cursor: hand;" text="Rejoindre" />
-                </HBox>
-
-                <!-- Description Card -->
-                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);">
-                    <Label style="-fx-font-weight: bold; -fx-text-fill: #64748b;" text="À PROPOS DU GROUPE" />
-                    <Label fx:id="descriptionLabel" style="-fx-font-size: 14px; -fx-text-fill: #1e293b;" text="Description du groupe..." wrapText="true" />
-                    <HBox spacing="20" style="-fx-padding: 10 0 0 0;">
-                        <VBox>
-                            <Label fx:id="memberCountLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
-                            <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 11px;" text="MEMBRES ACTUELS" />
-                        </VBox>
-                        <Separator orientation="VERTICAL" />
-                        <VBox>
-                            <Label fx:id="capacityLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
-                            <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 11px;" text="CAPACITÉ MAX" />
+                    <HBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 10 20; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                        <Label fx:id="weatherIcon" style="-fx-font-size: 24px;" text="☀️" />
+                        <VBox alignment="CENTER_LEFT">
+                            <Label fx:id="tempLabel" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #1a1a2e;" text="--°C" />
+                            <Label fx:id="cityLabel" style="-fx-font-size: 11px; -fx-text-fill: #64748b;" text="Météo du jour" />
                         </VBox>
                     </HBox>
+                </HBox>
+
+                <!-- Group Info Card -->
+                <HBox spacing="30" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);">
+                    <StackPane>
+                        <ImageView fx:id="groupImageView" fitHeight="150.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="false">
+                            <clip>
+                                <Rectangle arcHeight="30" arcWidth="30" height="150" width="220" />
+                            </clip>
+                        </ImageView>
+                    </StackPane>
+                    <VBox spacing="10" HBox.hgrow="ALWAYS">
+                        <Label fx:id="groupNameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" text="Nom du Groupe" />
+                        <Label fx:id="themeLabel" style="-fx-text-fill: #4C6FFF; -fx-font-weight: bold; -fx-font-size: 16px;" text="Thématique" />
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <Button fx:id="actionBtn" onAction="#handleJoinLeave" prefHeight="45" prefWidth="150" style="-fx-background-radius: 12; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-color: #4C6FFF; -fx-text-fill: white;" text="Rejoindre" />
+                            <VBox>
+                                <Label fx:id="memberCountLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                                <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 11px;" text="MEMBRES" />
+                            </VBox>
+                            <Separator orientation="VERTICAL" />
+                            <VBox>
+                                <Label fx:id="capacityLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                                <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 11px;" text="CAPACITÉ MAX" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+                <!-- Description -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);">
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #64748b;" text="DESCRIPTION" />
+                    <Label fx:id="descriptionLabel" style="-fx-font-size: 15px; -fx-text-fill: #1e293b; -fx-line-spacing: 5;" text="..." wrapText="true" />
                 </VBox>
 
-                <!-- Events Section -->
+                <!-- Events -->
                 <VBox spacing="15">
                     <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" text="Événements de ce groupe" />
-                    <VBox fx:id="eventsContainer" spacing="12">
-                        <!-- Events injected here -->
-                    </VBox>
+                    <VBox fx:id="eventsContainer" spacing="12" />
                 </VBox>
-
             </VBox>
         </ScrollPane>
     </center>

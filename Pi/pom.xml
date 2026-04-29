@@ -32,6 +32,20 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21</version>
         </dependency>
+
+        <!-- Added for Maps API -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>21</version>
+        </dependency>
+
+        <!-- Added for Weather API Parsing -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,5 +70,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
