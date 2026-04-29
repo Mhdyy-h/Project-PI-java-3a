@@ -4,7 +4,7 @@
 
 <VBox spacing="20"
       style="-fx-background-color: #f8f6ff; -fx-padding: 50;"
-      stylesheets="@style.css"
+      stylesheets="@../styles/style.css"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controller.ModifierExerciceController">
 

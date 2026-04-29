@@ -4,10 +4,10 @@
 <?import javafx.geometry.*?>
 
 <HBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.AdminController"
+      fx:controller="org.example.controller.MenuCoachController"
       prefWidth="1200" prefHeight="780"
       style="-fx-background-color: #f4f1fb;"
-      stylesheets="@style.css">
+      stylesheets="@../styles/style.css">
 
     <!-- ══════════ SIDEBAR ══════════ -->
     <VBox prefWidth="220"

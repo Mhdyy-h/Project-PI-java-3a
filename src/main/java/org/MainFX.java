@@ -1,4 +1,4 @@
-package org;
+package org.example;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,16 +12,14 @@ public class MainFX extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(
                 getClass().getResource("/view/Menu.fxml"));
-        primaryStage.setTitle("Gestion Séances Sport");
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+        Scene scene = new Scene(root, 1100, 700);
+        scene.getStylesheets().add(
+                getClass().getResource("/styles/style.css").toExternalForm());
 
+        primaryStage.setTitle("Gestion Sport");
         primaryStage.setScene(scene);
-        primaryStage.setWidth(1280);
-        primaryStage.setHeight(800);
-        primaryStage.setMinWidth(1000);
-        primaryStage.setMinHeight(650);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 

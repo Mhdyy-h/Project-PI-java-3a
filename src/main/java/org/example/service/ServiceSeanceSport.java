@@ -129,4 +129,7 @@ public class ServiceSeanceSport {
         }
         return liste;
     }
+    public Connection getConnection() {
+        return DatabaseConnection.getConnection();
+    }
 }

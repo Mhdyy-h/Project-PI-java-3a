@@ -280,7 +280,7 @@ public class AjouterSeanceController {
     @FXML
     public void ouvrirMenu(ActionEvent e) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuCoach.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException ex) {
             System.err.println(ex.getMessage());

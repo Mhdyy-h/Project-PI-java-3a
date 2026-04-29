@@ -68,7 +68,6 @@ public class AfficherExerciceController {
         appliquerFiltres();
     }
 
-    // ── Filtres ───────────────────────────────────────────────
     private void appliquerFiltres() {
         String recherche     = rechercheField.getText().trim().toLowerCase();
         String intensite     = filtreIntensite.getValue();
@@ -79,13 +78,11 @@ public class AfficherExerciceController {
                     boolean matchNom = recherche.isEmpty()
                             || (e.getNomExercice() != null &&
                             e.getNomExercice().toLowerCase().contains(recherche));
-
                     String intens = e.getIntensite() != null
                             ? e.getIntensite() : "Faible";
                     boolean matchIntensite = intensite == null
                             || intensite.equals("Toutes")
                             || intens.equalsIgnoreCase(intensite);
-
                     double c = e.getCaloriesParMinute();
                     boolean matchCalories = true;
                     if (caloriesRange != null) {
@@ -104,7 +101,6 @@ public class AfficherExerciceController {
         mettreAJourCompteur();
     }
 
-    // ── Afficher les Cards ────────────────────────────────────
     private void afficherCards() {
         cardsContainer.getChildren().clear();
         for (Exercice exercice : exercicesFiltres) {
@@ -120,7 +116,6 @@ public class AfficherExerciceController {
             case "Moyenne" -> "#e67e22";
             default        -> "#27ae60";
         };
-
         String emojiBord = switch (
                 exercice.getIntensite() != null
                         ? exercice.getIntensite() : "Faible") {
@@ -137,28 +132,30 @@ public class AfficherExerciceController {
                         "-fx-border-color: " + couleurBord + ";" +
                         "-fx-border-width: 2;" +
                         "-fx-border-radius: 16;" +
-                        "-fx-effect: dropshadow(gaussian, rgba(74,35,90,0.15), 15, 0, 0, 4);" +
+                        "-fx-effect: dropshadow(gaussian,rgba(74,35,90,0.15),15,0,0,4);" +
                         "-fx-pref-width: 240;"
         );
 
         Label nomLabel = new Label("💪 " + exercice.getNomExercice());
-        nomLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4a235a;");
-
-        Label intensiteLabel = new Label(emojiBord + "  " + (exercice.getIntensite() != null
-                ? exercice.getIntensite() : "Faible"));
-        intensiteLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: " + couleurBord + ";");
-
-        Label caloriesLabel = new Label("🔥  " + exercice.getCaloriesParMinute() + " cal/min");
+        nomLabel.setStyle(
+                "-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"
+        );
+        Label intensiteLabel = new Label(
+                emojiBord + "  " + (exercice.getIntensite() != null
+                        ? exercice.getIntensite() : "Faible")
+        );
+        intensiteLabel.setStyle(
+                "-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: " + couleurBord + ";"
+        );
+        Label caloriesLabel = new Label(
+                "🔥  " + exercice.getCaloriesParMinute() + " cal/min"
+        );
         caloriesLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #e94560;");
-
-        Label seanceLabel = new Label("🏋️  Séance #" + exercice.getSeanceId());
-        seanceLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #8e44ad;");
 
         Label sep = new Label("─────────────────");
         sep.setStyle("-fx-text-fill: #e8dff5; -fx-font-size: 10px;");
 
         HBox boutons = new HBox(8);
-
         Button btnModifier = new Button("✏️ Modifier");
         btnModifier.setStyle(
                 "-fx-background-color: linear-gradient(to right, #d4af37, #b8960c);" +
@@ -178,111 +175,121 @@ public class AfficherExerciceController {
         btnSupprimer.setOnAction(e -> supprimerExercice(exercice));
 
         boutons.getChildren().addAll(btnModifier, btnSupprimer);
-        card.getChildren().addAll(nomLabel, intensiteLabel, caloriesLabel, seanceLabel, sep, boutons);
-
+        card.getChildren().addAll(
+                nomLabel, intensiteLabel, caloriesLabel, sep, boutons
+        );
         return card;
     }
 
-    // ── Compteur ──────────────────────────────────────────────
     private void mettreAJourCompteur() {
         int filtre = exercicesFiltres.size();
         int total  = tousLesExercices.size();
-        if (filtre == total) {
-            compteurLabel.setText("📋 " + total + " exercice(s) au total");
-        } else {
-            compteurLabel.setText("🔍 " + filtre + " résultat(s) sur " + total);
-        }
+        compteurLabel.setText(filtre == total
+                ? "📋 " + total + " exercice(s) au total"
+                : "🔍 " + filtre + " résultat(s) sur " + total
+        );
     }
 
-    // ── Tri ───────────────────────────────────────────────────
     @FXML public void trierNomAZ() {
         FXCollections.sort(tousLesExercices,
-                Comparator.comparing(e -> e.getNomExercice() != null ? e.getNomExercice() : ""));
+                Comparator.comparing(e -> e.getNomExercice() != null
+                        ? e.getNomExercice() : ""));
         appliquerFiltres();
     }
-
     @FXML public void trierNomZA() {
         FXCollections.sort(tousLesExercices,
                 Comparator.comparing((Exercice e) -> e.getNomExercice() != null
                         ? e.getNomExercice() : "").reversed());
         appliquerFiltres();
     }
-
     @FXML public void trierCaloriesAsc() {
         FXCollections.sort(tousLesExercices,
                 Comparator.comparingDouble(Exercice::getCaloriesParMinute));
         appliquerFiltres();
     }
-
     @FXML public void trierCaloriesDesc() {
         FXCollections.sort(tousLesExercices,
                 Comparator.comparingDouble(Exercice::getCaloriesParMinute).reversed());
         appliquerFiltres();
     }
-
     @FXML public void trierIntensiteAsc() {
         FXCollections.sort(tousLesExercices, (a, b) ->
                 Integer.compare(ordreIntensite(a.getIntensite()),
                         ordreIntensite(b.getIntensite())));
         appliquerFiltres();
     }
-
     @FXML public void trierIntensiteDesc() {
         FXCollections.sort(tousLesExercices, (a, b) ->
                 Integer.compare(ordreIntensite(b.getIntensite()),
                         ordreIntensite(a.getIntensite())));
         appliquerFiltres();
     }
-
-    private int ordreIntensite(String intensite) {
-        if (intensite == null) return 0;
-        return switch (intensite) {
+    private int ordreIntensite(String i) {
+        if (i == null) return 0;
+        return switch (i) {
             case "Faible"  -> 1;
             case "Moyenne" -> 2;
             case "Élevée"  -> 3;
             default        -> 0;
         };
     }
-
     @FXML public void reinitialiserFiltres() {
         rechercheField.clear();
         filtreIntensite.setValue("Toutes");
         filtreCalories.setValue("Toutes");
     }
 
-    // ── Navigation ────────────────────────────────────────────
     private void modifierExercice(Exercice exercice) {
         try {
             ExerciceSelection.exercice = exercice;
-            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifierExercice.fxml"));
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/ModifierExercice.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
-
     private void supprimerExercice(Exercice exercice) {
         try {
             ExerciceSelection.exercice = exercice;
-            Parent root = FXMLLoader.load(getClass().getResource("/view/SupprimerExercice.fxml"));
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/SupprimerExercice.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
-
     @FXML public void ouvrirAjouter(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AjouterExercice.fxml"));
-            btnMenu.getScene().setRoot(root); // ✅ FIX
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/AjouterExercice.fxml"));
+            btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
-            System.err.println("Erreur ouvrirAjouter: " + e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
-
     @FXML public void ouvrirMenu(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Menu.fxml"));
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/MenuUser.fxml")); // ✅
+            btnMenu.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    @FXML public void ouvrirVoirSeancesBtn(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/VoirSeances.fxml"));
+            btnMenu.getScene().setRoot(root);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    @FXML public void ouvrirVoirSeances(javafx.scene.input.MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/VoirSeances.fxml"));
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());

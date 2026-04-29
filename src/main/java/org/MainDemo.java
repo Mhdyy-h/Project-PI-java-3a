@@ -1,7 +1,12 @@
 package org;
 
 import org.example.metier.service.SeanceSportService;
+import org.example.metier.service.SeanceSportService.RapportProgression;
+import org.example.metier.service.SeanceSportService.AlerteSurcharge;
+import org.example.metier.service.SeanceSportService.ExerciceRecommande;
+import org.example.metier.service.SeanceSportService.NiveauSportif;
 
+import java.util.List;
 import java.util.List;
 
 /**

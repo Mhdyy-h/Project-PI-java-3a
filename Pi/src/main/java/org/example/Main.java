@@ -1,8 +1,5 @@
 package org.example;
 
-import org.example.DatabaseConnection;
-import org.example.dao.UserDAO;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;

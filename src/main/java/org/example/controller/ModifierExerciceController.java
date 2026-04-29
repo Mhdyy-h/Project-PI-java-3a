@@ -121,7 +121,7 @@ public class ModifierExerciceController {
     @FXML
     public void retour(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AfficherExercice.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuUser.fxml"));
             btnRetour.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());

@@ -20,11 +20,10 @@
             <HBox alignment="CENTER_LEFT" spacing="16"
                   style="-fx-padding: 20 32 20 32; -fx-background-color: linear-gradient(to right, #1a1a2e, #16213e);">
 
-                <!-- Icone IA animée -->
                 <StackPane>
                     <Circle radius="24"
                             style="-fx-fill: linear-gradient(to bottom right, #7c3aed, #4C6FFF);
-                                    -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.5), 14, 0, 0, 0);"/>
+                                   -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.5), 14, 0, 0, 0);"/>
                     <Label text="🤖" style="-fx-font-size: 20px;"/>
                 </StackPane>
 
@@ -47,14 +46,6 @@
                            style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #c4b5fd;"/>
                 </HBox>
 
-                <!-- Bouton fermer -->
-                <Button fx:id="btnFermer" text="✕" onAction="#fermer"
-                        style="-fx-background-color: rgba(239,68,68,0.15);
-                               -fx-text-fill: #ef4444; -fx-font-size: 16px;
-                               -fx-background-radius: 50%; -fx-min-width: 36;
-                               -fx-min-height: 36; -fx-cursor: hand;
-                               -fx-border-color: rgba(239,68,68,0.3);
-                               -fx-border-radius: 50%;"/>
             </HBox>
 
             <!-- Tabs de navigation -->
@@ -84,31 +75,27 @@
             <VBox fx:id="mainContent" spacing="20"
                   style="-fx-padding: 28 32 32 32; -fx-background-color: #f4f6fb;">
 
-                <!-- ===== SECTION 1 : CARTES STATISTIQUES ===== -->
+                <!-- SECTION 1 : CARTES STATISTIQUES -->
                 <HBox spacing="16">
 
-                    <!-- Carte Séances -->
                     <VBox HBox.hgrow="ALWAYS" spacing="8"
                           style="-fx-background-color: white; -fx-background-radius: 16;
                                  -fx-padding: 24 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);
                                  -fx-border-color: #ede9fe; -fx-border-width: 1; -fx-border-radius: 16;">
                         <HBox alignment="CENTER_LEFT" spacing="12">
                             <StackPane>
-                                <Circle radius="20"
-                                        style="-fx-fill: #ede9fe;"/>
+                                <Circle radius="20" style="-fx-fill: #ede9fe;"/>
                                 <Label text="🏋️" style="-fx-font-size: 16px;"/>
                             </StackPane>
                             <Label text="Séances totales"
                                    style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
                         </HBox>
                         <Label fx:id="lblTotalSeances" text="—"
-                               style="-fx-font-size: 32px; -fx-font-weight: bold;
-                                      -fx-text-fill: #1a1a2e;"/>
+                               style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                         <Label fx:id="lblEvolutionSeances" text=""
                                style="-fx-font-size: 11px; -fx-text-fill: #10b981;"/>
                     </VBox>
 
-                    <!-- Carte Durée moyenne -->
                     <VBox HBox.hgrow="ALWAYS" spacing="8"
                           style="-fx-background-color: white; -fx-background-radius: 16;
                                  -fx-padding: 24 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);
@@ -123,17 +110,14 @@
                         </HBox>
                         <HBox alignment="BASELINE_LEFT" spacing="4">
                             <Label fx:id="lblDureeMoyenne" text="—"
-                                   style="-fx-font-size: 32px; -fx-font-weight: bold;
-                                          -fx-text-fill: #1a1a2e;"/>
+                                   style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                             <Label text="min"
-                                   style="-fx-font-size: 14px; -fx-text-fill: #9ca3af;
-                                          -fx-padding: 0 0 6 0;"/>
+                                   style="-fx-font-size: 14px; -fx-text-fill: #9ca3af; -fx-padding: 0 0 6 0;"/>
                         </HBox>
                         <Label fx:id="lblTendanceDuree" text=""
                                style="-fx-font-size: 11px; -fx-text-fill: #10b981;"/>
                     </VBox>
 
-                    <!-- Carte Score IA -->
                     <VBox HBox.hgrow="ALWAYS" spacing="8"
                           style="-fx-background-color: white; -fx-background-radius: 16;
                                  -fx-padding: 24 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);
@@ -148,17 +132,14 @@
                         </HBox>
                         <HBox alignment="BASELINE_LEFT" spacing="4">
                             <Label fx:id="lblScoreIA" text="—"
-                                   style="-fx-font-size: 32px; -fx-font-weight: bold;
-                                          -fx-text-fill: #1a1a2e;"/>
+                                   style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                             <Label text="/10"
-                                   style="-fx-font-size: 14px; -fx-text-fill: #9ca3af;
-                                          -fx-padding: 0 0 6 0;"/>
+                                   style="-fx-font-size: 14px; -fx-text-fill: #9ca3af; -fx-padding: 0 0 6 0;"/>
                         </HBox>
                         <Label fx:id="lblNiveauScore" text=""
                                style="-fx-font-size: 11px; -fx-text-fill: #f59e0b;"/>
                     </VBox>
 
-                    <!-- Carte Niveau global -->
                     <VBox HBox.hgrow="ALWAYS" spacing="8"
                           style="-fx-background-color: linear-gradient(to bottom right, #7c3aed, #4C6FFF);
                                  -fx-background-radius: 16; -fx-padding: 24 20;
@@ -170,64 +151,51 @@
                                    style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.7);"/>
                         </HBox>
                         <Label fx:id="lblNiveauGlobal" text="—"
-                               style="-fx-font-size: 26px; -fx-font-weight: bold;
-                                      -fx-text-fill: white;"/>
+                               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: white;"/>
                         <Label fx:id="lblDescriptionNiveau" text=""
                                style="-fx-font-size: 11px; -fx-text-fill: rgba(255,255,255,0.7);
                                       -fx-wrap-text: true;"/>
                     </VBox>
                 </HBox>
 
-                <!-- ===== SECTION 2 : ANALYSE + BARRE DE PROGRESSION ===== -->
+                <!-- SECTION 2 : ANALYSE + BARRES -->
                 <HBox spacing="16">
 
-                    <!-- Bloc analyse textuelle -->
                     <VBox HBox.hgrow="ALWAYS" spacing="16"
                           style="-fx-background-color: white; -fx-background-radius: 16;
                                  -fx-padding: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);">
                         <HBox alignment="CENTER_LEFT" spacing="10">
-                            <Label text="🤖"  style="-fx-font-size: 18px;"/>
+                            <Label text="🤖" style="-fx-font-size: 18px;"/>
                             <Label text="Analyse IA Détaillée"
-                                   style="-fx-font-size: 15px; -fx-font-weight: bold;
-                                          -fx-text-fill: #1a1a2e;"/>
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                         </HBox>
-
                         <Separator style="-fx-opacity: 0.4;"/>
-
                         <VBox spacing="12">
-                            <!-- Fréquence -->
                             <VBox spacing="6">
                                 <HBox spacing="8" alignment="CENTER_LEFT">
                                     <Label text="📅" style="-fx-font-size: 13px;"/>
                                     <Label text="Fréquence d'entraînement"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #374151;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
                                 </HBox>
                                 <Label fx:id="lblAnalyseFrequence" text="—"
                                        style="-fx-font-size: 12px; -fx-text-fill: #6b7280;
                                               -fx-wrap-text: true; -fx-padding: 0 0 0 22;"/>
                             </VBox>
-
-                            <!-- Intensité -->
                             <VBox spacing="6">
                                 <HBox spacing="8" alignment="CENTER_LEFT">
                                     <Label text="💪" style="-fx-font-size: 13px;"/>
                                     <Label text="Intensité des séances"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #374151;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
                                 </HBox>
                                 <Label fx:id="lblAnalyseIntensite" text="—"
                                        style="-fx-font-size: 12px; -fx-text-fill: #6b7280;
                                               -fx-wrap-text: true; -fx-padding: 0 0 0 22;"/>
                             </VBox>
-
-                            <!-- Régularité -->
                             <VBox spacing="6">
                                 <HBox spacing="8" alignment="CENTER_LEFT">
                                     <Label text="📈" style="-fx-font-size: 13px;"/>
                                     <Label text="Régularité"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #374151;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #374151;"/>
                                 </HBox>
                                 <Label fx:id="lblAnalyseRegularite" text="—"
                                        style="-fx-font-size: 12px; -fx-text-fill: #6b7280;
@@ -236,88 +204,65 @@
                         </VBox>
                     </VBox>
 
-                    <!-- Bloc barres de progression -->
                     <VBox prefWidth="280" spacing="16"
                           style="-fx-background-color: white; -fx-background-radius: 16;
                                  -fx-padding: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);">
                         <Label text="📊 Scores par critère"
-                               style="-fx-font-size: 15px; -fx-font-weight: bold;
-                                      -fx-text-fill: #1a1a2e;"/>
+                               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                         <Separator style="-fx-opacity: 0.4;"/>
-
                         <VBox spacing="14">
-                            <!-- Fréquence -->
                             <VBox spacing="6">
                                 <HBox alignment="CENTER_LEFT">
-                                    <Label text="Fréquence"
-                                           style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
+                                    <Label text="Fréquence" style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Label fx:id="lblScoreFrequence" text="0/10"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #7c3aed;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #7c3aed;"/>
                                 </HBox>
                                 <ProgressBar fx:id="barFrequence" progress="0" maxWidth="1.7976931348623157E308"
-                                             style="-fx-accent: #7c3aed; -fx-background-radius: 4;
-                                                    -fx-control-inner-background: #f3f4f6; -fx-pref-height: 8;"/>
+                                             style="-fx-accent: #7c3aed; -fx-pref-height: 8;"/>
                             </VBox>
-
-                            <!-- Intensité -->
                             <VBox spacing="6">
                                 <HBox alignment="CENTER_LEFT">
-                                    <Label text="Intensité"
-                                           style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
+                                    <Label text="Intensité" style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Label fx:id="lblScoreIntensite" text="0/10"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #10b981;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #10b981;"/>
                                 </HBox>
                                 <ProgressBar fx:id="barIntensite" progress="0" maxWidth="1.7976931348623157E308"
-                                             style="-fx-accent: #10b981; -fx-background-radius: 4;
-                                                    -fx-control-inner-background: #f3f4f6; -fx-pref-height: 8;"/>
+                                             style="-fx-accent: #10b981; -fx-pref-height: 8;"/>
                             </VBox>
-
-                            <!-- Régularité -->
                             <VBox spacing="6">
                                 <HBox alignment="CENTER_LEFT">
-                                    <Label text="Régularité"
-                                           style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
+                                    <Label text="Régularité" style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Label fx:id="lblScoreRegularite" text="0/10"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #f59e0b;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #f59e0b;"/>
                                 </HBox>
                                 <ProgressBar fx:id="barRegularite" progress="0" maxWidth="1.7976931348623157E308"
-                                             style="-fx-accent: #f59e0b; -fx-background-radius: 4;
-                                                    -fx-control-inner-background: #f3f4f6; -fx-pref-height: 8;"/>
+                                             style="-fx-accent: #f59e0b; -fx-pref-height: 8;"/>
                             </VBox>
-
-                            <!-- Progression globale -->
                             <VBox spacing="6">
                                 <HBox alignment="CENTER_LEFT">
-                                    <Label text="Score global"
-                                           style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
+                                    <Label text="Score global" style="-fx-font-size: 12px; -fx-text-fill: #374151;"/>
                                     <Region HBox.hgrow="ALWAYS"/>
                                     <Label fx:id="lblScoreGlobal2" text="0/10"
-                                           style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                                  -fx-text-fill: #4C6FFF;"/>
+                                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
                                 </HBox>
                                 <ProgressBar fx:id="barGlobal" progress="0" maxWidth="1.7976931348623157E308"
-                                             style="-fx-accent: #4C6FFF; -fx-background-radius: 4;
-                                                    -fx-control-inner-background: #f3f4f6; -fx-pref-height: 10;"/>
+                                             style="-fx-accent: #4C6FFF; -fx-pref-height: 10;"/>
                             </VBox>
                         </VBox>
                     </VBox>
                 </HBox>
 
-                <!-- ===== SECTION 3 : RECOMMANDATIONS IA ===== -->
+                <!-- SECTION 3 : RECOMMANDATIONS -->
                 <VBox spacing="16"
                       style="-fx-background-color: white; -fx-background-radius: 16;
                              -fx-padding: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);">
                     <HBox alignment="CENTER_LEFT" spacing="10">
                         <Label text="💡" style="-fx-font-size: 18px;"/>
                         <Label text="Recommandations personnalisées"
-                               style="-fx-font-size: 15px; -fx-font-weight: bold;
-                                      -fx-text-fill: #1a1a2e;"/>
+                               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label text="Généré par IA"
                                style="-fx-font-size: 11px; -fx-text-fill: white;
@@ -325,51 +270,36 @@
                                       -fx-padding: 4 10;"/>
                     </HBox>
                     <Separator style="-fx-opacity: 0.4;"/>
-
                     <VBox fx:id="recommendationsContainer" spacing="10"/>
                 </VBox>
 
-                <!-- ===== SECTION 4 : HISTORIQUE SÉANCES ===== -->
+                <!-- SECTION 4 : HISTORIQUE -->
                 <VBox spacing="0"
                       style="-fx-background-color: white; -fx-background-radius: 16;
                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 12, 0, 0, 2);
                              -fx-padding: 0 0 8 0;">
-
-                    <HBox alignment="CENTER_LEFT" spacing="10"
-                          style="-fx-padding: 20 24 16 24;">
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 20 24 16 24;">
                         <Label text="📋" style="-fx-font-size: 18px;"/>
                         <Label text="Historique des séances"
-                               style="-fx-font-size: 15px; -fx-font-weight: bold;
-                                      -fx-text-fill: #1a1a2e;"/>
+                               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Label fx:id="lblNbSeances" text=""
                                style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
                     </HBox>
-
-                    <!-- En-tête tableau -->
                     <HBox style="-fx-background-color: #f8fafc; -fx-padding: 10 24;">
                         <Label text="DATE" prefWidth="150"
-                               style="-fx-font-size: 11px; -fx-font-weight: bold;
-                                      -fx-text-fill: #9ca3af;"/>
+                               style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
                         <Label text="TYPE" prefWidth="180"
-                               style="-fx-font-size: 11px; -fx-font-weight: bold;
-                                      -fx-text-fill: #9ca3af;"/>
+                               style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
                         <Label text="DURÉE" prefWidth="120"
-                               style="-fx-font-size: 11px; -fx-font-weight: bold;
-                                      -fx-text-fill: #9ca3af;"/>
+                               style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
                         <Label text="STATUT" prefWidth="140"
-                               style="-fx-font-size: 11px; -fx-font-weight: bold;
-                                      -fx-text-fill: #9ca3af;"/>
+                               style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
                         <Label text="SCORE"
-                               style="-fx-font-size: 11px; -fx-font-weight: bold;
-                                      -fx-text-fill: #9ca3af;"/>
+                               style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
                     </HBox>
-
                     <Separator style="-fx-opacity: 0.3;"/>
-
                     <VBox fx:id="seancesContainer" spacing="0"/>
-
-                    <!-- Message si vide -->
                     <VBox fx:id="emptyState" alignment="CENTER" spacing="10"
                           style="-fx-padding: 40; -fx-opacity: 0.6;" visible="false">
                         <Label text="🏃" style="-fx-font-size: 36px;"/>
@@ -378,7 +308,7 @@
                     </VBox>
                 </VBox>
 
-                <!-- ===== FOOTER BOUTONS ===== -->
+                <!-- FOOTER BOUTONS -->
                 <HBox spacing="12" alignment="CENTER_RIGHT" style="-fx-padding: 8 0 0 0;">
                     <Button text="🖨️  Exporter PDF" onAction="#exporterPDF"
                             style="-fx-background-color: white; -fx-text-fill: #374151;
@@ -397,5 +327,18 @@
             </VBox>
         </ScrollPane>
     </center>
+
+    <!-- ✅ Bouton retour en bas -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="12"
+              style="-fx-padding: 12 32; -fx-background-color: white;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, -2);">
+            <Button fx:id="btnFermer" text="← Retour Menu" onAction="#fermer"
+                    style="-fx-background-color: #1a1a2e;
+                           -fx-text-fill: white; -fx-font-size: 13px;
+                           -fx-font-weight: bold; -fx-background-radius: 10;
+                           -fx-padding: 10 20; -fx-cursor: hand;"/>
+        </HBox>
+    </bottom>
 
 </BorderPane>

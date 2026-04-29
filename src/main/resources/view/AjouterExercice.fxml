@@ -27,7 +27,59 @@
             </HBox>
         </VBox>
 
-        <!-- Section Informations principales -->
+        <!-- ══════════ SECTION SÉANCES DISPONIBLES ══════════ -->
+        <VBox spacing="12"
+              style="-fx-background-color: white;
+                     -fx-background-radius: 18;
+                     -fx-padding: 22;
+                     -fx-effect: dropshadow(gaussian, rgba(74,35,90,0.12), 20, 0, 0, 6);
+                     -fx-border-color: #10b981; -fx-border-width: 2;
+                     -fx-border-radius: 18;">
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="🏃" style="-fx-font-size: 20px;"/>
+                <VBox spacing="2">
+                    <Label text="Séances disponibles"
+                           style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2d1b69;"/>
+                    <Label text="Cliquez sur une séance pour sélectionner automatiquement son ID"
+                           style="-fx-font-size: 11px; -fx-text-fill: #9b89a8;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="🔄 Actualiser" onAction="#chargerSeances"
+                        style="-fx-background-color: #f0fdf4; -fx-text-fill: #10b981;
+                               -fx-font-size: 11px; -fx-font-weight: bold;
+                               -fx-background-radius: 8; -fx-cursor: hand;
+                               -fx-border-color: #10b981; -fx-border-width: 1.5;
+                               -fx-border-radius: 8; -fx-pref-height: 32;
+                               -fx-padding: 0 12;"/>
+            </HBox>
+
+            <Label text="──────────────────────────────────────"
+                   style="-fx-text-fill: #d4af37; -fx-opacity: 0.4; -fx-font-size: 10px;"/>
+
+            <ScrollPane fitToWidth="true" prefHeight="160"
+                        style="-fx-background-color: transparent;
+                               -fx-background: transparent;
+                               -fx-border-color: transparent;">
+                <FlowPane fx:id="seancesContainer"
+                          hgap="10" vgap="10"
+                          style="-fx-background-color: transparent; -fx-padding: 4;"/>
+            </ScrollPane>
+
+            <HBox spacing="10" alignment="CENTER_LEFT"
+                  style="-fx-background-color: #f0fdf4; -fx-background-radius: 10;
+                         -fx-padding: 10 14;">
+                <Label text="✅ ID séance sélectionné :"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #10b981;"/>
+                <Label fx:id="labelSeanceSelectionnee"
+                       text="Aucune séance sélectionnée"
+                       style="-fx-font-size: 12px; -fx-text-fill: #555; -fx-font-style: italic;"/>
+            </HBox>
+
+        </VBox>
+        <!-- fin SÉANCES -->
+
+        <!-- ══════════ SECTION INFORMATIONS PRINCIPALES ══════════ -->
         <VBox spacing="15"
               style="-fx-background-color: white;
                      -fx-background-radius: 18;
@@ -82,6 +134,8 @@
 
             <!-- Calories + ID Séance -->
             <HBox spacing="20">
+
+                <!-- Calories -->
                 <VBox spacing="7" HBox.hgrow="ALWAYS">
                     <HBox spacing="8" alignment="CENTER_LEFT">
                         <Label text=" 🔥 "
@@ -91,16 +145,28 @@
                         <Label text="Calories par minute"
                                style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
                     </HBox>
-                    <TextField fx:id="caloriesField" promptText="Ex: 8.5, 12.0..."
-                               maxWidth="Infinity"
-                               style="-fx-background-color: #fff0f3; -fx-text-fill: #4a235a;
-                                      -fx-border-color: #e94560; -fx-border-radius: 12;
-                                      -fx-background-radius: 12; -fx-pref-height: 46;
-                                      -fx-font-size: 13px; -fx-padding: 0 16;"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <TextField fx:id="caloriesField"
+                                   promptText="Cliquer Calculer ou saisir manuellement"
+                                   style="-fx-background-color: #faf8ff; -fx-text-fill: #4a235a;
+                                          -fx-border-color: #d4af37; -fx-border-radius: 12;
+                                          -fx-background-radius: 12; -fx-pref-height: 46;
+                                          -fx-font-size: 13px; -fx-padding: 0 16;
+                                          -fx-pref-width: 220;"/>
+                        <Button text="🔥 Calculer via API"
+                                onAction="#calculerCaloriesAPI"
+                                style="-fx-background-color: #e67e22;
+                                       -fx-text-fill: white;
+                                       -fx-background-radius: 10;
+                                       -fx-padding: 10 16;
+                                       -fx-cursor: hand;
+                                       -fx-font-size: 12px;"/>
+                    </HBox>
                     <Label fx:id="errCalories" text=""
                            style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 0 0 0 5;"/>
                 </VBox>
 
+                <!-- ID Séance -->
                 <VBox spacing="7" HBox.hgrow="ALWAYS">
                     <HBox spacing="8" alignment="CENTER_LEFT">
                         <Label text=" 🏋️ "
@@ -110,18 +176,22 @@
                         <Label text="ID Séance associée"
                                style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"/>
                     </HBox>
-                    <TextField fx:id="seanceIdField" promptText="Ex: 1, 2, 3..."
+                    <TextField fx:id="seanceIdField"
+                               promptText="Sélectionnez ci-dessus..."
                                maxWidth="Infinity"
                                style="-fx-background-color: #f0fff6; -fx-text-fill: #4a235a;
-                                      -fx-border-color: #27ae60; -fx-border-radius: 12;
+                                      -fx-border-color: #10b981; -fx-border-radius: 12;
                                       -fx-background-radius: 12; -fx-pref-height: 46;
                                       -fx-font-size: 13px; -fx-padding: 0 16;"/>
                     <Label fx:id="errSeance" text=""
                            style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 0 0 0 5;"/>
                 </VBox>
+
             </HBox>
+            <!-- fin Calories + ID Séance -->
 
         </VBox>
+        <!-- fin INFORMATIONS PRINCIPALES -->
 
         <!-- Guide intensités -->
         <VBox spacing="10"

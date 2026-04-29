@@ -1,6 +1,6 @@
-package org.example;
+package org;
 
-import model.SeanceSport;
+import org.example.model.SeanceSport;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 

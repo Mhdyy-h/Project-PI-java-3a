@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,65 +24,65 @@ public class MenuController {
     @FXML private Label moyenneDureeLabel;
     @FXML private Label totalMedaillesLabel;
 
-    // 🔥 FIX IMPORTANT : exécution en thread pour éviter freeze JavaFX
     @FXML
     public void initialize() {
-        new Thread(this::chargerStatistiques).start();
+        new Thread(() -> {
+            try {
+                List<SeanceSport> seances = new ServiceSeanceSport().afficherAll();
+                double moyenne = seances.stream()
+                        .mapToInt(SeanceSport::getDureeMinutes)
+                        .average().orElse(0);
+                long medaillesOr = seances.stream()
+                        .filter(s -> "Or".equalsIgnoreCase(s.getMedailleObtenue()))
+                        .count();
+
+                Platform.runLater(() -> {
+                    totalSeancesLabel.setText(String.valueOf(seances.size()));
+                    moyenneDureeLabel.setText(String.format("%.0f", moyenne));
+                    totalMedaillesLabel.setText(String.valueOf(medaillesOr));
+                });
+            } catch (Exception e) {
+                Platform.runLater(() -> {
+                    totalSeancesLabel.setText("0");
+                    moyenneDureeLabel.setText("0");
+                    totalMedaillesLabel.setText("0");
+                });
+            }
+
+            try {
+                List<Exercice> exercices = new ServiceExercice().afficherAll();
+                Platform.runLater(() ->
+                        totalExercicesLabel.setText(String.valueOf(exercices.size()))
+                );
+            } catch (Exception e) {
+                Platform.runLater(() -> totalExercicesLabel.setText("0"));
+            }
+        }).start();
     }
 
-    private void chargerStatistiques() {
-        try {
-            List<SeanceSport> seances = new ServiceSeanceSport().afficherAll();
-            totalSeancesLabel.setText(String.valueOf(seances.size()));
-
-            double moyenne = seances.stream()
-                    .mapToInt(SeanceSport::getDureeMinutes)
-                    .average().orElse(0);
-
-            moyenneDureeLabel.setText(String.format("%.0f", moyenne));
-
-            long medaillesOr = seances.stream()
-                    .filter(s -> "Or".equalsIgnoreCase(s.getMedailleObtenue()))
-                    .count();
-
-            totalMedaillesLabel.setText(String.valueOf(medaillesOr));
-
-        } catch (Exception e) {
-            totalSeancesLabel.setText("0");
-            moyenneDureeLabel.setText("0");
-            totalMedaillesLabel.setText("0");
-        }
-
-        try {
-            List<Exercice> exercices = new ServiceExercice().afficherAll();
-            totalExercicesLabel.setText(String.valueOf(exercices.size()));
-        } catch (Exception e) {
-            totalExercicesLabel.setText("0");
-        }
-    }
-
-    // ── CARTES ──────────────────────────────────────
-
+    // ── Séances → MenuCoach ──────────────────────────────────
     @FXML
     public void ouvrirSeances(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AfficherSeance.fxml"));
-            totalSeancesLabel.getScene().setRoot(root);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuCoach.fxml"));
+            ((javafx.scene.Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
+    // ── Exercices → MenuUser ─────────────────────────────────
     @FXML
     public void ouvrirExercices(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AfficherExercice.fxml"));
-            totalExercicesLabel.getScene().setRoot(root);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuUser.fxml"));
+            ((javafx.scene.Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
+    // ── Admin — ouvre dans une nouvelle fenêtre ──────────────
     @FXML
     public void ouvrirAdmin(MouseEvent event) {
         try {
@@ -89,21 +90,20 @@ public class MenuController {
             Stage adminStage = new Stage();
             adminStage.setTitle("⚙️ Back Office Admin");
             adminStage.setScene(new Scene(root));
-            adminStage.setWidth(1100);
-            adminStage.setHeight(750);
+            adminStage.setWidth(1200);
+            adminStage.setHeight(780);
             adminStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erreur admin : " + e.getMessage());
         }
     }
 
-    // ── NAVBAR ───────────────────────────────────────
-
+    // ── Boutons Nav (ActionEvent) ────────────────────────────
     @FXML
     public void ouvrirSeancesNav(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AfficherSeance.fxml"));
-            totalSeancesLabel.getScene().setRoot(root);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuCoach.fxml"));
+            ((javafx.scene.Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -112,8 +112,8 @@ public class MenuController {
     @FXML
     public void ouvrirExercicesNav(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AfficherExercice.fxml"));
-            totalExercicesLabel.getScene().setRoot(root);
+            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuUser.fxml"));
+            ((javafx.scene.Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -130,7 +130,7 @@ public class MenuController {
             adminStage.setHeight(780);
             adminStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erreur admin : " + e.getMessage());
         }
     }
 }

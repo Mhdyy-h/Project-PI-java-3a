@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="0" prefWidth="1100" prefHeight="700"
+      style="-fx-background-color: #0f0f1a;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.ProfilAthleteController">
+
+    <!-- HEADER -->
+    <HBox alignment="CENTER_LEFT" spacing="16"
+          style="-fx-background-color: #1a1a2e; -fx-padding: 16 20;">
+        <Button text="←" onAction="#retourMenu"
+                style="-fx-background-color: #2a2a2a; -fx-text-fill: #aaaaaa;
+                       -fx-background-radius: 8; -fx-padding: 6 12; -fx-cursor: hand;"/>
+        <Label text="👤" style="-fx-font-size: 24px;"/>
+        <VBox spacing="2">
+            <Label text="Mon Profil Athlète"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Remplissez votre profil pour des recommandations personnalisées"
+                   style="-fx-font-size: 11px; -fx-text-fill: #7d3c98;"/>
+        </VBox>
+    </HBox>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                style="-fx-background: transparent; -fx-background-color: transparent;"
+                pannable="false">
+        <VBox spacing="16" style="-fx-padding: 20; -fx-background-color: #0f0f1a;">
+
+            <!-- ① PHYSIQUE — PREMIER BLOC -->
+            <VBox spacing="10" style="-fx-background-color: #1a1a2e;
+                                      -fx-background-radius: 16; -fx-padding: 20;">
+                <Label text="📏 Informations Physiques"
+                       style="-fx-text-fill: #7d3c98; -fx-font-weight: bold;
+                              -fx-font-size: 13px;"/>
+                <HBox spacing="16">
+                    <VBox spacing="4">
+                        <Label text="Âge"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <TextField fx:id="fieldAge" promptText="ex: 25"
+                                   style="-fx-background-color: #2a2a3e;
+                                          -fx-text-fill: white;
+                                          -fx-background-radius: 8;
+                                          -fx-padding: 8;
+                                          -fx-pref-width: 120;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Poids (kg)"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <TextField fx:id="fieldPoids" promptText="ex: 65.5"
+                                   style="-fx-background-color: #2a2a3e;
+                                          -fx-text-fill: white;
+                                          -fx-background-radius: 8;
+                                          -fx-padding: 8;
+                                          -fx-pref-width: 120;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Taille (cm)"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <TextField fx:id="fieldTaille" promptText="ex: 165"
+                                   style="-fx-background-color: #2a2a3e;
+                                          -fx-text-fill: white;
+                                          -fx-background-radius: 8;
+                                          -fx-padding: 8;
+                                          -fx-pref-width: 120;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Sexe"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <ComboBox fx:id="comboSexe"
+                                  style="-fx-background-color: #2a2a3e;
+                                         -fx-pref-width: 140;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- ② SANTÉ -->
+            <VBox spacing="10" style="-fx-background-color: #1a1a2e;
+                                      -fx-background-radius: 16; -fx-padding: 20;">
+                <Label text="🏥 Santé et Historique Médical"
+                       style="-fx-text-fill: #7d3c98; -fx-font-weight: bold;
+                              -fx-font-size: 13px;"/>
+                <HBox spacing="16">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Blessures actuelles / passées"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <TextArea fx:id="areaBlessures"
+                                  promptText="ex: genou droit, dos..."
+                                  prefRowCount="3"
+                                  style="-fx-control-inner-background: #2a2a3e;
+                 -fx-text-fill: white;
+                 -fx-prompt-text-fill: #666666;
+                 -fx-highlight-fill: #7d3c98;
+                 -fx-border-color: #3a3a5e;
+                 -fx-border-radius: 8;
+                 -fx-background-radius: 8;
+                 -fx-font-size: 12px;"/>
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Médicaments"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <TextArea fx:id="areaMedicaments"
+                                  promptText="ex: aucun / aspirine..."
+                                  prefRowCount="3"
+                                  style="-fx-control-inner-background: #2a2a3e;
+                 -fx-text-fill: white;
+                 -fx-prompt-text-fill: #666666;
+                 -fx-highlight-fill: #7d3c98;
+                 -fx-border-color: #3a3a5e;
+                 -fx-border-radius: 8;
+                 -fx-background-radius: 8;
+                 -fx-font-size: 12px;"/>
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Historique médical"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <TextArea fx:id="areaHistorique"
+                                  promptText="ex: diabète, hypertension..."
+                                  prefRowCount="3"
+                                  style="-fx-control-inner-background: #2a2a3e;
+                 -fx-text-fill: white;
+                 -fx-prompt-text-fill: #666666;
+                 -fx-highlight-fill: #7d3c98;
+                 -fx-border-color: #3a3a5e;
+                 -fx-border-radius: 8;
+                 -fx-background-radius: 8;
+                 -fx-font-size: 12px;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- ③ SPORT -->
+            <VBox spacing="10" style="-fx-background-color: #1a1a2e;
+                                      -fx-background-radius: 16; -fx-padding: 20;">
+                <Label text="🏋️ Objectif Sportif"
+                       style="-fx-text-fill: #7d3c98; -fx-font-weight: bold;
+                              -fx-font-size: 13px;"/>
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <VBox spacing="4">
+                        <Label text="Objectif"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <ComboBox fx:id="comboObjectif"
+                                  style="-fx-background-color: #2a2a3e;
+                                         -fx-pref-width: 200;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Niveau actuel"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <ComboBox fx:id="comboNiveau"
+                                  style="-fx-background-color: #2a2a3e;
+                                         -fx-pref-width: 180;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Disponibilité"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblDispo" text="3 jours/semaine"
+                               style="-fx-text-fill: #44cc88; -fx-font-weight: bold;"/>
+                        <Slider fx:id="sliderDispo" min="1" max="7" value="3"
+                                blockIncrement="1" snapToTicks="true"
+                                majorTickUnit="1"
+                                style="-fx-pref-width: 200;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- ④ MENTAL -->
+            <VBox spacing="10" style="-fx-background-color: #1a1a2e;
+                                      -fx-background-radius: 16; -fx-padding: 20;">
+                <Label text="🧠 État Mental"
+                       style="-fx-text-fill: #7d3c98; -fx-font-weight: bold;
+                              -fx-font-size: 13px;"/>
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <VBox spacing="4">
+                        <Label text="État émotionnel"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <ComboBox fx:id="comboEmotion"
+                                  style="-fx-background-color: #2a2a3e;
+                                         -fx-pref-width: 180;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Niveau de stress"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblStress" text="5 / 10"
+                               style="-fx-text-fill: #ffaa00; -fx-font-weight: bold;"/>
+                        <Slider fx:id="sliderStress" min="1" max="10" value="5"
+                                blockIncrement="1"
+                                style="-fx-pref-width: 180;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Qualité du sommeil"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+                        <Label fx:id="lblSommeil" text="5 / 10"
+                               style="-fx-text-fill: #44cc88; -fx-font-weight: bold;"/>
+                        <Slider fx:id="sliderSommeil" min="1" max="10" value="5"
+                                blockIncrement="1"
+                                style="-fx-pref-width: 180;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- ⑤ ALIMENTATION -->
+            <VBox spacing="10" style="-fx-background-color: #1a1a2e;
+                                      -fx-background-radius: 16; -fx-padding: 20;">
+                <Label text="🥗 Alimentation"
+                       style="-fx-text-fill: #7d3c98; -fx-font-weight: bold;
+                              -fx-font-size: 13px;"/>
+                <ComboBox fx:id="comboAlimentation"
+                          style="-fx-background-color: #2a2a3e;
+                                 -fx-pref-width: 220;"/>
+            </VBox>
+
+            <!-- RÉSULTAT + BOUTON SAUVEGARDER -->
+            <Label fx:id="lblResultat" text="" wrapText="true"
+                   style="-fx-font-size: 12px;"/>
+
+            <Button text="💾 Sauvegarder mon profil"
+                    onAction="#sauvegarder"
+                    style="-fx-background-color: #7d3c98;
+                           -fx-text-fill: white;
+                           -fx-background-radius: 10;
+                           -fx-padding: 12 30;
+                           -fx-font-size: 13px;
+                           -fx-cursor: hand;"/>
+
+        </VBox>
+    </ScrollPane>
+</VBox>

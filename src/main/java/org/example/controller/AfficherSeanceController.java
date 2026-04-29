@@ -131,25 +131,20 @@ public class AfficherSeanceController {
                         "-fx-pref-width: 240;"
         );
 
-        // Nom
         Label nomLabel = new Label("🏃 " + seance.getNomSeance());
         nomLabel.setStyle(
                 "-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4a235a;"
         );
 
-        // Durée
         Label dureeLabel = new Label("⏱️  " + seance.getDureeMinutes() + " minutes");
         dureeLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #27ae60;");
 
-        // Date
         Label dateLabel = new Label("📅  " + seance.getDateSeance());
         dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #2980b9;");
 
-        // Heure
         Label heureLabel = new Label("⏰  " + seance.getHeureDebut());
         heureLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #8e44ad;");
 
-        // Médaille
         String medEmoji = switch (
                 seance.getMedailleObtenue() != null
                         ? seance.getMedailleObtenue() : "Aucune") {
@@ -164,22 +159,20 @@ public class AfficherSeanceController {
                         "-fx-text-fill: " + couleurBord + ";"
         );
 
-        // Séparateur
         Label sep = new Label("─────────────────");
         sep.setStyle("-fx-text-fill: #e8dff5; -fx-font-size: 10px;");
 
-        // ── Boutons ───────────────────────────────────────────
         HBox boutons = new HBox(6);
 
-        // 👁 Détails  ← NOUVEAU
-        Button btnDetails = new Button("👁 Détails");
-        btnDetails.setStyle(
-                "-fx-background-color: #2d1b69;" +
+        // ✅ Assigner — remplace Détails
+        Button btnAssigner = new Button("🔗 Assigner");
+        btnAssigner.setStyle(
+                "-fx-background-color: #10b981;" +
                         "-fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold;" +
                         "-fx-pref-height: 32; -fx-pref-width: 90;" +
                         "-fx-background-radius: 8; -fx-cursor: hand;"
         );
-        btnDetails.setOnAction(e -> voirDetails(seance));
+        btnAssigner.setOnAction(e -> assignerExercice(seance));
 
         // ✏️ Modifier
         Button btnModifier = new Button("✏️ Modifier");
@@ -201,7 +194,7 @@ public class AfficherSeanceController {
         );
         btnSupprimer.setOnAction(e -> supprimerSeance(seance));
 
-        boutons.getChildren().addAll(btnDetails, btnModifier, btnSupprimer);
+        boutons.getChildren().addAll(btnAssigner, btnModifier, btnSupprimer);
 
         card.getChildren().addAll(
                 nomLabel, dureeLabel, dateLabel,
@@ -215,11 +208,9 @@ public class AfficherSeanceController {
     private void mettreAJourCompteur() {
         int filtre = seancesFiltrees.size();
         int total  = toutesLesSeances.size();
-        if (filtre == total) {
-            compteurLabel.setText("📋 " + total + " séance(s) au total");
-        } else {
-            compteurLabel.setText("🔍 " + filtre + " résultat(s) sur " + total);
-        }
+        compteurLabel.setText(filtre == total
+                ? "📋 " + total + " séance(s) au total"
+                : "🔍 " + filtre + " résultat(s) sur " + total);
     }
 
     // ── Tri ───────────────────────────────────────────────────
@@ -262,18 +253,16 @@ public class AfficherSeanceController {
     }
 
     // ── Navigation ────────────────────────────────────────────
-
-    // ← NOUVEAU : ouvrir la page détails d'une séance
-    private void voirDetails(SeanceSport seance) {
+    private void assignerExercice(SeanceSport seance) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/view/DetailSeance.fxml"));
+                    getClass().getResource("/view/AssignerExercice.fxml"));
             Parent root = loader.load();
-            DetailSeanceController ctrl = loader.getController();
+            AssignerExerciceController ctrl = loader.getController();
             ctrl.setSeance(seance);
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
-            System.err.println("Erreur ouverture détails : " + e.getMessage());
+            System.err.println("Erreur assigner : " + e.getMessage());
         }
     }
 
@@ -312,7 +301,7 @@ public class AfficherSeanceController {
     @FXML public void ouvrirMenu(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(
-                    getClass().getResource("/view/Menu.fxml"));
+                    getClass().getResource("/view/MenuCoach.fxml")); // ✅
             btnMenu.getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());

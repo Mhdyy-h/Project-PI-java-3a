@@ -437,11 +437,16 @@ public class AnalyseIAController implements Initializable {
     // ─────────────────────────────────────────────────────────────────────────
     //  ACTIONS BOUTONS
     // ─────────────────────────────────────────────────────────────────────────
-
     @FXML
     private void fermer() {
-        Stage stage = (Stage) lblNomUtilisateur.getScene().getWindow();
-        stage.close();
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
+                    getClass().getResource("/view/MenuCoach.fxml"));
+            javafx.scene.Parent root = loader.load();
+            lblNomUtilisateur.getScene().setRoot(root);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

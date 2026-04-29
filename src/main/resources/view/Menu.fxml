@@ -8,7 +8,7 @@
             fx:controller="org.example.controller.MenuController"
             prefWidth="1100" prefHeight="700"
             style="-fx-background-color: #f0f2f8;"
-            stylesheets="@style.css">
+            stylesheets="@../styles/style.css">
 
     <!-- ===== SIDEBAR GAUCHE ===== -->
     <left>
