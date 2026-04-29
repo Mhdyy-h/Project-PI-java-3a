@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.Nutritiondashboardcontroller"
+      style="-fx-background-color: #f0f2f8; -fx-padding: 24;">
+
+    <Label text="Dashboard Nutritionnel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Label text="Période:"/>
+        <ComboBox fx:id="periodeCombo" prefWidth="120"/>
+    </HBox>
+
+    <GridPane hgap="20" vgap="10">
+        <Label text="Score moyen:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="scoreMoyenLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-size: 20px;"/>
+
+        <Label text="Meilleur score:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="meilleurScoreLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Pire score:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="pireScoreLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Alertes actives:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="alertesCountLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Tendance:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="tendanceLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <LineChart fx:id="scoreChart" title="Évolution des scores">
+        <xAxis>
+            <CategoryAxis label="Date"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Score" lowerBound="0" upperBound="14"/>
+        </yAxis>
+    </LineChart>
+
+    <BarChart fx:id="caloriesChart" title="Calories par jour">
+        <xAxis>
+            <CategoryAxis label="Date"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Calories"/>
+        </yAxis>
+    </BarChart>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="Fermer" onAction="#fermer"
+                style="-fx-background-color: #4C6FFF; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 20;"/>
+    </HBox>
+
+</VBox>

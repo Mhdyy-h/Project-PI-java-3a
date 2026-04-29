@@ -1,0 +1,31 @@
+# Fichiers Windows
+NTUSER.DAT
+*.TM.blf
+*.regtrans-ms
+ntuser.ini
+ntuser.dat.LOG1
+ntuser.dat.LOG2
+
+# Dossiers personnels
+AppData/
+Desktop/
+Downloads/
+Documents/
+Music/
+Videos/
+OneDrive/
+Contacts/
+Favorites/
+
+# Java
+target/
+*.class
+*.jar
+.idea/
+*.iml
+
+# Autres projets
+pi_java/
+pidev/
+FirstProject/
+IdeaProjects/
