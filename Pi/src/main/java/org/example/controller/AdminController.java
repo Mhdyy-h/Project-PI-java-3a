@@ -34,10 +34,12 @@ public class AdminController {
     @FXML private StackPane adminAvatarPane;
     @FXML private Circle adminAvatarCircle;
     @FXML private ImageView adminAvatarImage;
+    @FXML private Button themeToggleBtn;
 
     private final DashboardService dashboardService = DashboardService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
     private final RateLimiterService rateLimiter = RateLimiterService.getInstance();
+    private final org.example.service.ThemeService themeService = org.example.service.ThemeService.getInstance();
     private User currentUser;
     private static boolean photoUpdatedFlag = false;
 
@@ -64,6 +66,14 @@ public class AdminController {
         updateHeader();
         loadStats();
         loadRecentUsers();
+
+        // Register scene for theme management
+        javafx.application.Platform.runLater(() -> {
+            if (adminNameLabel != null && adminNameLabel.getScene() != null) {
+                themeService.registerScene(adminNameLabel.getScene());
+                updateThemeButtonIcon();
+            }
+        });
     }
 
     private void updateHeader() {
@@ -181,6 +191,18 @@ public class AdminController {
     @FXML
     private void handleLogout(MouseEvent event) {
         navigationService.navigateToLogin(adminNameLabel);
+    }
+
+    @FXML
+    private void handleThemeToggle() {
+        themeService.toggleDarkMode();
+        updateThemeButtonIcon();
+    }
+
+    private void updateThemeButtonIcon() {
+        if (themeToggleBtn != null) {
+            themeToggleBtn.setText(themeService.isDarkMode() ? "🌙" : "☀");
+        }
     }
 
     @FXML

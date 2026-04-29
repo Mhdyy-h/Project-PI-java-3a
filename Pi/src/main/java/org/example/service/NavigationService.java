@@ -14,6 +14,7 @@ public class NavigationService {
 
     private static NavigationService instance;
     private Stage mainStage;
+    private final ThemeService themeService = ThemeService.getInstance();
 
     private NavigationService() {}
 
@@ -43,6 +44,10 @@ public class NavigationService {
 
             Stage stage = mainStage != null ? mainStage : new Stage();
             Scene scene = new Scene(root, width, height);
+
+            // Apply current theme
+            themeService.registerScene(scene);
+
             stage.setScene(scene);
             stage.setTitle(title);
             stage.centerOnScreen();
@@ -68,6 +73,10 @@ public class NavigationService {
 
             Stage stage = (Stage) sourceNode.getScene().getWindow();
             Scene scene = new Scene(root, width, height);
+
+            // Apply current theme
+            themeService.registerScene(scene);
+
             stage.setScene(scene);
             stage.setTitle(title);
             stage.centerOnScreen();

@@ -1,0 +1,327 @@
+/* ==================== DARK MODE - COMPREHENSIVE OVERRIDES ==================== */
+
+/* ========== ROOT & ALL CONTAINERS ========== */
+.dark-mode,
+.dark-mode * {
+    -fx-background-color: #0f172a;
+}
+
+/* Override all inline background styles */
+.dark-mode VBox[style*="-fx-background-color"],
+.dark-mode HBox[style*="-fx-background-color"],
+.dark-mode BorderPane[style*="-fx-background-color"],
+.dark-mode StackPane[style*="-fx-background-color"] {
+    -fx-background-color: #0f172a !important;
+}
+
+/* ========== SPECIFIC DARK BACKGROUNDS ========== */
+.dark-mode .root,
+.dark-mode #root,
+.dark-mode .main-container,
+.dark-mode .content-area,
+.dark-mode .scroll-pane .viewport {
+    -fx-background-color: #0f172a;
+}
+
+/* ========== CARDS & PANELS ========== */
+.dark-mode .card,
+.dark-mode .card-clickable,
+.dark-mode .card-validations-pro,
+.dark-mode .stat-card,
+.dark-mode .dashboard-card,
+.dark-mode .info-card {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+    -fx-text-fill: #e2e8f0;
+}
+
+/* Force cards with white bg to dark */
+.dark-mode VBox[style*="-fx-background-color: white"],
+.dark-mode VBox[style*="-fx-background-color: #ffffff"],
+.dark-mode VBox[style*="-fx-background-color: #fff"],
+.dark-mode HBox[style*="-fx-background-color: white"],
+.dark-mode HBox[style*="-fx-background-color: #ffffff"],
+.dark-mode HBox[style*="-fx-background-color: #fff"] {
+    -fx-background-color: #1e293b !important;
+}
+
+/* ========== TEXT COLORS ========== */
+.dark-mode .label,
+.dark-mode Text,
+.dark-mode .text {
+    -fx-text-fill: #e2e8f0;
+    -fx-fill: #e2e8f0;
+}
+
+.dark-mode .title,
+.dark-mode .page-title,
+.dark-mode .section-title {
+    -fx-text-fill: #f8fafc;
+}
+
+.dark-mode .subtitle,
+.dark-mode .description {
+    -fx-text-fill: #94a3b8;
+}
+
+/* ========== BUTTONS ========== */
+.dark-mode .button,
+.dark-mode .btn {
+    -fx-background-color: #334155;
+    -fx-text-fill: #e2e8f0;
+    -fx-border-color: #475569;
+}
+
+.dark-mode .button:hover,
+.dark-mode .btn:hover {
+    -fx-background-color: #475569;
+}
+
+.dark-mode .btn-primary {
+    -fx-background-color: #4C6FFF;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+/* ========== FORM FIELDS ========== */
+.dark-mode .text-field,
+.dark-mode .password-field,
+.dark-mode .text-input,
+.dark-mode .text-area {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #475569;
+    -fx-text-fill: #e2e8f0;
+    -fx-prompt-text-fill: #64748b;
+}
+
+.dark-mode .text-field:focused,
+.dark-mode .password-field:focused {
+    -fx-border-color: #4C6FFF;
+}
+
+/* ========== LIST & TABLE ROWS ========== */
+.dark-mode .list-view,
+.dark-mode .list-view .list-cell {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #e2e8f0;
+}
+
+.dark-mode .list-view .list-cell:odd {
+    -fx-background-color: #1a2436;
+}
+
+.dark-mode .user-row,
+.dark-mode .user-row-default,
+.dark-mode .recent-user-row,
+.dark-mode .recent-user-row-default {
+    -fx-background-color: #1e293b;
+    -fx-border-color: transparent transparent #334155 transparent;
+}
+
+.dark-mode .user-row-alt,
+.dark-mode .recent-user-row-alt {
+    -fx-background-color: #1a2436;
+}
+
+/* ========== SIDEBAR ========== */
+.dark-mode .sidebar,
+.dark-mode .sidebar-panel,
+.dark-mode .nav-sidebar {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+}
+
+.dark-mode .sidebar .label {
+    -fx-text-fill: #cbd5e1;
+}
+
+.dark-mode .sidebar .nav-item:hover {
+    -fx-background-color: #334155;
+}
+
+/* ========== HEADERS ========== */
+.dark-mode .header,
+.dark-mode .top-bar,
+.dark-mode .app-header {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+}
+
+/* ========== SEPARATORS ========== */
+.dark-mode .separator,
+.dark-mode Separator {
+    -fx-background-color: #334155;
+    -fx-border-color: #334155;
+    -fx-opacity: 0.5;
+}
+
+/* ========== SCROLL BARS ========== */
+.dark-mode .scroll-bar {
+    -fx-background-color: #1e293b;
+}
+
+.dark-mode .scroll-bar .thumb {
+    -fx-background-color: #475569;
+}
+
+.dark-mode .scroll-bar .thumb:hover {
+    -fx-background-color: #64748b;
+}
+
+/* ========== COMBOBOX ========== */
+.dark-mode .combo-box,
+.dark-mode .choice-box {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #475569;
+    -fx-text-fill: #e2e8f0;
+}
+
+.dark-mode .combo-box .list-cell {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #e2e8f0;
+}
+
+.dark-mode .combo-box-popup .list-view {
+    -fx-background-color: #1e293b;
+}
+
+/* ========== CHECKBOX & RADIO ========== */
+.dark-mode .check-box,
+.dark-mode .radio-button {
+    -fx-text-fill: #e2e8f0;
+}
+
+.dark-mode .check-box .box {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #475569;
+}
+
+/* ========== HYPERLINKS ========== */
+.dark-mode .hyperlink {
+    -fx-text-fill: #60a5fa;
+}
+
+.dark-mode .hyperlink:hover {
+    -fx-text-fill: #93c5fd;
+}
+
+/* ========== TOOLTIP ========== */
+.dark-mode .tooltip {
+    -fx-background-color: #334155;
+    -fx-text-fill: #e2e8f0;
+    -fx-border-color: #475569;
+}
+
+/* ========== PROGRESS INDICATOR ========== */
+.dark-mode .progress-indicator {
+    -fx-progress-color: #4C6FFF;
+}
+
+/* ========== PASSWORD FEATURES (dark) ========== */
+.dark-mode .password-strength-track {
+    -fx-background-color: #334155;
+}
+
+.dark-mode .password-strength-label {
+    -fx-text-fill: #94a3b8;
+}
+
+.dark-mode .password-suggest-btn {
+    -fx-background-color: #334155;
+    -fx-border-color: #475569;
+    -fx-text-fill: #60a5fa;
+}
+
+.dark-mode .password-suggest-btn:hover {
+    -fx-background-color: #475569;
+}
+
+.dark-mode .eye-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+}
+
+.dark-mode .eye-toggle-btn:hover {
+    -fx-text-fill: #e2e8f0;
+}
+
+/* ========== THEME TOGGLE ========== */
+.theme-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-padding: 6 10;
+    -fx-font-size: 16px;
+    -fx-text-fill: #4C6FFF;
+}
+
+.theme-toggle-btn:hover {
+    -fx-background-color: rgba(76,111,255,0.2);
+}
+
+/* ========== STATUS BADGES ========== */
+.dark-mode .statut-en-attente {
+    -fx-background-color: #78350f;
+    -fx-text-fill: #fde68a;
+}
+
+.dark-mode .statut-accepte {
+    -fx-background-color: #064e3b;
+    -fx-text-fill: #6ee7b7;
+}
+
+.dark-mode .statut-refuse {
+    -fx-background-color: #7f1d1d;
+    -fx-text-fill: #fca5a5;
+}
+
+/* ========== LIGHT MODE (default) ========== */
+.password-strength-track {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 4;
+    -fx-pref-height: 6;
+    -fx-min-height: 6;
+    -fx-max-height: 6;
+}
+
+.password-strength-fill {
+    -fx-background-radius: 4;
+    -fx-min-height: 6;
+    -fx-max-height: 6;
+}
+
+.password-strength-label {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.password-suggest-btn {
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #4C6FFF;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 4 10;
+    -fx-cursor: hand;
+}
+
+.password-suggest-btn:hover {
+    -fx-background-color: #e8edff;
+}
+
+.eye-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-padding: 0 6;
+    -fx-font-size: 14px;
+    -fx-text-fill: #9ca3af;
+    -fx-min-width: 30;
+    -fx-pref-width: 30;
+}
+
+.eye-toggle-btn:hover {
+    -fx-text-fill: #4C6FFF;
+}

@@ -5,6 +5,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.example.service.NavigationService;
@@ -22,14 +24,27 @@ public class ForgotPasswordController {
     @FXML private VBox codeSection;
     @FXML private TextField codeField;
     @FXML private PasswordField newPasswordField;
+    @FXML private TextField newPasswordVisibleField;
+    @FXML private Button eyeToggleBtn;
+    @FXML private Button suggestPasswordBtn;
+    @FXML private VBox passwordStrengthBox;
+    @FXML private Region passwordStrengthTrack;
+    @FXML private Region passwordStrengthFill;
+    @FXML private Label passwordStrengthLabel;
     @FXML private PasswordField confirmPasswordField;
+    @FXML private TextField confirmPasswordVisibleField;
+    @FXML private Button confirmEyeToggleBtn;
     @FXML private Button resetButton;
     @FXML private Label statusLabel;
     @FXML private ProgressIndicator progressIndicator;
 
     private final PasswordResetService resetService = PasswordResetService.getInstance();
     private final NavigationService navigationService = NavigationService.getInstance();
+    private final org.example.service.PasswordStrengthService passwordStrengthService = org.example.service.PasswordStrengthService.getInstance();
+    private final org.example.service.ThemeService themeService = org.example.service.ThemeService.getInstance();
     private String currentEmail = "";
+    private boolean passwordVisible = false;
+    private boolean confirmPasswordVisible = false;
 
     @FXML
     public void initialize() {
@@ -38,6 +53,118 @@ public class ForgotPasswordController {
         if (progressIndicator != null) {
             progressIndicator.setVisible(false);
         }
+
+        // Password strength listener
+        setupPasswordStrengthListener();
+
+        // Register scene for theme
+        Platform.runLater(() -> {
+            if (newPasswordField != null && newPasswordField.getScene() != null) {
+                themeService.registerScene(newPasswordField.getScene());
+            }
+        });
+    }
+
+    private void setupPasswordStrengthListener() {
+        if (newPasswordField != null) {
+            newPasswordField.textProperty().addListener((obs, oldVal, newVal) -> updatePasswordStrength(newVal));
+        }
+        if (newPasswordVisibleField != null) {
+            newPasswordVisibleField.textProperty().addListener((obs, oldVal, newVal) -> updatePasswordStrength(newVal));
+        }
+    }
+
+    private void updatePasswordStrength(String password) {
+        if (passwordStrengthBox == null) return;
+
+        boolean show = password != null && !password.isEmpty();
+        passwordStrengthBox.setVisible(show);
+        passwordStrengthBox.setManaged(show);
+
+        if (suggestPasswordBtn != null) {
+            suggestPasswordBtn.setVisible(show);
+            suggestPasswordBtn.setManaged(show);
+        }
+
+        if (!show) return;
+
+        double strength = passwordStrengthService.calculateStrength(password);
+        String color = passwordStrengthService.getStrengthColor(strength);
+        String label = passwordStrengthService.getStrengthLabel(strength);
+
+        double trackWidth = passwordStrengthTrack != null ? passwordStrengthTrack.getWidth() : 280;
+        double fillWidth = trackWidth * strength;
+        if (passwordStrengthFill != null) {
+            passwordStrengthFill.setPrefWidth(Math.max(0, fillWidth));
+            passwordStrengthFill.setStyle("-fx-background-color: " + color + ";");
+        }
+        if (passwordStrengthLabel != null) {
+            passwordStrengthLabel.setText(label);
+            passwordStrengthLabel.setStyle("-fx-text-fill: " + color + ";");
+        }
+    }
+
+    @FXML
+    public void handleEyeToggle() {
+        passwordVisible = !passwordVisible;
+        if (passwordVisible) {
+            newPasswordVisibleField.setText(newPasswordField.getText());
+            newPasswordField.setVisible(false);
+            newPasswordField.setManaged(false);
+            newPasswordVisibleField.setVisible(true);
+            newPasswordVisibleField.setManaged(true);
+            if (eyeToggleBtn != null) eyeToggleBtn.setText("🙈");
+        } else {
+            newPasswordField.setText(newPasswordVisibleField.getText());
+            newPasswordVisibleField.setVisible(false);
+            newPasswordVisibleField.setManaged(false);
+            newPasswordField.setVisible(true);
+            newPasswordField.setManaged(true);
+            if (eyeToggleBtn != null) eyeToggleBtn.setText("👁");
+        }
+    }
+
+    @FXML
+    public void handleConfirmEyeToggle() {
+        confirmPasswordVisible = !confirmPasswordVisible;
+        if (confirmPasswordVisible) {
+            confirmPasswordVisibleField.setText(confirmPasswordField.getText());
+            confirmPasswordField.setVisible(false);
+            confirmPasswordField.setManaged(false);
+            confirmPasswordVisibleField.setVisible(true);
+            confirmPasswordVisibleField.setManaged(true);
+            if (confirmEyeToggleBtn != null) confirmEyeToggleBtn.setText("🙈");
+        } else {
+            confirmPasswordField.setText(confirmPasswordVisibleField.getText());
+            confirmPasswordVisibleField.setVisible(false);
+            confirmPasswordVisibleField.setManaged(false);
+            confirmPasswordField.setVisible(true);
+            confirmPasswordField.setManaged(true);
+            if (confirmEyeToggleBtn != null) confirmEyeToggleBtn.setText("👁");
+        }
+    }
+
+    @FXML
+    public void handleSuggestPassword() {
+        String suggested = passwordStrengthService.generateStrongPassword();
+        newPasswordField.setText(suggested);
+        if (newPasswordVisibleField != null) newPasswordVisibleField.setText(suggested);
+        if (confirmPasswordField != null) confirmPasswordField.setText(suggested);
+        if (confirmPasswordVisibleField != null) confirmPasswordVisibleField.setText(suggested);
+    }
+
+    private String getNewPasswordText() {
+        if (passwordVisible) {
+            return newPasswordVisibleField != null ? newPasswordVisibleField.getText() : "";
+        }
+        return newPasswordField != null ? newPasswordField.getText() : "";
+    }
+
+    private String getConfirmPasswordText() {
+        if (confirmPasswordVisible) {
+            return confirmPasswordVisibleField != null ? confirmPasswordVisibleField.getText() : "";
+        }
+        return confirmPasswordField != null ? confirmPasswordField.getText() : "";
     }
 
     @FXML
@@ -75,8 +202,8 @@ public class ForgotPasswordController {
     @FXML
     public void handleResetPassword() {
         String code = codeField.getText().trim();
-        String newPassword = newPasswordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
+        String newPassword = getNewPasswordText();
+        String confirmPassword = getConfirmPasswordText();
 
         if (code.isEmpty()) {
             showStatus("Veuillez entrer le code reçu par email.", false);

@@ -125,6 +125,14 @@
                 <Region VBox.vgrow="ALWAYS"/>
             </VBox>
 
+            <!-- Theme Toggle -->
+            <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-padding: 8 12 8 12;">
+                <Button fx:id="themeToggleBtn" text="☀" onAction="#handleThemeToggle"
+                        styleClass="theme-toggle-btn"
+                        style="-fx-background-color: transparent; -fx-text-fill: #4C6FFF; -fx-font-size: 16px; -fx-cursor: hand; -fx-padding: 6 10;"/>
+                <Label text="Mode sombre" style="-fx-font-size: 11px; -fx-text-fill: #6b7280;"/>
+            </HBox>
+
             <!-- Bottom: Admin info + Logout -->
             <VBox style="-fx-border-color: #f0f2f8 transparent transparent transparent; -fx-border-width: 1 0 0 0; -fx-padding: 16 20 16 20;" spacing="12">
                 <HBox alignment="CENTER_LEFT" spacing="10">
