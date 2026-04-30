@@ -1,0 +1,195 @@
+/* ═══════════════════════════════════════════════════════════════
+   BioSync – Module Mental Wellness
+   Vue Utilisateur (Patient) – Passage de Quiz
+   Thème : vert (#1D9E75) + fond clair (#F0FDF8)
+═══════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────
+   GLOBAL
+────────────────────────────────────────────────────────────── */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-background-color: #F0FDF8;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   CARTES QUIZ (Écran 1)
+────────────────────────────────────────────────────────────── */
+.quiz-card {
+    -fx-background-color: white;
+    -fx-border-color: #D1FAE5;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-padding: 20 18 18 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 3);
+    -fx-cursor: hand;
+}
+
+.quiz-card:hover {
+    -fx-border-color: #1D9E75;
+    -fx-effect: dropshadow(gaussian, rgba(29,158,117,0.18), 14, 0, 0, 4);
+}
+
+.card-emoji {
+    -fx-font-size: 34px;
+}
+
+.card-titre {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #085041;
+}
+
+.card-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9CA3AF;
+}
+
+.card-questions {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1D9E75;
+    -fx-font-weight: 600;
+}
+
+.card-btn {
+    -fx-background-color: #1D9E75;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 9 18 9 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(29,158,117,0.3), 6, 0, 0, 2);
+}
+
+.card-btn:hover {
+    -fx-background-color: #0F6E56;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   BOUTONS RÉPONSE (Écran 3)
+────────────────────────────────────────────────────────────── */
+.btn-reponse {
+    -fx-background-color: #F8FFFD;
+    -fx-border-color: #A7F3D0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #1A1A2E;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20 0 20;
+    -fx-cursor: hand;
+}
+
+.btn-reponse:hover {
+    -fx-background-color: #D1FAE5;
+    -fx-border-color: #1D9E75;
+    -fx-border-width: 2;
+}
+
+/* Bonne réponse */
+.btn-correct {
+    -fx-background-color: #D1FAE5;
+    -fx-border-color: #1D9E75;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #065F46;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 0 20 0 20;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: dropshadow(gaussian, rgba(29,158,117,0.25), 6, 0, 0, 2);
+}
+
+/* Mauvaise réponse choisie */
+.btn-incorrect {
+    -fx-background-color: #FEE2E2;
+    -fx-border-color: #E24B4A;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #991B1B;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 0 20 0 20;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Bouton désactivé (après réponse) */
+.btn-reponse:disabled {
+    -fx-opacity: 0.6;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TIMER EXPIRÉ
+────────────────────────────────────────────────────────────── */
+.timer-expire {
+    -fx-text-fill: #E24B4A !important;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   BARRE DE PROGRESSION (Écran 3)
+────────────────────────────────────────────────────────────── */
+.progress-bar > .bar {
+    -fx-background-color: #1D9E75;
+    -fx-background-radius: 6;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #D1FAE5;
+    -fx-background-radius: 6;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   RÉCAPITULATIF (Écran 4)
+────────────────────────────────────────────────────────────── */
+.recap-correct {
+    -fx-background-color: #ECFDF5;
+    -fx-background-radius: 8;
+    -fx-border-color: #A7F3D0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 8 12 8 12;
+}
+
+.recap-incorrect {
+    -fx-background-color: #FEF2F2;
+    -fx-background-radius: 8;
+    -fx-border-color: #FECACA;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 8 12 8 12;
+}
+
+.recap-icone-ok {
+    -fx-text-fill: #1D9E75;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.recap-icone-ko {
+    -fx-text-fill: #E24B4A;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   SCROLL PANE (transparent)
+────────────────────────────────────────────────────────────── */
+.scroll-pane,
+.scroll-pane .viewport,
+.scroll-pane > .scroll-bar {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb,
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #A7F3D0;
+    -fx-background-radius: 4;
+}
