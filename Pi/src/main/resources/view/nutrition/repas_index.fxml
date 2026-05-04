@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- ══ ROOT : ScrollPane pour rendre toute la page scrollable ══ -->
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.Nutritioncontroller"
+            fitToWidth="true"
+            style="-fx-background-color: #f0f2f8; -fx-background: #f0f2f8; -fx-border-color: transparent;">
+
+    <VBox spacing="20" style="-fx-background-color: #f0f2f8; -fx-padding: 24;">
+
+        <!-- Bouton Retour -->
+        <HBox>
+            <Button text="&#8592; Retour" onAction="#retournerVersDashboard"
+                    style="-fx-background-color: transparent; -fx-text-fill: #4C6FFF;
+                           -fx-font-size: 13px; -fx-font-weight: bold;
+                           -fx-border-color: #4C6FFF; -fx-border-radius: 8;
+                           -fx-background-radius: 8; -fx-padding: 7 16;
+                           -fx-cursor: hand;"/>
+        </HBox>
+
+        <!-- Titre -->
+        <VBox spacing="8">
+            <Label text="Mes repas"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+            <Label text="Suivez votre alimentation et obtenez votre ChronoScore"
+                   style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+        </VBox>
+
+        <!-- Stats -->
+        <HBox spacing="16">
+
+            <!-- Calories -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-background-radius: 14;
+                         -fx-padding: 18 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="&#x1F525;" style="-fx-font-size: 18px;"/>
+                    <VBox spacing="3">
+                        <Label text="Calories" style="-fx-font-size: 11px; -fx-text-fill: #9ca3af;"/>
+                        <Label fx:id="caloriesJourLabel" text="— cal"
+                               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #f39c12;"/>
+                        <Label fx:id="caloriesPeriodeLabel" text="Chargement..."
+                               style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Score moyen -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-background-radius: 14;
+                         -fx-padding: 18 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="&#x2B50;" style="-fx-font-size: 18px;"/>
+                    <VBox spacing="3">
+                        <Label text="Score moyen" style="-fx-font-size: 11px; -fx-text-fill: #9ca3af;"/>
+                        <Label fx:id="moyenneScoreLabel" text="0,0/14"
+                               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <Label text="ChronoScore moyen" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Total repas -->
+            <VBox spacing="6" HBox.hgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-background-radius: 14;
+                         -fx-padding: 18 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="&#x1F37D;" style="-fx-font-size: 18px;"/>
+                    <VBox spacing="3">
+                        <Label text="Repas" style="-fx-font-size: 11px; -fx-text-fill: #9ca3af;"/>
+                        <Label fx:id="totalRepasLabel" text="0 / 0 repas"
+                               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <Label text="Affichés / total" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+        </HBox>
+
+        <!-- Alertes système -->
+        <VBox fx:id="alertesContainer" spacing="8"/>
+
+        <!-- ═══ RECOMMANDATIONS INTELLIGENTES ═══ -->
+        <VBox spacing="12"
+              style="-fx-background-color: white; -fx-background-radius: 16;
+                     -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+
+            <!-- En-tête -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="🧠" style="-fx-font-size: 18px;"/>
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <Label text="Recommandations personnalisées"
+                           style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                    <Label text="Analyse intelligente de vos habitudes alimentaires"
+                           style="-fx-font-size: 11px; -fx-text-fill: #9ca3af;"/>
+                </VBox>
+                <Label fx:id="recosBadgeLabel" text="0 conseil"
+                       style="-fx-background-color: #e8edff; -fx-text-fill: #4C6FFF;
+                              -fx-background-radius: 20; -fx-padding: 4 12;
+                              -fx-font-size: 11px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <!-- Cartes de recommandations (générées dynamiquement) -->
+            <VBox fx:id="recommandationsContainer" spacing="10"/>
+
+            <!-- Message si aucune recommandation -->
+            <Label fx:id="noRecosLabel" text="✅ Aucun conseil à afficher pour l'instant."
+                   style="-fx-text-fill: #10b981; -fx-font-size: 13px;" visible="false" managed="false"/>
+
+        </VBox>
+
+        <!-- Barre de filtres -->
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 10 15;">
+            <Label text="Recherche :" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+            <TextField fx:id="rechercheField" promptText="Titre du repas..."
+                       prefWidth="180"
+                       style="-fx-background-color: #f0f2f8; -fx-background-radius: 6; -fx-padding: 6 10;"/>
+            <Label text="Moment :" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+            <ComboBox fx:id="filtresMomentCombo" prefWidth="130"/>
+            <Label text="Du :" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+            <DatePicker fx:id="filtreDateDebut" prefWidth="140"/>
+            <Label text="Au :" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+            <DatePicker fx:id="filtreDateFin" prefWidth="140"/>
+            <Button text="Réinitialiser" onAction="#reinitialiserFiltres"
+                    style="-fx-background-color: #f0f2f8; -fx-text-fill: #6b7280;
+                           -fx-background-radius: 6; -fx-padding: 6 12;"/>
+        </HBox>
+
+        <!-- Boutons d'action -->
+        <HBox spacing="12">
+            <Button text="➕  Nouveau repas" onAction="#nouveauRepas"
+                    style="-fx-background-color: #4C6FFF; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"/>
+            <Button text="📊  Dashboard" onAction="#ouvrirDashboard"
+                    style="-fx-background-color: #06b6d4; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"/>
+            <Button text="🥗  Aliments" onAction="#gererAliments"
+                    style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"/>
+            <Button text="📄  Exporter PDF" onAction="#exporterPdf"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <!-- Tableau des repas avec hauteur fixe pour permettre le scroll global -->
+        <VBox spacing="0"
+              style="-fx-background-color: white; -fx-background-radius: 12;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+
+            <TableView fx:id="repasTable" prefHeight="300" minHeight="200"
+                       style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: transparent;">
+                <columns>
+                    <TableColumn fx:id="colTitre"  text="Repas"         prefWidth="280" sortable="true"/>
+                    <TableColumn fx:id="colMoment" text="Moment"        prefWidth="130" sortable="true"/>
+                    <TableColumn fx:id="colDate"   text="Date et heure" prefWidth="200" sortable="true"/>
+                    <TableColumn fx:id="colPoints" text="ChronoScore"   prefWidth="120" sortable="true"/>
+                </columns>
+            </TableView>
+
+            <!-- Actions tableau dans une barre en bas -->
+            <HBox spacing="10" alignment="CENTER_RIGHT"
+                  style="-fx-padding: 10 14; -fx-background-color: #fafbfd; -fx-background-radius: 0 0 12 12;">
+                <Button text="👁  Voir" onAction="#voirDetailsRepas"
+                        style="-fx-background-color: white; -fx-text-fill: #4C6FFF;
+                               -fx-border-color: #e8edff; -fx-border-width: 1; -fx-border-radius: 6;
+                               -fx-background-radius: 6; -fx-padding: 7 16; -fx-cursor: hand;"/>
+                <Button text="✏  Modifier" onAction="#modifierRepas"
+                        style="-fx-background-color: white; -fx-text-fill: #f39c12;
+                               -fx-border-color: #fef3c7; -fx-border-width: 1; -fx-border-radius: 6;
+                               -fx-background-radius: 6; -fx-padding: 7 16; -fx-cursor: hand;"/>
+                <Button text="🗑  Supprimer" onAction="#supprimerRepas"
+                        style="-fx-background-color: white; -fx-text-fill: #e74c3c;
+                               -fx-border-color: #fee2e2; -fx-border-width: 1; -fx-border-radius: 6;
+                               -fx-background-radius: 6; -fx-padding: 7 16; -fx-cursor: hand;"/>
+            </HBox>
+
+        </VBox>
+
+    </VBox>
+</ScrollPane>

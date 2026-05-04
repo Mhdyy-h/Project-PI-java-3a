@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.RepasFormController"
+      style="-fx-background-color: #f0f2f8; -fx-padding: 24;">
+
+    <Label text="Nouveau repas" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+
+    <GridPane hgap="15" vgap="15">
+        <Label text="Titre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="titreField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300"/>
+
+        <Label text="Moment:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="momentCombo" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <Label text="Date:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="datePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Heure:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <HBox spacing="10">
+            <ComboBox fx:id="heureCombo" prefWidth="80"/>
+            <Label text=":"/>
+            <ComboBox fx:id="minuteCombo" prefWidth="80"/>
+        </HBox>
+    </GridPane>
+
+    <Separator/>
+
+    <Label text="Aliments" style="-fx-font-weight: bold;"/>
+
+    <HBox spacing="20">
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="Aliments disponibles"/>
+            <ListView fx:id="alimentsDisponiblesList" prefHeight="250"/>
+        </VBox>
+        <VBox alignment="CENTER" spacing="10">
+            <Button text="→" onAction="#ajouterAliment" prefWidth="50"/>
+            <Button text="←" onAction="#retirerAliment" prefWidth="50"/>
+        </VBox>
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="Aliments choisis"/>
+            <ListView fx:id="alimentsChoisisList" prefHeight="250"/>
+        </VBox>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Quantité:"/>
+        <TextField fx:id="quantiteField" text="1" prefWidth="60"/>
+    </HBox>
+
+    <Separator/>
+
+    <HBox spacing="20" alignment="CENTER">
+        <Label fx:id="totalCaloriesLabel" text="0 calories" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label fx:id="scorePreviewLabel" text="Score: -" style="-fx-font-size: 14px;"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#fermer"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 20;"/>
+        <Button text="Sauvegarder" onAction="#sauvegarder"
+                style="-fx-background-color: #4C6FFF; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 20;"/>
+    </HBox>
+
+</VBox>

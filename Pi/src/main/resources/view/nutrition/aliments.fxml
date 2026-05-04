@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.AlimentController"
+      style="-fx-background-color: #f0f2f8; -fx-padding: 24;">
+
+    <Label text="Gestion des aliments" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Rechercher un aliment..." HBox.hgrow="ALWAYS"/>
+        <Button text="🔍" style="-fx-background-color: #4C6FFF; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="alimentTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colNom" text="Nom" prefWidth="200"/>
+            <TableColumn fx:id="colCalories" text="Calories" prefWidth="80"/>
+            <TableColumn fx:id="colProteines" text="Protéines" prefWidth="80"/>
+            <TableColumn fx:id="colGlucides" text="Glucides" prefWidth="80"/>
+            <TableColumn fx:id="colLipides" text="Lipides" prefWidth="80"/>
+            <TableColumn fx:id="colExcitant" text="Excitant" prefWidth="80"/>
+        </columns>
+    </TableView>
+
+    <GridPane hgap="10" vgap="10" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12;">
+        <Label text="Nom:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nomField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Calories:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="caloriesField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Protéines:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="proteinesField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Glucides:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="glucidesField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Lipides:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="lipidesField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Index glycémique:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="indexGlycemiqueField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <CheckBox fx:id="excitantCheck" text="Est excitant" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Type:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <TextField fx:id="typeAlimentField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Ajouter" onAction="#ajouter"
+                style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 16;"/>
+        <Button text="Modifier" onAction="#modifier"
+                style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 16;"/>
+        <Button text="Supprimer" onAction="#supprimer"
+                style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 16;"/>
+        <Button text="Fermer" onAction="#fermer"
+                style="-fx-background-color: #6b7280; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 16;"/>
+    </HBox>
+
+</VBox>
