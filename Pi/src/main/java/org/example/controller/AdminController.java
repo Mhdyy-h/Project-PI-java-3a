@@ -212,6 +212,26 @@ public class AdminController {
         showRateLimiterDialog();
     }
 
+    @FXML
+    private void handleRefresh() {
+        loadStats();
+        loadRecentUsers();
+    }
+
+    @FXML
+    private void handleNavNutrition(MouseEvent event) {
+        navigationService.navigateToNutrition(adminNameLabel, currentUser);
+    }
+
+    @FXML
+    private void handleScrollToAlertes(MouseEvent event) {
+        // Scroll to the alerts section in the dashboard
+        // Since the alerts section is already visible in the current view,
+        // we can just show a notification or do nothing
+        // Alternatively, you could implement smooth scrolling to the alerts container
+        System.out.println("Scrolling to alerts section");
+    }
+
     /**
      * Affiche une fenêtre de gestion des utilisateurs bloqués par rate limiting.
      */

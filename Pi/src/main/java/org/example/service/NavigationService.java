@@ -139,6 +139,28 @@ public class NavigationService {
         navigateFrom(sourceNode, "/view/forgot_password.fxml", "BioSync - Mot de passe oublié", 480, 680);
     }
 
+    public void navigateToNutrition(Node sourceNode, User currentUser) {
+        String roles = currentUser != null ? currentUser.getRoles() : "";
+        boolean isAdminOrCoach = roles != null && (roles.contains("ADMIN") || roles.contains("COACH"));
+
+        if (isAdminOrCoach) {
+            navigateFrom(sourceNode, "/view/nutrition/coach_users.fxml", "BioSync - Nutrition", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.CoachUsersController) {
+                    ((org.example.controller.CoachUsersController) ctrl).setCoachUser(currentUser);
+                }
+            });
+        } else {
+            navigateFrom(sourceNode, "/view/nutrition/repas_index.fxml", "BioSync - Mes Repas", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.Nutritioncontroller) {
+                    ((org.example.controller.Nutritioncontroller) ctrl).setCurrentUser(currentUser);
+                    if (currentUser != null) {
+                        ((org.example.controller.Nutritioncontroller) ctrl).setUtilisateurId(currentUser.getId());
+                    }
+                }
+            });
+        }
+    }
+
     public static class NavigationException extends RuntimeException {
         public NavigationException(String message, Throwable cause) {
             super(message, cause);

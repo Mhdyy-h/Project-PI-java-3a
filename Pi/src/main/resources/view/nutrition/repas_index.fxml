@@ -23,7 +23,7 @@
 
         <!-- Bouton Retour -->
         <HBox>
-            <Button text="&#8592; Retour" onAction="#retournerVersDashboard"
+            <Button text="&#8592; Retour au Dashboard" onAction="#retournerVersDashboard"
                     style="-fx-background-color: transparent; -fx-text-fill: #4C6FFF;
                            -fx-font-size: 13px; -fx-font-weight: bold;
                            -fx-border-color: #4C6FFF; -fx-border-radius: 8;

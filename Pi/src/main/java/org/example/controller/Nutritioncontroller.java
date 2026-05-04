@@ -500,7 +500,7 @@ public class Nutritioncontroller {
     private void retournerVersDashboard() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/dashboard.fxml"));
+                    getClass().getResource("/view/dashboard.fxml"));
             Parent root = loader.load();
             AdminController adminController = loader.getController();
             if (currentUser != null) {

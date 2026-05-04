@@ -139,7 +139,7 @@ public class CoachUsersController {
     private void retournerVersDashboard() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/dashboard.fxml"));
+                    getClass().getResource("/view/dashboard.fxml"));
             Parent root = loader.load();
             AdminController ctrl = loader.getController();
             if (coachUser != null) ctrl.setUser(coachUser);
