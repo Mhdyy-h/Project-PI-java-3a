@@ -173,28 +173,27 @@ public class MessagerieController {
     }
 
     @FXML
-
     private void retourMenu() {
         if (refreshTimer != null) refreshTimer.stop();
         try {
-            // ← LIGNE 179 : remplace l'ancienne ligne par ça
-            String fxml = (currentUser.getRoles() != null && currentUser.getRoles().contains("coach"))
-                    ? "/view/MenuCoach.fxml" : "/view/MenuUser.fxml";
+            boolean estCoach = currentUser.getRoles() != null &&
+                    currentUser.getRoles().contains("ROLE_COACH");
+
+            String fxml = estCoach ? "/view/MenuCoach.fxml" : "/view/MenuUser.fxml";
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
 
-            // ← LIGNE 183 : remplace l'ancienne ligne par ça
-            if (currentUser.getRoles() != null && currentUser.getRoles().contains("coach")) {
+            if (estCoach) {
                 MenuCoachController ctrl = loader.getController();
                 ctrl.setCurrentUser(currentUser);
             } else {
                 MenuUserController ctrl = loader.getController();
                 ctrl.setCurrentUser(currentUser);
             }
+
             listeContacts.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    }
+    }}
