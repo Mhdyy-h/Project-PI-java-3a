@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CoachIAService {
 
-    private static final String API_KEY = System.getenv("GROQ_API_KEY");
+    private static final String API_KEY = "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";
     private static final String API_URL = "https://api.groq.com/openai/v1/chat/completions";
     private static final String MODEL   = "llama-3.3-70b-versatile";
 

@@ -1,356 +1,407 @@
-/* ═══════════════════════════════════════════════════════════════
-   BioSync – Module Mental Wellness
-   Thème : vert/teal (#1D9E75) + bleu (#4285F4)
-   Fichier référencé dans quiz_manager, quiz_form, question_manager,
-   quiz_player et result.fxml via  <String value="/styles/style.css"/>
-═══════════════════════════════════════════════════════════════ */
+/* ==================== STYLES GLOBAUX ==================== */
 
-/* ──────────────────────────────────────────────────────────────
-   ROOT / FOND
-────────────────────────────────────────────────────────────── */
 .root {
-    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    -fx-background-color: #F5F7FA;
+    -fx-font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   SIDEBAR
-────────────────────────────────────────────────────────────── */
-.sidebar {
+/* ==================== STATUS LABELS ==================== */
+.status-success {
+    -fx-font-size: 12px;
+    -fx-text-fill: #10b981;
+}
+
+.status-error {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ef4444;
+}
+
+.status-warning {
+    -fx-font-size: 12px;
+    -fx-text-fill: #f59e0b;
+}
+
+/* ==================== USER ROWS ==================== */
+.user-row {
+    -fx-padding: 14 24 14 24;
+    -fx-border-color: transparent transparent #f0f2f8 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.user-row-default {
     -fx-background-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 2, 0);
 }
 
-/* ──────────────────────────────────────────────────────────────
-   HEADER QUIZ (titre de page)
-────────────────────────────────────────────────────────────── */
-.quiz-header {
-    -fx-background-color: #1D9E75;
-    -fx-padding: 15px;
+.user-row-alt {
+    -fx-background-color: #fafbfd;
 }
 
-.quiz-title-label {
+/* ==================== USER INFO ==================== */
+.user-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.user-email {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9ca3af;
+}
+
+.user-date {
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+}
+
+/* ==================== AVATAR ==================== */
+.user-avatar {
+    -fx-background-radius: 50%;
+}
+
+.user-avatar-circle {
+    -fx-fill: #7c3aed;
+}
+
+.avatar-admin {
+    -fx-fill: #ef4444;
+}
+
+.avatar-coach {
+    -fx-fill: #10b981;
+}
+
+.avatar-specialiste {
+    -fx-fill: #f59e0b;
+}
+
+.avatar-default {
+    -fx-fill: #7c3aed;
+}
+
+.user-avatar-initials {
+    -fx-font-size: 11px;
     -fx-text-fill: white;
-    -fx-font-size: 18px;
     -fx-font-weight: bold;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   TABLE VIEW
-────────────────────────────────────────────────────────────── */
-.table-view {
-    -fx-border-color: #9FE1CB;
+/* ==================== ROLE BADGES ==================== */
+.role-badge {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12 4 12;
+    -fx-text-fill: white;
+}
+
+.role-admin {
+    -fx-background-color: #ef4444;
+}
+
+.role-coach {
+    -fx-background-color: #10b981;
+}
+
+.role-specialiste {
+    -fx-background-color: #f59e0b;
+}
+
+.role-utilisateur {
+    -fx-background-color: #6b7280;
+}
+
+/* ==================== SCORE ==================== */
+.score-star {
+    -fx-font-size: 13px;
+    -fx-text-fill: #f59e0b;
+}
+
+.score-value {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+/* ==================== ACTION BUTTONS ==================== */
+.action-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+    -fx-padding: 4 8 4 8;
+}
+
+.action-view {
+    -fx-font-size: 16px;
+}
+
+.action-edit {
+    -fx-text-fill: #f59e0b;
+}
+
+.action-delete {
+    -fx-text-fill: #ef4444;
+}
+
+/* ==================== SORT BUTTONS ==================== */
+.sort-active {
+    -fx-background-color: #4C6FFF;
+    -fx-text-fill: white;
     -fx-border-radius: 8;
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-}
-
-.table-view .column-header {
-    -fx-background-color: #E1F5EE;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-text-fill: #0F6E56;
+}
+
+.sort-normal {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+}
+
+/* ==================== CARDS ==================== */
+.card-clickable {
+    -fx-cursor: hand;
+}
+
+.card-validations-pro {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 32 24 28 24;
+    -fx-border-color: #d1fae5;
+    -fx-border-width: 2;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(6,182,212,0.08), 10, 0, 0, 2);
+}
+
+/* ==================== NAVIGATION ==================== */
+.nav-item {
+    -fx-cursor: hand;
     -fx-padding: 10 14 10 14;
+    -fx-background-radius: 8;
 }
 
-.table-view .column-header-background {
-    -fx-background-color: #E1F5EE;
+.nav-item:hover {
+    -fx-background-color: #f0f2f8;
 }
 
-.table-view .table-row-cell {
-    -fx-border-color: transparent transparent #F3F4F6 transparent;
-}
-
-.table-view .table-row-cell:selected {
-    -fx-background-color: #DBEAFE;
-    -fx-text-fill: #1E40AF;
-}
-
-.table-view .table-row-cell:hover {
-    -fx-background-color: #F0FDF4;
-}
-
-/* ──────────────────────────────────────────────────────────────
-   BOUTONS PRIMAIRES
-────────────────────────────────────────────────────────────── */
+/* ==================== BUTTONS ==================== */
 .btn-primary {
-    -fx-background-color: #1D9E75;
+    -fx-background-color: linear-gradient(to right, #3498db, #2ecc71);
     -fx-text-fill: white;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 25;
     -fx-cursor: hand;
-    -fx-font-weight: 600;
-}
-
-.btn-primary:hover {
-    -fx-background-color: #0F6E56;
-}
-
-.btn-blue {
-    -fx-background-color: #4285F4;
-    -fx-text-fill: white;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
-    -fx-font-weight: 600;
-}
-
-.btn-blue:hover {
-    -fx-background-color: #2563EB;
-}
-
-.btn-danger {
-    -fx-background-color: #E24B4A;
-    -fx-text-fill: white;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
-    -fx-font-weight: 600;
-}
-
-.btn-danger:hover {
-    -fx-background-color: #B91C1C;
-}
-
-.btn-warning {
-    -fx-background-color: #EF9F27;
-    -fx-text-fill: white;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
-    -fx-font-weight: 600;
-}
-
-.btn-warning:hover {
-    -fx-background-color: #D97706;
 }
 
 .btn-secondary {
-    -fx-background-color: #F3F4F6;
-    -fx-text-fill: #374151;
-    -fx-border-color: #D1D5DB;
-    -fx-border-width: 1;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
     -fx-cursor: hand;
 }
 
-.btn-secondary:hover {
-    -fx-background-color: #E5E7EB;
+/* ==================== FORM ELEMENTS ==================== */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   CHAMPS DE FORMULAIRE
-────────────────────────────────────────────────────────────── */
-.text-field, .text-area, .combo-box {
-    -fx-background-color: #F9FAFB;
-    -fx-border-color: #D1D5DB;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-padding: 10 14 10 14;
-    -fx-font-size: 14px;
+.text-field:focused {
+    -fx-border-color: #3498db;
 }
 
-.text-field:focused, .text-area:focused, .combo-box:focused {
-    -fx-border-color: #4285F4;
-    -fx-border-width: 2;
+/* ==================== LOGIN ==================== */
+.login-container {
+    -fx-padding: 40;
 }
 
-.text-field-valid {
-    -fx-border-color: #1D9E75;
-    -fx-border-width: 2;
-}
-
-.text-field-invalid {
-    -fx-border-color: #E24B4A;
-    -fx-border-width: 2;
-}
-
-.form-label {
+.login-title {
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #085041;
+}
+
+/* ==================== DASHBOARD RECENT USERS ==================== */
+.recent-user-row {
+    -fx-padding: 14 16 14 16;
+    -fx-border-color: transparent transparent #f8fafc transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.recent-user-row-default {
+    -fx-background-color: white;
+}
+
+.recent-user-row-alt {
+    -fx-background-color: #fafbfd;
+}
+
+.recent-user-name {
     -fx-font-size: 13px;
-}
-
-.error-label {
-    -fx-text-fill: #EF4444;
-    -fx-font-size: 12px;
-}
-
-/* ──────────────────────────────────────────────────────────────
-   CARTES STATISTIQUES
-────────────────────────────────────────────────────────────── */
-.stat-card {
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-    -fx-border-color: #E5E7EB;
-    -fx-border-width: 1;
-    -fx-border-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);
-    -fx-padding: 18 20 18 20;
-}
-
-.stat-number {
-    -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1A1A1A;
+    -fx-text-fill: #1a1a2e;
 }
 
-.stat-label {
-    -fx-font-size: 12px;
-    -fx-text-fill: #6B7280;
+.recent-user-email {
+    -fx-font-size: 13px;
+    -fx-text-fill: #4C6FFF;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   SCORE / RÉSULTAT
-────────────────────────────────────────────────────────────── */
-.score-label {
-    -fx-font-size: 36px;
+.role-badge-small {
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1D9E75;
-}
-
-.score-percentage {
-    -fx-font-size: 52px;
-    -fx-font-weight: 800;
-    -fx-text-fill: #4285F4;
-}
-
-.medal-badge {
-    -fx-background-color: linear-gradient(to right, #FCD34D, #F59E0B);
-    -fx-background-radius: 30;
-    -fx-padding: 16 40 16 40;
-}
-
-.result-card {
-    -fx-background-color: white;
     -fx-background-radius: 20;
-    -fx-border-color: #E5E7EB;
-    -fx-border-width: 1;
-    -fx-border-radius: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.09), 18, 0, 0, 6);
+    -fx-padding: 4 12 4 12;
+    -fx-text-fill: white;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   OPTIONS DE RÉPONSE (quiz player)
-────────────────────────────────────────────────────────────── */
-.option-button {
-    -fx-background-color: #F9FAFB;
-    -fx-border-color: #D1D5DB;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 0 20 0 20;
-    -fx-cursor: hand;
-    -fx-text-fill: #1A1A1A;
-    -fx-font-size: 14px;
-    -fx-alignment: CENTER_LEFT;
-    -fx-border-width: 2;
+.role-badge-admin {
+    -fx-background-color: #ef4444;
 }
 
-.option-button:hover {
-    -fx-background-color: #EFF6FF;
-    -fx-border-color: #93C5FD;
+.role-badge-coach {
+    -fx-background-color: #10b981;
 }
 
-.option-button-selected {
-    -fx-background-color: #DBEAFE;
-    -fx-border-color: #4285F4;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 0 20 0 20;
-    -fx-cursor: hand;
-    -fx-text-fill: #1E40AF;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-alignment: CENTER_LEFT;
-    -fx-border-width: 2;
+.role-badge-specialiste {
+    -fx-background-color: #f59e0b;
 }
 
-.option-button-correct {
-    -fx-background-color: #D1FAE5;
-    -fx-border-color: #059669;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 0 20 0 20;
-    -fx-text-fill: #065F46;
-    -fx-font-weight: bold;
-    -fx-border-width: 2;
+.role-badge-utilisateur {
+    -fx-background-color: #6b7280;
 }
 
-.option-button-wrong {
-    -fx-background-color: #FEE2E2;
-    -fx-border-color: #DC2626;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 0 20 0 20;
-    -fx-text-fill: #991B1B;
-    -fx-font-weight: bold;
-    -fx-border-width: 2;
+/* ==================== CERTIFICATIONS ==================== */
+.cert-row {
+    -fx-padding: 14 24;
+    -fx-border-color: transparent transparent #f0f2f8 transparent;
+    -fx-border-width: 0 0 1 0;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   PROGRESS BAR
-────────────────────────────────────────────────────────────── */
-.progress-bar > .bar {
-    -fx-background-color: #4285F4;
-    -fx-background-radius: 6;
-}
-
-.progress-bar > .track {
-    -fx-background-color: #E5E7EB;
-    -fx-background-radius: 6;
-}
-
-/* ──────────────────────────────────────────────────────────────
-   CARTES QUIZ (vue sélection dans quiz_player)
-────────────────────────────────────────────────────────────── */
-.quiz-card {
+.cert-row-default {
     -fx-background-color: white;
-    -fx-background-radius: 14;
-    -fx-border-color: #E5E7EB;
-    -fx-border-width: 1;
-    -fx-border-radius: 14;
-    -fx-padding: 18 24 18 24;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 8, 0, 0, 2);
 }
 
-.quiz-card:hover {
-    -fx-border-color: #4285F4;
-    -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.15), 10, 0, 0, 3);
+.cert-row-alt {
+    -fx-background-color: #fafbfd;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   BADGES DIFFICULTÉ
-────────────────────────────────────────────────────────────── */
-.badge-facile {
-    -fx-background-color: #D1FAE5;
-    -fx-text-fill: #065F46;
-    -fx-background-radius: 12;
-    -fx-padding: 3 10 3 10;
+.cert-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.cert-email {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9ca3af;
+}
+
+.cert-motivation {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.cert-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #374151;
+}
+
+.spec-badge {
     -fx-font-size: 11px;
     -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12;
+    -fx-text-fill: white;
 }
 
-.badge-moyen {
-    -fx-background-color: #FEF3C7;
-    -fx-text-fill: #92400E;
-    -fx-background-radius: 12;
-    -fx-padding: 3 10 3 10;
+.spec-badge-coach {
+    -fx-background-color: #10b981;
+}
+
+.spec-badge-specialiste {
+    -fx-background-color: #f59e0b;
+}
+
+.statut-badge {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 10;
+}
+
+.statut-en-attente {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+
+.statut-accepte {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+}
+
+.statut-refuse {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+}
+
+.statut-unknown {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #6b7280;
+}
+
+.btn-view-pdf {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #374151;
     -fx-font-size: 11px;
     -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
 }
 
-.badge-difficile {
-    -fx-background-color: #FEE2E2;
-    -fx-text-fill: #991B1B;
-    -fx-background-radius: 12;
-    -fx-padding: 3 10 3 10;
+.btn-accept {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
     -fx-font-size: 11px;
     -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   SÉPARATEUR
-────────────────────────────────────────────────────────────── */
-.separator {
-    -fx-opacity: 0.5;
+.btn-refuse {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}
+
+.lbl-treated {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+    -fx-text-fill: #2c3e50;
+}
+
+.login-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.login-hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
 }
