@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,17 +87,18 @@ public class ServiceUtilisateur {
 
     public void ajouter(Utilisateur u) {
         String sql = """
-            INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO utilisateur (nom_complet, email, mot_de_passe, roles)
+            VALUES (?, ?, ?, ?)
             """;
         try (Connection cn = DatabaseConnection.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, u.getNom());
-            ps.setString(2, u.getPrenom());
-            ps.setString(3, u.getEmail().toLowerCase());
-            ps.setString(4, u.getMotDePasse());
-            ps.setString(5, u.getRole() != null ? u.getRole() : "ETUDIANT");
+            String nomComplet = (u.getPrenom() != null && !u.getPrenom().isBlank())
+                    ? u.getPrenom() + " " + u.getNom() : u.getNom();
+            ps.setString(1, nomComplet);
+            ps.setString(2, u.getEmail().toLowerCase());
+            ps.setString(3, u.getMotDePasse());
+            ps.setString(4, u.getRole() != null ? u.getRole() : "ETUDIANT");
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -152,15 +154,16 @@ public class ServiceUtilisateur {
 
     public void update(Utilisateur u) {
         String sql = """
-            UPDATE utilisateur SET nom=?, prenom=?, email=?, role=? WHERE id=?
+            UPDATE utilisateur SET nom_complet=?, email=?, roles=? WHERE id=?
             """;
         try (Connection cn = DatabaseConnection.getConnection();
              PreparedStatement ps = cn.prepareStatement(sql)) {
-            ps.setString(1, u.getNom());
-            ps.setString(2, u.getPrenom());
-            ps.setString(3, u.getEmail().toLowerCase());
-            ps.setString(4, u.getRole());
-            ps.setInt(5, u.getId());
+            String nomComplet = (u.getPrenom() != null && !u.getPrenom().isBlank())
+                    ? u.getPrenom() + " " + u.getNom() : u.getNom();
+            ps.setString(1, nomComplet);
+            ps.setString(2, u.getEmail().toLowerCase());
+            ps.setString(3, u.getRole());
+            ps.setInt(4, u.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             log.error("Erreur update utilisateur : {}", e.getMessage());
@@ -222,15 +225,28 @@ public class ServiceUtilisateur {
     }
 
     private Utilisateur mapper(ResultSet rs) throws SQLException {
+        String nomComplet = rs.getString("nom_complet");
+        String nom = nomComplet != null ? nomComplet : "";
+        String prenom = "";
+        if (nomComplet != null && nomComplet.contains(" ")) {
+            int idx = nomComplet.indexOf(' ');
+            prenom = nomComplet.substring(0, idx);
+            nom    = nomComplet.substring(idx + 1);
+        }
+        LocalDateTime dateCreation = null;
+        try {
+            Timestamp ts = rs.getTimestamp("created_at");
+            if (ts != null) dateCreation = ts.toLocalDateTime();
+        } catch (SQLException ignored) {}
+
         return new Utilisateur(
                 rs.getInt("id"),
-                rs.getString("nom"),
-                rs.getString("prenom"),
+                nom,
+                prenom,
                 rs.getString("email"),
                 rs.getString("mot_de_passe"),
-                rs.getString("role"),
-                rs.getTimestamp("date_creation") != null
-                        ? rs.getTimestamp("date_creation").toLocalDateTime() : null
+                rs.getString("roles"),
+                dateCreation
         );
     }
 }

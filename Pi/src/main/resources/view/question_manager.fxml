@@ -37,6 +37,13 @@
                    style="-fx-font-size: 12px; -fx-text-fill: #6B7280;"/>
         </VBox>
 
+        <Button text="🤖 Générer avec IA" onAction="#handleGenerateAi"
+                style="-fx-background-color: #ECFDF5; -fx-text-fill: #1D9E75;
+                       -fx-font-size: 13px; -fx-font-weight: 700;
+                       -fx-background-radius: 8; -fx-padding: 10 16 10 16;
+                       -fx-cursor: hand; -fx-border-color: #A7F3D0;
+                       -fx-border-width: 1; -fx-border-radius: 8;"/>
+
         <Button text="← Retour aux Quiz" onAction="#handleRetour"
                 style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151;
                        -fx-font-size: 13px; -fx-font-weight: 500;

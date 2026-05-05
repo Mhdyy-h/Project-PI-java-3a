@@ -166,9 +166,25 @@ public class NavigationService {
         });
     }
 
+    // ── AI ─────────────────────────────────────────────────────
+
+    public void navigateToAiChat(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/ai_chat.fxml", "BioSync - Assistant IA", 1000, 720, ctrl -> {
+            if (ctrl instanceof org.example.controller.AiChatController chatCtrl) {
+                chatCtrl.setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    public void navigateToDashboardCognitif(Node sourceNode) {
+        navigateFrom(sourceNode, "/DashboardCognitif.fxml", "BioSync - Dashboard Cognitif", 1000, 720, ctrl -> {
+            // DashboardCognitifController uses SessionContext, no user injection needed
+        });
+    }
+
     // ── Mental Wellness ────────────────────────────────────────
 
-    /** Ouvre la liste des quiz (admin). */
+    /** Ouvre la liste des quiz (admin) - quiz_manager.fxml. */
     public void navigateToMental(Node sourceNode, User currentUser) {
         navigateToQuizManager(sourceNode, currentUser);
     }

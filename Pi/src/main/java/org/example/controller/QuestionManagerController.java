@@ -10,6 +10,7 @@ import org.example.model.Question;
 import org.example.model.Quiz;
 import org.example.model.User;
 import org.example.service.NavigationService;
+import org.example.service.OllamaQcmGeneratorService;
 import org.example.service.QuestionService;
 import org.example.util.AlertHelper;
 import org.example.util.InputValidator;
@@ -51,6 +52,7 @@ public class QuestionManagerController {
 
     // ── État ───────────────────────────────────────────────────
     private final QuestionService questionService = new QuestionService();
+    private final OllamaQcmGeneratorService ollamaQcmGeneratorService = new OllamaQcmGeneratorService();
     private ObservableList<Question> questionList = FXCollections.observableArrayList();
     private Quiz   currentQuiz;
     private User   currentUser;
@@ -237,6 +239,60 @@ public class QuestionManagerController {
     @FXML
     private void handleRetour() {
         NavigationService.getInstance().navigateToQuizManager(saveButton, currentUser);
+    }
+
+    @FXML
+    private void handleGenerateAi() {
+        if (currentQuiz == null) {
+            AlertHelper.showWarning("IA", "Veuillez sélectionner un quiz.");
+            return;
+        }
+
+        TextInputDialog themeDialog = new TextInputDialog(currentQuiz.getTitre() != null ? currentQuiz.getTitre() : "");
+        themeDialog.setTitle("Génération IA");
+        themeDialog.setHeaderText("Thème des questions");
+        themeDialog.setContentText("Thème :");
+
+        String theme = themeDialog.showAndWait().orElse("").trim();
+        if (theme.isEmpty()) return;
+
+        TextInputDialog countDialog = new TextInputDialog("5");
+        countDialog.setTitle("Génération IA");
+        countDialog.setHeaderText("Nombre de questions");
+        countDialog.setContentText("Combien ?");
+
+        int count;
+        try {
+            count = Integer.parseInt(countDialog.showAndWait().orElse("0").trim());
+        } catch (Exception e) {
+            AlertHelper.showWarning("IA", "Nombre invalide.");
+            return;
+        }
+        if (count <= 0 || count > 20) {
+            AlertHelper.showWarning("IA", "Choisissez un nombre entre 1 et 20.");
+            return;
+        }
+
+        int difficulty = Math.max(1, Math.min(10, currentQuiz.getNiveauStressCible() > 0 ? currentQuiz.getNiveauStressCible() : 5));
+
+        try {
+            List<Question> generated = ollamaQcmGeneratorService.generate(theme, difficulty, count, 1);
+            if (generated.isEmpty()) {
+                AlertHelper.showWarning("IA", "Aucune question générée. Vérifiez qu'Ollama est lancé.");
+                return;
+            }
+
+            int inserted = 0;
+            for (Question q : generated) {
+                q.setQuizId(currentQuiz.getId());
+                if (questionService.ajouterQuestion(q)) inserted++;
+            }
+
+            chargerQuestions();
+            AlertHelper.showSuccess("IA", inserted + " question(s) ajoutée(s).");
+        } catch (Exception e) {
+            AlertHelper.showError("IA", "Erreur génération IA : " + e.getMessage());
+        }
     }
 
     // ── Suppression ─────────────────────────────────────────────

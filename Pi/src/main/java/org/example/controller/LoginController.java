@@ -7,7 +7,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.model.User;
+import org.example.model.Utilisateur;
 import org.example.service.AuthService;
+import org.example.util.SessionContext;
 import org.example.util.UserSession;
 
 /**
@@ -55,6 +57,7 @@ public class LoginController extends BaseController {
         if (result.isSuccess()) {
             User user = result.getUser();
             UserSession.getInstance().startSession(user);
+            SessionContext.connecter(mapToUtilisateur(user));
             log("User registered: " + user.getEmail());
             navigateToDashboard();
             closeCurrentWindow(event);
@@ -72,10 +75,34 @@ public class LoginController extends BaseController {
         if (result.isSuccess()) {
             User user = result.getUser();
             UserSession.getInstance().startSession(user);
+            SessionContext.connecter(mapToUtilisateur(user));
             log("User registered and logged in: " + user.getEmail());
             navigateToDashboard();
             closeCurrentWindow(event);
         }
+    }
+
+    private Utilisateur mapToUtilisateur(User user) {
+        if (user == null) return null;
+
+        String nomComplet = user.getNomComplet() != null ? user.getNomComplet().trim() : "";
+        String prenom = "";
+        String nom = nomComplet;
+        if (!nomComplet.isEmpty() && nomComplet.contains(" ")) {
+            int idx = nomComplet.indexOf(' ');
+            prenom = nomComplet.substring(0, idx).trim();
+            nom = nomComplet.substring(idx + 1).trim();
+        }
+
+        Utilisateur u = new Utilisateur();
+        u.setId(user.getId());
+        u.setPrenom(prenom);
+        u.setNom(nom);
+        u.setEmail(user.getEmail());
+
+        String roles = user.getRoles() != null ? user.getRoles().toUpperCase() : "";
+        u.setRole(roles.contains("ADMIN") ? "ADMIN" : "ETUDIANT");
+        return u;
     }
 
     @FXML

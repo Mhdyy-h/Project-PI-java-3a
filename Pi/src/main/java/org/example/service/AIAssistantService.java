@@ -171,7 +171,7 @@ public class AIAssistantService {
      */
     public String chat(String messageUtilisateur) {
         if (!ConfigLoader.claudeDisponible()) {
-            return "L'assistant IA n'est pas disponible. Vérifiez la clé API dans config.properties.";
+            return repondreLocalement(messageUtilisateur.trim().toLowerCase());
         }
 
         historiqueConversation.add(Map.of("role", "user", "content", messageUtilisateur));
@@ -187,12 +187,76 @@ public class AIAssistantService {
             historiqueConversation.add(Map.of("role", "assistant", "content", reponse));
         }
 
-        // Limite l'historique à 20 messages pour éviter de dépasser les tokens
         if (historiqueConversation.size() > 20) {
             historiqueConversation.subList(0, 2).clear();
         }
 
         return reponse != null ? reponse : "Je n'ai pas pu générer une réponse. Réessayez.";
+    }
+
+    /**
+     * Répond localement aux questions fréquentes sans API externe.
+     * Utilisé quand claude.api.key est absent de config.properties.
+     */
+    private String repondreLocalement(String question) {
+        if (contient(question, "theme", "thème", "sujet", "categorie", "catégorie", "domaine")) {
+            return "Les thèmes disponibles sur BioSync sont : Mémoire, Attention, Logique, " +
+                   "Langage, Mathématiques, Culture générale et Vitesse de traitement. " +
+                   "Chaque quiz est classé par thème et niveau de difficulté.";
+        }
+        if (contient(question, "quiz", "quizz", "test", "évaluation", "evaluation")) {
+            return "Un quiz contient plusieurs questions à choix multiples. Vous avez un temps " +
+                   "limité par question. Votre score ELO s'ajuste automatiquement selon vos " +
+                   "performances pour vous proposer des questions adaptées à votre niveau.";
+        }
+        if (contient(question, "elo", "score", "point", "niveau")) {
+            return "Le score ELO mesure votre niveau cognitif. Il part de 1000 et monte quand " +
+                   "vous répondez correctement et vite. Un ELO > 1200 = niveau avancé, " +
+                   "< 800 = niveau débutant. Il s'adapte à chaque thème indépendamment.";
+        }
+        if (contient(question, "fatigue", "pause", "repos", "arrêt", "arret")) {
+            return "Le système détecte votre fatigue cognitive en temps réel (ralentissement, " +
+                   "erreurs répétées). Quand le score de fatigue dépasse 65%, une pause vous " +
+                   "est conseillée. Au-delà de 85%, la session s'arrête automatiquement.";
+        }
+        if (contient(question, "difficulté", "difficulte", "facile", "difficile", "dur")) {
+            return "La difficulté s'adapte automatiquement (système adaptatif). Si vous " +
+                   "répondez bien, les questions deviennent plus difficiles. En cas d'erreurs, " +
+                   "elles s'allègent. L'objectif est de vous maintenir dans votre zone optimale.";
+        }
+        if (contient(question, "rapport", "pdf", "résultat", "resultat", "bilan")) {
+            return "En fin de session, un rapport PDF est généré automatiquement dans votre " +
+                   "dossier personnel. Il contient : score, détail question par question, " +
+                   "profil de fatigue et recommandations personnalisées.";
+        }
+        if (contient(question, "compte", "profil", "inscription", "mot de passe", "password")) {
+            return "Vous pouvez créer un compte depuis l'écran de connexion. " +
+                   "Votre profil cognitif se construit au fil des sessions et garde " +
+                   "l'historique de toutes vos performances.";
+        }
+        if (contient(question, "bonjour", "salut", "bonsoir", "hello", "hi")) {
+            return "Bonjour ! Je suis votre assistant BioSync. Je peux vous renseigner sur " +
+                   "les thèmes de quiz, le score ELO, la fatigue cognitive, les rapports PDF " +
+                   "ou le fonctionnement de la plateforme. Que souhaitez-vous savoir ?";
+        }
+        if (contient(question, "merci", "super", "parfait", "excellent", "bravo")) {
+            return "Avec plaisir ! N'hésitez pas si vous avez d'autres questions.";
+        }
+        if (contient(question, "aide", "help", "comment", "que faire", "expliquer")) {
+            return "Je peux vous aider sur : les thèmes disponibles, le système ELO, " +
+                   "la détection de fatigue, les rapports PDF, les niveaux de difficulté " +
+                   "ou la création de compte. Posez-moi votre question !";
+        }
+        return "Je ne suis pas sûr de comprendre votre question. Je peux vous renseigner sur " +
+               "les thèmes de quiz, le score ELO, la fatigue cognitive, les niveaux de " +
+               "difficulté, les rapports ou votre profil. Précisez votre demande !";
+    }
+
+    private boolean contient(String texte, String... mots) {
+        for (String mot : mots) {
+            if (texte.contains(mot)) return true;
+        }
+        return false;
     }
 
     /** Efface l'historique de conversation (nouvelle session). */

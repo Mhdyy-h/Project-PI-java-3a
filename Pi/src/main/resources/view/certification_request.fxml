@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 
 <ScrollPane fitToWidth="true"
-            xmlns="http://javafx.com/javafx/21"
+            xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.controller.CertificationRequestController"
             style="-fx-background-color: #e8f0fe; -fx-background: #e8f0fe; -fx-border-color: transparent;"

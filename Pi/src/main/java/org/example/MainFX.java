@@ -5,14 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.service.MonitoringService;
 
 public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        MonitoringService.init();
         Parent root = FXMLLoader.load(
-                getClass().getResource("/Connexion.fxml"));
-        primaryStage.setTitle("BioSync — Évaluation Cognitive");
+                getClass().getResource("/view/login.fxml"));
+        primaryStage.setTitle("BioSync");
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());

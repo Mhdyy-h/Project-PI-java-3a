@@ -31,20 +31,20 @@ public class DatabaseConnection {
         if (testMode && testConnection != null) {
             return testConnection;
         }
-        if (connection == null) {
-            try {
-                String url = properties.getProperty("db.url");
+        try {
+            if (connection == null || connection.isClosed()) {
+                String url      = properties.getProperty("db.url");
                 String username = properties.getProperty("db.username");
                 String password = properties.getProperty("db.password");
-                String driver = properties.getProperty("db.driver");
+                String driver   = properties.getProperty("db.driver");
 
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, username, password);
                 System.out.println("Database connection established successfully!");
-            } catch (ClassNotFoundException | SQLException e) {
-                System.err.println("Database connection failed: " + e.getMessage());
-                e.printStackTrace();
             }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Database connection failed: " + e.getMessage());
+            e.printStackTrace();
         }
         return connection;
     }

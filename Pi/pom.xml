@@ -25,6 +25,7 @@
         <pdfbox.version>3.0.1</pdfbox.version>
         <commons-math3.version>3.6.1</commons-math3.version>
         <java-websocket.version>1.5.4</java-websocket.version>
+        <sentry.version>7.14.0</sentry.version>
     </properties>
 
     <dependencies>
@@ -87,6 +88,18 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+
+        <!-- Sentry (optionnel) : activé uniquement si sentry.dsn est configuré en local -->
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry</artifactId>
+            <version>${sentry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-logback</artifactId>
+            <version>${sentry.version}</version>
         </dependency>
 
         <!-- PDF : génération de rapports (ReportService) — licence Apache 2.0 -->

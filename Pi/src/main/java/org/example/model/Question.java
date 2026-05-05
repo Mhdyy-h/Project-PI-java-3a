@@ -8,6 +8,7 @@ public class Question {
     private String reponseCorrecte;
     private String optionsFausses;  // pipe-separated: "opt1|opt2|opt3"
     private int    pointsValeur;
+    private String explication;
 
     public Question() {}
 
@@ -105,6 +106,6 @@ public class Question {
         optionsFausses = String.join("|", parts);
     }
 
-    public String getExplication() { return null; }
-    public void setExplication(String explication) { }
+    public String getExplication() { return explication; }
+    public void setExplication(String explication) { this.explication = explication; }
 }

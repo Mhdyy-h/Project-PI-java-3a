@@ -230,6 +230,20 @@ public class QuizController {
         NavigationService.getInstance().navigateToVueUtilisateur(quizTable, currentUser);
     }
 
+    @FXML
+    private void handleAiChat() {
+        if (currentUser != null) {
+            NavigationService.getInstance().navigateToAiChat(quizTable, currentUser);
+        } else {
+            NavigationService.getInstance().navigateToLogin(quizTable);
+        }
+    }
+
+    @FXML
+    private void handleDashboardCognitif() {
+        NavigationService.getInstance().navigateToDashboardCognitif(quizTable);
+    }
+
     // ── Actions sur une ligne ────────────────────────────────────
 
     private void handleModifier(Quiz quiz) {

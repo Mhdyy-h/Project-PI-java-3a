@@ -43,6 +43,18 @@
                                -fx-padding: 8 16 8 16; -fx-cursor: hand;
                                -fx-background-radius: 6; -fx-border-color: #A7F3D0;
                                -fx-border-width: 1; -fx-border-radius: 6;"/>
+                <Button text="🤖 Chat IA" onAction="#handleAiChat"
+                        style="-fx-background-color: #F3E8FF; -fx-text-fill: #7C3AED;
+                               -fx-font-size: 13px; -fx-font-weight: bold;
+                               -fx-padding: 8 16 8 16; -fx-cursor: hand;
+                               -fx-background-radius: 6; -fx-border-color: #DDD6FE;
+                               -fx-border-width: 1; -fx-border-radius: 6;"/>
+                <Button text="🧠 Dashboard" onAction="#handleDashboardCognitif"
+                        style="-fx-background-color: #FEF3C7; -fx-text-fill: #D97706;
+                               -fx-font-size: 13px; -fx-font-weight: bold;
+                               -fx-padding: 8 16 8 16; -fx-cursor: hand;
+                               -fx-background-radius: 6; -fx-border-color: #FDE68A;
+                               -fx-border-width: 1; -fx-border-radius: 6;"/>
 
                 <Region HBox.hgrow="ALWAYS"/>
                 <Button text="+ Nouveau Quiz" onAction="#handleNewQuiz"

@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
+<BorderPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.example.controller.AdminController"
             prefWidth="1100" prefHeight="700"
@@ -89,9 +89,10 @@
                     </VBox>
                 </HBox>
 
-                <!-- IA Mentale - NOT clickable -->
-                <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                <!-- IA Mentale - CLICKABLE -->
+                <HBox fx:id="aiNavItem" alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavAi">
                     <Label text="🤖" style="-fx-font-size: 14px;"/>
                     <Label text="IA Mentale" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>

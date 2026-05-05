@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controller.AiChatController"
+      prefHeight="720.0" prefWidth="1000.0"
+      style="-fx-background-color: #F5F7FA;">
+
+    <stylesheets>
+        <URL value="@/styles/style.css"/>
+    </stylesheets>
+
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: white; -fx-padding: 14 18 14 18; -fx-border-color: #E5E7EB; -fx-border-width: 0 0 1 0;">
+        <Label text="🤖 Assistant IA" style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="resetButton" text="Réinitialiser" onAction="#handleReset"
+                style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151; -fx-background-radius: 8; -fx-padding: 10 16 10 16; -fx-cursor: hand; -fx-border-color: #D1D5DB; -fx-border-width: 1; -fx-border-radius: 8;"/>
+        <Button fx:id="backButton" text="← Retour" onAction="#handleBack"
+                style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151; -fx-background-radius: 8; -fx-padding: 10 16 10 16; -fx-cursor: hand; -fx-border-color: #D1D5DB; -fx-border-width: 1; -fx-border-radius: 8;"/>
+    </HBox>
+
+    <VBox spacing="12" style="-fx-padding: 16;">
+        <TextArea fx:id="chatArea" prefHeight="560" wrapText="true"
+                  style="-fx-background-color: white; -fx-border-color: #E5E7EB; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 10;"/>
+
+        <HBox spacing="10">
+            <TextField fx:id="inputField" promptText="Écris ton message..." HBox.hgrow="ALWAYS"
+                       onAction="#handleSend"
+                       style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 12 14 12 14; -fx-font-size: 13px;"/>
+            <Button fx:id="sendButton" text="Envoyer" onAction="#handleSend"
+                    style="-fx-background-color: #4285F4; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: 700; -fx-background-radius: 10; -fx-padding: 12 18 12 18; -fx-cursor: hand;"/>
+        </HBox>
+
+        <Label text="Ollama doit être lancé en local (http://localhost:11434)." style="-fx-text-fill: #6B7280; -fx-font-size: 12px;"/>
+    </VBox>
+
+    <padding>
+        <Insets top="0" right="0" bottom="0" left="0"/>
+    </padding>
+</VBox>

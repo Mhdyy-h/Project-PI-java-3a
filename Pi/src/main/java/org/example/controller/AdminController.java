@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.model.User;
 import org.example.service.DashboardService;
+import org.example.service.NavigationService;
 import org.example.service.UserService;
 
 import java.util.List;
@@ -27,9 +28,13 @@ public class AdminController extends BaseController {
     @FXML private Label statusLabel;
 
     private final DashboardService dashboardService = DashboardService.getInstance();
+    private final NavigationService navigationService = NavigationService.getInstance();
+
+    private User currentUser;
 
     @Override
     public void initializeWithUser(User user) {
+        this.currentUser = user;
         updateHeader(user);
         loadStats();
         loadRecentUsers();
@@ -110,12 +115,16 @@ public class AdminController extends BaseController {
 
     @FXML
     private void handleNavMental(MouseEvent event) {
-        loadPage(VIEW_QUIZ_MANAGER, "BioSync - Mental Wellness", 1200, 800);
+        navigationService.navigateToMental(adminNameLabel, currentUser);
+    }
+
+    @FXML
+    private void handleNavAi(MouseEvent event) {
+        navigationService.navigateToAiChat(adminNameLabel, currentUser);
     }
 
     @FXML
     private void handleLogout(MouseEvent event) {
-        Stage currentStage = (Stage) adminNameLabel.getScene().getWindow();
-        navigateToLogin(currentStage);
+        navigationService.navigateToLogin(adminNameLabel);
     }
 }
