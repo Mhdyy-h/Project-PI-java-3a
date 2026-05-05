@@ -115,6 +115,14 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>Pi/src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>Pi/src/main/resources</directory>
+            </resource>
+        </resources>
+        <testSourceDirectory>Pi/src/test/java</testSourceDirectory>
+
         <plugins>
             <!-- JavaFX Plugin -->
             <plugin>

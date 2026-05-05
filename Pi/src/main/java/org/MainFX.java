@@ -17,7 +17,7 @@ public class MainFX extends Application {
         // ✅ Dashboard USER
         Session.role = "USER";
         FXMLLoader loaderUser = new FXMLLoader(
-                getClass().getResource("/view/MenuUser.fxml"));
+                getClass().getResource("/view/login.fxml"));
         Parent rootUser = loaderUser.load();
         MenuUserController ctrl = loaderUser.getController();
         ctrl.setCurrentUser(new User(1, "Ahmed", "ahmed@sport.com"));
