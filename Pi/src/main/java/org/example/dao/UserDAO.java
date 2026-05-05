@@ -2,7 +2,6 @@ package org.example.dao;
 
 import org.example.DatabaseConnection;
 import org.example.model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,326 +9,203 @@ import java.util.List;
 public class UserDAO {
 
     public static boolean testConnection() {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            if (connection != null && !connection.isClosed()) {
-                System.out.println("Database connection is successful!");
-                System.out.println("Database: " + connection.getMetaData().getDatabaseProductName());
-                System.out.println("Version: " + connection.getMetaData().getDatabaseProductVersion());
-                return true;
-            }
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            return connection != null && !connection.isClosed();
         } catch (SQLException e) {
-            System.err.println("Connection test failed: " + e.getMessage());
+            System.err.println("❌ Connection test failed: " + e.getMessage());
             return false;
         }
+    }
+
+    public static void createTableIfNotExists() {
+        String sql = "CREATE TABLE IF NOT EXISTS utilisateur (" +
+                "id INT AUTO_INCREMENT PRIMARY KEY," +
+                "nom_complet VARCHAR(50) NOT NULL," +
+                "email VARCHAR(100) NOT NULL UNIQUE," +
+                "mot_de_passe VARCHAR(100) NOT NULL," +
+                "roles VARCHAR(100) DEFAULT '[\"ROLE_USER\"]'," +
+                "score_global INT DEFAULT 0," +
+                "date_inscription DATE," +
+                "photo_profil VARCHAR(500)," +
+                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                ")";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+            try {
+                stmt.execute("ALTER TABLE utilisateur ADD COLUMN IF NOT EXISTS photo_profil VARCHAR(500)");
+                stmt.execute("ALTER TABLE utilisateur ADD COLUMN IF NOT EXISTS score_global INT DEFAULT 0");
+            } catch (SQLException ignored) { }
+        } catch (SQLException e) {
+            System.err.println("❌ Error creating table: " + e.getMessage());
+        }
+    }
+
+    public static User login(String email, String motDePasse) {
+        String sql = "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ps.setString(2, motDePasse);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapUser(rs);
+            }
+        } catch (SQLException e) { }
+        return null;
+    }
+
+    public static boolean insertUser(User user) {
+        createTableIfNotExists();
+        String sql = "INSERT INTO utilisateur (nom_complet, email, mot_de_passe, roles, score_global, date_inscription, photo_profil) VALUES (?, ?, ?, ?, 0, CURDATE(), ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, user.getNomComplet());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getMotDePasse());
+            ps.setString(4, user.getRoles() != null ? user.getRoles() : "[\"ROLE_USER\"]");
+            ps.setString(5, user.getPhotoProfil());
+            if (ps.executeUpdate() > 0) {
+                try (ResultSet keys = ps.getGeneratedKeys()) {
+                    if (keys.next()) user.setId(keys.getInt(1));
+                }
+                return true;
+            }
+        } catch (SQLException e) { }
         return false;
     }
 
-    // Create users table if not exists (with photo_profil column)
-    public static void createTableIfNotExists() {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            Statement statement = connection.createStatement();
-
-            String sql = "CREATE TABLE IF NOT EXISTS utilisateur (" +
-                         "id INT AUTO_INCREMENT PRIMARY KEY," +
-                         "nom_complet VARCHAR(50) NOT NULL," +
-                         "email VARCHAR(100) NOT NULL," +
-                         "mot_de_passe VARCHAR(100) NOT NULL," +
-                         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
-                         "roles VARCHAR(100)," +
-                         "score_global INT DEFAULT 0," +
-                         "date_inscription DATE," +
-                         "photo_profil VARCHAR(500)" +
-                         ")";
-
-            statement.execute(sql);
-            statement.close();
-
-            // Add photo_profil column if it doesn't exist yet (for existing DBs)
-            try {
-                Statement alterStmt = connection.createStatement();
-                alterStmt.execute("ALTER TABLE utilisateur ADD COLUMN IF NOT EXISTS photo_profil VARCHAR(500)");
-                alterStmt.close();
-            } catch (SQLException ignored) {
-                // MySQL < 8: column might already exist, ignore
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error creating table: " + e.getMessage());
-        }
-    }
-
-    // Insert a new user
-    public static boolean insertUser(User user) {
-        try {
-            createTableIfNotExists();
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO utilisateur (nom_complet, email, mot_de_passe, score_global, date_inscription, roles, photo_profil) VALUES (?, ?, ?, 0, CURDATE(), ?, ?)",
-                Statement.RETURN_GENERATED_KEYS
-            );
-
-            statement.setString(1, user.getNomComplet());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getMotDePasse());
-            statement.setString(4, user.getRoles() != null ? user.getRoles() : "[\"ROLE_USER\"]");
-            statement.setString(5, user.getPhotoProfil());
-
-            int rowsAffected = statement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                ResultSet generatedKeys = statement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    user.setId(generatedKeys.getInt(1));
-                }
-                generatedKeys.close();
-            }
-            statement.close();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.err.println("Error inserting user: " + e.getMessage());
-            return false;
-        }
-    }
-
-    // Get all users
     public static List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM utilisateur ORDER BY id DESC");
-
-            while (resultSet.next()) {
-                users.add(mapUser(resultSet));
-            }
-
-            resultSet.close();
-            statement.close();
-
-        } catch (SQLException e) {
-            System.err.println("Error getting users: " + e.getMessage());
-        }
+        String sql = "SELECT * FROM utilisateur ORDER BY id DESC";
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) users.add(mapUser(rs));
+        } catch (SQLException e) { }
         return users;
     }
 
-    // Delete user by ID (also deletes related records first)
-    public static boolean deleteUser(int id) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-
-            // First, delete related activity logs
-            try {
-                PreparedStatement deleteLogs = connection.prepareStatement("DELETE FROM activity_log WHERE user_id = ?");
-                deleteLogs.setInt(1, id);
-                deleteLogs.executeUpdate();
-                deleteLogs.close();
-            } catch (SQLException e) {
-                // Table might not exist, continue
-            }
-
-            // Delete related certification requests
-            try {
-                PreparedStatement deleteCertifications = connection.prepareStatement("DELETE FROM certification WHERE utilisateur_id = ?");
-                deleteCertifications.setInt(1, id);
-                deleteCertifications.executeUpdate();
-                deleteCertifications.close();
-            } catch (SQLException e) {
-                // Table might not exist, continue
-            }
-
-            // Delete related log_event records
-            try {
-                PreparedStatement deleteLogEvents = connection.prepareStatement("DELETE FROM log_event WHERE utilisateur_id = ?");
-                deleteLogEvents.setInt(1, id);
-                deleteLogEvents.executeUpdate();
-                deleteLogEvents.close();
-            } catch (SQLException e) {
-                // Table might not exist, continue
-            }
-
-            // Then delete the user
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM utilisateur WHERE id = ?");
-            statement.setInt(1, id);
-            int rows = statement.executeUpdate();
-            statement.close();
-            return rows > 0;
-        } catch (SQLException e) {
-            System.err.println("Error deleting user ID " + id + ": " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Get user by ID
+    // --- NEW / FIXED: This was missing and caused the AdminController error ---
     public static User getUserById(int id) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM utilisateur WHERE id = ?");
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                User user = mapUser(resultSet);
-                resultSet.close();
-                statement.close();
-                return user;
+        String sql = "SELECT * FROM utilisateur WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapUser(rs);
             }
-
-            resultSet.close();
-            statement.close();
-
         } catch (SQLException e) {
-            System.err.println("Error getting user: " + e.getMessage());
+            System.err.println("❌ GetUserById Error: " + e.getMessage());
         }
         return null;
     }
 
-    // Login
-    public static User login(String email, String motDePasse) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ?"
-            );
-            statement.setString(1, email);
-            statement.setString(2, motDePasse);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                User user = mapUser(resultSet);
-                resultSet.close();
-                statement.close();
-                return user;
-            }
-
-            resultSet.close();
-            statement.close();
-
-        } catch (SQLException e) {
-            System.err.println("Error during login: " + e.getMessage());
-        }
-        return null;
-    }
-
-    // Update user (with or without password)
     public static boolean updateUser(User user, boolean skipPassword) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement;
+        String sql = skipPassword ?
+                "UPDATE utilisateur SET nom_complet=?, email=?, roles=? WHERE id=?" :
+                "UPDATE utilisateur SET nom_complet=?, email=?, mot_de_passe=?, roles=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getNomComplet());
+            ps.setString(2, user.getEmail());
             if (skipPassword) {
-                statement = connection.prepareStatement(
-                    "UPDATE utilisateur SET nom_complet = ?, email = ?, roles = ? WHERE id = ?"
-                );
-                statement.setString(1, user.getNomComplet());
-                statement.setString(2, user.getEmail());
-                statement.setString(3, user.getRoles());
-                statement.setInt(4, user.getId());
+                ps.setString(3, user.getRoles());
+                ps.setInt(4, user.getId());
             } else {
-                statement = connection.prepareStatement(
-                    "UPDATE utilisateur SET nom_complet = ?, email = ?, mot_de_passe = ?, roles = ? WHERE id = ?"
-                );
-                statement.setString(1, user.getNomComplet());
-                statement.setString(2, user.getEmail());
-                statement.setString(3, user.getMotDePasse());
-                statement.setString(4, user.getRoles());
-                statement.setInt(5, user.getId());
+                ps.setString(3, user.getMotDePasse());
+                ps.setString(4, user.getRoles());
+                ps.setInt(5, user.getId());
             }
-            int rows = statement.executeUpdate();
-            statement.close();
-            return rows > 0;
-        } catch (SQLException e) {
-            System.err.println("Error updating user: " + e.getMessage());
-            return false;
-        }
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) { return false; }
     }
 
-    // Update only the photo_profil for a user
-    public static boolean updateUserPhoto(int userId, String photoPath) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                "UPDATE utilisateur SET photo_profil = ? WHERE id = ?"
-            );
-            statement.setString(1, photoPath);
-            statement.setInt(2, userId);
-            int rows = statement.executeUpdate();
-            statement.close();
-            return rows > 0;
-        } catch (SQLException e) {
-            System.err.println("Error updating user photo: " + e.getMessage());
-            return false;
-        }
+    public static void updateScore(int userId, int points) {
+        String sql = "UPDATE utilisateur SET score_global = score_global + ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, points);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) { }
     }
 
-    // Find user by email (for Face ID lookup)
+    public static List<User> getTopUsers(int limit) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM utilisateur ORDER BY score_global DESC LIMIT ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) users.add(mapUser(rs));
+            }
+        } catch (SQLException e) { }
+        return users;
+    }
+
+    public static boolean deleteUser(int id) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String[] relatedTables = {"activity_log", "certification", "log_event", "membre_groupe"};
+            for (String table : relatedTables) {
+                String col = table.equals("activity_log") ? "user_id" : "utilisateur_id";
+                try (PreparedStatement ps = conn.prepareStatement("DELETE FROM " + table + " WHERE " + col + " = ?")) {
+                    ps.setInt(1, id);
+                    ps.executeUpdate();
+                } catch (SQLException ignored) {}
+            }
+            try (PreparedStatement ps = conn.prepareStatement("DELETE FROM utilisateur WHERE id = ?")) {
+                ps.setInt(1, id);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) { return false; }
+    }
+
     public static User getUserByEmail(String email) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM utilisateur WHERE email = ?"
-            );
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                User user = mapUser(resultSet);
-                resultSet.close();
-                statement.close();
-                return user;
+        String sql = "SELECT * FROM utilisateur WHERE email = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapUser(rs);
             }
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            System.err.println("Error getting user by email: " + e.getMessage());
-        }
+        } catch (SQLException e) { }
         return null;
     }
 
-    // Update password by email (for password reset)
     public static boolean updatePasswordByEmail(String email, String newPassword) {
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(
-                "UPDATE utilisateur SET mot_de_passe = ? WHERE email = ?"
-            );
-            statement.setString(1, newPassword);
-            statement.setString(2, email);
-            int rows = statement.executeUpdate();
-            statement.close();
-            return rows > 0;
-        } catch (SQLException e) {
-            System.err.println("Error updating password by email: " + e.getMessage());
-            return false;
-        }
+        String sql = "UPDATE utilisateur SET mot_de_passe = ? WHERE email = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) { return false; }
     }
 
-    // ==================== HELPER ====================
+    public static boolean updateUserPhoto(int userId, String photoPath) {
+        String sql = "UPDATE utilisateur SET photo_profil = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, photoPath);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) { return false; }
+    }
+
     private static User mapUser(ResultSet rs) throws SQLException {
-        int scoreGlobal = 0;
-        String dateInscription = null;
-        String photoProfil = null;
-
-        try { scoreGlobal = rs.getInt("score_global"); } catch (SQLException ignored) {}
-        try {
-            java.sql.Date d = rs.getDate("date_inscription");
-            if (d != null) {
-                dateInscription = String.format("%02d/%02d/%04d", d.getDate(), d.getMonth() + 1, d.getYear() + 1900);
-            }
-        } catch (SQLException ignored) {}
-        try { photoProfil = rs.getString("photo_profil"); } catch (SQLException ignored) {}
-
-        User user = new User(
-            rs.getInt("id"),
-            rs.getString("nom_complet"),
-            rs.getString("email"),
-            rs.getString("mot_de_passe"),
-            rs.getString("roles"),
-            scoreGlobal,
-            dateInscription
-        );
-        user.setPhotoProfil(photoProfil);
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setNomComplet(rs.getString("nom_complet"));
+        user.setEmail(rs.getString("email"));
+        user.setMotDePasse(rs.getString("mot_de_passe"));
+        user.setRoles(rs.getString("roles"));
+        user.setScoreGlobal(rs.getInt("score_global"));
+        user.setPhotoProfil(rs.getString("photo_profil"));
+        Date d = rs.getDate("date_inscription");
+        if (d != null) {
+            user.setDateInscription(String.format("%02d/%02d/%04d", d.getDate(), d.getMonth() + 1, d.getYear() + 1900));
+        }
         return user;
     }
 }
