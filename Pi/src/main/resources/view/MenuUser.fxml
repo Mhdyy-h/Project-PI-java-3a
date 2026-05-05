@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.MenuUserController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #f0f2f8;"
+            stylesheets="@../styles/style.css">
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background-color: transparent;
+                           -fx-background: transparent;
+                           -fx-border-color: transparent;">
+            <VBox spacing="24" style="-fx-padding: 32 36;">
+
+                <VBox spacing="4">
+                    <Label text="Dashboard — Utilisateur"
+                           style="-fx-font-size: 26px; -fx-font-weight: bold;
+                                  -fx-text-fill: #1a0f4f;"/>
+                    <Label text="Gérez vos exercices et consultez les séances"
+                           styleClass="user-email"/>
+                </VBox>
+
+                <HBox spacing="20">
+                    <HBox alignment="CENTER_LEFT" spacing="20" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white; -fx-background-radius: 16;
+                                 -fx-padding: 24 30;
+                                 -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                        <StackPane minWidth="52" minHeight="52"
+                                   style="-fx-background-color: #f5eeff; -fx-background-radius: 14;">
+                            <Label text="💪" style="-fx-font-size: 22px;"/>
+                        </StackPane>
+                        <VBox spacing="4">
+                            <Label fx:id="totalExercicesLabel" text="—"
+                                   style="-fx-font-size: 32px; -fx-font-weight: bold;
+                                          -fx-text-fill: #7d3c98;"/>
+                            <Label text="Mes Exercices" styleClass="user-email"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="20" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white; -fx-background-radius: 16;
+                                 -fx-padding: 24 30;
+                                 -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                        <StackPane minWidth="52" minHeight="52"
+                                   style="-fx-background-color: #fff8e7; -fx-background-radius: 14;">
+                            <Label text="🏃" style="-fx-font-size: 22px;"/>
+                        </StackPane>
+                        <VBox spacing="4">
+                            <Label fx:id="totalSeancesLabel" text="—"
+                                   style="-fx-font-size: 32px; -fx-font-weight: bold;
+                                          -fx-text-fill: #c9a227;"/>
+                            <Label text="Séances disponibles" styleClass="user-email"/>
+                        </VBox>
+                    </HBox>
+                </HBox>
+
+                <HBox spacing="12">
+                    <Button text="👤 Mon Profil Athlète"
+                            onAction="#ouvrirProfilAthlete"
+                            style="-fx-background-color: #1a1a2e; -fx-text-fill: white;
+                                   -fx-background-radius: 10; -fx-padding: 10 20;
+                                   -fx-cursor: hand; -fx-font-size: 13px;"/>
+                    <StackPane>
+                        <Button text="🔔 Recommandations"
+                                onAction="#ouvrirRecommandations"
+                                style="-fx-background-color: #7d3c98; -fx-text-fill: white;
+                                       -fx-background-radius: 10; -fx-padding: 10 20;
+                                       -fx-cursor: hand; -fx-font-size: 13px;"/>
+                        <Label fx:id="badgeRecommandations" text="0" visible="false"
+                               style="-fx-background-color: #ff4444; -fx-text-fill: white;
+                                      -fx-font-size: 10px; -fx-font-weight: bold;
+                                      -fx-background-radius: 10; -fx-padding: 2 6;
+                                      -fx-min-width: 18; -fx-alignment: center;"
+                               StackPane.alignment="TOP_RIGHT" translateX="8" translateY="-8"/>
+                    </StackPane>
+                    <Button text="📊 Ma Progression"
+                            onAction="#ouvrirGraphiques"
+                            style="-fx-background-color: #1a1a2e; -fx-text-fill: white;
+                                   -fx-background-radius: 10; -fx-padding: 10 20;
+                                   -fx-cursor: hand; -fx-font-size: 13px;"/>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      styleClass="nav-item"
+                      onMouseClicked="#ouvrirMonProfilMouse">
+                    <Label text="🏆" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Mon Profil"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold;
+                                      -fx-text-fill: #c9a227;"/>
+                        <Label text="Niveaux &amp; Badges"
+                               style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="20">
+                    <VBox spacing="16" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          styleClass="card-validations-pro"
+                          onMouseClicked="#ouvrirExercices"
+                          style="-fx-cursor: hand; -fx-border-color: #f5eeff;">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #f5eeff; -fx-background-radius: 16;">
+                            <Label text="💪" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Mes Exercices" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                            <Label text="Ajouter, modifier, supprimer vos exercices"
+                                   styleClass="user-email" wrapText="true"/>
+                        </VBox>
+                        <Button text="Accéder →" onAction="#ouvrirExercicesNav"
+                                style="-fx-background-color: #7d3c98;" styleClass="btn-primary"/>
+                    </VBox>
+
+                    <VBox spacing="16" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          styleClass="card-validations-pro"
+                          onMouseClicked="#ouvrirVoirSeances"
+                          style="-fx-cursor: hand;">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #fff8e7; -fx-background-radius: 16;">
+                            <Label text="🏃" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Séances du Coach" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                            <Label text="Consulter les séances disponibles"
+                                   styleClass="user-email" wrapText="true"/>
+                        </VBox>
+                        <Button text="Accéder →" onAction="#ouvrirVoirSeancesNav" styleClass="btn-primary"/>
+                    </VBox>
+
+                    <VBox spacing="16" alignment="CENTER" HBox.hgrow="ALWAYS"
+                          styleClass="card-validations-pro"
+                          onMouseClicked="#ouvrirMonProfilMouse"
+                          style="-fx-cursor: hand; -fx-border-color: #fff8e7;">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #fff8e7; -fx-background-radius: 16;">
+                            <Label text="🏆" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Mon Profil" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                            <Label text="Niveaux, badges et progression"
+                                   styleClass="user-email" wrapText="true"/>
+                        </VBox>
+                        <Button text="Accéder →" onAction="#ouvrirMonProfil"
+                                style="-fx-background-color: #c9a227;" styleClass="btn-primary"/>
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="16" alignment="CENTER"
+                      styleClass="card-validations-pro"
+                      onMouseClicked="#ouvrirSurchargeMouse"
+                      style="-fx-cursor: hand; -fx-border-color: #ffe0e0;">
+                    <StackPane minWidth="60" minHeight="60"
+                               style="-fx-background-color: #ffe0e0; -fx-background-radius: 16;">
+                        <Label text="⚡" style="-fx-font-size: 26px;"/>
+                    </StackPane>
+                    <VBox spacing="6" alignment="CENTER">
+                        <Label text="Surcharge" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                        <Label text="Analyse de votre charge d'entraînement"
+                               styleClass="user-email" wrapText="true"/>
+                    </VBox>
+                    <Button text="Analyser →" onAction="#ouvrirSurcharge"
+                            style="-fx-background-color: #ff4444;" styleClass="btn-primary"/>
+                </VBox>
+
+                <VBox spacing="16" alignment="CENTER"
+                      styleClass="card-validations-pro"
+                      onMouseClicked="#ouvrirIndiceMouse"
+                      style="-fx-cursor: hand; -fx-border-color: #e0f0ff;">
+                    <StackPane minWidth="60" minHeight="60"
+                               style="-fx-background-color: #e0f0ff; -fx-background-radius: 16;">
+                        <Label text="❤️" style="-fx-font-size: 26px;"/>
+                    </StackPane>
+                    <VBox spacing="6" alignment="CENTER">
+                        <Label text="Indice de Forme" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                        <Label text="Score global sur 100" styleClass="user-email" wrapText="true"/>
+                    </VBox>
+                    <Button text="Calculer →" onAction="#ouvrirIndice"
+                            style="-fx-background-color: #00d4ff;" styleClass="btn-primary"/>
+                </VBox>
+
+                <VBox spacing="16" alignment="CENTER"
+                      styleClass="card-validations-pro"
+                      onMouseClicked="#ouvrirCoachMouse"
+                      style="-fx-cursor: hand; -fx-border-color: #e8d5f5;">
+                    <StackPane minWidth="60" minHeight="60"
+                               style="-fx-background-color: #e8d5f5; -fx-background-radius: 16;">
+                        <Label text="🤖" style="-fx-font-size: 26px;"/>
+                    </StackPane>
+                    <VBox spacing="6" alignment="CENTER">
+                        <Label text="Coach IA" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                        <Label text="Posez vos questions sportives"
+                               styleClass="user-email" wrapText="true"/>
+                    </VBox>
+                    <Button text="Discuter →" onAction="#ouvrirCoach"
+                            style="-fx-background-color: #7d3c98;" styleClass="btn-primary"/>
+                </VBox>
+
+                <VBox spacing="16" alignment="CENTER"
+                      styleClass="card-validations-pro"
+                      style="-fx-cursor: hand; -fx-border-color: #1a6b8a;">
+                    <StackPane minWidth="60" minHeight="60"
+                               style="-fx-background-color: #e0f4ff; -fx-background-radius: 16;">
+                        <Label text="💬" style="-fx-font-size: 26px;"/>
+                    </StackPane>
+                    <VBox spacing="6" alignment="CENTER">
+                        <Label text="Messagerie" styleClass="user-name" style="-fx-font-size: 15px;"/>
+                        <Label text="Chat avec votre coach"
+                               styleClass="user-email" wrapText="true"/>
+                    </VBox>
+                    <Button text="Ouvrir →" onAction="#ouvrirMessagerie"
+                            style="-fx-background-color: #1a6b8a;" styleClass="btn-primary"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

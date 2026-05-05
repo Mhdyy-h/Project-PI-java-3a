@@ -37,22 +37,21 @@ public class NavigationService {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
-            if (controllerSetup != null) {
-                controllerSetup.accept(loader.getController());
-            }
-
+            if (controllerSetup != null) controllerSetup.accept(loader.getController());
             Stage stage = mainStage != null ? mainStage : new Stage();
+<<<<<<< HEAD
             Scene scene = new Scene(root, width, height);
 
             // Apply current theme
             themeService.registerScene(scene);
 
             stage.setScene(scene);
+=======
+            stage.setScene(new Scene(root, width, height));
+>>>>>>> sports
             stage.setTitle(title);
             stage.centerOnScreen();
             stage.show();
-
         } catch (IOException e) {
             throw new NavigationException("Failed to navigate to " + fxmlPath, e);
         }
@@ -66,55 +65,65 @@ public class NavigationService {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
-            if (controllerSetup != null) {
-                controllerSetup.accept(loader.getController());
-            }
-
+            if (controllerSetup != null) controllerSetup.accept(loader.getController());
             Stage stage = (Stage) sourceNode.getScene().getWindow();
+<<<<<<< HEAD
             Scene scene = new Scene(root, width, height);
 
             // Apply current theme
             themeService.registerScene(scene);
 
             stage.setScene(scene);
+=======
+            stage.setScene(new Scene(root, width, height));
+>>>>>>> sports
             stage.setTitle(title);
             stage.centerOnScreen();
             stage.show();
-
         } catch (IOException e) {
             throw new NavigationException("Failed to navigate to " + fxmlPath, e);
         }
     }
 
+    // ✅ Redirige selon le rôle Coach ou User
     public void navigateToDashboard(Node sourceNode, User currentUser) {
-        navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Administration", 1100, 700, ctrl -> {
-            if (ctrl instanceof org.example.controller.AdminController) {
-                ((org.example.controller.AdminController) ctrl).setUser(currentUser);
-            }
-        });
+        boolean isCoach = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_COACH");
+
+        if (isCoach) {
+            org.example.model.Session.role = "COACH";
+            navigateFrom(sourceNode, "/view/MenuCoach.fxml", "BioSync - Espace Coach", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.MenuCoachController c)
+                    c.setCurrentUser(currentUser);
+            });
+        } else {
+            org.example.model.Session.role = "USER";
+            navigateFrom(sourceNode, "/view/MenuUser.fxml", "BioSync - Espace Utilisateur", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.MenuUserController c)
+                    c.setCurrentUser(currentUser);
+            });
+        }
     }
 
     public void navigateToLogin(Node sourceNode) {
         navigateFrom(sourceNode, "/view/login.fxml", "BioSync - Connexion", 480, 680);
     }
 
+    // ✅ Gardé car AdminController l'utilise — vide temporairement si UtilisateurController manque
     public void navigateToUtilisateurs(Node sourceNode, User currentUser) {
         navigateFrom(sourceNode, "/view/utilisateurs.fxml", "BioSync - Utilisateurs", 1100, 700, ctrl -> {
-            if (ctrl instanceof org.example.controller.UtilisateurController) {
-                ((org.example.controller.UtilisateurController) ctrl).setCurrentUser(currentUser);
-            }
+            // sera complété quand UtilisateurController sera intégré
         });
     }
 
+    // ✅ Gardé car AdminController l'utilise — vide temporairement
     public void navigateToCertifications(Node sourceNode, User currentUser) {
         navigateFrom(sourceNode, "/view/certifications_admin.fxml", "BioSync - Certifications", 1100, 700, ctrl -> {
-            if (ctrl instanceof org.example.controller.CertificationsAdminController) {
-                ((org.example.controller.CertificationsAdminController) ctrl).setCurrentUser(currentUser);
-            }
+            // sera complété quand CertificationsAdminController sera intégré
         });
     }
 
+<<<<<<< HEAD
     public void navigateToCertificationRequest(Node sourceNode) {
         navigateFrom(sourceNode, "/view/certification_request.fxml", "BioSync - Demande de Certification", 520, 750);
     }
@@ -159,6 +168,11 @@ public class NavigationService {
                 }
             });
         }
+=======
+    // ✅ Gardé car AdminController l'utilise — vide temporairement
+    public void navigateToMental(Node sourceNode, User currentUser) {
+        // sera complété quand QuizController sera intégré
+>>>>>>> sports
     }
 
     public static class NavigationException extends RuntimeException {
