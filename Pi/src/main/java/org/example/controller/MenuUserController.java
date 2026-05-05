@@ -280,5 +280,9 @@ public class MenuUserController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }@FXML
+    public void retourDashboard(ActionEvent e) {
+        org.example.service.NavigationService.getInstance()
+                .navigateToDashboard((Node) e.getSource(), currentUser);
     }
 }

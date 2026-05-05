@@ -222,7 +222,10 @@ public class AdminController {
     private void handleNavNutrition(MouseEvent event) {
         navigationService.navigateToNutrition(adminNameLabel, currentUser);
     }
-
+    @FXML
+    private void handleNavSports(MouseEvent event) {
+        navigationService.navigateToSports(adminNameLabel, currentUser);
+    }
     @FXML
     private void handleScrollToAlertes(MouseEvent event) {
         // Scroll to the alerts section in the dashboard

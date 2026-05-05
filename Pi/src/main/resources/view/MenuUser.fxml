@@ -10,6 +10,17 @@
             style="-fx-background-color: #f0f2f8;"
             stylesheets="@../styles/style.css">
 
+    <top>
+        <HBox style="-fx-padding: 12 20; -fx-background-color: white;
+                 -fx-effect: dropshadow(gaussian,rgba(0,0,0,0.06),4,0,0,2);">
+            <Button text="← Retour au Dashboard"
+                    onAction="#retourDashboard"
+                    style="-fx-background-color: #1a1a2e; -fx-text-fill: white;
+                       -fx-background-radius: 8; -fx-padding: 8 16;
+                       -fx-cursor: hand; -fx-font-size: 13px;"/>
+        </HBox>
+    </top>
+
     <center>
         <ScrollPane fitToWidth="true"
                     style="-fx-background-color: transparent;

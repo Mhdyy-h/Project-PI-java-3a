@@ -71,26 +71,46 @@ public class NavigationService {
         }
     }
 
-    // ✅ Redirige selon le rôle Coach ou User
+    // ✅ Après login → toujours dashboard.fxml
     public void navigateToDashboard(Node sourceNode, User currentUser) {
+        boolean isAdmin = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_ADMIN");
+        boolean isCoach = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_COACH");
+
+        if (isAdmin) {
+            org.example.model.Session.role = "ADMIN";
+        } else if (isCoach) {
+            org.example.model.Session.role = "COACH";
+        } else {
+            org.example.model.Session.role = "USER";
+        }
+
+        navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Dashboard", 1100, 700, ctrl -> {
+            if (ctrl instanceof org.example.controller.AdminController c)
+                c.setUser(currentUser);
+        });
+    }
+
+    // ✅ Depuis bouton Sports → selon le rôle
+    public void navigateToSports(Node sourceNode, User currentUser) {
         boolean isCoach = currentUser.getRoles() != null
                 && currentUser.getRoles().contains("ROLE_COACH");
 
         if (isCoach) {
-            org.example.model.Session.role = "COACH";
             navigateFrom(sourceNode, "/view/MenuCoach.fxml", "BioSync - Espace Coach", 1100, 700, ctrl -> {
                 if (ctrl instanceof org.example.controller.MenuCoachController c)
                     c.setCurrentUser(currentUser);
             });
         } else {
-            org.example.model.Session.role = "USER";
-            navigateFrom(sourceNode, "/view/MenuUser.fxml", "BioSync - Espace Utilisateur", 1100, 700, ctrl -> {
+            navigateFrom(sourceNode, "/view/MenuUser.fxml", "BioSync - Dashboard User", 1100, 700, ctrl -> {
                 if (ctrl instanceof org.example.controller.MenuUserController c)
                     c.setCurrentUser(currentUser);
             });
         }
     }
 
+    // ✅ INTACT — travail de tes amis
     public void navigateToLogin(Node sourceNode) {
         navigateFrom(sourceNode, "/view/login.fxml", "BioSync - Connexion", 480, 680);
     }

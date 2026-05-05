@@ -23,7 +23,18 @@ public class MenuController {
     @FXML private Label totalExercicesLabel;
     @FXML private Label moyenneDureeLabel;
     @FXML private Label totalMedaillesLabel;
+    // ── Utilisateur connecté ─────────────────────────────────
+    private org.example.model.User currentUser;
 
+    public void setCurrentUser(org.example.model.User user) {
+        this.currentUser = user;
+    }
+
+    private boolean isCoach() {
+        return currentUser != null
+                && currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_COACH");
+    }
     @FXML
     public void initialize() {
         new Thread(() -> {
@@ -61,10 +72,12 @@ public class MenuController {
     }
 
     // ── Séances → MenuCoach ──────────────────────────────────
+
     @FXML
     public void ouvrirSeances(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuCoach.fxml"));
+            String fxml = isCoach() ? "/view/MenuCoach.fxml" : "/view/MenuUser.fxml";
+            Parent root = FXMLLoader.load(getClass().getResource(fxml));
             ((javafx.scene.Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -75,13 +88,13 @@ public class MenuController {
     @FXML
     public void ouvrirExercices(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/MenuUser.fxml"));
+            String fxml = isCoach() ? "/view/MenuCoach.fxml" : "/view/MenuUser.fxml";
+            Parent root = FXMLLoader.load(getClass().getResource(fxml));
             ((javafx.scene.Node) event.getSource()).getScene().setRoot(root);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
-
     // ── Admin — ouvre dans une nouvelle fenêtre ──────────────
     @FXML
     public void ouvrirAdmin(MouseEvent event) {

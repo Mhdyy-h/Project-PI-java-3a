@@ -98,11 +98,15 @@
                     <Label text="Gestion RDV" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Sports - NOT clickable -->
+                <!-- Sports - CLICKABLE -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavSports">
                     <Label text="⚡" style="-fx-font-size: 14px;"/>
-                    <Label text="Sports" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <VBox spacing="1">
+                        <Label text="Sports" style="-fx-font-size: 13px; -fx-text-fill: #f59e0b; -fx-font-weight: bold;"/>
+                        <Label text="Séances &amp; Exercices" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
                 </HBox>
 
                 <!-- Mental - NOT clickable -->

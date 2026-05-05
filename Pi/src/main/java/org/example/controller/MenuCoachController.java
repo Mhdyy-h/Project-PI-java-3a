@@ -141,5 +141,9 @@ public class MenuCoachController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }@FXML
+    private void retourDashboard(ActionEvent event) {
+        org.example.service.NavigationService.getInstance()
+                .navigateToDashboard((javafx.scene.Node) event.getSource(), currentUser);
     }
 }
