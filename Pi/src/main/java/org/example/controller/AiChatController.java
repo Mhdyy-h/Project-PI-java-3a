@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import org.example.model.User;
 import org.example.service.NavigationService;
 import org.example.service.OllamaChatService;
 
@@ -18,11 +17,8 @@ public class AiChatController {
     @FXML private Button backButton;
 
     private final OllamaChatService chatService = new OllamaChatService();
-    private User currentUser;
 
-    public void setCurrentUser(User user) {
-        this.currentUser = user;
-    }
+
 
     @FXML
     public void initialize() {

@@ -1,7 +1,5 @@
 package org.example.util;
 
-import org.example.model.User;
-
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,6 +1,5 @@
 package org.example.util;
 
-import org.example.model.User;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

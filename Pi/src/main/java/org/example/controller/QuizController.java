@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.example.model.Quiz;
-import org.example.model.User;
 import org.example.service.NavigationService;
 import org.example.service.QuizService;
 import org.example.util.AlertHelper;

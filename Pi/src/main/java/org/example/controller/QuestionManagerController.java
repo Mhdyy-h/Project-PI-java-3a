@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.model.Question;
 import org.example.model.Quiz;
-import org.example.model.User;
 import org.example.service.NavigationService;
 import org.example.service.OllamaQcmGeneratorService;
 import org.example.service.QuestionService;

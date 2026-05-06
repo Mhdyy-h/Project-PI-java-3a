@@ -2,7 +2,7 @@ package org.example.service;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
-import org.example.model.User;
+
 import java.awt.Color;
 
 import java.io.File;

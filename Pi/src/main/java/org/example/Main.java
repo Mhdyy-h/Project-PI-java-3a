@@ -1,8 +1,5 @@
 package org.example;
 
-import org.example.DatabaseConnection;
-import org.example.dao.UserDAO;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -12,11 +9,9 @@ public class Main {
         System.out.println("Hello and welcome!");
         System.out.println("Testing database connection...");
         
-        boolean isConnected = UserDAO.testConnection();
+
         
-        if (isConnected) {
-            System.out.println("Connection test passed!");
-            
+
             // Show table structure
             try {
                 Connection conn = DatabaseConnection.getConnection();
@@ -31,8 +26,6 @@ public class Main {
             } catch (Exception e) {
                 System.err.println("Error: " + e.getMessage());
             }
-        } else {
-            System.out.println("Connection test failed!");
+
         }
     }
-}

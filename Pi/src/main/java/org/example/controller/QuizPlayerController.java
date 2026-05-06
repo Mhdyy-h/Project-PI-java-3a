@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.example.model.Question;
 import org.example.model.Quiz;
-import org.example.model.User;
 import org.example.service.NavigationService;
 import org.example.service.QuizService;
 import org.example.service.QuestionService;

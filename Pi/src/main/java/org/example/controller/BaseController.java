@@ -8,7 +8,6 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.model.User;
 import org.example.util.UserSession;
 
 import java.io.IOException;

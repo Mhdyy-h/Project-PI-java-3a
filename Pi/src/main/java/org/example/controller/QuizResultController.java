@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.example.model.Quiz;
-import org.example.model.User;
 import org.example.service.NavigationService;
 
 /**

@@ -1,0 +1,602 @@
+2026-05-02 12:33:21.175 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 12:33:21.328 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Tentative 1/3 échouée : Unknown database 'biosync'
+2026-05-02 12:33:22.332 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Tentative 2/3 échouée : Unknown database 'biosync'
+2026-05-02 12:33:24.334 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Tentative 3/3 échouée : Unknown database 'biosync'
+2026-05-02 12:33:24.336 [JavaFX Application Thread] ERROR org.example.DatabaseConnection - [DB] Connexion impossible après 3 tentatives.
+═══════════════════════════════════════════════════
+ ERREUR DE CONNEXION MYSQL
+═══════════════════════════════════════════════════
+ URL      : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+ User     : root
+ Cause    : Unknown database 'biosync'
+───────────────────────────────────────────────────
+ ► La base de données n'existe pas.
+   Exécuter : CREATE DATABASE IF NOT EXISTS `biosync`;
+═══════════════════════════════════════════════════
+2026-05-02 12:33:24.336 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Base 'biosync' absente — tentative de création...
+2026-05-02 12:33:24.358 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Base 'biosync' créée avec succès.
+2026-05-02 12:33:24.365 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 12:33:24.375 [JavaFX Application Thread] DEBUG org.example.dao.UserDAO - [UserDAO] Table 'utilisateur' vérifiée/créée.
+2026-05-02 12:33:24.376 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 12:34:02.017 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 12:34:02.036 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 12:34:03.317 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 12:34:03.319 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 12:34:11.396 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 12:34:11.398 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 12:34:12.405 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 12:34:12.406 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 12:34:33.185 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 12:34:33.186 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 12:34:34.646 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 12:34:34.647 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 12:37:13.780 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 12:37:13.933 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 12:37:13.933 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 12:37:13.941 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 12:37:13.945 [JavaFX Application Thread] DEBUG org.example.dao.UserDAO - [UserDAO] Table 'utilisateur' vérifiée/créée.
+2026-05-02 12:37:13.945 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 12:37:26.069 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 12:37:26.090 [JavaFX Application Thread] WARN  org.example.dao.UserDAO - [UserDAO] Login échoué pour email=ahmedch12@gmail.com
+2026-05-02 13:43:04.711 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 13:43:04.864 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 13:43:04.864 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 13:43:04.875 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 13:43:04.879 [JavaFX Application Thread] DEBUG org.example.dao.UserDAO - [UserDAO] Table 'utilisateur' vérifiée/créée.
+2026-05-02 13:43:04.879 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 13:43:39.942 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 13:43:39.959 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:07.206 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 13:55:07.355 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 13:55:07.356 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 13:55:07.365 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 13:55:07.370 [JavaFX Application Thread] DEBUG org.example.dao.UserDAO - [UserDAO] Table 'utilisateur' vérifiée/créée.
+2026-05-02 13:55:07.371 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 13:55:27.376 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 13:55:27.388 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.041 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 13:55:28.042 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.180 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 13:55:28.181 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.308 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 13:55:28.309 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.449 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 13:55:28.450 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.686 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 13:55:28.688 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.809 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #9 ouverte (tentative 1)
+2026-05-02 13:55:28.811 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:28.935 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #10 ouverte (tentative 1)
+2026-05-02 13:55:28.937 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 13:55:29.124 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #11 ouverte (tentative 1)
+2026-05-02 13:55:29.125 [JavaFX Application Thread] WARN  org.example.service.AuthService - [Auth] Login échoué — email introuvable : ahmedch12@gmail.com
+2026-05-02 16:26:05.767 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 16:26:06.209 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Tentative 1/3 échouée : Unknown database 'biosync'
+2026-05-02 16:26:07.220 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Tentative 2/3 échouée : Unknown database 'biosync'
+2026-05-02 16:26:09.229 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Tentative 3/3 échouée : Unknown database 'biosync'
+2026-05-02 16:26:09.229 [JavaFX Application Thread] ERROR org.example.DatabaseConnection - [DB] Connexion impossible après 3 tentatives.
+═══════════════════════════════════════════════════
+ ERREUR DE CONNEXION MYSQL
+═══════════════════════════════════════════════════
+ URL      : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+ User     : root
+ Cause    : Unknown database 'biosync'
+───────────────────────────────────────────────────
+ ► La base de données n'existe pas.
+   Exécuter : CREATE DATABASE IF NOT EXISTS `biosync`;
+═══════════════════════════════════════════════════
+2026-05-02 16:26:09.230 [JavaFX Application Thread] WARN  org.example.DatabaseConnection - [DB] Base 'biosync' absente — tentative de création...
+2026-05-02 16:26:09.279 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Base 'biosync' créée avec succès.
+2026-05-02 16:26:09.293 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 16:26:09.321 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 16:26:09.339 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 16:26:28.812 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 16:26:29.194 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 16:26:29.196 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 16:26:29.229 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 16:26:29.251 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 16:26:29.255 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 16:27:01.860 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 16:27:02.214 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 16:27:02.215 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 16:27:02.241 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 16:27:02.277 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 16:27:02.280 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 16:27:02.784 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 16:27:36.507 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 16:27:50.430 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 16:27:52.341 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 16:28:59.811 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 16:29:00.208 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 16:29:00.209 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 16:29:00.240 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 16:29:00.268 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 16:29:00.270 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 16:29:00.759 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 16:29:22.654 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 16:29:25.558 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 16:30:35.747 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 16:30:51.096 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 16:30:51.482 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 16:30:51.484 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 16:30:51.517 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 16:30:51.536 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 16:30:51.540 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 16:30:52.009 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 16:31:04.842 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 18:04:53.834 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 18:04:54.866 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 18:04:57.668 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 18:39:17.502 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 18:39:17.657 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 18:39:17.658 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 18:39:17.668 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 18:39:17.732 [JavaFX Application Thread] INFO  org.example.util.SchemaBootstrap - [Schema] All tables created or verified OK
+2026-05-02 18:39:17.737 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 18:39:17.742 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 18:39:17.744 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 18:39:17.949 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 18:39:21.220 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 18:39:24.744 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 18:39:24.922 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 18:39:25.923 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #9 ouverte (tentative 1)
+2026-05-02 18:39:27.974 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #10 ouverte (tentative 1)
+2026-05-02 18:39:39.293 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #11 ouverte (tentative 1)
+2026-05-02 18:39:43.761 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #12 ouverte (tentative 1)
+2026-05-02 18:39:44.418 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #13 ouverte (tentative 1)
+2026-05-02 18:39:47.211 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #14 ouverte (tentative 1)
+2026-05-02 18:42:00.585 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 18:42:00.754 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 18:42:00.754 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 18:42:00.762 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 18:42:00.775 [JavaFX Application Thread] INFO  org.example.util.SchemaBootstrap - [Schema] All tables created or verified OK
+2026-05-02 18:42:00.779 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 18:42:00.784 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 18:42:00.784 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 18:42:01.050 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 18:42:03.818 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 18:46:36.741 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 18:46:36.875 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 18:46:36.875 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 18:46:36.885 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 18:46:36.903 [JavaFX Application Thread] INFO  org.example.util.SchemaBootstrap - [Schema] All tables created or verified OK
+2026-05-02 18:46:36.907 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 18:46:36.909 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 18:46:36.911 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 18:46:37.138 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 18:46:39.584 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 18:46:40.494 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 18:46:40.887 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 18:46:42.794 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #9 ouverte (tentative 1)
+2026-05-02 18:46:47.294 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #10 ouverte (tentative 1)
+2026-05-02 18:46:48.270 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #11 ouverte (tentative 1)
+2026-05-02 18:47:02.443 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #12 ouverte (tentative 1)
+2026-05-02 18:47:02.448 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #13 ouverte (tentative 1)
+2026-05-02 18:47:03.809 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #14 ouverte (tentative 1)
+2026-05-02 18:49:43.725 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #15 ouverte (tentative 1)
+2026-05-02 18:49:47.988 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #16 ouverte (tentative 1)
+2026-05-02 18:53:49.611 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 18:53:49.732 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 18:53:49.733 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 18:53:49.741 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 18:53:49.762 [JavaFX Application Thread] INFO  org.example.util.SchemaBootstrap - [Schema] All tables created or verified OK
+2026-05-02 18:53:49.766 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 18:53:49.770 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 18:53:49.770 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 18:53:50.032 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 18:53:52.728 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 18:53:59.832 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 18:54:00.898 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 18:54:06.434 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #9 ouverte (tentative 1)
+2026-05-02 18:54:07.847 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #10 ouverte (tentative 1)
+2026-05-02 18:54:11.479 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #11 ouverte (tentative 1)
+2026-05-02 18:54:13.433 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #12 ouverte (tentative 1)
+2026-05-02 18:54:15.571 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #13 ouverte (tentative 1)
+2026-05-02 18:54:16.716 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #14 ouverte (tentative 1)
+2026-05-02 18:54:20.075 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #15 ouverte (tentative 1)
+2026-05-02 18:54:21.097 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #16 ouverte (tentative 1)
+2026-05-02 18:54:23.654 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #17 ouverte (tentative 1)
+2026-05-02 18:54:24.998 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #18 ouverte (tentative 1)
+2026-05-02 18:54:26.743 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #19 ouverte (tentative 1)
+2026-05-02 18:54:28.121 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #20 ouverte (tentative 1)
+2026-05-02 18:54:32.401 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #21 ouverte (tentative 1)
+2026-05-02 18:54:34.095 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #22 ouverte (tentative 1)
+2026-05-02 18:54:35.048 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #23 ouverte (tentative 1)
+2026-05-02 18:54:36.527 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #24 ouverte (tentative 1)
+2026-05-02 18:54:41.154 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #25 ouverte (tentative 1)
+2026-05-02 18:54:44.221 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #26 ouverte (tentative 1)
+2026-05-02 18:54:45.720 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #27 ouverte (tentative 1)
+2026-05-02 18:54:49.023 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #28 ouverte (tentative 1)
+2026-05-02 18:54:51.476 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #29 ouverte (tentative 1)
+2026-05-02 18:54:53.391 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #30 ouverte (tentative 1)
+2026-05-02 18:54:54.923 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #31 ouverte (tentative 1)
+2026-05-02 18:55:00.139 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #32 ouverte (tentative 1)
+2026-05-02 18:55:00.617 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #33 ouverte (tentative 1)
+2026-05-02 18:55:00.808 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #34 ouverte (tentative 1)
+2026-05-02 18:55:00.987 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #35 ouverte (tentative 1)
+2026-05-02 18:55:01.177 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #36 ouverte (tentative 1)
+2026-05-02 18:55:01.349 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #37 ouverte (tentative 1)
+2026-05-02 18:55:01.519 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #38 ouverte (tentative 1)
+2026-05-02 18:55:01.704 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #39 ouverte (tentative 1)
+2026-05-02 18:55:01.895 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #40 ouverte (tentative 1)
+2026-05-02 18:55:04.061 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #41 ouverte (tentative 1)
+2026-05-02 18:55:04.295 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #42 ouverte (tentative 1)
+2026-05-02 18:55:04.501 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #43 ouverte (tentative 1)
+2026-05-02 18:55:04.704 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #44 ouverte (tentative 1)
+2026-05-02 18:55:09.389 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #45 ouverte (tentative 1)
+2026-05-02 19:00:50.012 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #46 ouverte (tentative 1)
+2026-05-02 19:05:01.149 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #47 ouverte (tentative 1)
+2026-05-02 19:05:02.429 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #48 ouverte (tentative 1)
+2026-05-02 19:05:02.917 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #49 ouverte (tentative 1)
+2026-05-02 19:05:03.741 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #50 ouverte (tentative 1)
+2026-05-02 19:05:04.607 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #51 ouverte (tentative 1)
+2026-05-02 19:05:05.648 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #52 ouverte (tentative 1)
+2026-05-02 19:10:15.932 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 19:10:16.242 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 19:10:16.242 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 19:10:16.260 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 19:10:16.317 [JavaFX Application Thread] INFO  org.example.util.SchemaBootstrap - [Schema] All tables created or verified OK
+2026-05-02 19:10:16.327 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 19:10:16.334 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 19:10:16.335 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 19:10:16.696 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 19:10:19.793 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 19:10:21.359 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 19:10:22.486 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 19:10:24.894 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #9 ouverte (tentative 1)
+2026-05-02 19:21:04.466 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #10 ouverte (tentative 1)
+2026-05-02 19:21:05.332 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #11 ouverte (tentative 1)
+2026-05-02 19:21:06.042 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #12 ouverte (tentative 1)
+2026-05-02 19:21:27.965 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Configuration chargée : jdbc:mysql://localhost:3306/biosync?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+2026-05-02 19:21:28.238 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #1 ouverte (tentative 1)
+2026-05-02 19:21:28.239 [JavaFX Application Thread] INFO  org.example.DatabaseConnection - [DB] Connexion OK — MySQL 5.5.5-10.4.32-MariaDB
+2026-05-02 19:21:28.255 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #2 ouverte (tentative 1)
+2026-05-02 19:21:28.297 [JavaFX Application Thread] INFO  org.example.util.SchemaBootstrap - [Schema] All tables created or verified OK
+2026-05-02 19:21:28.304 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #3 ouverte (tentative 1)
+2026-05-02 19:21:28.311 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #4 ouverte (tentative 1)
+2026-05-02 19:21:28.312 [JavaFX Application Thread] INFO  org.example.MainApplication - [App] Base et schéma prêts.
+2026-05-02 19:21:28.670 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #5 ouverte (tentative 1)
+2026-05-02 19:21:31.103 [JavaFX Application Thread] DEBUG org.example.util.ConfigLoader - Configuration chargée depuis config.properties
+2026-05-02 19:21:31.182 [Thread-3] DEBUG org.example.DatabaseConnection - [DB] Connexion #6 ouverte (tentative 1)
+2026-05-02 19:21:31.232 [Thread-3] DEBUG org.example.DatabaseConnection - [DB] Connexion #7 ouverte (tentative 1)
+2026-05-02 19:21:31.248 [Thread-3] DEBUG org.example.DatabaseConnection - [DB] Connexion #8 ouverte (tentative 1)
+2026-05-02 19:21:31.255 [Thread-3] DEBUG org.example.DatabaseConnection - [DB] Connexion #9 ouverte (tentative 1)
+2026-05-02 19:21:31.256 [Thread-3] INFO  o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 1 (0 session(s))
+2026-05-02 19:21:31.261 [Thread-3] DEBUG org.example.DatabaseConnection - [DB] Connexion #10 ouverte (tentative 1)
+2026-05-02 19:21:31.265 [Thread-3] ERROR org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-02 19:21:37.301 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #11 ouverte (tentative 1)
+2026-05-02 19:21:37.309 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #12 ouverte (tentative 1)
+2026-05-02 19:21:37.313 [JavaFX Application Thread] INFO  o.example.service.ServiceQuizSession - Session démarrée : id=1, user=1, thème=Informatique
+2026-05-02 19:21:37.320 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #13 ouverte (tentative 1)
+2026-05-02 19:21:37.321 [Thread-4] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.327 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #14 ouverte (tentative 1)
+2026-05-02 19:21:37.329 [Thread-4] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.334 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #15 ouverte (tentative 1)
+2026-05-02 19:21:37.335 [Thread-4] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.340 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #16 ouverte (tentative 1)
+2026-05-02 19:21:37.341 [Thread-4] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.341 [Thread-4] WARN  org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 1
+2026-05-02 19:21:37.347 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #17 ouverte (tentative 1)
+2026-05-02 19:21:37.348 [Thread-4] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:37.348 [Thread-4] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-02 19:21:37.352 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #18 ouverte (tentative 1)
+2026-05-02 19:21:37.355 [Thread-4] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.362 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #19 ouverte (tentative 1)
+2026-05-02 19:21:37.363 [Thread-4] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.368 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #20 ouverte (tentative 1)
+2026-05-02 19:21:37.368 [Thread-4] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.373 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #21 ouverte (tentative 1)
+2026-05-02 19:21:37.374 [Thread-4] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.378 [Thread-4] DEBUG org.example.DatabaseConnection - [DB] Connexion #22 ouverte (tentative 1)
+2026-05-02 19:21:37.379 [Thread-4] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:37.379 [Thread-4] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-02 19:21:40.487 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #23 ouverte (tentative 1)
+2026-05-02 19:21:40.500 [JavaFX Application Thread] DEBUG org.example.service.AdaptiveService - ELO 1000 → 1008 (question niv.1, correct=true, Δ=8)
+2026-05-02 19:21:40.504 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #24 ouverte (tentative 1)
+2026-05-02 19:21:40.524 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #25 ouverte (tentative 1)
+2026-05-02 19:21:42.433 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #26 ouverte (tentative 1)
+2026-05-02 19:21:42.437 [Thread-6] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.444 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #27 ouverte (tentative 1)
+2026-05-02 19:21:42.446 [Thread-6] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.451 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #28 ouverte (tentative 1)
+2026-05-02 19:21:42.453 [Thread-6] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.457 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #29 ouverte (tentative 1)
+2026-05-02 19:21:42.459 [Thread-6] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.460 [Thread-6] WARN  org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 1
+2026-05-02 19:21:42.465 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #30 ouverte (tentative 1)
+2026-05-02 19:21:42.467 [Thread-6] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:42.467 [Thread-6] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-02 19:21:42.472 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #31 ouverte (tentative 1)
+2026-05-02 19:21:42.473 [Thread-6] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.480 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #32 ouverte (tentative 1)
+2026-05-02 19:21:42.481 [Thread-6] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.487 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #33 ouverte (tentative 1)
+2026-05-02 19:21:42.488 [Thread-6] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.492 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #34 ouverte (tentative 1)
+2026-05-02 19:21:42.494 [Thread-6] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.499 [Thread-6] DEBUG org.example.DatabaseConnection - [DB] Connexion #35 ouverte (tentative 1)
+2026-05-02 19:21:42.500 [Thread-6] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:42.500 [Thread-6] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-02 19:21:45.064 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #36 ouverte (tentative 1)
+2026-05-02 19:21:45.065 [Thread-7] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.071 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #37 ouverte (tentative 1)
+2026-05-02 19:21:45.072 [Thread-7] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.078 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #38 ouverte (tentative 1)
+2026-05-02 19:21:45.079 [Thread-7] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.084 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #39 ouverte (tentative 1)
+2026-05-02 19:21:45.086 [Thread-7] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.086 [Thread-7] WARN  org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 1
+2026-05-02 19:21:45.091 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #40 ouverte (tentative 1)
+2026-05-02 19:21:45.094 [Thread-7] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:45.094 [Thread-7] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-02 19:21:45.099 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #41 ouverte (tentative 1)
+2026-05-02 19:21:45.101 [Thread-7] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.107 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #42 ouverte (tentative 1)
+2026-05-02 19:21:45.109 [Thread-7] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.115 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #43 ouverte (tentative 1)
+2026-05-02 19:21:45.115 [Thread-7] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.122 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #44 ouverte (tentative 1)
+2026-05-02 19:21:45.123 [Thread-7] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.128 [Thread-7] DEBUG org.example.DatabaseConnection - [DB] Connexion #45 ouverte (tentative 1)
+2026-05-02 19:21:45.129 [Thread-7] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:45.129 [Thread-7] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-02 19:21:47.089 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #46 ouverte (tentative 1)
+2026-05-02 19:21:47.134 [Thread-8] DEBUG org.example.DatabaseConnection - [DB] Connexion #47 ouverte (tentative 1)
+2026-05-02 19:21:47.141 [Thread-8] DEBUG org.example.DatabaseConnection - [DB] Connexion #48 ouverte (tentative 1)
+2026-05-02 19:21:47.148 [Thread-8] DEBUG org.example.DatabaseConnection - [DB] Connexion #49 ouverte (tentative 1)
+2026-05-02 19:21:47.150 [Thread-8] INFO  o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 1 (0 session(s))
+2026-05-02 19:21:47.155 [Thread-8] DEBUG org.example.DatabaseConnection - [DB] Connexion #50 ouverte (tentative 1)
+2026-05-02 19:21:47.156 [Thread-8] ERROR org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-02 19:21:54.865 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #51 ouverte (tentative 1)
+2026-05-02 19:21:54.866 [JavaFX Application Thread] ERROR o.example.service.MultiplayerService - Erreur insererSalon : Table 'biosync.session_multijoueur' doesn't exist
+2026-05-02 19:21:54.866 [JavaFX Application Thread] INFO  o.example.service.MultiplayerService - Salon créé : 0 (code: 5HV4U9)
+2026-05-02 19:21:54.873 [JavaFX Application Thread] INFO  o.example.service.MultiplayerService - Serveur WebSocket démarré sur le port 8887
+2026-05-02 19:21:54.894 [WebSocketSelector-82] INFO  o.example.service.MultiplayerService - WebSocketServer démarré et en écoute
+2026-05-02 19:21:57.181 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #52 ouverte (tentative 1)
+2026-05-02 19:21:57.184 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.184 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.190 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #53 ouverte (tentative 1)
+2026-05-02 19:21:57.192 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.197 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #54 ouverte (tentative 1)
+2026-05-02 19:21:57.198 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.204 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #55 ouverte (tentative 1)
+2026-05-02 19:21:57.205 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.210 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #56 ouverte (tentative 1)
+2026-05-02 19:21:57.211 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.216 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #57 ouverte (tentative 1)
+2026-05-02 19:21:57.216 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.216 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.221 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #58 ouverte (tentative 1)
+2026-05-02 19:21:57.221 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.221 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.226 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #59 ouverte (tentative 1)
+2026-05-02 19:21:57.227 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.232 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #60 ouverte (tentative 1)
+2026-05-02 19:21:57.233 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.238 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #61 ouverte (tentative 1)
+2026-05-02 19:21:57.239 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.243 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #62 ouverte (tentative 1)
+2026-05-02 19:21:57.244 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.248 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #63 ouverte (tentative 1)
+2026-05-02 19:21:57.249 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.249 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.253 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #64 ouverte (tentative 1)
+2026-05-02 19:21:57.254 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.254 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.258 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #65 ouverte (tentative 1)
+2026-05-02 19:21:57.259 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.263 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #66 ouverte (tentative 1)
+2026-05-02 19:21:57.264 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.268 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #67 ouverte (tentative 1)
+2026-05-02 19:21:57.268 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.271 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #68 ouverte (tentative 1)
+2026-05-02 19:21:57.273 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.277 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #69 ouverte (tentative 1)
+2026-05-02 19:21:57.279 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.279 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.282 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #70 ouverte (tentative 1)
+2026-05-02 19:21:57.283 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.283 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.288 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #71 ouverte (tentative 1)
+2026-05-02 19:21:57.288 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.294 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #72 ouverte (tentative 1)
+2026-05-02 19:21:57.294 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.297 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #73 ouverte (tentative 1)
+2026-05-02 19:21:57.298 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.301 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #74 ouverte (tentative 1)
+2026-05-02 19:21:57.302 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.305 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #75 ouverte (tentative 1)
+2026-05-02 19:21:57.305 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.306 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.309 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #76 ouverte (tentative 1)
+2026-05-02 19:21:57.311 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.311 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.314 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #77 ouverte (tentative 1)
+2026-05-02 19:21:57.315 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.319 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #78 ouverte (tentative 1)
+2026-05-02 19:21:57.319 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.323 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #79 ouverte (tentative 1)
+2026-05-02 19:21:57.325 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.327 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #80 ouverte (tentative 1)
+2026-05-02 19:21:57.329 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.333 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #81 ouverte (tentative 1)
+2026-05-02 19:21:57.333 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.333 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.336 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #82 ouverte (tentative 1)
+2026-05-02 19:21:57.338 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.338 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.341 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #83 ouverte (tentative 1)
+2026-05-02 19:21:57.344 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.347 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #84 ouverte (tentative 1)
+2026-05-02 19:21:57.348 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.351 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #85 ouverte (tentative 1)
+2026-05-02 19:21:57.352 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.355 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #86 ouverte (tentative 1)
+2026-05-02 19:21:57.356 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.359 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #87 ouverte (tentative 1)
+2026-05-02 19:21:57.359 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.359 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.364 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #88 ouverte (tentative 1)
+2026-05-02 19:21:57.364 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.365 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.367 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #89 ouverte (tentative 1)
+2026-05-02 19:21:57.368 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.371 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #90 ouverte (tentative 1)
+2026-05-02 19:21:57.373 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.376 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #91 ouverte (tentative 1)
+2026-05-02 19:21:57.376 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.379 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #92 ouverte (tentative 1)
+2026-05-02 19:21:57.381 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.384 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #93 ouverte (tentative 1)
+2026-05-02 19:21:57.385 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.385 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.390 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #94 ouverte (tentative 1)
+2026-05-02 19:21:57.390 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.391 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.393 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #95 ouverte (tentative 1)
+2026-05-02 19:21:57.395 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.400 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #96 ouverte (tentative 1)
+2026-05-02 19:21:57.400 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.404 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #97 ouverte (tentative 1)
+2026-05-02 19:21:57.405 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.408 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #98 ouverte (tentative 1)
+2026-05-02 19:21:57.409 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.412 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #99 ouverte (tentative 1)
+2026-05-02 19:21:57.414 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.414 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.421 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #100 ouverte (tentative 1)
+2026-05-02 19:21:57.422 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.422 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.426 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #101 ouverte (tentative 1)
+2026-05-02 19:21:57.426 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.429 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #102 ouverte (tentative 1)
+2026-05-02 19:21:57.429 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.434 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #103 ouverte (tentative 1)
+2026-05-02 19:21:57.434 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.437 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #104 ouverte (tentative 1)
+2026-05-02 19:21:57.439 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.443 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #105 ouverte (tentative 1)
+2026-05-02 19:21:57.444 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.444 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.448 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #106 ouverte (tentative 1)
+2026-05-02 19:21:57.450 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:21:57.450 [Thread-30] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-02 19:21:57.452 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #107 ouverte (tentative 1)
+2026-05-02 19:21:57.454 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.457 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #108 ouverte (tentative 1)
+2026-05-02 19:21:57.458 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.463 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #109 ouverte (tentative 1)
+2026-05-02 19:21:57.463 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.468 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #110 ouverte (tentative 1)
+2026-05-02 19:21:57.468 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.477 [Thread-30] DEBUG org.example.DatabaseConnection - [DB] Connexion #111 ouverte (tentative 1)
+2026-05-02 19:21:57.477 [Thread-30] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:21:57.477 [Thread-30] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-02 19:21:57.484 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #112 ouverte (tentative 1)
+2026-05-02 19:21:57.485 [JavaFX Application Thread] ERROR o.example.service.MultiplayerService - Erreur mettreAJourStatutSalon : Table 'biosync.session_multijoueur' doesn't exist
+2026-05-02 19:21:59.457 [JavaFX Application Thread] INFO  o.example.service.MultiplayerService - Serveur WebSocket arrêté
+2026-05-02 19:21:59.494 [Thread-32] DEBUG org.example.DatabaseConnection - [DB] Connexion #113 ouverte (tentative 1)
+2026-05-02 19:21:59.499 [Thread-32] DEBUG org.example.DatabaseConnection - [DB] Connexion #114 ouverte (tentative 1)
+2026-05-02 19:21:59.506 [Thread-32] DEBUG org.example.DatabaseConnection - [DB] Connexion #115 ouverte (tentative 1)
+2026-05-02 19:21:59.508 [Thread-32] INFO  o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 1 (0 session(s))
+2026-05-02 19:21:59.511 [Thread-32] DEBUG org.example.DatabaseConnection - [DB] Connexion #116 ouverte (tentative 1)
+2026-05-02 19:21:59.513 [Thread-32] ERROR org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-02 19:27:02.611 [Timer-9] DEBUG org.example.DatabaseConnection - [DB] Connexion #117 ouverte (tentative 1)
+2026-05-02 19:27:02.615 [Timer-9] DEBUG org.example.DatabaseConnection - [DB] Connexion #118 ouverte (tentative 1)
+2026-05-02 19:27:02.618 [Timer-9] ERROR o.example.service.MultiplayerService - Erreur mettreAJourStatutSalon : Table 'biosync.session_multijoueur' doesn't exist
+2026-05-02 19:28:07.768 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #119 ouverte (tentative 1)
+2026-05-02 19:28:07.775 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #120 ouverte (tentative 1)
+2026-05-02 19:28:07.783 [JavaFX Application Thread] INFO  o.example.service.ServiceQuizSession - Session démarrée : id=2, user=1, thème=Informatique
+2026-05-02 19:28:07.787 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #121 ouverte (tentative 1)
+2026-05-02 19:28:07.790 [Thread-42] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.794 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #122 ouverte (tentative 1)
+2026-05-02 19:28:07.795 [Thread-42] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.797 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #123 ouverte (tentative 1)
+2026-05-02 19:28:07.798 [Thread-42] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.802 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #124 ouverte (tentative 1)
+2026-05-02 19:28:07.802 [Thread-42] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.802 [Thread-42] WARN  org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 2
+2026-05-02 19:28:07.808 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #125 ouverte (tentative 1)
+2026-05-02 19:28:07.809 [Thread-42] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:28:07.809 [Thread-42] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-02 19:28:07.813 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #126 ouverte (tentative 1)
+2026-05-02 19:28:07.813 [Thread-42] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.819 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #127 ouverte (tentative 1)
+2026-05-02 19:28:07.820 [Thread-42] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.830 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #128 ouverte (tentative 1)
+2026-05-02 19:28:07.831 [Thread-42] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.836 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #129 ouverte (tentative 1)
+2026-05-02 19:28:07.838 [Thread-42] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.842 [Thread-42] DEBUG org.example.DatabaseConnection - [DB] Connexion #130 ouverte (tentative 1)
+2026-05-02 19:28:07.845 [Thread-42] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:07.845 [Thread-42] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-02 19:28:09.118 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #131 ouverte (tentative 1)
+2026-05-02 19:28:09.151 [Thread-43] DEBUG org.example.DatabaseConnection - [DB] Connexion #132 ouverte (tentative 1)
+2026-05-02 19:28:09.158 [Thread-43] DEBUG org.example.DatabaseConnection - [DB] Connexion #133 ouverte (tentative 1)
+2026-05-02 19:28:09.165 [Thread-43] DEBUG org.example.DatabaseConnection - [DB] Connexion #134 ouverte (tentative 1)
+2026-05-02 19:28:09.167 [Thread-43] INFO  o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 1 (0 session(s))
+2026-05-02 19:28:09.173 [Thread-43] DEBUG org.example.DatabaseConnection - [DB] Connexion #135 ouverte (tentative 1)
+2026-05-02 19:28:09.175 [Thread-43] ERROR org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-02 19:28:10.457 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #136 ouverte (tentative 1)
+2026-05-02 19:28:10.463 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #137 ouverte (tentative 1)
+2026-05-02 19:28:10.466 [JavaFX Application Thread] INFO  o.example.service.ServiceQuizSession - Session démarrée : id=3, user=1, thème=Informatique
+2026-05-02 19:28:10.471 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #138 ouverte (tentative 1)
+2026-05-02 19:28:10.471 [Thread-44] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.479 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #139 ouverte (tentative 1)
+2026-05-02 19:28:10.481 [Thread-44] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.486 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #140 ouverte (tentative 1)
+2026-05-02 19:28:10.486 [Thread-44] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.490 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #141 ouverte (tentative 1)
+2026-05-02 19:28:10.491 [Thread-44] ERROR org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.491 [Thread-44] WARN  org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 3
+2026-05-02 19:28:10.497 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #142 ouverte (tentative 1)
+2026-05-02 19:28:10.498 [Thread-44] ERROR o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-02 19:28:10.498 [Thread-44] INFO  o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-02 19:28:10.502 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #143 ouverte (tentative 1)
+2026-05-02 19:28:10.502 [Thread-44] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.506 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #144 ouverte (tentative 1)
+2026-05-02 19:28:10.507 [Thread-44] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.512 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #145 ouverte (tentative 1)
+2026-05-02 19:28:10.514 [Thread-44] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.518 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #146 ouverte (tentative 1)
+2026-05-02 19:28:10.521 [Thread-44] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.525 [Thread-44] DEBUG org.example.DatabaseConnection - [DB] Connexion #147 ouverte (tentative 1)
+2026-05-02 19:28:10.527 [Thread-44] ERROR o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-02 19:28:10.527 [Thread-44] ERROR o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-02 19:28:11.325 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #148 ouverte (tentative 1)
+2026-05-02 19:28:11.353 [Thread-45] DEBUG org.example.DatabaseConnection - [DB] Connexion #149 ouverte (tentative 1)
+2026-05-02 19:28:11.364 [Thread-45] DEBUG org.example.DatabaseConnection - [DB] Connexion #150 ouverte (tentative 1)
+2026-05-02 19:28:11.369 [Thread-45] DEBUG org.example.DatabaseConnection - [DB] Connexion #151 ouverte (tentative 1)
+2026-05-02 19:28:11.370 [Thread-45] INFO  o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 1 (0 session(s))
+2026-05-02 19:28:11.373 [Thread-45] DEBUG org.example.DatabaseConnection - [DB] Connexion #152 ouverte (tentative 1)
+2026-05-02 19:28:11.375 [Thread-45] ERROR org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-02 19:28:12.020 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #153 ouverte (tentative 1)
+2026-05-02 19:28:15.366 [Thread-46] DEBUG org.example.DatabaseConnection - [DB] Connexion #154 ouverte (tentative 1)
+2026-05-02 19:28:15.371 [Thread-46] DEBUG org.example.DatabaseConnection - [DB] Connexion #155 ouverte (tentative 1)
+2026-05-02 19:28:15.375 [Thread-46] DEBUG org.example.DatabaseConnection - [DB] Connexion #156 ouverte (tentative 1)
+2026-05-02 19:28:15.376 [Thread-46] INFO  o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 1 (0 session(s))
+2026-05-02 19:28:15.379 [Thread-46] DEBUG org.example.DatabaseConnection - [DB] Connexion #157 ouverte (tentative 1)
+2026-05-02 19:28:15.379 [Thread-46] ERROR org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-02 19:28:16.481 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #158 ouverte (tentative 1)
+2026-05-02 19:28:26.938 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #159 ouverte (tentative 1)
+2026-05-02 19:28:26.944 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #160 ouverte (tentative 1)
+2026-05-02 19:28:27.911 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #161 ouverte (tentative 1)
+2026-05-02 19:28:29.662 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #162 ouverte (tentative 1)
+2026-05-02 19:28:53.376 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #163 ouverte (tentative 1)
+2026-05-02 19:28:53.381 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #164 ouverte (tentative 1)
+2026-05-02 19:28:54.614 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #165 ouverte (tentative 1)
+2026-05-02 19:28:57.034 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #166 ouverte (tentative 1)
+2026-05-02 19:28:57.040 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #167 ouverte (tentative 1)
+2026-05-02 19:29:02.593 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #168 ouverte (tentative 1)
+2026-05-02 19:29:07.145 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #169 ouverte (tentative 1)
+2026-05-02 19:29:09.140 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #170 ouverte (tentative 1)
+2026-05-02 19:29:16.732 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #171 ouverte (tentative 1)
+2026-05-02 19:29:17.584 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #172 ouverte (tentative 1)
+2026-05-02 19:29:20.449 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #173 ouverte (tentative 1)
+2026-05-02 19:29:20.689 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #174 ouverte (tentative 1)
+2026-05-02 19:29:20.848 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #175 ouverte (tentative 1)
+2026-05-02 19:29:21.030 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #176 ouverte (tentative 1)
+2026-05-02 19:29:21.217 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #177 ouverte (tentative 1)
+2026-05-02 19:29:21.462 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #178 ouverte (tentative 1)
+2026-05-02 19:29:22.373 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #179 ouverte (tentative 1)
+2026-05-02 19:29:23.787 [JavaFX Application Thread] DEBUG org.example.DatabaseConnection - [DB] Connexion #180 ouverte (tentative 1)

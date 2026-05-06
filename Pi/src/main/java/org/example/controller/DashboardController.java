@@ -8,11 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.example.dao.UserDAO;
-import org.example.model.User;
 
 import java.io.IOException;
-import java.util.List;
 
 public class DashboardController {
     
@@ -58,12 +55,7 @@ public class DashboardController {
         showProfileDialog();
     }
     
-    @FXML
-    public void handleUsers(ActionEvent event) {
-        statusLabel.setText("Chargement des utilisateurs...");
-        showAllUsers();
-    }
-    
+
     @FXML
     public void handleSettings(ActionEvent event) {
         statusLabel.setText("Paramètres - En construction");
@@ -97,45 +89,7 @@ public class DashboardController {
         alert.showAndWait();
     }
     
-    private void showAllUsers() {
-        try {
-            List<User> users = UserDAO.getAllUsers();
-            
-            if (users.isEmpty()) {
-                statusLabel.setText("Aucun utilisateur trouvé");
-                return;
-            }
-            
-            // Create a dialog to show all users
-            Dialog<Void> dialog = new Dialog<>();
-            dialog.setTitle("Tous les Utilisateurs");
-            dialog.setHeaderText("Liste des utilisateurs enregistrés");
-            
-            TextArea textArea = new TextArea();
-            StringBuilder sb = new StringBuilder();
-            
-            for (User user : users) {
-                sb.append("ID: ").append(user.getId())
-                  .append(" | Nom: ").append(user.getNomComplet())
-                  .append(" | Email: ").append(user.getEmail())
-                  .append("\n");
-            }
-            
-            textArea.setText(sb.toString());
-            textArea.setEditable(false);
-            textArea.setPrefHeight(300);
-            textArea.setPrefWidth(400);
-            
-            dialog.getDialogPane().setContent(textArea);
-            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-            dialog.showAndWait();
-            
-            statusLabel.setText(users.size() + " utilisateur(s) trouvé(s)");
-            
-        } catch (Exception e) {
-            statusLabel.setText("Erreur: " + e.getMessage());
-        }
-    }
+
     
     private void showSettingsDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

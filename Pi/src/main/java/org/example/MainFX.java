@@ -13,7 +13,7 @@ public class MainFX extends Application {
     public void start(Stage primaryStage) throws Exception {
         MonitoringService.init();
         Parent root = FXMLLoader.load(
-                getClass().getResource("/view/login.fxml"));
+                getClass().getResource("/view/quiz_manager.fxml"));
         primaryStage.setTitle("BioSync");
 
         Scene scene = new Scene(root);

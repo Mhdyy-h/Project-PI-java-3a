@@ -6,7 +6,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.example.model.CertificationRequest;
-import org.example.model.User;
 import org.example.service.CertificationService;
 import org.example.service.NavigationService;
 

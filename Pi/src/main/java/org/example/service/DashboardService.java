@@ -1,9 +1,5 @@
 package org.example.service;
 
-import org.example.dao.CertificationDAO;
-import org.example.dao.UserDAO;
-import org.example.model.User;
-
 import java.util.List;
 
 public class DashboardService {
@@ -19,20 +15,7 @@ public class DashboardService {
         return instance;
     }
 
-    public DashboardStats loadStats() {
-        try {
-            List<User> users = UserDAO.getAllUsers();
-            int pendingCerts = CertificationDAO.countPending();
-            
-            return new DashboardStats(
-                users.size(),
-                pendingCerts,
-                users
-            );
-        } catch (Exception e) {
-            return new DashboardStats(0, 0, List.of());
-        }
-    }
+
 
     public String getUserInitials(String name) {
         if (name == null || name.isEmpty()) return "??";
