@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox spacing="20"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.CoachUsersController"
+      style="-fx-background-color: #f0f2f8; -fx-padding: 24;">
+
+    <!-- Bouton Retour -->
+    <HBox>
+        <Button text="&#8592; Retour au Dashboard" onAction="#retournerVersDashboard"
+                style="-fx-background-color: transparent; -fx-text-fill: #4C6FFF;
+                       -fx-font-size: 13px; -fx-font-weight: bold;
+                       -fx-border-color: #4C6FFF; -fx-border-radius: 8;
+                       -fx-background-radius: 8; -fx-padding: 7 16;
+                       -fx-cursor: hand;"/>
+    </HBox>
+
+    <!-- En-tête Coach -->
+    <HBox alignment="CENTER_LEFT" spacing="16"
+          style="-fx-background-color: white; -fx-background-radius: 16;
+                 -fx-padding: 20 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);">
+        <StackPane minWidth="52" minHeight="52"
+                   style="-fx-background-color: #d1fae5; -fx-background-radius: 14;">
+            <Label text="&#x1F4CB;" style="-fx-font-size: 24px;"/>
+        </StackPane>
+        <VBox spacing="4">
+            <Label text="Vue Coach – Suivi Nutritionnel"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+            <Label fx:id="coachNameLabel" text="Connecté en tant que Coach"
+                   style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <VBox alignment="CENTER" spacing="2"
+              style="-fx-background-color: #d1fae5; -fx-background-radius: 10; -fx-padding: 8 16;">
+            <Label fx:id="totalUsersLabel" text="0"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #10b981;"/>
+            <Label text="Utilisateurs suivis"
+                   style="-fx-font-size: 11px; -fx-text-fill: #6b7280;"/>
+        </VBox>
+    </HBox>
+
+    <!-- Barre de recherche -->
+    <HBox spacing="12" alignment="CENTER_LEFT"
+          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 12 16;">
+        <Label text="&#x1F50D;" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="rechercheField" promptText="Rechercher un utilisateur (nom ou email)..."
+                   HBox.hgrow="ALWAYS"
+                   style="-fx-background-color: #f0f2f8; -fx-background-radius: 8;
+                          -fx-padding: 8 12; -fx-font-size: 13px; -fx-border-color: transparent;"/>
+    </HBox>
+
+    <!-- Tableau des utilisateurs -->
+    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-background-radius: 12;">
+        <columns>
+            <TableColumn fx:id="colNom"    text="Nom complet"      prefWidth="220" sortable="true"/>
+            <TableColumn fx:id="colEmail"  text="Email"            prefWidth="250" sortable="true"/>
+            <TableColumn fx:id="colScore"  text="Score Global"     prefWidth="120" sortable="true"/>
+            <TableColumn fx:id="colDate"   text="Inscrit le"       prefWidth="130" sortable="true"/>
+            <TableColumn fx:id="colAction" text="Actions"          prefWidth="160" sortable="false"/>
+        </columns>
+    </TableView>
+
+</VBox>

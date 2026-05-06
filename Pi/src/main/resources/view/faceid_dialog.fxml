@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.FaceIDController"
+      alignment="CENTER"
+      spacing="20"
+      prefWidth="700"
+      prefHeight="650"
+      style="-fx-background-color: #f8fafc; -fx-padding: 30;">
+
+    <!-- Header -->
+    <VBox alignment="CENTER" spacing="8">
+        <Label fx:id="instructionLabel"
+               text="Face ID"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+        <Label fx:id="statusLabel"
+               text="Positionnez votre visage devant la caméra"
+               wrapText="true"
+               alignment="CENTER"
+               style="-fx-font-size: 14px; -fx-text-fill: #6b7280; -fx-text-alignment: center;"/>
+    </VBox>
+
+    <!-- Camera View -->
+    <VBox alignment="CENTER" spacing="10">
+        <!-- Camera frame with border -->
+        <VBox style="-fx-background-color: #1a1a2e; -fx-background-radius: 16; -fx-padding: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 8);">
+            <ImageView fx:id="cameraView"
+                       fitWidth="640"
+                       fitHeight="480"
+                       preserveRatio="true"
+                       style="-fx-background-color: #000;"/>
+        </VBox>
+
+        <!-- Face detection guide overlay (optional visual guide) -->
+        <Label text="🎯 Centrez votre visage dans le cadre"
+               style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+    </VBox>
+
+    <!-- Registration Progress (only shown in registration mode) -->
+    <VBox fx:id="registrationProgressBox"
+          alignment="CENTER"
+          spacing="8"
+          visible="false"
+          managed="false">
+        <ProgressBar fx:id="progressBar"
+                     prefWidth="400"
+                     progress="0.0"
+                     style="-fx-accent: #4C6FFF;"/>
+        <Label fx:id="photoCountLabel"
+               text="0 / 5 photos"
+               style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+    </VBox>
+
+    <!-- Buttons -->
+    <HBox alignment="CENTER" spacing="20">
+        <Button fx:id="cancelButton"
+                text="❌ Annuler"
+                onAction="#handleCancel"
+                prefWidth="140"
+                prefHeight="45"
+                style="-fx-background-color: #f3f4f6; -fx-text-fill: #6b7280; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;"/>
+
+        <Button fx:id="captureButton"
+                text="📷 Capturer"
+                onAction="#handleCapture"
+                prefWidth="180"
+                prefHeight="50"
+                style="-fx-background-color: linear-gradient(to right, #4C6FFF, #06b6d4); -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-background-radius: 12; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(76,111,255,0.35), 10, 0, 0, 4);"/>
+    </HBox>
+
+</VBox>

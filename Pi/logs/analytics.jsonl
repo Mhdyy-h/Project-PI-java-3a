@@ -1,0 +1,18 @@
+{"ts":"2026-05-04T00:34:00.092537900Z","event":"app_started","props":{}}
+{"ts":"2026-05-04T15:33:23.448005400Z","event":"app_started","props":{}}
+{"ts":"2026-05-04T20:56:23.621126400Z","event":"app_started","props":{}}
+{"ts":"2026-05-04T20:57:59.322098800Z","event":"app_started","props":{}}
+{"ts":"2026-05-04T21:01:01.647570400Z","event":"app_started","props":{}}
+{"ts":"2026-05-05T11:49:49.323600400Z","event":"app_started","props":{}}
+{"ts":"2026-05-05T11:50:06.645353500Z","event":"uncaught_exception","props":{"errorId":"d83847d2-7dd0-4bf4-81c2-c388302a8cb9","thread":"JavaFX Application Thread","type":"java.lang.RuntimeException"}}
+{"ts":"2026-05-05T11:50:25.677493300Z","event":"uncaught_exception","props":{"errorId":"88adf34f-bf9a-4413-b5b4-1518176de11f","thread":"JavaFX Application Thread","type":"java.lang.RuntimeException"}}
+{"ts":"2026-05-05T11:51:43.243138100Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T00:17:08.815333900Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T00:33:57.256544400Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T18:09:04.341787100Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T18:09:35.151630900Z","event":"uncaught_exception","props":{"type":"java.lang.RuntimeException","thread":"JavaFX Application Thread","errorId":"da6db956-6706-479b-8de9-2da3338f1e24"}}
+{"ts":"2026-05-06T18:09:38.128195400Z","event":"uncaught_exception","props":{"type":"java.lang.RuntimeException","thread":"JavaFX Application Thread","errorId":"fc5c239a-69a8-421f-92fd-3d67231fc922"}}
+{"ts":"2026-05-06T18:21:42.953280300Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T18:24:18.941452600Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T18:25:48.333879900Z","event":"app_started","props":{}}
+{"ts":"2026-05-06T18:27:06.828708400Z","event":"app_started","props":{}}

@@ -1,0 +1,703 @@
+/* =========================================================
+   ==========  PREMIUM DARK THEME - BioSync  ==========
+   Modern glassmorphism design with depth, gradients, glows
+   ========================================================= */
+
+/* ========== COLOR PALETTE ==========
+   Background: #0d1117 (GitHub Dark style)
+   Surface:    #161b22
+   Elevated:   #21262d
+   Border:     #30363d
+   
+   Primary:    #6366f1 (Indigo)
+   Secondary:  #8b5cf6 (Violet)
+   Accent:     #06b6d4 (Cyan)
+   
+   Success:    #22c55e
+   Warning:    #f59e0b
+   Error:      #ef4444
+   
+   Text:
+   - Primary:   #f0f6fc
+   - Secondary: #8b949e
+   - Muted:     #6e7681
+   
+   Gradients & Glows:
+   - Card Glow: rgba(99, 102, 241, 0.15)
+   - Hover:     rgba(99, 102, 241, 0.25)
+*/
+
+/* ========== ROOT & BASE ========== */
+.dark-mode {
+    -fx-background-color: #0d1117;
+}
+
+.dark-mode .root {
+    -fx-background: #0d1117;
+}
+
+/* ========== SCROLLPANE ========== */
+.dark-mode .scroll-pane,
+.dark-mode .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.dark-mode .scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+/* ========== SCROLL BARS - Enhanced ========== */
+.dark-mode .scroll-bar {
+    -fx-background-color: #0d1117;
+    -fx-padding: 0 2;
+}
+
+.dark-mode .scroll-bar .track {
+    -fx-background-color: #161b22;
+    -fx-background-radius: 8;
+}
+
+.dark-mode .scroll-bar .thumb {
+    -fx-background-color: #30363d;
+    -fx-background-radius: 8;
+    -fx-min-width: 8;
+    -fx-pref-width: 8;
+}
+
+.dark-mode .scroll-bar .thumb:hover {
+    -fx-background-color: #484f58;
+}
+
+.dark-mode .scroll-bar .thumb:pressed {
+    -fx-background-color: #8b949e;
+}
+
+.dark-mode .scroll-bar .increment-button,
+.dark-mode .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ========== CARDS - Glassmorphism ========== */
+.dark-mode .card,
+.dark-mode .stat-card {
+    -fx-background-color: rgba(22, 27, 34, 0.85);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(48, 54, 61, 0.6);
+    -fx-border-radius: 16;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.08), 20, 0, 0, 4);
+    -fx-padding: 20;
+}
+
+.dark-mode .card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.15), 30, 0, 0, 6);
+    -fx-border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Primary gradient card */
+.dark-mode .card-primary {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(99, 102, 241, 0.15) 0%, rgba(22, 27, 34, 0.9) 100%);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(99, 102, 241, 0.4);
+    -fx-border-radius: 16;
+}
+
+/* Success gradient card */
+.dark-mode .card-success {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(34, 197, 94, 0.15) 0%, rgba(22, 27, 34, 0.9) 100%);
+    -fx-border-color: rgba(34, 197, 94, 0.4);
+}
+
+/* Warning gradient card */
+.dark-mode .card-warning {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(245, 158, 11, 0.15) 0%, rgba(22, 27, 34, 0.9) 100%);
+    -fx-border-color: rgba(245, 158, 11, 0.4);
+}
+
+/* ========== HEADERS & TITLES ========== */
+.dark-mode .page-title {
+    -fx-text-fill: #f0f6fc;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 15, 0, 0, 0);
+}
+
+.dark-mode .section-title {
+    -fx-text-fill: #f0f6fc;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.dark-mode .subtitle {
+    -fx-text-fill: #8b949e;
+    -fx-font-size: 14px;
+}
+
+/* ========== BUTTONS - Premium ========== */
+.dark-mode .btn {
+    -fx-background-color: #21262d;
+    -fx-text-fill: #f0f6fc;
+    -fx-background-radius: 10;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+}
+
+.dark-mode .btn:hover {
+    -fx-background-color: #30363d;
+    -fx-border-color: #8b949e;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.2), 15, 0, 0, 2);
+}
+
+/* Primary button with gradient */
+.dark-mode .btn-primary {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #6366f1 0%, #8b5cf6 100%);
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.4), 15, 0, 0, 3);
+}
+
+.dark-mode .btn-primary:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #818cf8 0%, #a78bfa 100%);
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.6), 20, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Glow button */
+.dark-mode .btn-glow {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-text-fill: #818cf8;
+    -fx-border-color: rgba(99, 102, 241, 0.5);
+}
+
+.dark-mode .btn-glow:hover {
+    -fx-background-color: rgba(99, 102, 241, 0.3);
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.4), 20, 0, 0, 0);
+}
+
+/* ========== COMBOBOX ========== */
+.dark-mode .combo-box {
+    -fx-background-color: #161b22;
+    -fx-background-radius: 10;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+.dark-mode .combo-box:hover {
+    -fx-border-color: #484f58;
+}
+
+.dark-mode .combo-box .list-cell {
+    -fx-text-fill: #f0f6fc;
+}
+
+.dark-mode .combo-box-popup .list-view {
+    -fx-background-color: #161b22;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 0, 5);
+}
+
+.dark-mode .combo-box-popup .list-view .list-cell {
+    -fx-background-color: #161b22;
+    -fx-text-fill: #c9d1d9;
+    -fx-padding: 10 15;
+}
+
+.dark-mode .combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #21262d;
+    -fx-text-fill: #f0f6fc;
+}
+
+.dark-mode .combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: rgba(99, 102, 241, 0.2);
+    -fx-text-fill: #818cf8;
+}
+
+/* ========== TEXT FIELDS ========== */
+.dark-mode .text-field {
+    -fx-background-color: #0d1117;
+    -fx-text-fill: #f0f6fc;
+    -fx-background-radius: 10;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-padding: 12 15;
+}
+
+.dark-mode .text-field:focused {
+    -fx-border-color: #6366f1;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 10, 0, 0, 0);
+}
+
+/* Search field with icon */
+.dark-mode .search-field {
+    -fx-background-color: #161b22;
+    -fx-border-color: #30363d;
+}
+
+.dark-mode .search-field:focused {
+    -fx-border-color: #8b5cf6;
+    -fx-effect: dropshadow(gaussian, rgba(139, 92, 246, 0.3), 15, 0, 0, 0);
+}
+
+/* ========== CHECKBOX ========== */
+.dark-mode .check-box {
+    -fx-text-fill: #c9d1d9;
+}
+
+.dark-mode .check-box .box {
+    -fx-background-color: #161b22;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.dark-mode .check-box:hover .box {
+    -fx-border-color: #8b949e;
+}
+
+.dark-mode .check-box:selected .box {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #6366f1 0%, #8b5cf6 100%);
+    -fx-border-color: transparent;
+}
+
+.dark-mode .check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+/* ========== RADIO BUTTON ========== */
+.dark-mode .radio-button {
+    -fx-text-fill: #c9d1d9;
+}
+
+.dark-mode .radio-button .radio {
+    -fx-background-color: #161b22;
+    -fx-border-color: #30363d;
+}
+
+.dark-mode .radio-button:selected .radio {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #6366f1 0%, #8b5cf6 100%);
+    -fx-border-color: transparent;
+}
+
+.dark-mode .radio-button:selected .dot {
+    -fx-background-color: white;
+}
+
+/* ========== LIST VIEW ========== */
+.dark-mode .list-view {
+    -fx-background-color: #0d1117;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 12;
+}
+
+.dark-mode .list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c9d1d9;
+    -fx-padding: 12 16;
+    -fx-border-color: transparent transparent #21262d transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.dark-mode .list-view .list-cell:hover {
+    -fx-background-color: rgba(33, 38, 45, 0.5);
+}
+
+.dark-mode .list-view .list-cell:selected {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-text-fill: #818cf8;
+}
+
+/* ========== TABLE VIEW ========== */
+.dark-mode .table-view {
+    -fx-background-color: #0d1117;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 12;
+}
+
+.dark-mode .table-view .column-header {
+    -fx-background-color: #161b22;
+    -fx-border-color: #30363d;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 14 16;
+}
+
+.dark-mode .table-view .column-header .label {
+    -fx-text-fill: #8b949e;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-text-transform: uppercase;
+}
+
+.dark-mode .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c9d1d9;
+    -fx-border-color: transparent transparent #21262d transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.dark-mode .table-row-cell:hover {
+    -fx-background-color: rgba(33, 38, 45, 0.5);
+}
+
+.dark-mode .table-row-cell:selected {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+}
+
+/* ========== TOOLTIP ========== */
+.dark-mode .tooltip {
+    -fx-background-color: #21262d;
+    -fx-text-fill: #f0f6fc;
+    -fx-border-color: #30363d;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 3);
+}
+
+/* ========== HYPERLINK ========== */
+.dark-mode .hyperlink {
+    -fx-text-fill: #818cf8;
+    -fx-border-color: transparent;
+}
+
+.dark-mode .hyperlink:hover {
+    -fx-text-fill: #a5b4fc;
+    -fx-underline: true;
+}
+
+/* ========== SEPARATOR ========== */
+.dark-mode .separator .line {
+    -fx-background-color: #21262d;
+    -fx-border-color: #21262d;
+}
+
+/* ========== USER ROWS - Premium ========== */
+.dark-mode .user-row,
+.dark-mode .recent-user-row,
+.dark-mode .cert-row {
+    -fx-background-color: rgba(22, 27, 34, 0.6);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(48, 54, 61, 0.4);
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-padding: 14 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+}
+
+.dark-mode .user-row:hover,
+.dark-mode .recent-user-row:hover,
+.dark-mode .cert-row:hover {
+    -fx-background-color: rgba(33, 38, 45, 0.8);
+    -fx-border-color: rgba(99, 102, 241, 0.3);
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.15), 20, 0, 0, 4);
+    -fx-translate-y: -2;
+}
+
+.dark-mode .user-row-alt,
+.dark-mode .recent-user-row-alt,
+.dark-mode .cert-row-alt {
+    -fx-background-color: rgba(13, 17, 23, 0.8);
+}
+
+/* ========== USER INFO TEXT ========== */
+.dark-mode .user-name,
+.dark-mode .recent-user-name,
+.dark-mode .cert-name {
+    -fx-text-fill: #f0f6fc;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+}
+
+.dark-mode .user-email,
+.dark-mode .recent-user-email,
+.dark-mode .cert-email {
+    -fx-text-fill: #8b949e;
+    -fx-font-size: 12px;
+}
+
+.dark-mode .user-date,
+.dark-mode .cert-date {
+    -fx-text-fill: #6e7681;
+    -fx-font-size: 12px;
+}
+
+/* ========== ROLE BADGES - Modern Glow ========== */
+.dark-mode .role-badge {
+    -fx-background-color: rgba(48, 54, 61, 0.8);
+    -fx-text-fill: #c9d1d9;
+    -fx-background-radius: 20;
+    -fx-padding: 6 14;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Admin - Red Glow */
+.dark-mode .role-admin,
+.dark-mode .role-badge-role_admin {
+    -fx-background-color: rgba(239, 68, 68, 0.15);
+    -fx-text-fill: #fca5a5;
+    -fx-border-color: rgba(239, 68, 68, 0.4);
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.2), 8, 0, 0, 0);
+}
+
+/* Coach - Green Glow */
+.dark-mode .role-coach,
+.dark-mode .role-badge-role_coach {
+    -fx-background-color: rgba(34, 197, 94, 0.15);
+    -fx-text-fill: #86efac;
+    -fx-border-color: rgba(34, 197, 94, 0.4);
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.2), 8, 0, 0, 0);
+}
+
+/* Specialist - Orange Glow */
+.dark-mode .role-specialiste,
+.dark-mode .role-badge-role_specialiste {
+    -fx-background-color: rgba(245, 158, 11, 0.15);
+    -fx-text-fill: #fde68a;
+    -fx-border-color: rgba(245, 158, 11, 0.4);
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.2), 8, 0, 0, 0);
+}
+
+/* User - Blue Glow */
+.dark-mode .role-utilisateur,
+.dark-mode .role-badge-role_user {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-text-fill: #a5b4fc;
+    -fx-border-color: rgba(99, 102, 241, 0.4);
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.2), 8, 0, 0, 0);
+}
+
+/* ========== STATUS BADGES ========== */
+.dark-mode .statut-en-attente {
+    -fx-background-color: rgba(245, 158, 11, 0.15);
+    -fx-text-fill: #fde68a;
+    -fx-border-color: rgba(245, 158, 11, 0.4);
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.2), 8, 0, 0, 0);
+}
+
+.dark-mode .statut-accepte {
+    -fx-background-color: rgba(34, 197, 94, 0.15);
+    -fx-text-fill: #86efac;
+    -fx-border-color: rgba(34, 197, 94, 0.4);
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.2), 8, 0, 0, 0);
+}
+
+.dark-mode .statut-refuse {
+    -fx-background-color: rgba(239, 68, 68, 0.15);
+    -fx-text-fill: #fca5a5;
+    -fx-border-color: rgba(239, 68, 68, 0.4);
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.2), 8, 0, 0, 0);
+}
+
+/* ========== SCORE DISPLAY ========== */
+.dark-mode .score-value {
+    -fx-text-fill: #fde047;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(253, 224, 71, 0.4), 8, 0, 0, 0);
+}
+
+.dark-mode .score-star {
+    -fx-text-fill: #fde047;
+}
+
+/* ========== ACTION BUTTONS - Icon Style ========== */
+.dark-mode .action-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6e7681;
+    -fx-background-radius: 8;
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.dark-mode .action-btn:hover {
+    -fx-text-fill: #f0f6fc;
+    -fx-background-color: rgba(48, 54, 61, 0.5);
+}
+
+.dark-mode .action-view:hover {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-text-fill: #818cf8;
+}
+
+.dark-mode .action-edit:hover {
+    -fx-background-color: rgba(245, 158, 11, 0.15);
+    -fx-text-fill: #fde68a;
+}
+
+.dark-mode .action-delete:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.15);
+    -fx-text-fill: #fca5a5;
+}
+
+/* ========== PASSWORD FEATURES ========== */
+.dark-mode .password-strength-track {
+    -fx-background-color: #21262d;
+    -fx-background-radius: 4;
+    -fx-pref-height: 6;
+    -fx-min-height: 6;
+}
+
+.dark-mode .password-strength-fill {
+    -fx-background-radius: 4;
+}
+
+.dark-mode .password-strength-label {
+    -fx-text-fill: #8b949e;
+    -fx-font-size: 11px;
+}
+
+.dark-mode .password-suggest-btn {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-border-color: rgba(99, 102, 241, 0.4);
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #818cf8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+}
+
+.dark-mode .password-suggest-btn:hover {
+    -fx-background-color: rgba(99, 102, 241, 0.3);
+    -fx-border-color: rgba(99, 102, 241, 0.6);
+}
+
+.dark-mode .eye-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-text-fill: #6e7681;
+}
+
+.dark-mode .eye-toggle-btn:hover {
+    -fx-text-fill: #818cf8;
+}
+
+/* ========== SIDEBAR ========== */
+.dark-mode .sidebar {
+    -fx-background-color: #161b22;
+    -fx-border-color: transparent #30363d transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.dark-mode .sidebar .nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8b949e;
+    -fx-padding: 12 20;
+    -fx-cursor: hand;
+}
+
+.dark-mode .sidebar .nav-item:hover {
+    -fx-background-color: rgba(99, 102, 241, 0.1);
+    -fx-text-fill: #c9d1d9;
+}
+
+.dark-mode .sidebar .nav-item.active {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-text-fill: #818cf8;
+    -fx-border-color: transparent transparent transparent #6366f1;
+    -fx-border-width: 0 0 0 3;
+}
+
+/* ========== HEADER ========== */
+.dark-mode .header {
+    -fx-background-color: rgba(13, 17, 23, 0.8);
+    -fx-border-color: transparent transparent #30363d transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 16 24;
+}
+
+/* ========== AVATAR ========== */
+.dark-mode .user-avatar {
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 15, 0, 0, 0);
+}
+
+.dark-mode .user-avatar-circle {
+    -fx-fill: linear-gradient(from 0% 0% to 100% 100%, #6366f1 0%, #8b5cf6 100%);
+}
+
+.dark-mode .user-avatar-initials {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ========== THEME TOGGLE ========== */
+.theme-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-padding: 8 12;
+    -fx-font-size: 16px;
+    -fx-text-fill: #6366f1;
+}
+
+.theme-toggle-btn:hover {
+    -fx-background-color: rgba(99, 102, 241, 0.15);
+    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.3), 10, 0, 0, 0);
+}
+
+/* ========== ANIMATION TRANSITIONS ========== */
+.dark-mode .btn,
+.dark-mode .action-btn,
+.dark-mode .user-row,
+.dark-mode .card {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+/* ========== LIGHT MODE DEFAULTS (kept for reference) ========== */
+.password-strength-track {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 4;
+    -fx-pref-height: 6;
+    -fx-min-height: 6;
+}
+
+.password-strength-fill {
+    -fx-background-radius: 4;
+}
+
+.password-strength-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.password-suggest-btn {
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #6366f1;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 6 12;
+}
+
+.eye-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-background-radius: 20;
+    -fx-text-fill: #9ca3af;
+}

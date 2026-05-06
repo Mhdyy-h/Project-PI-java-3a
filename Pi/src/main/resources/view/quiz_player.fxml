@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="org.example.controller.QuizPlayerController"
+           prefHeight="720.0" prefWidth="1000.0"
+           style="-fx-background-color: #F5F7FA;">
+
+    <!-- ══════════════════════════════════════════════
+         VIEW 0 – Mode Selection
+    ══════════════════════════════════════════════ -->
+    <VBox fx:id="voiceModeView" alignment="CENTER"
+          style="-fx-background-color: #F5F7FA;">
+
+        <VBox alignment="CENTER" spacing="32"
+              style="-fx-background-color: white; -fx-background-radius: 24;
+                      -fx-border-color: #E5E7EB; -fx-border-width: 1; -fx-border-radius: 24;
+                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0, 0, 6);
+                      -fx-padding: 52 64 52 64; -fx-max-width: 600;">
+
+            <!-- Header -->
+            <VBox alignment="CENTER" spacing="8">
+                <Label text="🧠 BioSync Quiz"
+                       style="-fx-font-size: 30px; -fx-font-weight: 800; -fx-text-fill: #1A1A1A;"/>
+                <Label text="Choisissez votre mode de jeu"
+                       style="-fx-font-size: 15px; -fx-text-fill: #6B7280;"/>
+            </VBox>
+
+            <!-- Mode Cards -->
+            <HBox spacing="24" alignment="CENTER">
+
+                <!-- Normal Mode -->
+                <VBox alignment="CENTER" spacing="16"
+                      style="-fx-background-color: #F9FAFB; -fx-background-radius: 16;
+                              -fx-border-color: #D1D5DB; -fx-border-width: 2; -fx-border-radius: 16;
+                              -fx-padding: 32 28 28 28; -fx-min-width: 220;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 2);">
+                    <Label text="🖱️" style="-fx-font-size: 48px;"/>
+                    <Label text="Mode Normal"
+                           style="-fx-font-size: 17px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"/>
+                    <Label text="Répondez avec la souris&#10;ou le clavier"
+                           style="-fx-font-size: 12px; -fx-text-fill: #9CA3AF; -fx-text-alignment: center;"
+                           wrapText="true" maxWidth="180"/>
+                    <Button text="Choisir →" onAction="#startNormalMode"
+                            maxWidth="Infinity"
+                            style="-fx-background-color: #374151; -fx-text-fill: white;
+                                   -fx-font-size: 14px; -fx-font-weight: 700;
+                                   -fx-background-radius: 10; -fx-padding: 12 0 12 0;
+                                   -fx-cursor: hand;"/>
+                </VBox>
+
+                <!-- Voice Mode -->
+                <VBox alignment="CENTER" spacing="16"
+                      style="-fx-background-color: #EFF6FF; -fx-background-radius: 16;
+                              -fx-border-color: #4285F4; -fx-border-width: 2; -fx-border-radius: 16;
+                              -fx-padding: 32 28 28 28; -fx-min-width: 220;
+                              -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.18), 12, 0, 0, 4);">
+                    <Label text="🎤" style="-fx-font-size: 48px;"/>
+                    <Label text="Mode Vocal"
+                           style="-fx-font-size: 17px; -fx-font-weight: 700; -fx-text-fill: #1E40AF;"/>
+                    <Label text="Questions lues à voix haute&#10;Réponse simulée par audio"
+                           style="-fx-font-size: 12px; -fx-text-fill: #3B82F6; -fx-text-alignment: center;"
+                           wrapText="true" maxWidth="180"/>
+                    <Button text="🎤 Activer" onAction="#startVoiceMode"
+                            maxWidth="Infinity"
+                            style="-fx-background-color: #4285F4; -fx-text-fill: white;
+                                   -fx-font-size: 14px; -fx-font-weight: 700;
+                                   -fx-background-radius: 10; -fx-padding: 12 0 12 0;
+                                   -fx-cursor: hand;
+                                   -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.35), 8, 0, 0, 2);"/>
+                </VBox>
+
+            </HBox>
+        </VBox>
+    </VBox>
+
+    <!-- ══════════════════════════════════════════════
+         VIEW 1 – Quiz Selection
+    ══════════════════════════════════════════════ -->
+    <VBox fx:id="quizSelectionView" style="-fx-padding: 0;" alignment="TOP_CENTER"
+          visible="false" managed="false">
+
+        <!-- Top Bar -->
+        <HBox style="-fx-background-color: white;
+                      -fx-padding: 16 28 16 28;
+                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);"
+              alignment="CENTER_LEFT" spacing="16">
+            <VBox style="-fx-background-color: linear-gradient(to right, #4285F4, #5A9BD5);
+                          -fx-background-radius: 10; -fx-padding: 8 12 8 12;">
+                <Label text="🧠" style="-fx-font-size: 22px;"/>
+            </VBox>
+            <VBox spacing="2">
+                <Label text="BioSync – Quiz Mentaux"
+                       style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"/>
+                <Label fx:id="welcomeLabel" text="Bienvenue !"
+                       style="-fx-font-size: 13px; -fx-text-fill: #6B7280;"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="roleLabel" text=""
+                   style="-fx-background-color: #DBEAFE; -fx-text-fill: #1E40AF;
+                          -fx-font-size: 12px; -fx-font-weight: 600;
+                          -fx-background-radius: 20; -fx-padding: 4 12 4 12;"/>
+            <Button text="← Tableau de bord" onAction="#handleRetour"
+                    style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151;
+                           -fx-font-size: 13px; -fx-background-radius: 8;
+                           -fx-padding: 10 18 10 18; -fx-cursor: hand;
+                           -fx-border-color: #D1D5DB; -fx-border-width: 1; -fx-border-radius: 8;"/>
+        </HBox>
+
+        <!-- Content -->
+        <VBox style="-fx-padding: 28 40 28 40;" VBox.vgrow="ALWAYS" spacing="0">
+
+            <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-padding: 0 0 20 0;">
+                <Label text="Quiz Disponibles"
+                       style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"/>
+                <Label fx:id="statusLabel" text=""
+                       style="-fx-font-size: 13px; -fx-text-fill: #EF4444; -fx-padding: 0 0 0 10;"/>
+            </HBox>
+
+            <ScrollPane style="-fx-background-color: transparent; -fx-border-color: transparent;"
+                        VBox.vgrow="ALWAYS" fitToWidth="true">
+                <VBox fx:id="quizListContainer" spacing="14">
+                    <!-- Quiz cards injected dynamically -->
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </VBox>
+
+    <!-- ══════════════════════════════════════════════
+         VIEW 2 – Quiz Play
+    ══════════════════════════════════════════════ -->
+    <VBox fx:id="quizPlayView" style="-fx-background-color: #F5F7FA;"
+          alignment="TOP_CENTER" visible="false" managed="false">
+
+        <!-- Header -->
+        <HBox style="-fx-background-color: white; -fx-padding: 14 28 14 28;
+                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);"
+              alignment="CENTER_LEFT" spacing="16">
+            <Label fx:id="quizTitleLabel" text="Quiz"
+                   style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="✕  Quitter" onAction="#handleBackToQuizzes"
+                    style="-fx-background-color: #FEE2E2; -fx-text-fill: #DC2626;
+                           -fx-font-size: 13px; -fx-font-weight: 600;
+                           -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand;"/>
+        </HBox>
+
+        <!-- Progress Bar -->
+        <VBox style="-fx-background-color: white; -fx-padding: 14 28 14 28;
+                      -fx-border-color: #E5E7EB; -fx-border-width: 0 0 1 0;">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Label fx:id="questionNumberLabel" text="Question 1 / 10"
+                       style="-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #1A1A1A;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="progressLabel" text="1 / 10"
+                       style="-fx-font-size: 13px; -fx-text-fill: #6B7280;"/>
+            </HBox>
+            <ProgressBar fx:id="progressBar" maxWidth="Infinity" prefHeight="8" progress="0.1"
+                         style="-fx-accent: #4285F4; -fx-background-radius: 6;
+                                -fx-background-color: #E5E7EB;"/>
+        </VBox>
+
+        <!-- Voice Mode Bar (only visible when voiceMode = true) -->
+        <HBox fx:id="voiceBar" visible="false" managed="false"
+              style="-fx-background-color: #F0FDF4; -fx-padding: 12 28 12 28;
+                      -fx-border-color: #86EFAC; -fx-border-width: 0 0 1 0;"
+              alignment="CENTER_LEFT" spacing="14">
+            <Label text="🎤 Mode Vocal"
+                   style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #166534;"/>
+            <Label fx:id="voiceStatusLabel" text="Prêt"
+                   style="-fx-font-size: 13px; -fx-text-fill: #15803D;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="voiceInputButton" text="🎤 Répondre vocalement"
+                    onAction="#handleVoiceInput"
+                    style="-fx-background-color: #22C55E; -fx-text-fill: white;
+                           -fx-font-size: 13px; -fx-font-weight: 700;
+                           -fx-background-radius: 8; -fx-padding: 9 18 9 18; -fx-cursor: hand;
+                           -fx-effect: dropshadow(gaussian, rgba(34,197,94,0.3), 6, 0, 0, 2);"/>
+        </HBox>
+
+        <!-- Question Card -->
+        <ScrollPane style="-fx-background-color: transparent; -fx-border-color: transparent;"
+                    VBox.vgrow="ALWAYS" fitToWidth="true">
+            <VBox alignment="TOP_CENTER" style="-fx-padding: 32 40 32 40;" spacing="0">
+
+                <VBox style="-fx-background-color: white; -fx-background-radius: 16;
+                              -fx-border-color: #E5E7EB; -fx-border-width: 1; -fx-border-radius: 16;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 3);
+                              -fx-max-width: 820; -fx-padding: 32 36 28 36;"
+                      spacing="24">
+
+                    <!-- Question Text -->
+                    <Label fx:id="questionTextLabel"
+                           text="Chargement..."
+                           wrapText="true"
+                           style="-fx-font-size: 18px; -fx-font-weight: 600;
+                                  -fx-text-fill: #1A1A1A; -fx-line-spacing: 4;"/>
+
+                    <!-- Option Buttons -->
+                    <VBox spacing="12">
+                        <Button fx:id="optionAButton" text="A.  Option A"
+                                onAction="#handleOptionA"
+                                maxWidth="Infinity" prefHeight="54"
+                                style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB;
+                                       -fx-border-radius: 10; -fx-background-radius: 10;
+                                       -fx-padding: 0 20 0 20; -fx-cursor: hand;
+                                       -fx-text-fill: #1A1A1A; -fx-font-size: 14px;
+                                       -fx-alignment: CENTER_LEFT; -fx-border-width: 2;"/>
+                        <Button fx:id="optionBButton" text="B.  Option B"
+                                onAction="#handleOptionB"
+                                maxWidth="Infinity" prefHeight="54"
+                                style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB;
+                                       -fx-border-radius: 10; -fx-background-radius: 10;
+                                       -fx-padding: 0 20 0 20; -fx-cursor: hand;
+                                       -fx-text-fill: #1A1A1A; -fx-font-size: 14px;
+                                       -fx-alignment: CENTER_LEFT; -fx-border-width: 2;"/>
+                        <Button fx:id="optionCButton" text="C.  Option C"
+                                onAction="#handleOptionC"
+                                maxWidth="Infinity" prefHeight="54"
+                                style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB;
+                                       -fx-border-radius: 10; -fx-background-radius: 10;
+                                       -fx-padding: 0 20 0 20; -fx-cursor: hand;
+                                       -fx-text-fill: #1A1A1A; -fx-font-size: 14px;
+                                       -fx-alignment: CENTER_LEFT; -fx-border-width: 2;"/>
+                        <Button fx:id="optionDButton" text="D.  Option D"
+                                onAction="#handleOptionD"
+                                maxWidth="Infinity" prefHeight="54"
+                                style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB;
+                                       -fx-border-radius: 10; -fx-background-radius: 10;
+                                       -fx-padding: 0 20 0 20; -fx-cursor: hand;
+                                       -fx-text-fill: #1A1A1A; -fx-font-size: 14px;
+                                       -fx-alignment: CENTER_LEFT; -fx-border-width: 2;"/>
+                    </VBox>
+
+                    <!-- Navigation -->
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Button fx:id="previousButton" text="← Précédent"
+                                onAction="#handlePreviousQuestion"
+                                style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151;
+                                       -fx-font-size: 13px; -fx-font-weight: 500;
+                                       -fx-background-radius: 8; -fx-padding: 11 22 11 22;
+                                       -fx-cursor: hand; -fx-border-color: #D1D5DB;
+                                       -fx-border-width: 1; -fx-border-radius: 8;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="submitButton" text="✓  Terminer le quiz"
+                                onAction="#handleSubmitQuiz"
+                                visible="false" managed="false"
+                                style="-fx-background-color: #6EC5A6; -fx-text-fill: white;
+                                       -fx-font-size: 13px; -fx-font-weight: 700;
+                                       -fx-background-radius: 8; -fx-padding: 11 26 11 26;
+                                       -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(110,197,166,0.4), 8, 0, 0, 2);"/>
+                        <Button fx:id="nextButton" text="Suivant →"
+                                onAction="#handleNextQuestion" disable="true"
+                                style="-fx-background-color: #4285F4; -fx-text-fill: white;
+                                       -fx-font-size: 13px; -fx-font-weight: 700;
+                                       -fx-background-radius: 8; -fx-padding: 11 26 11 26;
+                                       -fx-cursor: hand;
+                                       -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.35), 8, 0, 0, 2);"/>
+                    </HBox>
+
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+
+    <!-- ══════════════════════════════════════════════
+         VIEW 3 – Result (inline fallback)
+    ══════════════════════════════════════════════ -->
+    <VBox fx:id="resultView" alignment="CENTER"
+          style="-fx-background-color: #F5F7FA; -fx-padding: 40;"
+          visible="false" managed="false">
+
+        <VBox alignment="CENTER" spacing="24"
+              style="-fx-background-color: white; -fx-background-radius: 20;
+                      -fx-border-color: #E5E7EB; -fx-border-width: 1; -fx-border-radius: 20;
+                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0, 0, 6);
+                      -fx-padding: 44 52 44 52; -fx-max-width: 540;">
+
+            <!-- Medal Badge -->
+            <HBox fx:id="medalContainer" alignment="CENTER"
+                  style="-fx-background-color: linear-gradient(to right, #FCD34D, #F59E0B);
+                          -fx-background-radius: 30; -fx-padding: 16 40 16 40;">
+                <Label fx:id="medalLabel" text="🥇 Médaille d'Or"
+                       style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: white;"/>
+            </HBox>
+
+            <Label fx:id="resultTitleLabel" text="—"
+                   style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: #1A1A1A;"
+                   wrapText="true"/>
+
+            <VBox alignment="CENTER" spacing="6">
+                <Label fx:id="percentageLabel" text="—%"
+                       style="-fx-font-size: 52px; -fx-font-weight: 800; -fx-text-fill: #4285F4;"/>
+                <Label fx:id="scoreLabel" text="— / —"
+                       style="-fx-font-size: 18px; -fx-text-fill: #6B7280;"/>
+            </VBox>
+
+            <Label fx:id="messageLabel" text=""
+                   style="-fx-font-size: 15px; -fx-font-weight: 600; -fx-text-fill: #6EC5A6;"
+                   wrapText="true"/>
+
+            <HBox spacing="14" alignment="CENTER">
+                <Button fx:id="retryButton" text="↺  Recommencer"
+                        onAction="#handleRetryQuiz"
+                        style="-fx-background-color: #F3F4F6; -fx-text-fill: #374151;
+                               -fx-font-size: 14px; -fx-font-weight: 600;
+                               -fx-background-radius: 10; -fx-padding: 13 28 13 28;
+                               -fx-cursor: hand; -fx-border-color: #D1D5DB;
+                               -fx-border-width: 1; -fx-border-radius: 10;"/>
+                <Button text="← Retour aux Quiz"
+                        onAction="#handleBackToQuizzes"
+                        style="-fx-background-color: #4285F4; -fx-text-fill: white;
+                               -fx-font-size: 14px; -fx-font-weight: 700;
+                               -fx-background-radius: 10; -fx-padding: 13 28 13 28;
+                               -fx-cursor: hand;
+                               -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.35), 8, 0, 0, 2);"/>
+            </HBox>
+
+        </VBox>
+    </VBox>
+
+</StackPane>

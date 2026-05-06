@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controller.DetailSeanceController"
+      spacing="0" style="-fx-background-color: #f5f0ff;"
+      stylesheets="@../styles/style.css">
+
+    <!-- NAVBAR -->
+    <HBox style="-fx-background-color: #2d1b69; -fx-padding: 15 25;"
+          alignment="CENTER_LEFT" spacing="20">
+        <Label text="🏆 GESTION SPORT"
+               style="-fx-text-fill: white; -fx-font-size: 18px;
+                      -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="🏠 Menu" onAction="#goMenu"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: white; -fx-font-size: 13px;
+                       -fx-cursor: hand;"/>
+        <Button text="🏃 Séances" onAction="#goSeances"
+                style="-fx-background-color: transparent;
+                       -fx-text-fill: white; -fx-font-size: 13px;
+                       -fx-cursor: hand;"/>
+    </HBox>
+
+    <ScrollPane fitToWidth="true"
+                style="-fx-background-color: transparent;
+                       -fx-border-color: transparent;">
+        <VBox spacing="20" style="-fx-padding: 30;">
+
+            <!-- HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Button text="← Retour" onAction="#goBack"
+                        style="-fx-background-color: #ede8ff;
+                               -fx-text-fill: #2d1b69;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;"/>
+                <VBox spacing="3">
+                    <Label fx:id="labelTitre"
+                           style="-fx-font-size: 24px; -fx-font-weight: bold;
+                                  -fx-text-fill: #2d1b69;"/>
+                    <Label text="Détails de la séance"
+                           style="-fx-font-size: 13px; -fx-text-fill: #888;"/>
+                </VBox>
+            </HBox>
+
+            <!-- INFOS SEANCE -->
+            <VBox style="-fx-background-color: white;
+                         -fx-background-radius: 12; -fx-padding: 20;
+                         -fx-effect: dropshadow(gaussian,#ddd,8,0,0,2);"
+                  spacing="12">
+                <Label text="📋 Informations"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;
+                              -fx-text-fill: #2d1b69;"/>
+                <HBox spacing="10">
+                    <Label text="⏱ Durée :"
+                           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+                    <Label fx:id="labelDuree"
+                           style="-fx-text-fill: #c8a000; -fx-font-weight: bold;"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="📅 Date :"
+                           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+                    <Label fx:id="labelDate"
+                           style="-fx-text-fill: #555;"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="🕐 Heure :"
+                           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+                    <Label fx:id="labelHeure"
+                           style="-fx-text-fill: #555;"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="🏅 Médaille :"
+                           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+                    <Label fx:id="labelMedaille"
+                           style="-fx-text-fill: #e74c3c; -fx-font-weight: bold;"/>
+                </HBox>
+            </VBox>
+
+            <!-- EXERCICES ASSIGNES -->
+            <VBox style="-fx-background-color: white;
+                         -fx-background-radius: 12; -fx-padding: 20;
+                         -fx-effect: dropshadow(gaussian,#ddd,8,0,0,2);"
+                  spacing="12">
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="💪 Exercices de cette séance"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;
+                                  -fx-text-fill: #2d1b69;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="labelCalories"
+                           style="-fx-font-size: 13px; -fx-font-weight: bold;
+                                  -fx-text-fill: #27ae60;"/>
+                </HBox>
+                <VBox fx:id="exercicesContainer" spacing="8"/>
+                <Label fx:id="labelVide"
+                       text="Aucun exercice assigné à cette séance."
+                       style="-fx-font-size: 13px; -fx-text-fill: #9b89a8;
+                              -fx-font-style: italic;"
+                       visible="false" managed="false"/>
+            </VBox>
+
+            <!-- BOUTON ASSIGNER — Coach seulement via fx:id -->
+            <HBox fx:id="boxAssigner" spacing="12">
+                <Button fx:id="btnAssigner"
+                        text="🔗 Assigner des exercices"
+                        onAction="#ouvrirAssigner"
+                        style="-fx-background-color: #10b981;
+                               -fx-text-fill: white; -fx-font-weight: bold;
+                               -fx-background-radius: 10; -fx-cursor: hand;
+                               -fx-pref-height: 42; -fx-pref-width: 220;
+                               -fx-font-size: 13px;"/>
+            </HBox>
+
+        </VBox>
+    </ScrollPane>
+</VBox>

@@ -1,0 +1,6 @@
+2026-05-03 13:56:01.903 [JavaFX Application Thread] ERROR o.example.service.ServiceUtilisateur - Erreur existeEmail : No operations allowed after connection closed.
+2026-05-03 13:56:01.907 [JavaFX Application Thread] ERROR o.example.service.ServiceUtilisateur - Erreur ajouter utilisateur : No operations allowed after connection closed.
+2026-05-03 14:00:56.034 [JavaFX Application Thread] ERROR o.example.service.ServiceUtilisateur - Erreur connexion : No operations allowed after connection closed.
+2026-05-03 14:00:56.036 [JavaFX Application Thread] WARN  o.example.service.ServiceUtilisateur - Échec connexion pour : demo@biosync.fr
+2026-05-03 14:00:59.860 [JavaFX Application Thread] ERROR o.example.service.ServiceUtilisateur - Erreur connexion : No operations allowed after connection closed.
+2026-05-03 14:00:59.864 [JavaFX Application Thread] WARN  o.example.service.ServiceUtilisateur - Échec connexion pour : demo@biosync.fr

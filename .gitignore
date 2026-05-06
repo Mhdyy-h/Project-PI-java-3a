@@ -1,3 +1,38 @@
+<<<<<<< HEAD
+# Fichiers Windows
+NTUSER.DAT
+*.TM.blf
+*.regtrans-ms
+ntuser.ini
+ntuser.dat.LOG1
+ntuser.dat.LOG2
+
+# Dossiers personnels
+AppData/
+Desktop/
+Downloads/
+Documents/
+Music/
+Videos/
+OneDrive/
+Contacts/
+Favorites/
+
+# Java
+target/
+*.class
+*.jar
+.idea/
+*.iml
+
+# Autres projets
+pi_java/
+pidev/
+FirstProject/
+IdeaProjects/Pi/user_data/
+Pi/uploads/
+Pi/user_data/
+=======
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -37,3 +72,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+>>>>>>> sports

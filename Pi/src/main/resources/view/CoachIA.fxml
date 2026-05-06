@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="0"
+      prefWidth="1100" prefHeight="700"
+      style="-fx-background-color: #0f0f1a;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.CoachIAController">
+
+    <!-- HEADER FIXE -->
+    <HBox alignment="CENTER_LEFT" spacing="16"
+          style="-fx-background-color: #1a1a2e;
+                 -fx-padding: 16 20;
+                 -fx-border-color: transparent transparent #2a2a3e transparent;
+                 -fx-border-width: 0 0 1 0;">
+        <Button text="←"
+                onAction="#retourDashboard"
+                style="-fx-background-color: #2a2a2a;
+                       -fx-text-fill: #aaaaaa;
+                       -fx-font-size: 14px;
+                       -fx-cursor: hand;
+                       -fx-background-radius: 8;
+                       -fx-padding: 6 12;"/>
+        <Label text="🏋️" style="-fx-font-size: 24px;"/>
+        <VBox spacing="2">
+            <Label fx:id="lblNomUser"
+                   style="-fx-font-size: 15px; -fx-font-weight: bold;
+                          -fx-text-fill: white;"/>
+            <Label text="🟢 Coach IA actif — sport uniquement"
+                   style="-fx-font-size: 11px; -fx-text-fill: #44cc88;"/>
+        </VBox>
+    </HBox>
+
+    <!-- ZONE MESSAGES -->
+    <ScrollPane fx:id="scrollPane"
+                fitToWidth="true"
+                VBox.vgrow="ALWAYS"
+                style="-fx-background: transparent;
+                       -fx-background-color: transparent;
+                       -fx-border-color: transparent;">
+        <VBox fx:id="messagesContainer"
+              spacing="8"
+              style="-fx-padding: 16 0; -fx-background-color: transparent;"/>
+    </ScrollPane>
+
+    <!-- ZONE SAISIE -->
+    <HBox spacing="10" alignment="CENTER"
+          style="-fx-background-color: #1a1a2e;
+                 -fx-padding: 16 20;
+                 -fx-border-color: #2a2a3e transparent transparent transparent;
+                 -fx-border-width: 1 0 0 0;">
+        <TextField fx:id="inputMessage"
+                   HBox.hgrow="ALWAYS"
+                   promptText="Posez votre question sportive..."
+                   style="-fx-background-color: #2a2a2a;
+                          -fx-text-fill: white;
+                          -fx-prompt-text-fill: #666666;
+                          -fx-padding: 12 16;
+                          -fx-background-radius: 24;
+                          -fx-font-size: 13px;
+                          -fx-border-color: transparent;"/>
+        <Button fx:id="btnEnvoyer"
+                text="Envoyer ➤"
+                onAction="#envoyerMessage"
+                style="-fx-background-color: #7d3c98;
+                       -fx-text-fill: white;
+                       -fx-font-weight: bold;
+                       -fx-padding: 12 20;
+                       -fx-background-radius: 24;
+                       -fx-cursor: hand;
+                       -fx-font-size: 13px;"/>
+    </HBox>
+
+</VBox>

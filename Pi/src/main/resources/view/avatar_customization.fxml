@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<DialogPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.AvatarCustomizationController"
+            prefWidth="500" prefHeight="700"
+            style="-fx-background-color: white;">
+
+    <content>
+        <VBox spacing="20" style="-fx-padding: 20;">
+
+            <!-- Header -->
+            <VBox spacing="8" alignment="CENTER">
+                <Label text="🎨 Personnaliser votre Avatar"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                <Label text="Créez un avatar unique en modifiant les traits du visage"
+                       style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;"/>
+            </VBox>
+
+            <!-- Avatar Preview -->
+            <VBox alignment="CENTER" spacing="10"
+                  style="-fx-background-color: #f8fafc; -fx-background-radius: 16; -fx-padding: 24;">
+                <StackPane>
+                    <Circle radius="80" fill="#e5e7eb"/>
+                    <ImageView fx:id="avatarPreview" fitWidth="160" fitHeight="160"
+                               preserveRatio="true">
+                        <clip>
+                            <Circle radius="80" centerX="80" centerY="80"/>
+                        </clip>
+                    </ImageView>
+                </StackPane>
+                <Label text="Aperçu de l'avatar" style="-fx-font-size: 12px; -fx-text-fill: #6b7280;"/>
+            </VBox>
+
+            <!-- Random Button -->
+            <Button text="🎲 Générer aléatoirement" onAction="#handleRandomize"
+                    style="-fx-background-color: #f3f4f6; -fx-text-fill: #374151; -fx-font-size: 12px; -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 8;"/>
+
+            <!-- Customization Controls -->
+            <ScrollPane fitToWidth="true" prefHeight="280"
+                        style="-fx-background-color: transparent; -fx-background: transparent;">
+                <VBox spacing="16">
+
+                    <!-- Style/Skin -->
+                    <VBox spacing="6">
+                        <Label text="Style de peau" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="skinColorCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Hair Style -->
+                    <VBox spacing="6">
+                        <Label text="Coiffure" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="hairStyleCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Hair Color -->
+                    <VBox spacing="6">
+                        <Label text="Couleur de cheveux" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <HBox spacing="8">
+                            <ComboBox fx:id="hairColorCombo" maxWidth="Infinity"
+                                      style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Eyes -->
+                    <VBox spacing="6">
+                        <Label text="Yeux" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="eyesCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Eyebrows -->
+                    <VBox spacing="6">
+                        <Label text="Sourcils" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="eyebrowsCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Mouth -->
+                    <VBox spacing="6">
+                        <Label text="Bouche" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="mouthCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Accessories -->
+                    <VBox spacing="6">
+                        <Label text="Accessoires" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="accessoriesCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Clothes -->
+                    <VBox spacing="6">
+                        <Label text="Vêtements" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="clothesCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                    <!-- Clothes Color -->
+                    <VBox spacing="6">
+                        <Label text="Couleur des vêtements" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #4C6FFF;"/>
+                        <ComboBox fx:id="clothesColorCombo" maxWidth="Infinity"
+                                  style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 6;"/>
+                    </VBox>
+
+                </VBox>
+            </ScrollPane>
+
+        </VBox>
+    </content>
+
+    <buttonTypes>
+        <ButtonType text="✓ Confirmer" buttonData="OK_DONE"/>
+        <ButtonType text="✕ Annuler" buttonData="CANCEL_CLOSE"/>
+    </buttonTypes>
+
+</DialogPane>

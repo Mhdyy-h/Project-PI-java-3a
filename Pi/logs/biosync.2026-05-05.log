@@ -1,0 +1,231 @@
+2026-05-05 12:49:49.297 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)
+2026-05-05 12:50:06.640 ERROR [JavaFX Application Thread] o.example.service.MonitoringService - Erreur non gérée [d83847d2-7dd0-4bf4-81c2-c388302a8cb9] dans thread JavaFX Application Thread
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1857)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.reflect.InvocationTargetException: null
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:115)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1852)
+	... 46 common frames omitted
+Caused by: java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "connection" is null
+	at org.example.dao.UserDAO.login(UserDAO.java:183)
+	at org.example.service.AuthService.login(AuthService.java:67)
+	at org.example.controller.LoginController.handleLogin(LoginController.java:68)
+	at org.example.controller.LoginController.handleCreateAccount(LoginController.java:43)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	... 53 common frames omitted
+2026-05-05 12:50:25.677 ERROR [JavaFX Application Thread] o.example.service.MonitoringService - Erreur non gérée [88adf34f-bf9a-4413-b5b4-1518176de11f] dans thread JavaFX Application Thread
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1857)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.lang.reflect.InvocationTargetException: null
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:115)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1852)
+	... 46 common frames omitted
+Caused by: java.lang.NullPointerException: Cannot invoke "java.sql.Connection.prepareStatement(String)" because "connection" is null
+	at org.example.dao.UserDAO.login(UserDAO.java:183)
+	at org.example.service.AuthService.login(AuthService.java:67)
+	at org.example.controller.LoginController.handleLogin(LoginController.java:68)
+	at org.example.controller.LoginController.handleCreateAccount(LoginController.java:43)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	... 53 common frames omitted
+2026-05-05 12:50:47.197 INFO  [Thread-3] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-05 12:50:47.218 ERROR [Thread-3] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-05 12:50:52.084 ERROR [JavaFX Application Thread] o.example.service.MultiplayerService - Erreur insererSalon : Table 'biosync.session_multijoueur' doesn't exist
+2026-05-05 12:50:52.084 INFO  [JavaFX Application Thread] o.example.service.MultiplayerService - Salon créé : 0 (code: BU7CWE)
+2026-05-05 12:50:52.089 INFO  [JavaFX Application Thread] o.example.service.MultiplayerService - Serveur WebSocket démarré sur le port 8887
+2026-05-05 12:50:52.101 INFO  [WebSocketSelector-83] o.example.service.MultiplayerService - WebSocketServer démarré et en écoute
+2026-05-05 12:50:53.790 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.792 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.795 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.797 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.800 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.803 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.806 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.806 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.811 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.811 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.814 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.817 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.820 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.822 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.824 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.825 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.828 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.828 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.831 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.833 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.834 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.838 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.841 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.841 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.844 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.844 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.846 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.848 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.850 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.852 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.855 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.855 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.857 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.857 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.859 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.862 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.864 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.866 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.868 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.868 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.870 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.870 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.872 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.874 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.876 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.878 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.880 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.880 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.883 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.883 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.884 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.889 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.891 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.893 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.895 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.896 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.898 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.898 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.900 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.901 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.904 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.905 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.907 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.908 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.909 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.909 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.911 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.913 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.916 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.918 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.920 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.920 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.922 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-05 12:50:53.922 INFO  [Thread-25] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|5|QCM
+2026-05-05 12:50:53.924 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.926 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.928 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.931 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.932 ERROR [Thread-25] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-05 12:50:53.932 ERROR [Thread-25] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|5|QCM — banque vide ?
+2026-05-05 12:50:53.935 ERROR [JavaFX Application Thread] o.example.service.MultiplayerService - Erreur mettreAJourStatutSalon : Table 'biosync.session_multijoueur' doesn't exist
+2026-05-05 12:51:18.635 INFO  [JavaFX Application Thread] o.example.service.MultiplayerService - Serveur WebSocket arrêté
+2026-05-05 12:51:18.658 INFO  [Thread-27] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-05 12:51:18.663 ERROR [Thread-27] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-05 12:51:30.959 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Séances non disponible
+2026-05-05 12:51:31.382 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Séances non disponible
+2026-05-05 12:51:31.717 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Exercices non disponible
+2026-05-05 12:51:32.195 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Admin non disponible
+2026-05-05 12:51:43.220 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)
+2026-05-05 12:53:13.124 INFO  [Thread-3] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-05 12:53:13.146 ERROR [Thread-3] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-05 12:55:59.028 ERROR [Timer-9] o.example.service.MultiplayerService - Erreur mettreAJourStatutSalon : Table 'biosync.session_multijoueur' doesn't exist

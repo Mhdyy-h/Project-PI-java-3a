@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.input.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.LogsController"
+            prefWidth="1200" prefHeight="750"
+            style="-fx-background-color: #f0f2f8;">
+
+    <!-- ===== TOP HEADER (style utilisateurs.fxml) ===== -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-padding: 28 36 20 36; -fx-background-color: #f0f2f8;">
+
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Historique des Logs"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                <Label text="Suivi complet de l'activité sur la plateforme"
+                       style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+            </VBox>
+
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text=" Statistiques" onMouseClicked="#handleStatistiques"
+                        style="-fx-background-color: #4C6FFF; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(76,111,255,0.3), 8, 0, 0, 3);"/>
+                <Button text="⬇ Exporter PDF" onMouseClicked="#handleExportPdf"
+                        style="-fx-background-color: #7c3aed; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20 10 20; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(124,58,237,0.3), 8, 0, 0, 3);"/>
+                <Button text="← Retour" onMouseClicked="#handleRetour"
+                        style="-fx-background-color: white; -fx-text-fill: #6b7280; -fx-font-size: 13px; -fx-background-radius: 10; -fx-padding: 10 20 10 20; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 10; -fx-border-width: 1;"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ===== MAIN CONTENT (style utilisateurs.fxml) ===== -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 0 36 32 36;">
+
+            <!-- Search and Sort Bar (style utilisateurs.fxml exact) -->
+            <HBox spacing="24" alignment="CENTER_LEFT"
+                  style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 20 24 20 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);">
+
+                <!-- Search -->
+                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Label text="🔍" style="-fx-font-size: 12px;"/>
+                        <Label text="RECHERCHER" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                    </HBox>
+                    <TextField fx:id="searchField" promptText="Rechercher par utilisateur, email ou action..."
+                               style="-fx-background-color: #f8fafc; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10 14 10 14; -fx-font-size: 13px;"
+                               onKeyReleased="#handleSearch" prefHeight="40"/>
+                </VBox>
+
+                <!-- Vertical separator -->
+                <Separator orientation="VERTICAL" style="-fx-opacity: 0.3;"/>
+
+                <!-- Sort / Filter -->
+                <VBox spacing="8">
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Label text="📊" style="-fx-font-size: 12px;"/>
+                        <Label text="FILTRER PAR" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;"/>
+                    </HBox>
+                    <HBox spacing="8">
+                        <ComboBox fx:id="roleFilter" promptText="Rôle" prefWidth="120" prefHeight="38"
+                                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1; -fx-background-radius: 8; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                        <ComboBox fx:id="actionFilter" promptText="Action" prefWidth="120" prefHeight="38"
+                                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1; -fx-background-radius: 8; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                        <ComboBox fx:id="periodeFilter" promptText="Période" prefWidth="120" prefHeight="38"
+                                  style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1; -fx-background-radius: 8; -fx-padding: 8 12; -fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #374151;"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- Table (style utilisateurs.fxml) -->
+            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);">
+
+                <!-- Table Header -->
+                <HBox style="-fx-padding: 14 24 14 24; -fx-border-color: transparent transparent #f0f2f8 transparent; -fx-border-width: 0 0 1 0;">
+                    <Label text="DATE &amp; HEURE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="180"/>
+                    <Label text="UTILISATEUR" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="280"/>
+                    <Label text="RÔLE" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" prefWidth="150"/>
+                    <Label text="ACTION" style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #9ca3af;" HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Scrollable logs rows -->
+                <ScrollPane fitToWidth="true" prefHeight="420"
+                            style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+                    <VBox fx:id="logsContainer" spacing="0"/>
+                </ScrollPane>
+
+                <Label fx:id="totalLogsLabel" text="0 log(s) trouvé(s)"
+                       style="-fx-font-size: 12px; -fx-text-fill: #9ca3af; -fx-padding: 8 24 10 24;"/>
+            </VBox>
+
+        </VBox>
+    </center>
+</BorderPane>

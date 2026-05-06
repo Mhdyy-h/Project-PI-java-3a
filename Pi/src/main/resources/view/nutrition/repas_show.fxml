@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20"
+         xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="org.example.controller.RepasShowController"
+        style="-fx-background-color: #f0f2f8; -fx-padding: 24;">
+
+<Label fx:id="titreLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+
+<GridPane hgap="15" vgap="10">
+<Label text="Moment:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+<Label fx:id="momentLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+<Label text="Date/Heure:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+<Label fx:id="dateLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+</GridPane>
+
+<Separator/>
+
+<Label text="Aliments" style="-fx-font-weight: bold;"/>
+<VBox fx:id="alimentsContainer" spacing="5"/>
+
+<Separator/>
+
+<Label text="ChronoScore" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+<GridPane hgap="15" vgap="10">
+<Label text="Score total:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+<Label fx:id="scoreTotalLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-size: 20px;"/>
+
+<Label text="Appréciation:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+<Label fx:id="appreciationLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+<Label text="Timing score:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+<Label fx:id="timingScoreLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+<Label text="Nutrition score:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+<Label fx:id="nutritionScoreLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+<Label text="Équilibre bonus:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+<Label fx:id="equilibreScoreLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+<Label text="Interaction score:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+<Label fx:id="interactionScoreLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+<Label text="Risk penalty:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+<Label fx:id="riskLabel" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+</GridPane>
+
+<Label fx:id="messageRisqueLabel" wrapText="true" style="-fx-padding: 10 0 0 0;"/>
+
+<HBox alignment="CENTER_RIGHT">
+<Button text="Fermer" onAction="#fermer"
+        style="-fx-background-color: #4C6FFF; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10 20;"/>
+</HBox>
+
+</VBox>

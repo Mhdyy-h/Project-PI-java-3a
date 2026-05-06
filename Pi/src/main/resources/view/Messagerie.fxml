@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<VBox spacing="0" prefWidth="960" prefHeight="680"
+      style="-fx-background-color: #0d0d1a;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.MessagerieController">
+
+    <!-- HEADER -->
+    <HBox alignment="CENTER_LEFT" spacing="14"
+          style="-fx-background-color: #12122a;
+                 -fx-padding: 14 24;
+                 -fx-border-color: #2a2a4a;
+                 -fx-border-width: 0 0 1 0;">
+        <Button text="←" onAction="#retourMenu"
+                style="-fx-background-color: #23234a;
+                       -fx-text-fill: #aaaacc;
+                       -fx-background-radius: 8;
+                       -fx-padding: 7 14;
+                       -fx-cursor: hand;
+                       -fx-font-size: 14px;
+                       -fx-border-color: #3a3a6a;
+                       -fx-border-radius: 8;"/>
+        <Label text="💬"  style="-fx-font-size: 22px;"/>
+        <Label text="Messagerie"
+               style="-fx-font-size: 17px;
+                      -fx-font-weight: bold;
+                      -fx-text-fill: white;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Circle fx:id="statusDot" radius="6"
+                style="-fx-fill: #44cc88;"/>
+        <Label text="En ligne"
+               style="-fx-text-fill: #44cc88; -fx-font-size: 11px;"/>
+    </HBox>
+
+    <HBox VBox.vgrow="ALWAYS">
+
+        <!-- SIDEBAR CONTACTS -->
+        <VBox prefWidth="280" minWidth="280"
+              style="-fx-background-color: #12122a;
+                     -fx-border-color: #2a2a4a;
+                     -fx-border-width: 0 1 0 0;">
+
+            <HBox alignment="CENTER_LEFT" spacing="8"
+                  style="-fx-padding: 16 16 8 16;">
+                <Label text="🔍" style="-fx-font-size: 13px;"/>
+                <Label text="Contacts"
+                       style="-fx-text-fill: #7777aa;
+                              -fx-font-size: 12px;
+                              -fx-font-weight: bold;"/>
+            </HBox>
+
+            <!-- Séparateur -->
+            <HBox prefHeight="1" style="-fx-background-color: #2a2a4a;"/>
+
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                        style="-fx-background: transparent;
+                               -fx-background-color: transparent;
+                               -fx-border-color: transparent;">
+                <VBox fx:id="listeContacts" spacing="4"
+                      style="-fx-padding: 10 8;"/>
+            </ScrollPane>
+        </VBox>
+
+        <!-- ZONE CHAT -->
+        <VBox HBox.hgrow="ALWAYS"
+              style="-fx-background-color: #0d0d1a;">
+
+            <!-- Header contact actif -->
+            <HBox fx:id="headerContact" alignment="CENTER_LEFT" spacing="14"
+                  style="-fx-background-color: #12122a;
+                         -fx-padding: 14 20;
+                         -fx-border-color: #2a2a4a;
+                         -fx-border-width: 0 0 1 0;">
+                <StackPane>
+                    <Circle radius="22"
+                            style="-fx-fill: #23234a;
+                                   -fx-stroke: #7d3c98;
+                                   -fx-stroke-width: 2;"/>
+                    <Label text="👤" style="-fx-font-size: 18px;"/>
+                </StackPane>
+                <VBox spacing="3">
+                    <Label fx:id="lblNomContact" text="Sélectionnez un contact"
+                           style="-fx-text-fill: white;
+                                  -fx-font-weight: bold;
+                                  -fx-font-size: 14px;"/>
+                    <Label fx:id="lblStatutContact" text=""
+                           style="-fx-text-fill: #44cc88;
+                                  -fx-font-size: 11px;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Zone messages -->
+            <ScrollPane fx:id="scrollMessages" fitToWidth="true"
+                        VBox.vgrow="ALWAYS"
+                        style="-fx-background: transparent;
+                               -fx-background-color: transparent;
+                               -fx-border-color: transparent;">
+                <VBox fx:id="listeMessages" spacing="12"
+                      style="-fx-padding: 20;"/>
+            </ScrollPane>
+
+            <!-- Séparateur -->
+            <HBox prefHeight="1" style="-fx-background-color: #2a2a4a;"/>
+
+            <!-- Zone saisie -->
+            <HBox spacing="12" alignment="CENTER"
+                  style="-fx-background-color: #12122a;
+                         -fx-padding: 14 18;">
+                <TextArea fx:id="txtMessage"
+                          promptText="Écrire un message..."
+                          prefRowCount="2"
+                          HBox.hgrow="ALWAYS"
+                          style="-fx-control-inner-background: #1e1e3a;
+                                 -fx-text-fill: white;
+                                 -fx-prompt-text-fill: #555577;
+                                 -fx-border-color: #3a3a6a;
+                                 -fx-border-radius: 10;
+                                 -fx-background-radius: 10;
+                                 -fx-font-size: 13px;
+                                 -fx-padding: 8 12;"/>
+                <VBox spacing="8" alignment="CENTER">
+                    <Button text="📤" onAction="#envoyerMessage"
+                            style="-fx-background-color: linear-gradient(#9b59b6, #7d3c98);
+                                   -fx-text-fill: white;
+                                   -fx-background-radius: 12;
+                                   -fx-padding: 14 18;
+                                   -fx-cursor: hand;
+                                   -fx-font-size: 16px;
+                                   -fx-effect: dropshadow(gaussian, #7d3c9888, 8, 0, 0, 2);"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </HBox>
+</VBox>
