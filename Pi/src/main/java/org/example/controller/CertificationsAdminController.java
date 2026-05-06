@@ -1,12 +1,13 @@
 package org.example.controller;
 
+import org.example.model.User;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.example.model.CertificationRequest;
-import org.example.model.User;
 import org.example.service.CertificationService;
 import org.example.service.NavigationService;
 import org.example.service.ThemeService;
@@ -162,3 +163,4 @@ public class CertificationsAdminController {
         navigationService.navigateToDashboard(certsContainer, currentUser);
     }
 }
+

@@ -27,12 +27,20 @@ public class RateLimitingDAO {
                 "updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" +
                 ")";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-            System.out.println("[RateLimitingDAO] Table " + TABLE_NAME + " créée/vérifiée");
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            if (conn == null) {
+                System.err.println("[RateLimitingDAO] ⚠️  Connexion DB nulle - table non créée");
+                return;
+            }
+            
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute(sql);
+                System.out.println("[RateLimitingDAO] ✅ Table " + TABLE_NAME + " créée/vérifiée");
+            }
         } catch (SQLException e) {
-            System.err.println("[RateLimitingDAO] Erreur création table: " + e.getMessage());
+            System.err.println("[RateLimitingDAO] ❌ Erreur création table: " + e.getMessage());
         }
     }
 
@@ -44,18 +52,22 @@ public class RateLimitingDAO {
     public static Map<String, Object> getAttempts(String email) {
         String sql = "SELECT attempt_count, last_attempt FROM " + TABLE_NAME + " WHERE email = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            if (conn == null) return null;
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, email.toLowerCase().trim());
+                ResultSet rs = pstmt.executeQuery();
 
-            pstmt.setString(1, email.toLowerCase().trim());
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                Map<String, Object> result = new HashMap<>();
-                result.put("count", rs.getInt("attempt_count"));
-                Timestamp lastAttempt = rs.getTimestamp("last_attempt");
-                result.put("lastAttempt", lastAttempt != null ? lastAttempt.toInstant() : Instant.now());
-                return result;
+                if (rs.next()) {
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("count", rs.getInt("attempt_count"));
+                    Timestamp lastAttempt = rs.getTimestamp("last_attempt");
+                    result.put("lastAttempt", lastAttempt != null ? lastAttempt.toInstant() : Instant.now());
+                    return result;
+                }
             }
         } catch (SQLException e) {
             System.err.println("[RateLimitingDAO] Erreur getAttempts: " + e.getMessage());
@@ -74,19 +86,23 @@ public class RateLimitingDAO {
                 "VALUES (?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE attempt_count = ?, last_attempt = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            if (conn == null) return;
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                String normalizedEmail = email.toLowerCase().trim();
+                Timestamp timestamp = Timestamp.from(lastAttempt);
 
-            String normalizedEmail = email.toLowerCase().trim();
-            Timestamp timestamp = Timestamp.from(lastAttempt);
+                pstmt.setString(1, normalizedEmail);
+                pstmt.setInt(2, count);
+                pstmt.setTimestamp(3, timestamp);
+                pstmt.setInt(4, count);
+                pstmt.setTimestamp(5, timestamp);
 
-            pstmt.setString(1, normalizedEmail);
-            pstmt.setInt(2, count);
-            pstmt.setTimestamp(3, timestamp);
-            pstmt.setInt(4, count);
-            pstmt.setTimestamp(5, timestamp);
-
-            pstmt.executeUpdate();
+                pstmt.executeUpdate();
+            }
         } catch (SQLException e) {
             System.err.println("[RateLimitingDAO] Erreur saveAttempts: " + e.getMessage());
         }

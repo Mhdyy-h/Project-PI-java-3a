@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.example.model.User;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -309,3 +311,4 @@ public class AvatarService {
         }
     }
 }
+

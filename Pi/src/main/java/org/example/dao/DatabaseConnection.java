@@ -1,5 +1,7 @@
 package org.example.dao;
 
+import org.example.model.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

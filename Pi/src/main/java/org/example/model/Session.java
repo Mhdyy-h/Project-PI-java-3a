@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.model.User;
+
 public class Session {
     public static String role = "";
 

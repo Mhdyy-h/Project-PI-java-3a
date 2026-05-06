@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.model.User;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -330,3 +332,4 @@ public class AvatarCustomizationController implements Initializable {
         return buildAvatarUrl();
     }
 }
+

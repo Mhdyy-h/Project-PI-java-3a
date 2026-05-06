@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.example.model.User;
+
 import org.example.model.*;
 import org.example.dao.DatabaseConnection;
 

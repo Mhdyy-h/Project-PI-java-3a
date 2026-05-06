@@ -1,0 +1,109 @@
+2026-05-04 01:34:00.069 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)
+2026-05-04 16:33:23.409 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)
+2026-05-04 21:56:23.580 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)
+2026-05-04 21:56:59.962 INFO  [Thread-3] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:57:00.008 ERROR [Thread-3] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 21:57:07.798 INFO  [JavaFX Application Thread] o.example.service.ServiceQuizSession - Session démarrée : id=8, user=2, thème=Informatique
+2026-05-04 21:57:07.811 ERROR [Thread-4] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:07.843 ERROR [Thread-4] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:07.858 ERROR [Thread-4] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:07.866 ERROR [Thread-4] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:07.866 WARN  [Thread-4] org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 8
+2026-05-04 21:57:07.873 ERROR [Thread-4] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-04 21:57:07.875 INFO  [Thread-4] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-04 21:57:07.894 ERROR [Thread-4] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:07.904 ERROR [Thread-4] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:07.993 ERROR [Thread-4] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:08.008 ERROR [Thread-4] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:08.046 ERROR [Thread-4] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 21:57:08.047 ERROR [Thread-4] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-04 21:57:10.867 INFO  [Thread-5] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:57:10.872 ERROR [Thread-5] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 21:57:39.350 INFO  [Thread-6] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:57:39.367 ERROR [Thread-6] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 21:57:42.550 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Admin non disponible
+2026-05-04 21:57:59.290 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)
+2026-05-04 21:58:21.783 INFO  [Thread-3] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:58:21.839 ERROR [Thread-3] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 21:58:38.177 INFO  [Thread-4] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:58:38.201 ERROR [Thread-4] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 21:58:42.088 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Admin non disponible
+2026-05-04 21:58:44.269 INFO  [Thread-5] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:58:44.276 ERROR [Thread-5] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 21:58:47.228 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Séances non disponible
+2026-05-04 21:58:47.810 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Séances non disponible
+2026-05-04 21:58:48.398 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Séances non disponible
+2026-05-04 21:58:49.637 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Exercices non disponible
+2026-05-04 21:58:50.130 INFO  [JavaFX Application Thread] o.example.controller.MenuController - Module Admin non disponible
+2026-05-04 21:58:51.155 INFO  [Thread-6] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 21:58:51.164 ERROR [Thread-6] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 22:00:08.077 INFO  [JavaFX Application Thread] o.example.service.ServiceQuizSession - Session démarrée : id=9, user=2, thème=Informatique
+2026-05-04 22:00:08.095 ERROR [Thread-7] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.101 ERROR [Thread-7] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.106 ERROR [Thread-7] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.111 ERROR [Thread-7] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.112 WARN  [Thread-7] org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 9
+2026-05-04 22:00:08.122 ERROR [Thread-7] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-04 22:00:08.123 INFO  [Thread-7] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-04 22:00:08.133 ERROR [Thread-7] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.141 ERROR [Thread-7] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.148 ERROR [Thread-7] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.158 ERROR [Thread-7] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.168 ERROR [Thread-7] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:08.168 ERROR [Thread-7] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-04 22:00:11.044 ERROR [Thread-9] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.062 ERROR [Thread-9] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.077 ERROR [Thread-9] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.088 ERROR [Thread-9] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.089 WARN  [Thread-9] org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 9
+2026-05-04 22:00:11.099 ERROR [Thread-9] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-04 22:00:11.100 INFO  [Thread-9] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-04 22:00:11.112 ERROR [Thread-9] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.118 ERROR [Thread-9] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.130 ERROR [Thread-9] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.140 ERROR [Thread-9] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.148 ERROR [Thread-9] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:11.149 ERROR [Thread-9] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-04 22:00:11.945 WARN  [JavaFX Application Thread] org.example.service.AnomalyService - Session 9 — 1 anomalie(s) détectée(s) sur la question 2
+2026-05-04 22:00:13.838 ERROR [Thread-11] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.848 ERROR [Thread-11] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.857 ERROR [Thread-11] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.866 ERROR [Thread-11] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.867 WARN  [Thread-11] org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 9
+2026-05-04 22:00:13.879 ERROR [Thread-11] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-04 22:00:13.879 INFO  [Thread-11] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-04 22:00:13.890 ERROR [Thread-11] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.896 ERROR [Thread-11] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.902 ERROR [Thread-11] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.907 ERROR [Thread-11] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.914 ERROR [Thread-11] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:13.914 ERROR [Thread-11] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-04 22:00:14.462 ERROR [Thread-12] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.469 ERROR [Thread-12] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.477 ERROR [Thread-12] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.485 ERROR [Thread-12] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.485 WARN  [Thread-12] org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 9
+2026-05-04 22:00:14.493 ERROR [Thread-12] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-04 22:00:14.493 INFO  [Thread-12] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-04 22:00:14.500 ERROR [Thread-12] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.508 ERROR [Thread-12] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.517 ERROR [Thread-12] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.524 ERROR [Thread-12] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.530 ERROR [Thread-12] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:14.531 ERROR [Thread-12] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-04 22:00:15.257 INFO  [Thread-13] o.example.service.PredictionService - Pas assez d'historique pour l'utilisateur 2 (1 session(s))
+2026-05-04 22:00:15.266 ERROR [Thread-13] org.example.service.AdaptiveService - Erreur analyserThemes : Unknown column 'q.theme' in 'field list'
+2026-05-04 22:00:16.478 ERROR [Thread-14] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.485 ERROR [Thread-14] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.491 ERROR [Thread-14] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.494 ERROR [Thread-14] org.example.service.AdaptiveService - Erreur chercherQuestion : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.494 WARN  [Thread-14] org.example.service.AdaptiveService - Banque de questions épuisée pour le thème 'Informatique', session 9
+2026-05-04 22:00:16.501 ERROR [Thread-14] o.example.service.QuestionGenService - Erreur lecture cache : Table 'biosync.cache_question_ia' doesn't exist
+2026-05-04 22:00:16.501 INFO  [Thread-14] o.example.service.QuestionGenService - Fallback banque MySQL pour Informatique|2|QCM
+2026-05-04 22:00:16.505 ERROR [Thread-14] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.509 ERROR [Thread-14] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.514 ERROR [Thread-14] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.519 ERROR [Thread-14] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.522 ERROR [Thread-14] o.example.service.QuestionGenService - Erreur fallback MySQL : Unknown column 'niveau_difficulte' in 'where clause'
+2026-05-04 22:00:16.522 ERROR [Thread-14] o.example.service.QuestionGenService - Aucune question disponible pour Informatique|2|QCM — banque vide ?
+2026-05-04 22:01:01.612 INFO  [JavaFX Application Thread] o.example.service.MonitoringService - Sentry désactivé (sentry.dsn non configuré)

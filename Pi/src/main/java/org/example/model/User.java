@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.model.User;
+
 public class User {
     private int id;
     private String nomComplet;
@@ -71,4 +73,6 @@ public class User {
     public String toString() {
         return "User{id=" + id + ", nomComplet='" + nomComplet + "', email='" + email + "'}";
     }
+
+
 }

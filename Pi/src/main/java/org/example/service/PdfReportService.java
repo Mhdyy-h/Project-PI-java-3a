@@ -1,8 +1,10 @@
 package org.example.service;
 
+import org.example.model.User;
+
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
-import org.example.model.User;
+
 import java.awt.Color;
 
 import java.io.File;
@@ -174,3 +176,4 @@ public class PdfReportService {
         return new Color(124, 58, 237);
     }
 }
+

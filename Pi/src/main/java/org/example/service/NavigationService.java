@@ -213,7 +213,66 @@ public class NavigationService {
     }
 
     public void navigateToMental(Node sourceNode, User currentUser) {
-        // sera complété quand QuizController sera intégré
+        navigateToQuizManager(sourceNode, currentUser);
+    }
+
+    public void navigateToQuizManager(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/quiz_manager.fxml", "BioSync - Gestion Quiz", 1200, 750, ctrl -> {
+            if (ctrl instanceof QuizController) {
+                ((QuizController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    public void navigateToQuizForm(Node sourceNode, User currentUser, org.example.model.Quiz quiz) {
+        navigateFrom(sourceNode, "/view/quiz_form.fxml", "BioSync - " + (quiz == null ? "Nouveau Quiz" : "Modifier Quiz"), 700, 800, ctrl -> {
+            if (ctrl instanceof QuizFormController) {
+                ((QuizFormController) ctrl).setCurrentUser(currentUser);
+                if (quiz != null) {
+                    ((QuizFormController) ctrl).setQuiz(quiz);
+                }
+            }
+        });
+    }
+
+    public void navigateToQuestionManager(Node sourceNode, User currentUser, org.example.model.Quiz quiz) {
+        navigateFrom(sourceNode, "/view/question_manager.fxml", "BioSync - Gestion Questions", 1200, 750, ctrl -> {
+            if (ctrl instanceof QuestionManagerController) {
+                ((QuestionManagerController) ctrl).setCurrentUser(currentUser);
+                ((QuestionManagerController) ctrl).setQuiz(quiz);
+            }
+        });
+    }
+
+    public void navigateToQuizPlayer(Node sourceNode, User currentUser, org.example.model.Quiz quiz) {
+        navigateFrom(sourceNode, "/view/quiz_player.fxml", "BioSync - Quiz", 900, 700, ctrl -> {
+            if (ctrl instanceof QuizPlayerController) {
+                ((QuizPlayerController) ctrl).setCurrentUser(currentUser);
+                if (quiz != null) {
+                    ((QuizPlayerController) ctrl).setQuiz(quiz);
+                }
+            }
+        });
+    }
+
+    public void navigateToVueUtilisateur(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/vue_utilisateur.fxml", "BioSync - Quiz Patient", 1100, 750, ctrl -> {
+            if (ctrl instanceof VueUtilisateurController) {
+                ((VueUtilisateurController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    public void navigateToAiChat(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/ai_chat.fxml", "BioSync - Assistant IA", 800, 650, ctrl -> {
+            if (ctrl instanceof AiChatController) {
+                ((AiChatController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    public void navigateToDashboardCognitif(Node sourceNode) {
+        navigateFrom(sourceNode, "/view/dashboard_cognitif.fxml", "BioSync - Dashboard Cognitif", 1200, 750);
     }
 
     public static class NavigationException extends RuntimeException {

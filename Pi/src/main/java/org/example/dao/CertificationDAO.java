@@ -1,5 +1,7 @@
 package org.example.dao;
 
+import org.example.model.User;
+
 import org.example.DatabaseConnection;
 import org.example.model.CertificationRequest;
 
@@ -194,3 +196,4 @@ public class CertificationDAO {
         try { return rs.getString(col); } catch (SQLException e) { return ""; }
     }
 }
+

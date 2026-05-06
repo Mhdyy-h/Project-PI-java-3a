@@ -1,0 +1,407 @@
+/* ==================== STYLES GLOBAUX ==================== */
+
+.root {
+    -fx-font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ==================== STATUS LABELS ==================== */
+.status-success {
+    -fx-font-size: 12px;
+    -fx-text-fill: #10b981;
+}
+
+.status-error {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ef4444;
+}
+
+.status-warning {
+    -fx-font-size: 12px;
+    -fx-text-fill: #f59e0b;
+}
+
+/* ==================== USER ROWS ==================== */
+.user-row {
+    -fx-padding: 14 24 14 24;
+    -fx-border-color: transparent transparent #f0f2f8 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.user-row-default {
+    -fx-background-color: white;
+}
+
+.user-row-alt {
+    -fx-background-color: #fafbfd;
+}
+
+/* ==================== USER INFO ==================== */
+.user-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.user-email {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9ca3af;
+}
+
+.user-date {
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+}
+
+/* ==================== AVATAR ==================== */
+.user-avatar {
+    -fx-background-radius: 50%;
+}
+
+.user-avatar-circle {
+    -fx-fill: #7c3aed;
+}
+
+.avatar-admin {
+    -fx-fill: #ef4444;
+}
+
+.avatar-coach {
+    -fx-fill: #10b981;
+}
+
+.avatar-specialiste {
+    -fx-fill: #f59e0b;
+}
+
+.avatar-default {
+    -fx-fill: #7c3aed;
+}
+
+.user-avatar-initials {
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* ==================== ROLE BADGES ==================== */
+.role-badge {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12 4 12;
+    -fx-text-fill: white;
+}
+
+.role-admin {
+    -fx-background-color: #ef4444;
+}
+
+.role-coach {
+    -fx-background-color: #10b981;
+}
+
+.role-specialiste {
+    -fx-background-color: #f59e0b;
+}
+
+.role-utilisateur {
+    -fx-background-color: #6b7280;
+}
+
+/* ==================== SCORE ==================== */
+.score-star {
+    -fx-font-size: 13px;
+    -fx-text-fill: #f59e0b;
+}
+
+.score-value {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+/* ==================== ACTION BUTTONS ==================== */
+.action-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+    -fx-padding: 4 8 4 8;
+}
+
+.action-view {
+    -fx-font-size: 16px;
+}
+
+.action-edit {
+    -fx-text-fill: #f59e0b;
+}
+
+.action-delete {
+    -fx-text-fill: #ef4444;
+}
+
+/* ==================== SORT BUTTONS ==================== */
+.sort-active {
+    -fx-background-color: #4C6FFF;
+    -fx-text-fill: white;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.sort-normal {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+}
+
+/* ==================== CARDS ==================== */
+.card-clickable {
+    -fx-cursor: hand;
+}
+
+.card-validations-pro {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 32 24 28 24;
+    -fx-border-color: #d1fae5;
+    -fx-border-width: 2;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(6,182,212,0.08), 10, 0, 0, 2);
+}
+
+/* ==================== NAVIGATION ==================== */
+.nav-item {
+    -fx-cursor: hand;
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 8;
+}
+
+.nav-item:hover {
+    -fx-background-color: #f0f2f8;
+}
+
+/* ==================== BUTTONS ==================== */
+.btn-primary {
+    -fx-background-color: linear-gradient(to right, #3498db, #2ecc71);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 25;
+    -fx-cursor: hand;
+}
+
+.btn-secondary {
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+/* ==================== FORM ELEMENTS ==================== */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db;
+}
+
+/* ==================== LOGIN ==================== */
+.login-container {
+    -fx-padding: 40;
+}
+
+.login-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+/* ==================== DASHBOARD RECENT USERS ==================== */
+.recent-user-row {
+    -fx-padding: 14 16 14 16;
+    -fx-border-color: transparent transparent #f8fafc transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.recent-user-row-default {
+    -fx-background-color: white;
+}
+
+.recent-user-row-alt {
+    -fx-background-color: #fafbfd;
+}
+
+.recent-user-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.recent-user-email {
+    -fx-font-size: 13px;
+    -fx-text-fill: #4C6FFF;
+}
+
+.role-badge-small {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12 4 12;
+    -fx-text-fill: white;
+}
+
+.role-badge-admin {
+    -fx-background-color: #ef4444;
+}
+
+.role-badge-coach {
+    -fx-background-color: #10b981;
+}
+
+.role-badge-specialiste {
+    -fx-background-color: #f59e0b;
+}
+
+.role-badge-utilisateur {
+    -fx-background-color: #6b7280;
+}
+
+/* ==================== CERTIFICATIONS ==================== */
+.cert-row {
+    -fx-padding: 14 24;
+    -fx-border-color: transparent transparent #f0f2f8 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.cert-row-default {
+    -fx-background-color: white;
+}
+
+.cert-row-alt {
+    -fx-background-color: #fafbfd;
+}
+
+.cert-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.cert-email {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9ca3af;
+}
+
+.cert-motivation {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+
+.cert-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #374151;
+}
+
+.spec-badge {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12;
+    -fx-text-fill: white;
+}
+
+.spec-badge-coach {
+    -fx-background-color: #10b981;
+}
+
+.spec-badge-specialiste {
+    -fx-background-color: #f59e0b;
+}
+
+.statut-badge {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 10;
+}
+
+.statut-en-attente {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+
+.statut-accepte {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+}
+
+.statut-refuse {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+}
+
+.statut-unknown {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #6b7280;
+}
+
+.btn-view-pdf {
+    -fx-background-color: #f3f4f6;
+    -fx-text-fill: #374151;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+}
+
+.btn-accept {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}
+
+.btn-refuse {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+}
+
+.lbl-treated {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+    -fx-text-fill: #2c3e50;
+}
+
+.login-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.login-hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666;
+}
