@@ -1,7 +1,5 @@
 package org.example.service;
 
-import org.example.model.User;
-
 public class UserService {
 
     private static UserService instance;

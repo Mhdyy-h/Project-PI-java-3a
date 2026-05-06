@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="0"
+      prefWidth="700" prefHeight="600"
+      style="-fx-background-color: #0f0f1a;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.ProfilProgressionController">
+
+    <!-- BOUTON RETOUR -->
+    <Button text="← Retour au Dashboard"
+            onAction="#retourDashboard"
+            style="-fx-background-color: #2a2a2a;
+                   -fx-text-fill: #aaaaaa;
+                   -fx-font-size: 12px;
+                   -fx-cursor: hand;
+                   -fx-background-radius: 8;
+                   -fx-padding: 6 14;
+                   -fx-margin: 16;"/>
+
+    <!-- TOUT LE CONTENU DANS UN SEUL SCROLLPANE -->
+    <ScrollPane fitToWidth="true"
+                VBox.vgrow="ALWAYS"
+                style="-fx-background-color: transparent;
+                       -fx-background: transparent;
+                       -fx-border-color: transparent;">
+
+        <VBox spacing="20" style="-fx-padding: 30;">
+
+            <!-- HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label fx:id="lblNomUser"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+                <Label fx:id="lblNiveau"
+                       style="-fx-font-size: 16px; -fx-text-fill: #f0c040;
+                              -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblXP"
+                       style="-fx-font-size: 15px; -fx-text-fill: #00d4ff;"/>
+            </HBox>
+
+            <Separator/>
+
+            <!-- STATS -->
+            <HBox spacing="30">
+                <Label fx:id="lblTotalSeances"
+                       style="-fx-font-size: 14px; -fx-text-fill: #cccccc;"/>
+                <Label fx:id="lblSerie"
+                       style="-fx-font-size: 14px; -fx-text-fill: #ff6b35;"/>
+            </HBox>
+
+            <!-- BARRE DE PROGRESSION -->
+            <VBox spacing="8">
+                <Label text="Progression vers le niveau suivant"
+                       style="-fx-text-fill: #aaaaaa; -fx-font-size: 13px;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <ProgressBar fx:id="progressionBar"
+                                 prefWidth="400" prefHeight="20"
+                                 style="-fx-accent: #f0c040;"/>
+                    <Label fx:id="lblPourcentage"
+                           style="-fx-text-fill: #f0c040; -fx-font-weight: bold;"/>
+                </HBox>
+            </VBox>
+
+            <!-- MESSAGE MOTIVANT -->
+            <Label fx:id="lblMessage"
+                   wrapText="true"
+                   style="-fx-font-size: 13px; -fx-text-fill: #00d4ff;
+                          -fx-font-style: italic;
+                          -fx-background-color: #1a1a3e;
+                          -fx-padding: 12; -fx-background-radius: 8;"/>
+
+            <!-- SECTION EXPLICATIVE -->
+            <VBox spacing="12"
+                  style="-fx-background-color: #1a1a2e;
+                         -fx-background-radius: 12;
+                         -fx-padding: 16;">
+
+                <Label text="📖 Comment fonctionne votre progression ?"
+                       style="-fx-font-size: 14px; -fx-font-weight: bold;
+                              -fx-text-fill: #f0c040;"/>
+
+                <!-- Niveaux -->
+                <Label text="🎯 Niveaux — basés sur vos séances complétées"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold;
+                              -fx-text-fill: #cccccc;"/>
+                <FlowPane hgap="8" vgap="6">
+                    <Label text="🌱 0-4 Débutant"
+                           style="-fx-background-color: #2a2a2a; -fx-text-fill: #aaaaaa;
+                  -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11px;"/>
+                    <Label text="⚡ 5-14 Intermédiaire"
+                           style="-fx-background-color: #2a2a2a; -fx-text-fill: #aaaaaa;
+                  -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11px;"/>
+                    <Label text="🔥 15-29 Avancé"
+                           style="-fx-background-color: #2a2a2a; -fx-text-fill: #aaaaaa;
+                  -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11px;"/>
+                    <Label text="💎 30-49 Expert"
+                           style="-fx-background-color: #2a2a2a; -fx-text-fill: #aaaaaa;
+                  -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11px;"/>
+                    <Label text="🏆 50+ Élite"
+                           style="-fx-background-color: #2a2a2a; -fx-text-fill: #f0c040;
+                  -fx-padding: 4 10; -fx-background-radius: 20; -fx-font-size: 11px;"/>
+                </FlowPane>
+
+                <Separator style="-fx-background-color: #2a2a3e;"/>
+
+                <!-- XP -->
+                <Label text="✨ Points XP — comment les gagner ?"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold;
+                              -fx-text-fill: #cccccc;"/>
+                <VBox spacing="3">
+                    <Label text="🏃 +10 XP par séance complétée"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="🔥 +5 XP par jour de série consécutive"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="⚡ +15 XP par séance intensive (plus de 45 min)"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                </VBox>
+
+                <Separator style="-fx-background-color: #2a2a3e;"/>
+
+                <!-- Badges -->
+                <Label text="🏅 Badges — conditions pour débloquer"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold;
+                              -fx-text-fill: #cccccc;"/>
+                <VBox spacing="3">
+                    <Label text="🎯 Première Séance  →  1 séance complétée"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="🔥 Série de 3  →  3 jours consécutifs"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="💪 Semaine Parfaite  →  7 jours consécutifs"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="🌈 Athlète Complet  →  5 sports différents"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="💯 100 Séances  →  100 séances complétées"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="📅 Régularité  →  30 jours consécutifs"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="⚡ Haute Intensité  →  10 séances de plus de 45 min"
+                           style="-fx-font-size: 11px; -fx-text-fill: #aaaaaa;"/>
+                </VBox>
+
+            </VBox>
+
+            <Separator/>
+
+            <!-- BADGES -->
+            <Label text="🏅 Mes Badges"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;
+                          -fx-text-fill: white;"/>
+
+            <FlowPane fx:id="badgesContainer"
+                      hgap="15" vgap="15"
+                      style="-fx-background-color: transparent;
+                             -fx-padding: 10;"/>
+
+        </VBox>
+    </ScrollPane>
+
+</VBox>

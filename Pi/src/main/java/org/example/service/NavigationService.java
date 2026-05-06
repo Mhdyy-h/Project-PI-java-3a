@@ -34,6 +34,29 @@ public class NavigationService {
     // CORE NAVIGATION ENGINE (Overloaded to handle 5 or 6 args)
     // ============================================================
 
+    public void navigateTo(String fxmlPath, String title, double width, double height) {
+        navigateTo(fxmlPath, title, width, height, null);
+    }
+
+    // Helper for direct navigation if no source node is available (via mainStage)
+    public void navigateTo(String fxmlPath, String title, double width, double height, Consumer<Object> setup) {
+        if (mainStage == null) return;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            if (setup != null) setup.accept(loader.getController());
+            Stage stage = mainStage != null ? mainStage : new Stage();
+            Scene scene = new Scene(root, width, height);
+            themeService.registerScene(scene);
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new NavigationException("Failed to navigate to " + fxmlPath, e);
+        }
+    }
+
     /**
      * Standard navigation with 5 arguments (No controller setup)
      */
@@ -66,7 +89,6 @@ public class NavigationService {
             stage.setTitle(title);
             stage.centerOnScreen();
             stage.show();
-
         } catch (IOException e) {
             System.err.println("❌ Navigation Error [" + fxmlPath + "]: " + e.getMessage());
             e.printStackTrace();
@@ -77,20 +99,52 @@ public class NavigationService {
     // SPECIFIC ROUTES
     // ============================================================
 
+    // ✅ Après login → toujours dashboard.fxml
+    public void navigateToDashboard(Node sourceNode, User currentUser) {
+        boolean isAdmin = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_ADMIN");
+        boolean isCoach = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_COACH");
+
+        if (isAdmin) {
+            org.example.model.Session.role = "ADMIN";
+        } else if (isCoach) {
+            org.example.model.Session.role = "COACH";
+        } else {
+            org.example.model.Session.role = "USER";
+        }
+
+        navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Dashboard", 1100, 700, ctrl -> {
+            if (ctrl instanceof AdminController c)
+                c.setUser(currentUser);
+        });
+    }
+
+    // ✅ Depuis bouton Sports → selon le rôle
+    public void navigateToSports(Node sourceNode, User currentUser) {
+        boolean isCoach = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_COACH");
+
+        if (isCoach) {
+            navigateFrom(sourceNode, "/view/MenuCoach.fxml", "BioSync - Espace Coach", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.MenuCoachController c)
+                    c.setCurrentUser(currentUser);
+            });
+        } else {
+            navigateFrom(sourceNode, "/view/MenuUser.fxml", "BioSync - Dashboard User", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.MenuUserController c)
+                    c.setCurrentUser(currentUser);
+            });
+        }
+    }
+
+    // ✅ INTACT — travail de tes amis
     public void navigateToLogin(Node sourceNode) {
         navigateFrom(sourceNode, "/view/login.fxml", "BioSync - Connexion", 480, 680);
     }
 
     public void navigateToForgotPassword(Node sourceNode) {
         navigateFrom(sourceNode, "/view/forgot_password.fxml", "BioSync - Mot de passe oublié", 480, 680);
-    }
-
-    public void navigateToDashboard(Node sourceNode, User currentUser) {
-        navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Administration", 1100, 700, ctrl -> {
-            if (ctrl instanceof AdminController) {
-                ((AdminController) ctrl).setUser(currentUser);
-            }
-        });
     }
 
     public void navigateToUtilisateurs(Node sourceNode, User currentUser) {
@@ -158,18 +212,13 @@ public class NavigationService {
         }
     }
 
-    // Helper for direct navigation if no source node is available (via mainStage)
-    public void navigateTo(String fxmlPath, String title, double width, double height, Consumer<Object> setup) {
-        if (mainStage == null) return;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            if (setup != null) setup.accept(loader.getController());
-            Scene scene = new Scene(root, width, height);
-            themeService.registerScene(scene);
-            mainStage.setScene(scene);
-            mainStage.setTitle(title);
-            mainStage.show();
-        } catch (IOException e) { e.printStackTrace(); }
+    public void navigateToMental(Node sourceNode, User currentUser) {
+        // sera complété quand QuizController sera intégré
+    }
+
+    public static class NavigationException extends RuntimeException {
+        public NavigationException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 }

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="0"
+      prefWidth="1100" prefHeight="700"
+      style="-fx-background-color: #0f0f1a;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.IndiceFormeController">
+
+    <Button text="← Retour au Dashboard"
+            onAction="#retourDashboard"
+            style="-fx-background-color: #2a2a2a; -fx-text-fill: #aaaaaa;
+                   -fx-font-size: 12px; -fx-cursor: hand;
+                   -fx-background-radius: 8; -fx-padding: 6 14;"/>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                style="-fx-background: transparent;
+                       -fx-background-color: transparent;
+                       -fx-border-color: transparent;">
+        <VBox spacing="24" style="-fx-padding: 30;">
+
+            <!-- TITRE -->
+            <VBox spacing="4">
+                <Label text="❤️ Indice de Forme Physique"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+                <Label text="Score global calculé sur 4 critères scientifiques"
+                       style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+            </VBox>
+
+            <!-- SCORE PRINCIPAL -->
+            <VBox fx:id="carteScore" spacing="10" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="20">
+                    <Label fx:id="lblEmoji"
+                           style="-fx-font-size: 56px;"/>
+                    <VBox alignment="CENTER" spacing="4">
+                        <Label fx:id="lblScore"
+                               style="-fx-font-size: 72px;
+                                      -fx-font-weight: bold;"/>
+                        <Label text="/ 100"
+                               style="-fx-font-size: 18px;
+                                      -fx-text-fill: #888888;"/>
+                    </VBox>
+                    <VBox alignment="CENTER_LEFT" spacing="4">
+                        <Label fx:id="lblNiveau"
+                               style="-fx-font-size: 22px;
+                                      -fx-font-weight: bold;"/>
+                        <Label text="Indice de Forme"
+                               style="-fx-font-size: 13px;
+                                      -fx-text-fill: #888888;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- 4 CRITÈRES -->
+            <VBox spacing="12"
+                  style="-fx-background-color: #1a1a2e;
+                         -fx-background-radius: 12; -fx-padding: 20;">
+                <Label text="📊 Détail des 4 critères"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;
+                              -fx-text-fill: #f0c040;"/>
+
+                <!-- Régularité -->
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="📅 Régularité"
+                           prefWidth="150"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #cccccc;"/>
+                    <Label fx:id="lblBarreReg"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #44cc88;
+                                  -fx-font-family: monospace;"/>
+                    <Label fx:id="lblScoreReg"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #f0c040;
+                                  -fx-font-weight: bold;"/>
+                </HBox>
+
+                <!-- Intensité -->
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="⚡ Intensité"
+                           prefWidth="150"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #cccccc;"/>
+                    <Label fx:id="lblBarreInt"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #44cc88;
+                                  -fx-font-family: monospace;"/>
+                    <Label fx:id="lblScoreInt"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #f0c040;
+                                  -fx-font-weight: bold;"/>
+                </HBox>
+
+                <!-- Consistance -->
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="💪 Consistance"
+                           prefWidth="150"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #cccccc;"/>
+                    <Label fx:id="lblBarreCons"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #44cc88;
+                                  -fx-font-family: monospace;"/>
+                    <Label fx:id="lblScoreCons"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #f0c040;
+                                  -fx-font-weight: bold;"/>
+                </HBox>
+
+                <!-- Récupération -->
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="😴 Récupération"
+                           prefWidth="150"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #cccccc;"/>
+                    <Label fx:id="lblBarreRec"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #44cc88;
+                                  -fx-font-family: monospace;"/>
+                    <Label fx:id="lblScoreRec"
+                           style="-fx-font-size: 13px;
+                                  -fx-text-fill: #f0c040;
+                                  -fx-font-weight: bold;"/>
+                </HBox>
+            </VBox>
+
+            <!-- STATS BRUTES -->
+            <HBox spacing="16">
+                <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 16;">
+                    <Label fx:id="lblTotalSeances"
+                           style="-fx-font-size: 12px;
+                                  -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 16;">
+                    <Label fx:id="lblSeances7j"
+                           style="-fx-font-size: 12px;
+                                  -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 16;">
+                    <Label fx:id="lblDureeMoy"
+                           style="-fx-font-size: 12px;
+                                  -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 16;">
+                    <Label fx:id="lblSerie"
+                           style="-fx-font-size: 12px;
+                                  -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+            </HBox>
+
+            <!-- CONSEIL -->
+            <VBox spacing="10"
+                  style="-fx-background-color: #1a1a2e;
+                         -fx-background-radius: 12; -fx-padding: 20;">
+                <Label text="💡 Conseil pour améliorer votre score"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;
+                              -fx-text-fill: #f0c040;"/>
+                <Label fx:id="lblConseil" wrapText="true"
+                       style="-fx-font-size: 13px; -fx-text-fill: #cccccc;
+                              -fx-line-spacing: 4;"/>
+            </VBox>
+
+            <!-- EXPLICATION -->
+            <VBox spacing="12"
+                  style="-fx-background-color: #1a1a2e;
+                         -fx-background-radius: 12; -fx-padding: 20;">
+                <Label text="📖 Comment est calculé votre score ?"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;
+                              -fx-text-fill: #f0c040;"/>
+                <VBox spacing="6">
+                    <Label text="📅 Régularité (25 pts) — fréquence hebdomadaire idéale : 3 séances/semaine"
+                           style="-fx-font-size: 12px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="⚡ Intensité (25 pts) — durée idéale par séance : 45 à 60 minutes"
+                           style="-fx-font-size: 12px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="💪 Consistance (25 pts) — total de séances + série consécutive"
+                           style="-fx-font-size: 12px; -fx-text-fill: #aaaaaa;"/>
+                    <Label text="😴 Récupération (25 pts) — repos idéal : 1 à 2 jours entre séances"
+                           style="-fx-font-size: 12px; -fx-text-fill: #aaaaaa;"/>
+                </VBox>
+                <Separator style="-fx-background-color: #2a2a3e;"/>
+                <HBox spacing="16">
+                    <Label text="💔 0-20 Critique"
+                           style="-fx-background-color: #2a2a2a;
+                                  -fx-text-fill: #ff4444;
+                                  -fx-padding: 4 10;
+                                  -fx-background-radius: 20;
+                                  -fx-font-size: 11px;"/>
+                    <Label text="❤️ 21-40 Faible"
+                           style="-fx-background-color: #2a2a2a;
+                                  -fx-text-fill: #ff8800;
+                                  -fx-padding: 4 10;
+                                  -fx-background-radius: 20;
+                                  -fx-font-size: 11px;"/>
+                    <Label text="🧡 41-60 Moyen"
+                           style="-fx-background-color: #2a2a2a;
+                                  -fx-text-fill: #f0c040;
+                                  -fx-padding: 4 10;
+                                  -fx-background-radius: 20;
+                                  -fx-font-size: 11px;"/>
+                    <Label text="💚 61-80 Bon"
+                           style="-fx-background-color: #2a2a2a;
+                                  -fx-text-fill: #44cc88;
+                                  -fx-padding: 4 10;
+                                  -fx-background-radius: 20;
+                                  -fx-font-size: 11px;"/>
+                    <Label text="💎 81-100 Excellent"
+                           style="-fx-background-color: #2a2a2a;
+                                  -fx-text-fill: #00d4ff;
+                                  -fx-padding: 4 10;
+                                  -fx-background-radius: 20;
+                                  -fx-font-size: 11px;"/>
+                </HBox>
+            </VBox>
+
+        </VBox>
+    </ScrollPane>
+</VBox>

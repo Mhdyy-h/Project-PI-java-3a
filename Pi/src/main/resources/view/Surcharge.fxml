@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="0"
+      prefWidth="1100" prefHeight="700"
+      style="-fx-background-color: #0f0f1a;"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.controller.SurchargeController">
+
+    <!-- BOUTON RETOUR -->
+    <Button text="← Retour au Dashboard"
+            onAction="#retourDashboard"
+            style="-fx-background-color: #2a2a2a;
+                   -fx-text-fill: #aaaaaa;
+                   -fx-font-size: 12px;
+                   -fx-cursor: hand;
+                   -fx-background-radius: 8;
+                   -fx-padding: 6 14;
+                   -fx-margin: 16;"/>
+
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                style="-fx-background: transparent;
+                       -fx-background-color: transparent;
+                       -fx-border-color: transparent;">
+        <VBox spacing="24" style="-fx-padding: 30;">
+
+            <!-- TITRE PAGE -->
+            <VBox spacing="4">
+                <Label text="⚡ Analyse de Surcharge"
+                       style="-fx-font-size: 26px; -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+                <Label text="Surveillance intelligente de votre charge d'entraînement"
+                       style="-fx-font-size: 13px; -fx-text-fill: #888888;"/>
+            </VBox>
+
+            <!-- CARTE ALERTE PRINCIPALE -->
+            <VBox fx:id="carteAlerte" spacing="12">
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <Label fx:id="lblEmoji"
+                           style="-fx-font-size: 48px;"/>
+                    <VBox spacing="4">
+                        <Label fx:id="lblTitre"
+                               style="-fx-font-size: 20px; -fx-font-weight: bold;
+                                      -fx-text-fill: white;"/>
+                        <Label fx:id="lblMessage" wrapText="true"
+                               style="-fx-font-size: 13px; -fx-text-fill: #cccccc;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- STATS EN GRILLE -->
+            <HBox spacing="16">
+                <VBox HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 20;">
+                    <Label fx:id="lblSeances7j"
+                           style="-fx-font-size: 13px; -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 20;">
+                    <Label fx:id="lblSeances30j"
+                           style="-fx-font-size: 13px; -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 20;">
+                    <Label fx:id="lblDureeMoy"
+                           style="-fx-font-size: 13px; -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS" spacing="8" alignment="CENTER"
+                      style="-fx-background-color: #1a1a2e;
+                             -fx-background-radius: 12; -fx-padding: 20;">
+                    <Label fx:id="lblJoursRepos"
+                           style="-fx-font-size: 13px; -fx-text-fill: #cccccc;
+                                  -fx-font-weight: bold;"/>
+                </VBox>
+            </HBox>
+
+            <!-- CONSEIL PERSONNALISÉ -->
+            <VBox spacing="10"
+                  style="-fx-background-color: #1a1a2e;
+                         -fx-background-radius: 12; -fx-padding: 20;">
+                <Label text="💡 Conseil personnalisé"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;
+                              -fx-text-fill: #f0c040;"/>
+                <Label fx:id="lblConseil" wrapText="true"
+                       style="-fx-font-size: 13px; -fx-text-fill: #cccccc;
+                              -fx-line-spacing: 4;"/>
+            </VBox>
+
+            <!-- EXPLICATION DES NIVEAUX -->
+            <VBox spacing="12"
+                  style="-fx-background-color: #1a1a2e;
+                         -fx-background-radius: 12; -fx-padding: 20;">
+                <Label text="📖 Comprendre les niveaux d'alerte"
+                       style="-fx-font-size: 15px; -fx-font-weight: bold;
+                              -fx-text-fill: #f0c040;"/>
+                <VBox spacing="8">
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="🔴" style="-fx-font-size: 18px;"/>
+                        <VBox spacing="2">
+                            <Label text="Surcharge Critique"
+                                   style="-fx-font-weight: bold;
+                                          -fx-text-fill: #ff4444; -fx-font-size: 12px;"/>
+                            <Label text="6+ séances/semaine + durée &gt; 60 min + 0 repos"
+                                   style="-fx-text-fill: #888888; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="🟠" style="-fx-font-size: 18px;"/>
+                        <VBox spacing="2">
+                            <Label text="Attention Surcharge"
+                                   style="-fx-font-weight: bold;
+                                          -fx-text-fill: #ff8800; -fx-font-size: 12px;"/>
+                            <Label text="5+ séances/semaine ou 4 séances longues"
+                                   style="-fx-text-fill: #888888; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="🟡" style="-fx-font-size: 18px;"/>
+                        <VBox spacing="2">
+                            <Label text="Repos Conseillé"
+                                   style="-fx-font-weight: bold;
+                                          -fx-text-fill: #f0c040; -fx-font-size: 12px;"/>
+                            <Label text="4 séances/semaine sans jour de repos"
+                                   style="-fx-text-fill: #888888; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="🟢" style="-fx-font-size: 18px;"/>
+                        <VBox spacing="2">
+                            <Label text="Rythme Optimal"
+                                   style="-fx-font-weight: bold;
+                                          -fx-text-fill: #44cc88; -fx-font-size: 12px;"/>
+                            <Label text="1 à 3 séances/semaine — équilibre parfait"
+                                   style="-fx-text-fill: #888888; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="12" alignment="CENTER_LEFT">
+                        <Label text="🔵" style="-fx-font-size: 18px;"/>
+                        <VBox spacing="2">
+                            <Label text="Activité Insuffisante"
+                                   style="-fx-font-weight: bold;
+                                          -fx-text-fill: #4488ff; -fx-font-size: 12px;"/>
+                            <Label text="0 séance cette semaine"
+                                   style="-fx-text-fill: #888888; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+        </VBox>
+    </ScrollPane>
+</VBox>
