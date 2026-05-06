@@ -174,6 +174,11 @@ public class AdminController {
     private void handleNavCertifications(MouseEvent event) {
         navigationService.navigateToCertifications(adminNameLabel, currentUser);
     }
+    @FXML
+    private void handleNavCommunity(MouseEvent event) {
+        // Navigates to the community view using the shared navigation service
+        navigationService.navigateToCommunity(adminNameLabel, currentUser);
+    }
 
     @FXML
     private void handleGererMembres(MouseEvent event) {

@@ -119,11 +119,14 @@
                     <Label text="IA Mentale" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
                 </HBox>
 
-                <!-- Community - NOT clickable -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavCommunity">
                     <Label text="👥" style="-fx-font-size: 14px;"/>
-                    <Label text="Community" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <VBox spacing="1">
+                        <Label text="Community" style="-fx-font-size: 13px; -fx-text-fill: #10b981; -fx-font-weight: bold;"/>
+                        <Label text="Groupes &amp; Santé" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
                 </HBox>
 
                 <Region VBox.vgrow="ALWAYS"/>
