@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ConsultationController"
+      spacing="20" style="-fx-background-color: #f8f9fa; -fx-padding: 20;">
+    
+    <!-- Header -->
+    <HBox style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-background-radius: 12; -fx-padding: 20 25 20 25;">
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="🩺 Consultation Médicale" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label fx:id="rendezVousInfoLabel" style="-fx-font-size: 14px; -fx-text-fill: #e8eaf6;"/>
+        </VBox>
+        <Label fx:id="statusLabel" text="En cours..." style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white; -fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 8; -fx-padding: 8 15 8 15;"/>
+    </HBox>
+    
+    <!-- Patient Info Card -->
+    <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 4); -fx-padding: 25;" spacing="15">
+        <Label text="👤 Informations Patient" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        
+        <GridPane hgap="15" vgap="10">
+            <Label text="Nom:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="patientNomLabel" style="-fx-text-fill: #34495e; -fx-font-size: 14px;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            
+            <Label text="Date RDV:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="dateRdvLabel" style="-fx-text-fill: #34495e; -fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            
+            <Label text="Motif:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="motifLabel" style="-fx-text-fill: #34495e; -fx-font-size: 14px;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        </GridPane>
+    </VBox>
+    
+    <!-- Consultation Form -->
+    <VBox VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 4); -fx-padding: 25;" spacing="15">
+        <Label text="📋 Détails de la Consultation" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        
+        <VBox spacing="12">
+            <!-- Symptomes -->
+            <VBox spacing="5">
+                <Label text="🤒 Symptômes" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 16px;"/>
+                <TextArea fx:id="symptomesArea" promptText="Décrivez les symptômes observés chez le patient..." 
+                          prefRowCount="4" wrapText="true" 
+                          style="-fx-font-size: 14px; -fx-padding: 12 15 12 15; -fx-border-radius: 6; -fx-border-color: #cbd5e0; -fx-border-width: 2px;"/>
+            </VBox>
+            
+            <!-- Diagnostic -->
+            <VBox spacing="5">
+                <Label text="🔬 Diagnostic" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 16px;"/>
+                <TextArea fx:id="diagnosticArea" promptText="Diagnostic médical basé sur l'examen..." 
+                          prefRowCount="4" wrapText="true" 
+                          style="-fx-font-size: 14px; -fx-padding: 12 15 12 15; -fx-border-radius: 6; -fx-border-color: #cbd5e0; -fx-border-width: 2px;"/>
+            </VBox>
+            
+            <!-- Recommandations -->
+            <VBox spacing="5">
+                <Label text="💡 Recommandations" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 16px;"/>
+                <TextArea fx:id="recommandationsArea" promptText="Conseils, recommandations, prochaines étapes..." 
+                          prefRowCount="4" wrapText="true" 
+                          style="-fx-font-size: 14px; -fx-padding: 12 15 12 15; -fx-border-radius: 6; -fx-border-color: #cbd5e0; -fx-border-width: 2px;"/>
+            </VBox>
+        </VBox>
+    </VBox>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+        <Button fx:id="saveButton" text="💾 Sauvegarder Consultation" 
+                style="-fx-background-color: linear-gradient(to right, #27ae60, #2ecc71); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 25 12 25; -fx-font-size: 14px;"/>
+        
+        <Button fx:id="prescriptionButton" text="💊 Gérer Prescriptions" 
+                style="-fx-background-color: linear-gradient(to right, #3498db, #5dade2); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 25 12 25; -fx-font-size: 14px;"/>
+        
+        <Region HBox.hgrow="ALWAYS"/>
+        
+        <Button fx:id="finishButton" text="✅ Terminer et Retourner" 
+                style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 25 12 25; -fx-font-size: 14px;"/>
+    </HBox>
+    
+</VBox>

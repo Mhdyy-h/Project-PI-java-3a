@@ -1,8 +1,7 @@
 package org.example.model;
 
-import org.example.model.User;
-
 public class User {
+
     private int id;
     private String nomComplet;
     private String email;
@@ -10,7 +9,7 @@ public class User {
     private String roles;
     private int scoreGlobal;
     private String dateInscription;
-    private String photoProfil;   // chemin vers la photo de profil
+    private String photoProfil;
 
     public User() {}
 
@@ -35,7 +34,9 @@ public class User {
         this.roles = roles;
     }
 
-    public User(int id, String nomComplet, String email, String motDePasse, String roles, int scoreGlobal, String dateInscription) {
+    public User(int id, String nomComplet, String email, String motDePasse,
+                String roles, int scoreGlobal, String dateInscription) {
+
         this.id = id;
         this.nomComplet = nomComplet;
         this.email = email;
@@ -45,34 +46,105 @@ public class User {
         this.dateInscription = dateInscription;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getNomComplet() { return nomComplet; }
-    public void setNomComplet(String nomComplet) { this.nomComplet = nomComplet; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getNomComplet() {
+        return nomComplet;
+    }
 
-    public String getMotDePasse() { return motDePasse; }
-    public void setMotDePasse(String motDePasse) { this.motDePasse = motDePasse; }
+    public void setNomComplet(String nomComplet) {
+        this.nomComplet = nomComplet;
+    }
 
-    public String getRoles() { return roles; }
-    public void setRoles(String roles) { this.roles = roles; }
+    public String getEmail() {
+        return email;
+    }
 
-    public int getScoreGlobal() { return scoreGlobal; }
-    public void setScoreGlobal(int scoreGlobal) { this.scoreGlobal = scoreGlobal; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public String getDateInscription() { return dateInscription; }
-    public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
+    public String getMotDePasse() {
+        return motDePasse;
+    }
 
-    public String getPhotoProfil() { return photoProfil; }
-    public void setPhotoProfil(String photoProfil) { this.photoProfil = photoProfil; }
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public int getScoreGlobal() {
+        return scoreGlobal;
+    }
+
+    public void setScoreGlobal(int scoreGlobal) {
+        this.scoreGlobal = scoreGlobal;
+    }
+
+    public String getDateInscription() {
+        return dateInscription;
+    }
+
+    public void setDateInscription(String dateInscription) {
+        this.dateInscription = dateInscription;
+    }
+
+    public String getPhotoProfil() {
+        return photoProfil;
+    }
+
+    public void setPhotoProfil(String photoProfil) {
+        this.photoProfil = photoProfil;
+    }
+
+    // Role checking methods
+
+    public boolean isAdmin() {
+        return roles != null && roles.contains("ROLE_ADMIN");
+    }
+
+    public boolean isSpecialiste() {
+
+        if (roles == null)
+            return false;
+
+        String[] rolesArray = roles.split(",");
+
+        for (String role : rolesArray) {
+
+            if (role.contains("SPECIALISTE")
+                    || role.contains("ROLE_SPECIALISTE")
+                    || role.contains("dr.SPECIALISTE")) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isPatient() {
+        return roles != null && roles.contains("ROLE_USER");
+    }
 
     @Override
     public String toString() {
-        return "User{id=" + id + ", nomComplet='" + nomComplet + "', email='" + email + "'}";
+        return "User{id=" + id +
+                ", nomComplet='" + nomComplet + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
-
-
 }
