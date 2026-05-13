@@ -163,6 +163,10 @@ public class UserCommunityController {
     }
 
     @FXML private void handleSearch() { refreshGroups(); }
-    @FXML private void handleLogout(MouseEvent event) {}
-    @FXML private void handleBackToDashboard(MouseEvent event) {}
+    @FXML private void handleLogout(MouseEvent event) {
+        org.example.service.NavigationService.getInstance().navigateToLogin(groupsGrid);
+    }
+    @FXML private void handleBackToDashboard(MouseEvent event) {
+        org.example.service.NavigationService.getInstance().navigateToDashboard(groupsGrid, currentUser);
+    }
 }

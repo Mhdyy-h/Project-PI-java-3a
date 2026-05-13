@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.UserDashboardController"
+            prefWidth="1100" prefHeight="700"
+            style="-fx-background-color: #f0f2f8;"
+            stylesheets="@../styles.css">
+
+    <!-- ===== LEFT SIDEBAR ===== -->
+    <left>
+        <VBox prefWidth="200" minWidth="200"
+              style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 2, 0);">
+
+            <!-- Logo -->
+            <HBox alignment="CENTER_LEFT" spacing="10"
+                  style="-fx-padding: 24 20 24 20; -fx-border-color: transparent transparent #f0f2f8 transparent; -fx-border-width: 0 0 1 0;">
+                <Circle radius="16" fill="#4C6FFF"/>
+                <Label text="BioSync" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+            </HBox>
+
+            <!-- Nav Items -->
+            <VBox spacing="2" style="-fx-padding: 16 12 16 12;" VBox.vgrow="ALWAYS">
+
+                <!-- Dashboard (active) -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-background-color: #e8edff; -fx-cursor: hand;">
+                    <Label text="⊞" style="-fx-font-size: 16px; -fx-text-fill: #4C6FFF;"/>
+                    <Label text="Dashboard" style="-fx-font-size: 13px; -fx-text-fill: #4C6FFF; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <!-- Sports - CLICKABLE -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavSports">
+                    <Label text="⚡" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Sports" style="-fx-font-size: 13px; -fx-text-fill: #f59e0b; -fx-font-weight: bold;"/>
+                        <Label text="Exercices &amp; Séances" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Mental - CLICKABLE -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavMental">
+                    <Label text="🧠" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Mental" style="-fx-font-size: 13px; -fx-text-fill: #8b5cf6; -fx-font-weight: bold;"/>
+                        <Label text="Quiz &amp; Bien-être" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Community - CLICKABLE -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavCommunity">
+                    <Label text="👥" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Community" style="-fx-font-size: 13px; -fx-text-fill: #10b981; -fx-font-weight: bold;"/>
+                        <Label text="Groupes &amp; Événements" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Nutrition - CLICKABLE -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavNutrition">
+                    <Label text="🥗" style="-fx-font-size: 14px;"/>
+                    <VBox spacing="1">
+                        <Label text="Nutrition" style="-fx-font-size: 13px; -fx-text-fill: #10b981; -fx-font-weight: bold;"/>
+                        <Label text="Repas &amp; Aliments" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <!-- Bottom: User info + Logout -->
+            <VBox style="-fx-border-color: #f0f2f8 transparent transparent transparent; -fx-border-width: 1 0 0 0; -fx-padding: 16 20 16 20;" spacing="12">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Circle radius="18" fill="#4C6FFF"/>
+                    <VBox spacing="1">
+                        <Label fx:id="userNameLabel" text="Utilisateur"
+                               style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                        <Label text="Membre" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                    </VBox>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="6" onMouseClicked="#handleLogout"
+                      style="-fx-cursor: hand; -fx-padding: 6 0 0 0;">
+                    <Label text="→" style="-fx-font-size: 14px; -fx-text-fill: #e74c3c;"/>
+                    <Label text="Logout" style="-fx-font-size: 13px; -fx-text-fill: #e74c3c;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+            <VBox spacing="24" style="-fx-padding: 32 36 32 36;">
+
+                <!-- Page Header -->
+                <VBox spacing="4">
+                    <Label fx:id="welcomeLabel" text="Bienvenue !"
+                           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                    <Label text="Votre espace personnel BioSync" style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+                </VBox>
+
+                <!-- Quick Access Cards -->
+                <HBox spacing="20">
+
+                    <!-- Sports Card -->
+                    <VBox spacing="16" alignment="CENTER"
+                          style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 32 24 28 24;
+                                 -fx-border-color: #fff3cd; -fx-border-width: 2; -fx-border-radius: 16;
+                                 -fx-effect: dropshadow(gaussian, rgba(245,158,11,0.1), 10, 0, 0, 2); -fx-cursor: hand;"
+                          HBox.hgrow="ALWAYS" onMouseClicked="#handleNavSports">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #fff3cd; -fx-background-radius: 16;">
+                            <Label text="⚡" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Sports" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                            <Label text="Exercices, séances et suivi sportif"
+                                   style="-fx-font-size: 11px; -fx-text-fill: #9ca3af; -fx-text-alignment: center;"
+                                   wrapText="true" maxWidth="180"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Mental Card -->
+                    <VBox spacing="16" alignment="CENTER"
+                          style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 32 24 28 24;
+                                 -fx-border-color: #ede9fe; -fx-border-width: 2; -fx-border-radius: 16;
+                                 -fx-effect: dropshadow(gaussian, rgba(139,92,246,0.1), 10, 0, 0, 2); -fx-cursor: hand;"
+                          HBox.hgrow="ALWAYS" onMouseClicked="#handleNavMental">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #ede9fe; -fx-background-radius: 16;">
+                            <Label text="🧠" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Mental" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                            <Label text="Quiz mentaux et bien-être cognitif"
+                                   style="-fx-font-size: 11px; -fx-text-fill: #9ca3af; -fx-text-alignment: center;"
+                                   wrapText="true" maxWidth="180"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Community Card -->
+                    <VBox spacing="16" alignment="CENTER"
+                          style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 32 24 28 24;
+                                 -fx-border-color: #d1fae5; -fx-border-width: 2; -fx-border-radius: 16;
+                                 -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.1), 10, 0, 0, 2); -fx-cursor: hand;"
+                          HBox.hgrow="ALWAYS" onMouseClicked="#handleNavCommunity">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #d1fae5; -fx-background-radius: 16;">
+                            <Label text="👥" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Community" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                            <Label text="Groupes, événements et classements"
+                                   style="-fx-font-size: 11px; -fx-text-fill: #9ca3af; -fx-text-alignment: center;"
+                                   wrapText="true" maxWidth="180"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Nutrition Card -->
+                    <VBox spacing="16" alignment="CENTER"
+                          style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 32 24 28 24;
+                                 -fx-border-color: #d1fae5; -fx-border-width: 2; -fx-border-radius: 16;
+                                 -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.1), 10, 0, 0, 2); -fx-cursor: hand;"
+                          HBox.hgrow="ALWAYS" onMouseClicked="#handleNavNutrition">
+                        <StackPane minWidth="60" minHeight="60"
+                                   style="-fx-background-color: #d1fae5; -fx-background-radius: 16;">
+                            <Label text="🥗" style="-fx-font-size: 26px;"/>
+                        </StackPane>
+                        <VBox spacing="6" alignment="CENTER">
+                            <Label text="Nutrition" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                            <Label text="Repas, aliments et suivi nutritionnel"
+                                   style="-fx-font-size: 11px; -fx-text-fill: #9ca3af; -fx-text-alignment: center;"
+                                   wrapText="true" maxWidth="180"/>
+                        </VBox>
+                    </VBox>
+
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

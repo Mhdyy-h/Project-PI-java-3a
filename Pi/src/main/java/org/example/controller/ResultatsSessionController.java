@@ -317,12 +317,12 @@ public class ResultatsSessionController {
 
     @FXML
     public void retourDashboard() {
-        naviguerVers("/DashboardCognitif.fxml");
+        naviguerVers("/view/DashboardCognitif.fxml");
     }
 
     @FXML
     public void nouveauQuiz() {
-        naviguerVers("/QuizView.fxml");
+        naviguerVers("/view/QuizView.fxml");
     }
 
     private void naviguerVers(String fxml) {

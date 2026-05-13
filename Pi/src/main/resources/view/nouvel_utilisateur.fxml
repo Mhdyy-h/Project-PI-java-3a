@@ -56,7 +56,7 @@
                         <HBox spacing="8" alignment="CENTER">
                             <Button text="📷 Choisir une photo" onAction="#handleChoosePhoto"
                                     style="-fx-background-color: #f3f4f6; -fx-text-fill: #4C6FFF; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 14; -fx-cursor: hand; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-border-width: 1;"/>
-                            <Button text="🎨 Générer Avatar" onAction="#handleGenerateAvatar"
+                            <Button text="🎨 Générer Avatar" onAction="#handleOpenAvatarCustomizer"
                                     style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2); -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 6 14; -fx-cursor: hand;"/>
                         </HBox>
                     </VBox>

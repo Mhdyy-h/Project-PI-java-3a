@@ -31,11 +31,12 @@ public class RecommandationsController {
 
     public void setUser(User user) {
         this.currentUser = user;
-        lblTitre.setText("🔔 Recommandations de votre Coach");
+        lblTitre.setText("Recommandations de votre Coach");
         chargerRecommandations();
     }
 
     private void chargerRecommandations() {
+        if (currentUser == null) return;
         listeContainer.getChildren().clear();
         List<JSONObject> recommandations =
                 coachUserService.getRecommandationsUser(currentUser.getId());

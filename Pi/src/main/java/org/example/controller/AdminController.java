@@ -231,6 +231,17 @@ public class AdminController {
     private void handleNavSports(MouseEvent event) {
         navigationService.navigateToSports(adminNameLabel, currentUser);
     }
+    
+    @FXML
+    private void handleNavAi(MouseEvent event) {
+        navigationService.navigateToAiChat(adminNameLabel, currentUser);
+    }
+    
+    @FXML
+    private void handleNavMental(MouseEvent event) {
+        navigationService.navigateToQuizManager(adminNameLabel, currentUser);
+    }
+    
     @FXML
     private void handleScrollToAlertes(MouseEvent event) {
         // Scroll to the alerts section in the dashboard

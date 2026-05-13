@@ -111,7 +111,7 @@ public class QuizViewController {
     @FXML
     public void initialize() {
         if (!SessionContext.estConnecte()) {
-            naviguerVers("/Connexion.fxml");
+            naviguerVers("/view/Connexion.fxml");
             return;
         }
 
@@ -373,7 +373,7 @@ public class QuizViewController {
 
     private void naviguerVersResultats() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ResultatsSession.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ResultatsSession.fxml"));
             Parent root = loader.load();
             ResultatsSessionController ctrl = loader.getController();
             ctrl.chargerSession(session, reponses, questionsMap, eloAvantSession);
@@ -390,8 +390,10 @@ public class QuizViewController {
     @FXML
     public void quitterSession() {
         arreterTimer();
-        sessionSvc.abandonner(session.getId());
-        naviguerVers("/DashboardCognitif.fxml");
+        if (session != null) {
+            sessionSvc.abandonner(session.getId());
+        }
+        naviguerVers("/view/DashboardCognitif.fxml");
     }
 
     // ════════════════════════════════════════════════════════════════

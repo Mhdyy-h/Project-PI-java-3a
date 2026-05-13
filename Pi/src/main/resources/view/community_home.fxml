@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #f0f2f8;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.CommunityController">
+
+    <!-- REUSABLE SIDEBAR -->
+    <left>
+        <VBox prefWidth="200" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 2, 0);">
+            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 24 20 24 20; -fx-border-color: transparent transparent #f0f2f8 transparent; -fx-border-width: 0 0 1 0;">
+                <Circle fill="#4C6FFF" radius="16" />
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" text="BioSync" />
+            </HBox>
+            <VBox spacing="2" style="-fx-padding: 16 12 16 12;" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;" onMouseClicked="#handleBackToDashboard">
+                    <Label text="⊞" style="-fx-text-fill: #6b7280;"/>
+                    <Label text="Dashboard" style="-fx-text-fill: #6b7280;"/>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-background-color: #fff7ed; -fx-cursor: hand;">
+                    <Label text="👥" />
+                    <Label text="Community" style="-fx-font-weight: bold; -fx-text-fill: #f59e0b;"/>
+                </HBox>
+                <Region VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <!-- Logout -->
+            <VBox style="-fx-border-color: #f0f2f8 transparent transparent transparent; -fx-border-width: 1 0 0 0; -fx-padding: 16 20 16 20;">
+                <HBox alignment="CENTER_LEFT" spacing="6" onMouseClicked="#handleLogout"
+                      style="-fx-cursor: hand;">
+                    <Label text="→" style="-fx-font-size: 14px; -fx-text-fill: #e74c3c;"/>
+                    <Label text="Logout" style="-fx-font-size: 13px; -fx-text-fill: #e74c3c;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="25" style="-fx-padding: 30;">
+
+                <Label text="Centre de Communauté" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;" />
+
+                <!-- Action Buttons Area -->
+                <HBox spacing="20">
+                    <VBox alignment="CENTER" onMouseClicked="#handleGoToGroupForm" spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 30; -fx-border-color: #e8edff; -fx-border-width: 2; -fx-cursor: hand;" HBox.hgrow="ALWAYS">
+                        <StackPane style="-fx-background-color: #e8edff; -fx-background-radius: 12; -fx-padding: 15;">
+                            <Label text="➕👥" style="-fx-font-size: 20px;"/>
+                        </StackPane>
+                        <Label text="Nouveau Groupe" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    </VBox>
+
+                    <VBox alignment="CENTER" onMouseClicked="#handleGoToEventForm" spacing="15" style="-fx-background-color: white; -fx-background-radius: 16; -fx-padding: 30; -fx-border-color: #d1fae5; -fx-border-width: 2; -fx-cursor: hand;" HBox.hgrow="ALWAYS">
+                        <StackPane style="-fx-background-color: #d1fae5; -fx-background-radius: 12; -fx-padding: 15;">
+                            <Label text="➕📅" style="-fx-font-size: 20px;"/>
+                        </StackPane>
+                        <Label text="Nouvel Événement" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Lists Area -->
+                <HBox spacing="20">
+                    <VBox spacing="10" HBox.hgrow="ALWAYS">
+                        <Label text="Vos Groupes" style="-fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+                        <VBox fx:id="groupsContainer" spacing="10" />
+                    </VBox>
+                    <VBox spacing="10" HBox.hgrow="ALWAYS">
+                        <Label text="Événements à venir" style="-fx-font-weight: bold; -fx-text-fill: #64748b;"/>
+                        <VBox fx:id="eventsContainer" spacing="10" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

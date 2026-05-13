@@ -99,8 +99,12 @@ public class NavigationService {
     // SPECIFIC ROUTES
     // ============================================================
 
-    // ✅ Après login → toujours dashboard.fxml
+    // ✅ Après login → redirection selon le rôle
     public void navigateToDashboard(Node sourceNode, User currentUser) {
+        if (currentUser == null) {
+            System.err.println("NavigationService: currentUser is null, cannot navigate to dashboard.");
+            return;
+        }
         boolean isAdmin = currentUser.getRoles() != null
                 && currentUser.getRoles().contains("ROLE_ADMIN");
         boolean isCoach = currentUser.getRoles() != null
@@ -108,30 +112,42 @@ public class NavigationService {
 
         if (isAdmin) {
             org.example.model.Session.role = "ADMIN";
+            navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Dashboard Admin", 1100, 700, ctrl -> {
+                if (ctrl instanceof AdminController c)
+                    c.setUser(currentUser);
+            });
         } else if (isCoach) {
             org.example.model.Session.role = "COACH";
-        } else {
-            org.example.model.Session.role = "USER";
-        }
-
-        navigateFrom(sourceNode, "/view/dashboard.fxml", "BioSync - Dashboard", 1100, 700, ctrl -> {
-            if (ctrl instanceof AdminController c)
-                c.setUser(currentUser);
-        });
-    }
-
-    // ✅ Depuis bouton Sports → selon le rôle
-    public void navigateToSports(Node sourceNode, User currentUser) {
-        boolean isCoach = currentUser.getRoles() != null
-                && currentUser.getRoles().contains("ROLE_COACH");
-
-        if (isCoach) {
             navigateFrom(sourceNode, "/view/MenuCoach.fxml", "BioSync - Espace Coach", 1100, 700, ctrl -> {
                 if (ctrl instanceof org.example.controller.MenuCoachController c)
                     c.setCurrentUser(currentUser);
             });
         } else {
-            navigateFrom(sourceNode, "/view/MenuUser.fxml", "BioSync - Dashboard User", 1100, 700, ctrl -> {
+            // Regular USER → goes to user dashboard
+            org.example.model.Session.role = "USER";
+            navigateFrom(sourceNode, "/view/dashboard_user.fxml", "BioSync - Dashboard", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.UserDashboardController c)
+                    c.setCurrentUser(currentUser);
+            });
+        }
+    }
+
+    // ✅ Depuis bouton Sports → selon le rôle
+    public void navigateToSports(Node sourceNode, User currentUser) {
+        boolean isAdmin = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_ADMIN");
+        boolean isCoach = currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_COACH");
+
+        if (isAdmin || isCoach) {
+            // Admin/Coach → MenuCoach
+            navigateFrom(sourceNode, "/view/MenuCoach.fxml", "BioSync - Espace Coach", 1100, 700, ctrl -> {
+                if (ctrl instanceof org.example.controller.MenuCoachController c)
+                    c.setCurrentUser(currentUser);
+            });
+        } else {
+            // User → MenuUser
+            navigateFrom(sourceNode, "/view/MenuUser.fxml", "BioSync - Espace Sport", 1100, 700, ctrl -> {
                 if (ctrl instanceof org.example.controller.MenuUserController c)
                     c.setCurrentUser(currentUser);
             });
@@ -156,11 +172,24 @@ public class NavigationService {
     }
 
     public void navigateToCommunity(Node sourceNode, User currentUser) {
-        navigateFrom(sourceNode, "/view/user_community.fxml", "BioSync - Communauté", 1100, 700, ctrl -> {
-            if (ctrl instanceof UserCommunityController) {
-                ((UserCommunityController) ctrl).setCurrentUser(currentUser);
-            }
-        });
+        boolean isAdmin = currentUser != null && currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_ADMIN");
+
+        if (isAdmin) {
+            // Admin → community_home.fxml (CommunityController)
+            navigateFrom(sourceNode, "/view/community_home.fxml", "BioSync - Communauté Admin", 1100, 700, ctrl -> {
+                if (ctrl instanceof CommunityController) {
+                    ((CommunityController) ctrl).setCurrentUser(currentUser);
+                }
+            });
+        } else {
+            // User/Coach → user_community.fxml
+            navigateFrom(sourceNode, "/view/user_community.fxml", "BioSync - Communauté", 1100, 700, ctrl -> {
+                if (ctrl instanceof UserCommunityController) {
+                    ((UserCommunityController) ctrl).setCurrentUser(currentUser);
+                }
+            });
+        }
     }
 
     public void navigateToCertifications(Node sourceNode, User currentUser) {
@@ -213,7 +242,24 @@ public class NavigationService {
     }
 
     public void navigateToMental(Node sourceNode, User currentUser) {
-        navigateToQuizManager(sourceNode, currentUser);
+        boolean isAdmin = currentUser != null && currentUser.getRoles() != null
+                && currentUser.getRoles().contains("ROLE_ADMIN");
+
+        if (isAdmin) {
+            // Admin → quiz_manager.fxml
+            navigateToQuizManager(sourceNode, currentUser);
+        } else {
+            // User → vue_utilisateur.fxml
+            navigateToVueUtilisateur(sourceNode, currentUser);
+        }
+    }
+
+    public void navigateToMentalHealthDashboard(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/mental_health_dashboard.fxml", "BioSync - Santé Mentale", 1200, 800, ctrl -> {
+            if (ctrl instanceof MentalHealthDashboardController) {
+                ((MentalHealthDashboardController) ctrl).setCurrentUser(currentUser);
+            }
+        });
     }
 
     public void navigateToQuizManager(Node sourceNode, User currentUser) {
@@ -272,7 +318,52 @@ public class NavigationService {
     }
 
     public void navigateToDashboardCognitif(Node sourceNode) {
-        navigateFrom(sourceNode, "/view/dashboard_cognitif.fxml", "BioSync - Dashboard Cognitif", 1200, 750);
+        navigateFrom(sourceNode, "/view/DashboardCognitif.fxml", "BioSync - Dashboard Cognitif", 1200, 750);
+    }
+
+    public void navigateToDashboardCognitif(Node sourceNode, User user) {
+        if (user != null) org.example.util.SessionContext.connecter(user);
+        navigateFrom(sourceNode, "/view/DashboardCognitif.fxml", "BioSync - Dashboard Cognitif", 1200, 750);
+    }
+
+    // ============================================================
+    // ADDITIONAL NAVIGATION METHODS FOR DASHBOARD
+    // ============================================================
+
+    public void navigateToCoachRepas(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/nutrition/coach_repas.fxml", "BioSync - Coach Nutrition", 1100, 700, ctrl -> {
+            if (ctrl instanceof CoachRepasController) {
+                ((CoachRepasController) ctrl).setCoachUser(currentUser);
+                // Note: setSelectedUser doit être appelé après avoir sélectionné un utilisateur
+            }
+        });
+    }
+
+    public void navigateToAfficherSeance(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/AfficherSeance.fxml", "BioSync - Séances Sport", 1100, 700);
+    }
+
+    public void navigateToGroupManager(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/user_community.fxml", "BioSync - Gestion Groupes", 1100, 700, ctrl -> {
+            if (ctrl instanceof UserCommunityController) {
+                ((UserCommunityController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+
+    public void navigateToUserDashboard(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/dashboard_user.fxml", "BioSync - Dashboard", 1100, 700, ctrl -> {
+            if (ctrl instanceof UserDashboardController) {
+                ((UserDashboardController) ctrl).setCurrentUser(currentUser);
+            }
+        });
+    }
+    public void navigateToCertificationsAdmin(Node sourceNode, User currentUser) {
+        navigateFrom(sourceNode, "/view/certifications_admin.fxml", "BioSync - Certifications", 1100, 700, ctrl -> {
+            if (ctrl instanceof CertificationsAdminController) {
+                ((CertificationsAdminController) ctrl).setCurrentUser(currentUser);
+            }
+        });
     }
 
     public static class NavigationException extends RuntimeException {

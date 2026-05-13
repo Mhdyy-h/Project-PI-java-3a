@@ -489,7 +489,7 @@ public class UtilisateurController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/utilisateurs.fxml"));
             Parent root = loader.load();
-            UtilisateurController ctrl = loader.getController();
+            UtilisateursController ctrl = loader.getController();
             ctrl.setCurrentUser(currentUser);
             Stage stage = (Stage) nomField.getScene().getWindow();
             Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());

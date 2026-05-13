@@ -10,14 +10,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.example.DatabaseConnection;
 import org.example.model.ProfilCognitif;
 import org.example.model.QuizSession;
+import org.example.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.example.service.AdaptiveService;
 import org.example.service.PredictionService;
 import org.example.service.ServiceQuizSession;
 import org.example.util.SessionContext;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -59,6 +65,7 @@ public class DashboardCognitifController {
     private final PredictionService     predictionSvc     = new PredictionService();
 
     private ProfilCognitif profil;
+    private User currentUser;
 
     // ════════════════════════════════════════════════════════════════
     // Initialisation
@@ -67,12 +74,19 @@ public class DashboardCognitifController {
     @FXML
     public void initialize() {
         if (!SessionContext.estConnecte()) {
-            naviguerVers("/Connexion.fxml");
-            return;
+            // Fallback : charger le premier utilisateur disponible
+            currentUser = chargerPremierUtilisateur();
+            if (currentUser == null) {
+                labelSousTitre.setText("Aucun utilisateur connecté.");
+                return;
+            }
+            SessionContext.connecter(currentUser);
+        } else {
+            currentUser = SessionContext.getUtilisateur();
         }
 
-        int userId = SessionContext.getUtilisateurId();
-        String nomComplet = SessionContext.getUtilisateur().getNomComplet();
+        int userId = currentUser.getId();
+        String nomComplet = currentUser.getNomComplet() != null ? currentUser.getNomComplet() : "";
 
         labelNomUtilisateur.setText(nomComplet);
         labelTitreDashboard.setText("Tableau de bord cognitif");
@@ -185,7 +199,7 @@ public class DashboardCognitifController {
     @FXML
     public void lancerQuiz() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/QuizView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/QuizView.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) labelElo.getScene().getWindow();
             Scene scene = new Scene(root);
@@ -199,7 +213,7 @@ public class DashboardCognitifController {
     @FXML
     public void ouvrirMultijoueur() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalonMultijoueur.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SalonMultijoueur.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) labelElo.getScene().getWindow();
             Scene scene = new Scene(root);
@@ -212,7 +226,46 @@ public class DashboardCognitifController {
 
     @FXML
     public void retourMenu() {
-        naviguerVers("/Menu.fxml");
+        try {
+            boolean isCoach = currentUser != null && currentUser.getRoles() != null
+                && currentUser.getRoles().contains("COACH");
+            String fxml = isCoach ? "/view/MenuCoach.fxml" : "/view/MenuUser.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Parent root = loader.load();
+            Object ctrl = loader.getController();
+            if (ctrl instanceof MenuUserController) {
+                ((MenuUserController) ctrl).setCurrentUser(currentUser);
+            } else if (ctrl instanceof MenuCoachController) {
+                ((MenuCoachController) ctrl).setCurrentUser(currentUser);
+            }
+            Stage stage = (Stage) labelElo.getScene().getWindow();
+            Scene scene = new Scene(root);
+            java.net.URL css = getClass().getResource("/style.css");
+            if (css != null) scene.getStylesheets().add(css.toExternalForm());
+            stage.setScene(scene);
+        } catch (Exception e) {
+            log.error("Erreur retour menu : {}", e.getMessage());
+        }
+    }
+
+    /** Charge le premier utilisateur de la BD comme fallback. */
+    private User chargerPremierUtilisateur() {
+        try (Connection cn = DatabaseConnection.getConnection();
+             Statement st = cn.createStatement();
+             ResultSet rs = st.executeQuery(
+                     "SELECT id, nom_complet, email, roles FROM utilisateur ORDER BY id LIMIT 1")) {
+            if (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setNomComplet(rs.getString("nom_complet"));
+                u.setEmail(rs.getString("email"));
+                u.setRoles(rs.getString("roles"));
+                return u;
+            }
+        } catch (Exception e) {
+            log.error("Erreur chargement utilisateur fallback : {}", e.getMessage());
+        }
+        return null;
     }
 
     private void naviguerVers(String fxml) {

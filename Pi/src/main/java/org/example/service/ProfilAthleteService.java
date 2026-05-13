@@ -67,7 +67,7 @@ public class ProfilAthleteService {
             return result > 0;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
             return false;
         }
     }
@@ -101,7 +101,7 @@ public class ProfilAthleteService {
             }
             rs.close(); ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
         }
         return new JSONObject(); // profil vide si pas encore rempli
     }

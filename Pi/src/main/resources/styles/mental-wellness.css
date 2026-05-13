@@ -1,0 +1,886 @@
+/* ═══════════════════════════════════════════════════════════════════
+   BIOSYNC - MENTAL WELLNESS MODULE
+   Modern Design System inspired by Calm, Headspace & Notion
+   
+   Color Palette:
+   - Deep Navy: #0F0F1A (primary background)
+   - Card Surface: #1A1A2E
+   - Soft Violet: #7C6FCD (accent)
+   - Lavender: #A78BFA (secondary accent)
+   - Success: #34D399 | Warning: #FBBF24 | Danger: #F87171
+   - Text Primary: #F1F5F9 | Text Muted: #94A3B8
+   
+   Typography: Inter/Nunito with generous spacing
+   Components: Glassmorphism, rounded corners (16px), smooth animations
+═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   ROOT & GLOBAL STYLES
+═══════════════════════════════════════════════════════════════════ */
+
+.root {
+    -fx-font-family: 'Inter', 'Segoe UI', 'Nunito', system-ui, -apple-system, sans-serif;
+    -fx-font-smoothing-type: lcd;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BACKGROUNDS & SURFACES
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-background-primary {
+    -fx-background-color: #0F0F1A;
+}
+
+.mw-background-secondary {
+    -fx-background-color: #F5F7FA;
+}
+
+.mw-surface-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 12, 0, 0, 4);
+}
+
+.mw-surface-glass {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 16, 0, 0, 6);
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+}
+
+.mw-surface-elevated {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.15), 16, 0, 0, 8);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-heading-1 {
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #0F0F1A;
+    -fx-line-spacing: 8px;
+}
+
+.mw-heading-2 {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1A1A2E;
+    -fx-line-spacing: 6px;
+}
+
+.mw-heading-3 {
+    -fx-font-size: 18px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #1A1A2E;
+    -fx-line-spacing: 4px;
+}
+
+.mw-body-large {
+    -fx-font-size: 16px;
+    -fx-text-fill: #374151;
+    -fx-line-spacing: 4px;
+}
+
+.mw-body {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4B5563;
+    -fx-line-spacing: 3px;
+}
+
+.mw-body-small {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6B7280;
+}
+
+.mw-caption {
+    -fx-font-size: 12px;
+    -fx-text-fill: #94A3B8;
+}
+
+.mw-text-muted {
+    -fx-text-fill: #94A3B8;
+}
+
+.mw-text-accent {
+    -fx-text-fill: #7C6FCD;
+}
+
+.mw-text-success {
+    -fx-text-fill: #34D399;
+}
+
+.mw-text-warning {
+    -fx-text-fill: #FBBF24;
+}
+
+.mw-text-danger {
+    -fx-text-fill: #F87171;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BUTTONS - Modern Pill-Shaped with Gradients
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-btn-primary {
+    -fx-background-color: linear-gradient(to right, #7C6FCD, #A78BFA);
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 12px;
+    -fx-padding: 14px 32px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.4), 12, 0, 0, 4);
+}
+
+.mw-btn-primary:hover {
+    -fx-background-color: linear-gradient(to right, #6B5EBC, #967AE9);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.mw-btn-secondary {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #374151;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px 24px;
+    -fx-cursor: hand;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+
+.mw-btn-secondary:hover {
+    -fx-background-color: #E5E7EB;
+}
+
+.mw-btn-success {
+    -fx-background-color: linear-gradient(to right, #34D399, #10B981);
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 12px;
+    -fx-padding: 14px 32px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(52, 211, 153, 0.4), 12, 0, 0, 4);
+}
+
+.mw-btn-success:hover {
+    -fx-background-color: linear-gradient(to right, #2CC388, #0FA870);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.mw-btn-danger {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #DC2626;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.mw-btn-danger:hover {
+    -fx-background-color: #FECACA;
+}
+
+.mw-btn-ghost {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6B7280;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.mw-btn-ghost:hover {
+    -fx-background-color: #F9FAFB;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FORM INPUTS - Dark Background with Glowing Focus
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-input {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px 16px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1F2937;
+}
+
+.mw-input:focused {
+    -fx-border-color: #7C6FCD;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.25), 8, 0, 0, 0);
+}
+
+.mw-textarea {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px 16px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1F2937;
+}
+
+.mw-textarea:focused {
+    -fx-border-color: #7C6FCD;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.25), 8, 0, 0, 0);
+}
+
+.mw-select {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+}
+
+.mw-select:focused {
+    -fx-border-color: #7C6FCD;
+    -fx-border-width: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CARDS & CONTAINERS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-card-quiz {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16px;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-padding: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 10, 0, 0, 3);
+    -fx-cursor: hand;
+}
+
+.mw-card-quiz:hover {
+    -fx-border-color: #7C6FCD;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.2), 16, 0, 0, 6);
+    -fx-translate-y: -4px;
+}
+
+.mw-card-stat {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16px;
+    -fx-padding: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 10, 0, 0, 3);
+}
+
+.mw-card-gradient-violet {
+    -fx-background-color: linear-gradient(to bottom right, #7C6FCD, #A78BFA);
+    -fx-background-radius: 16px;
+    -fx-padding: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.3), 16, 0, 0, 6);
+}
+
+.mw-card-gradient-success {
+    -fx-background-color: linear-gradient(to bottom right, #34D399, #10B981);
+    -fx-background-radius: 16px;
+    -fx-padding: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(52, 211, 153, 0.3), 16, 0, 0, 6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BADGES & PILLS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-badge {
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 20px;
+    -fx-padding: 6px 14px;
+}
+
+.mw-badge-violet {
+    -fx-background-color: #EDE9FE;
+    -fx-text-fill: #7C3AED;
+}
+
+.mw-badge-success {
+    -fx-background-color: #D1FAE5;
+    -fx-text-fill: #065F46;
+}
+
+.mw-badge-warning {
+    -fx-background-color: #FEF3C7;
+    -fx-text-fill: #92400E;
+}
+
+.mw-badge-danger {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #991B1B;
+}
+
+.mw-badge-info {
+    -fx-background-color: #DBEAFE;
+    -fx-text-fill: #1E40AF;
+}
+
+.mw-badge-neutral {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #6B7280;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PROGRESS BARS - Gradient Accent
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-progress-bar {
+    -fx-background-color: #E5E7EB;
+    -fx-background-radius: 8px;
+}
+
+.mw-progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #7C6FCD, #A78BFA);
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-padding: 8px;
+}
+
+.mw-progress-bar-success .bar {
+    -fx-background-color: linear-gradient(to right, #34D399, #10B981);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLES - Zebra Striping with Hover
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-table {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12px;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.mw-table .column-header {
+    -fx-background-color: #F9FAFB;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #6B7280;
+    -fx-padding: 12px 16px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.mw-table .column-header-background {
+    -fx-background-color: #F9FAFB;
+}
+
+.mw-table .column-header .label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #6B7280;
+}
+
+.mw-table .table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #F3F4F6 transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-cell-size: 48px;
+}
+
+.mw-table .table-row-cell:odd {
+    -fx-background-color: #FAFBFC;
+}
+
+.mw-table .table-row-cell:hover {
+    -fx-background-color: #F0F4FF;
+}
+
+.mw-table .table-row-cell:selected {
+    -fx-background-color: #EDE9FE;
+    -fx-border-color: #7C6FCD;
+}
+
+.mw-table .table-cell {
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8px 12px;
+}
+
+.mw-table .table-column {
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* Fix pour l'affichage du texte dans les cellules */
+.mw-table .text {
+    -fx-fill: #374151;
+    -fx-font-size: 14px;
+}
+
+.mw-table .column-header .text {
+    -fx-fill: #6B7280;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+}
+
+/* Placeholder de table */
+.mw-table .placeholder {
+    -fx-background-color: transparent;
+}
+
+.mw-table .placeholder .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLES STANDARDS (sans classe mw-table)
+═══════════════════════════════════════════════════════════════════ */
+
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12px;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #F9FAFB;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F9FAFB;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #6B7280;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #F3F4F6 transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-cell-size: 48px;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFBFC;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #F0F4FF;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #EDE9FE;
+}
+
+.table-view .table-cell {
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8px 12px;
+}
+
+.table-view .text {
+    -fx-fill: #374151;
+    -fx-font-size: 14px;
+}
+
+.table-view .column-header .text {
+    -fx-fill: #6B7280;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+}
+
+.table-view .placeholder {
+    -fx-background-color: transparent;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   QUIZ OPTION BUTTONS - Interactive with States
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-option-btn {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 16px 20px;
+    -fx-cursor: hand;
+    -fx-text-fill: #1F2937;
+    -fx-font-size: 15px;
+    -fx-font-weight: 500;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 2px;
+}
+
+.mw-option-btn:hover {
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: #7C6FCD;
+}
+
+.mw-option-btn-selected {
+    -fx-background-color: #EDE9FE;
+    -fx-border-color: #7C6FCD;
+    -fx-border-width: 2px;
+}
+
+.mw-option-btn-correct {
+    -fx-background-color: #D1FAE5;
+    -fx-border-color: #34D399;
+    -fx-border-width: 2px;
+    -fx-text-fill: #065F46;
+}
+
+.mw-option-btn-incorrect {
+    -fx-background-color: #FEE2E2;
+    -fx-border-color: #F87171;
+    -fx-border-width: 2px;
+    -fx-text-fill: #991B1B;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NAVIGATION & SIDEBAR
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-sidebar {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 12, 0, 4, 0);
+}
+
+.mw-nav-item {
+    -fx-cursor: hand;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 10px;
+}
+
+.mw-nav-item:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.mw-nav-item-active {
+    -fx-background-color: #EDE9FE;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ICONS & EMOJI CONTAINERS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-icon-container {
+    -fx-background-radius: 12px;
+    -fx-padding: 12px;
+}
+
+.mw-icon-violet {
+    -fx-background-color: #EDE9FE;
+}
+
+.mw-icon-success {
+    -fx-background-color: #D1FAE5;
+}
+
+.mw-icon-warning {
+    -fx-background-color: #FEF3C7;
+}
+
+.mw-icon-danger {
+    -fx-background-color: #FEE2E2;
+}
+
+.mw-icon-info {
+    -fx-background-color: #DBEAFE;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ANIMATIONS & TRANSITIONS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-fade-in {
+    -fx-opacity: 0;
+}
+
+.mw-pulse {
+    -fx-effect: dropshadow(gaussian, rgba(124, 111, 205, 0.5), 20, 0, 0, 0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SCROLLBARS - Minimal & Modern
+═══════════════════════════════════════════════════════════════════ */
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8px;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: #D1D5DB;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .scroll-bar .thumb:hover {
+    -fx-background-color: #9CA3AF;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SPECIAL COMPONENTS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-timer-circle {
+    -fx-stroke: #7C6FCD;
+    -fx-stroke-width: 4px;
+    -fx-fill: transparent;
+}
+
+.mw-score-circle {
+    -fx-background-color: #EDE9FE;
+    -fx-background-radius: 80px;
+}
+
+.mw-medal-gold {
+    -fx-background-color: linear-gradient(to right, #FCD34D, #F59E0B);
+    -fx-background-radius: 30px;
+    -fx-padding: 16px 40px;
+}
+
+.mw-medal-silver {
+    -fx-background-color: linear-gradient(to right, #E5E7EB, #9CA3AF);
+    -fx-background-radius: 30px;
+    -fx-padding: 16px 40px;
+}
+
+.mw-medal-bronze {
+    -fx-background-color: linear-gradient(to right, #FED7AA, #F97316);
+    -fx-background-radius: 30px;
+    -fx-padding: 16px 40px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VOICE MODE SPECIFIC
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-voice-bar {
+    -fx-background-color: #F0FDF4;
+    -fx-border-color: #86EFAC;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 12px 28px;
+}
+
+.mw-voice-btn {
+    -fx-background-color: #22C55E;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.3), 8, 0, 0, 2);
+}
+
+.mw-voice-btn:hover {
+    -fx-background-color: #16A34A;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE UTILITIES
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-spacing-xs { -fx-spacing: 4px; }
+.mw-spacing-sm { -fx-spacing: 8px; }
+.mw-spacing-md { -fx-spacing: 12px; }
+.mw-spacing-lg { -fx-spacing: 16px; }
+.mw-spacing-xl { -fx-spacing: 24px; }
+.mw-spacing-2xl { -fx-spacing: 32px; }
+
+.mw-padding-xs { -fx-padding: 8px; }
+.mw-padding-sm { -fx-padding: 12px; }
+.mw-padding-md { -fx-padding: 16px; }
+.mw-padding-lg { -fx-padding: 24px; }
+.mw-padding-xl { -fx-padding: 32px; }
+.mw-padding-2xl { -fx-padding: 48px; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   CHAT / MESSAGING COMPONENTS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-chat-area {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-padding: 16px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+    -fx-font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.mw-chat-area .content {
+    -fx-background-color: #F9FAFB;
+}
+
+.mw-chat-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.mw-chat-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.mw-chat-area:focused {
+    -fx-border-color: #7C6FCD;
+    -fx-border-width: 2px;
+}
+
+/* Message bubbles (for future enhancement) */
+.mw-message-user {
+    -fx-background-color: #EDE9FE;
+    -fx-background-radius: 16px 16px 4px 16px;
+    -fx-padding: 12px 16px;
+    -fx-text-fill: #5B21B6;
+}
+
+.mw-message-assistant {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16px 16px 16px 4px;
+    -fx-padding: 12px 16px;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px 16px 16px 4px;
+    -fx-text-fill: #374151;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FRENCH LANGUAGE SPECIFIC ADJUSTMENTS
+═══════════════════════════════════════════════════════════════════ */
+
+.mw-text-french {
+    -fx-font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   QUIZ RESPONSE BUTTONS (Écran 3)
+═══════════════════════════════════════════════════════════════════ */
+
+.btn-reponse {
+    -fx-background-color: #F8FFFD;
+    -fx-border-color: #A7F3D0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #1A1A2E;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20 0 20;
+    -fx-cursor: hand;
+}
+
+.btn-reponse:hover {
+    -fx-background-color: #D1FAE5;
+    -fx-border-color: #1D9E75;
+    -fx-border-width: 2;
+}
+
+.btn-correct {
+    -fx-background-color: #D1FAE5;
+    -fx-border-color: #1D9E75;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #065F46;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 0 20 0 20;
+    -fx-alignment: CENTER_LEFT;
+    -fx-effect: dropshadow(gaussian, rgba(29,158,117,0.25), 6, 0, 0, 2);
+}
+
+.btn-incorrect {
+    -fx-background-color: #FEE2E2;
+    -fx-border-color: #E24B4A;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #991B1B;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 0 20 0 20;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.btn-reponse:disabled {
+    -fx-opacity: 0.6;
+}
+
+.timer-expire {
+    -fx-text-fill: #E24B4A !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   QUIZ RESULT RECAP (Écran 4)
+═══════════════════════════════════════════════════════════════════ */
+
+.recap-correct {
+    -fx-background-color: #ECFDF5;
+    -fx-background-radius: 8;
+    -fx-border-color: #A7F3D0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 8 12 8 12;
+}
+
+.recap-incorrect {
+    -fx-background-color: #FEF2F2;
+    -fx-background-radius: 8;
+    -fx-border-color: #FECACA;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-padding: 8 12 8 12;
+}
+
+.recap-icone-ok {
+    -fx-text-fill: #1D9E75;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.recap-icone-ko {
+    -fx-text-fill: #E24B4A;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

@@ -114,6 +114,10 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
 
     @FXML
     public void creerPartie() {
+        if (!SessionContext.estConnecte()) {
+            afficherErreurLobby("Veuillez vous connecter avant de créer une partie.");
+            return;
+        }
         int userId = SessionContext.getUtilisateurId();
 
         mpService = new MultiplayerService();
@@ -141,6 +145,10 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
 
     @FXML
     public void rejoindrePartie() {
+        if (!SessionContext.estConnecte()) {
+            afficherErreurLobby("Veuillez vous connecter avant de rejoindre une partie.");
+            return;
+        }
         String code = champCode.getText().trim().toUpperCase();
         if (code.length() < 4) {
             afficherErreurLobby("Code invalide (minimum 4 caractères).");
@@ -244,12 +252,12 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
         if (correct) {
             btnClique.setStyle("-fx-background-color: #dcfce7; -fx-background-radius: 10; " +
                     "-fx-padding: 12 20; -fx-font-size: 13px; -fx-border-color: #16a34a; -fx-border-radius: 10;");
-            labelFeedbackJeu.setText("✓ Correct !");
+            labelFeedbackJeu.setText("Correct !");
             labelFeedbackJeu.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #16a34a;");
         } else {
             btnClique.setStyle("-fx-background-color: #fee2e2; -fx-background-radius: 10; " +
                     "-fx-padding: 12 20; -fx-font-size: 13px; -fx-border-color: #dc2626; -fx-border-radius: 10;");
-            labelFeedbackJeu.setText("✗ Incorrect");
+            labelFeedbackJeu.setText("Incorrect");
             labelFeedbackJeu.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #dc2626;");
         }
 
@@ -258,7 +266,7 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
 
     private void mettreAJourScores(List<MultiplayerService.ScoreEntry> classement) {
         tableauScores.getChildren().clear();
-        String[] medailles = {"🥇", "🥈", "🥉"};
+        String[] medailles = {"1.", "2.", "3."};
 
         for (int i = 0; i < classement.size(); i++) {
             MultiplayerService.ScoreEntry entry = classement.get(i);
@@ -309,7 +317,7 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
         afficherVue(vueFin);
         podium.getChildren().clear();
 
-        String[] medailles = {"🥇", "🥈", "🥉"};
+        String[] medailles = {"1.", "2.", "3."};
         for (int i = 0; i < classement.size(); i++) {
             MultiplayerService.ScoreEntry entry = classement.get(i);
             HBox ligne = new HBox();
@@ -343,7 +351,7 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
         joueursConnectes.clear();
         questionIndex = 0;
         btnDemarrer.setDisable(false);
-        btnDemarrer.setText("🚀  Démarrer la partie");
+        btnDemarrer.setText("Démarrer la partie");
         afficherVue(vueLobby);
     }
 
@@ -351,7 +359,7 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
     public void retourDashboard() {
         arreterService();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/DashboardCognitif.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/DashboardCognitif.fxml"));
             Stage stage = (Stage) vueLobby.getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());

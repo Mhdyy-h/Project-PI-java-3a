@@ -9,6 +9,7 @@ import org.example.dao.EvenementDAO;
 import org.example.dao.GroupeDAO;
 import org.example.model.Evenement;
 import org.example.model.Groupe;
+import org.example.model.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -89,12 +90,21 @@ public class EventFormController {
     @FXML
     private void handleCancel() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/community_home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/community_home.fxml"));
+            Parent root = loader.load();
+            CommunityController ctrl = loader.getController();
+            ctrl.setCurrentUser(currentUser);
             titreField.getScene().setRoot(root);
         } catch (IOException e) { e.printStackTrace(); }
     }
 
     private Evenement editingEvent = null;
+    private User currentUser = null;
+
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
     public void setEventData(Evenement e) {
         this.editingEvent = e;
         titreField.setText(e.getTitreEvent());

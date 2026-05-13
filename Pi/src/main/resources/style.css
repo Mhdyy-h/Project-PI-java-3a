@@ -405,3 +405,40 @@
     -fx-font-size: 12px;
     -fx-text-fill: #666;
 }
+
+
+/* ==================== FIX AFFICHAGE TABLES ==================== */
+
+/* Fix pour l'affichage correct du texte dans les cellules de table */
+.table-view .table-cell {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 8px 12px;
+}
+
+.table-view .table-cell .text {
+    -fx-fill: #374151;
+}
+
+.table-view .column-header .label {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .column-header .text {
+    -fx-fill: #6B7280;
+}
+
+/* Hauteur de ligne appropriée */
+.table-view .table-row-cell {
+    -fx-cell-size: 48px;
+}
+
+/* Amélioration de la lisibilité */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFBFC;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #F0F4FF;
+}
+
+/* ==================== FIN FIX TABLES ==================== */
