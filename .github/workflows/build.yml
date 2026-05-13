@@ -1,0 +1,39 @@
+name: Build BioSync
+
+on:
+  push:
+    branches: [ integration_final, main ]
+  pull_request:
+    branches: [ integration_final, main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build fat JAR
+        working-directory: Pi
+        run: mvn -B clean package -DskipTests
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BioSync-App
+          path: Pi/target/ProjetJDBC-1.0-SNAPSHOT-fat.jar
+          retention-days: 30
+
+      - name: Show build result
+        working-directory: Pi
+        run: |
+          echo "=== Build complete ==="
+          dir target\*.jar
