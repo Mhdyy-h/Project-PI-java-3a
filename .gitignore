@@ -27,3 +27,5 @@ Thumbs.db
 # User data
 Pi/uploads/
 Pi/user_data/
+
+Pi/logs/
