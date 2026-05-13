@@ -23,10 +23,12 @@ import org.example.model.User;
 import org.example.model.Notification;
 import org.example.controller.ConsultationController;
 import org.example.controller.PrescriptionController;
+import org.example.service.NavigationService;
 
 import java.io.IOException;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
 
 public class RendezVousController {
     
@@ -114,36 +116,66 @@ public class RendezVousController {
                 // Admin can manage all RDVs
                 canManageRdv = true;
             } else if (currentUser.isSpecialiste() && 
-                       selected.getSpecialisteId() == currentUser.getId()) {
+                       selected != null && selected.getSpecialisteId() == currentUser.getId()) {
                 // Specialiste (including hybrid) can only manage RDVs assigned to them
                 canManageRdv = true;
             }
         }
         
         // PATIENT permissions - can edit/delete their own RDVs
+        System.out.println("🔍 DEBUG: isPatient(): " + currentUser.isPatient());
         if (currentUser.isPatient()) {
-            boolean isOwnRDV = selected.getPatientId() == currentUser.getId();
-            boolean canModify = isOwnRDV && 
-                               !"confirmé".equalsIgnoreCase(selected.getStatut()) &&
-                               !"annulé".equalsIgnoreCase(selected.getStatut());
-            
-            editButton.setDisable(!canModify);
-            deleteButton.setDisable(!isOwnRDV); // Can delete even if confirmed
-            
-            // Patients cannot see confirm/cancel buttons
-            confirmButton.setVisible(false);
-            cancelButton.setVisible(false);
+            if (selected != null) {
+                boolean isOwnRDV = selected.getPatientId() == currentUser.getId();
+                boolean isConfirmed = "confirmé".equalsIgnoreCase(selected.getStatut());
+                boolean canModify = isOwnRDV && !isConfirmed && !"annulé".equalsIgnoreCase(selected.getStatut());
+                
+                editButton.setDisable(!canModify);
+                deleteButton.setDisable(!isOwnRDV); // Can delete even if confirmed
+                
+                editButton.setVisible(true);
+                editButton.setManaged(true);
+                deleteButton.setVisible(true);
+                deleteButton.setManaged(true);
+                
+                // Patients cannot see confirm/cancel buttons
+                confirmButton.setVisible(false);
+                confirmButton.setManaged(false);
+                cancelButton.setVisible(false);
+                cancelButton.setManaged(false);
+            } else {
+                // No selection - disable all buttons
+                editButton.setDisable(true);
+                deleteButton.setDisable(true);
+                confirmButton.setDisable(true);
+                cancelButton.setDisable(true);
+            }
         }
         
         // SPECIALIST permissions - can confirm/cancel their own pending RDVs
         else if (currentUser.isSpecialiste()) {
-            boolean isOwnRDV = selected.getSpecialisteId() == currentUser.getId();
-            boolean canConfirmCancel = isOwnRDV && 
-                                       !"confirmé".equalsIgnoreCase(selected.getStatut()) &&
-                                       !"annulé".equalsIgnoreCase(selected.getStatut());
+            if (selected != null) {
+                boolean isOwnRDV = selected.getSpecialisteId() == currentUser.getId();
+                boolean isConfirmed = "confirmé".equalsIgnoreCase(selected.getStatut());
+                boolean canConfirmCancel = isOwnRDV && !isConfirmed && !"annulé".equalsIgnoreCase(selected.getStatut());
+                
+                confirmButton.setDisable(!canConfirmCancel);
+                cancelButton.setDisable(!canConfirmCancel);
+            } else {
+                confirmButton.setDisable(true);
+                cancelButton.setDisable(true);
+            }
             
-            confirmButton.setDisable(!canConfirmCancel);
-            cancelButton.setDisable(!canConfirmCancel);
+            confirmButton.setVisible(true);
+            confirmButton.setManaged(true);
+            cancelButton.setVisible(true);
+            cancelButton.setManaged(true);
+            
+            // Specialists cannot edit/delete patient RDVs
+            editButton.setVisible(false);
+            editButton.setManaged(false);
+            deleteButton.setVisible(false);
+            deleteButton.setManaged(false);
         }
         
         // ADMIN permissions - can do everything
@@ -152,6 +184,14 @@ public class RendezVousController {
             deleteButton.setDisable(false);
             confirmButton.setDisable(false);
             cancelButton.setDisable(false);
+            editButton.setVisible(true);
+            editButton.setManaged(true);
+            deleteButton.setVisible(true);
+            deleteButton.setManaged(true);
+            confirmButton.setVisible(true);
+            confirmButton.setManaged(true);
+            cancelButton.setVisible(true);
+            cancelButton.setManaged(true);
         }
     }
     
@@ -162,15 +202,18 @@ public class RendezVousController {
             deleteButton.setVisible(false);
             confirmButton.setVisible(false);
             cancelButton.setVisible(false);
+            addButton.setVisible(false);
             return;
         }
         
-        // For patients: hide confirm/cancel buttons
+        // For patients: show add button, hide confirm/cancel buttons
         if (currentUser.isPatient()) {
             confirmButton.setVisible(false);
             cancelButton.setVisible(false);
             editButton.setVisible(true);
             deleteButton.setVisible(true);
+            addButton.setVisible(true); // Allow patients to create RDVs
+            addButton.setManaged(true);
         }
         // For specialists: only show confirm/cancel buttons
         else if (currentUser.isSpecialiste()) {
@@ -178,6 +221,8 @@ public class RendezVousController {
             cancelButton.setVisible(true);
             editButton.setVisible(false);
             deleteButton.setVisible(false);
+            addButton.setVisible(true); // Allow specialists to create RDVs
+            addButton.setManaged(true);
             
             confirmButton.setManaged(true);
             cancelButton.setManaged(true);
@@ -190,6 +235,8 @@ public class RendezVousController {
             cancelButton.setVisible(true);
             editButton.setVisible(true);
             deleteButton.setVisible(true);
+            addButton.setVisible(true); // Allow admins to create RDVs
+            addButton.setManaged(true);
         }
         
         // Force UI update
@@ -380,24 +427,53 @@ public class RendezVousController {
                 boolean isPatient = currentUser != null && currentUser.isPatient();
                 boolean isConfirmed = "confirmé".equalsIgnoreCase(rdv.getStatut());
                 boolean isCancelled = "annulé".equalsIgnoreCase(rdv.getStatut());
-                boolean isOwnRDVSpecialist = isSpecialist && rdv.getSpecialisteId() == currentUser.getId();
+                boolean isTeleconsultationActive = rdv.isSessionActive();
+                boolean isOwnRDVSpecialist = isSpecialist && rdv.getSpecialisteId() != null && rdv.getSpecialisteId() == currentUser.getId();
                 boolean isOwnRDVPatient = isPatient && rdv.getPatientId() == currentUser.getId();
+                
+                // Debug output for action column
+                System.out.println("🔍 ACTION DEBUG: RDV #" + rdv.getId() + 
+                                 " | isSpecialist=" + isSpecialist + 
+                                 " | isOwnRDVSpecialist=" + isOwnRDVSpecialist +
+                                 " | specialiste_id=" + rdv.getSpecialisteId() + 
+                                 " | currentUser.getId()=" + currentUser.getId() +
+                                 " | status=" + rdv.getStatut());
                 
                 HBox currentButtonsBox = new HBox(3);
                 
-                // PATIENT: Show edit/delete for their own RDVs
-                if (isPatient && isOwnRDVPatient) {
+                // PATIENT: Show edit/delete for their own RDVs (only if not confirmed)
+                if (isPatient && isOwnRDVPatient && !isConfirmed) {
                     currentButtonsBox.getChildren().addAll(editBtn, deleteBtn);
+                } else if (isPatient && isOwnRDVPatient && isConfirmed) {
+                    // Patient can view their confirmed RDV but no edit/delete
+                    Button viewBtn = new Button("👁 Voir");
+                    viewBtn.setStyle("-fx-background-color: #6b7280; -fx-text-fill: white; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-padding: 4 8 4 8;");
+                    viewBtn.setOnAction(e -> {
+                        // Show RDV details dialog
+                        showAlert("Détails RDV", "RDV #" + rdv.getId() + "\nPatient: " + rdv.getPatientNom() + "\nDate: " + rdv.getDateHeure() + "\nStatut: " + rdv.getStatut(), Alert.AlertType.INFORMATION);
+                    });
+                    currentButtonsBox.getChildren().add(viewBtn);
+                }
+                
+                // PATIENT: Show join call button for teleconsultation when active
+                if (isPatient && isOwnRDVPatient && isConfirmed && isTeleconsultationActive) {
+                    Button joinCallBtn = new Button("📞 Rejoindre");
+                    joinCallBtn.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-radius: 4; -fx-padding: 4 8 4 8;");
+                    joinCallBtn.setOnAction(e -> {
+                        joinTeleconsultation(rdv);
+                    });
+                    currentButtonsBox.getChildren().add(joinCallBtn);
                 }
                 
                 // SPECIALIST: Show confirm/cancel for their own pending RDVs
                 if (isSpecialist && isOwnRDVSpecialist && !isConfirmed && !isCancelled) {
+                    System.out.println("🔍 Adding Confirm/Cancel buttons for RDV #" + rdv.getId());
                     currentButtonsBox.getChildren().addAll(confirmBtn, cancelBtn);
-                }
-                
-                // SPECIALIST: Show start consultation for their own confirmed RDVs
-                if (isSpecialist && isOwnRDVSpecialist && isConfirmed) {
+                } else if (isSpecialist && isOwnRDVSpecialist && isConfirmed && !isTeleconsultationActive) {
+                    System.out.println("🔍 Adding Start Consultation button for RDV #" + rdv.getId());
                     currentButtonsBox.getChildren().add(startConsultBtn);
+                } else if (isSpecialist) {
+                    System.out.println("🔍 Specialist RDV #" + rdv.getId() + " - no action buttons (status: " + rdv.getStatut() + ")");
                 }
                 
                 if (currentButtonsBox.getChildren().isEmpty()) {
@@ -411,7 +487,7 @@ public class RendezVousController {
         rendezVousTable.getColumns().add(actionColumn);
     }
     
-    private void loadRendezVous() {
+    public void loadRendezVous() {
         try {
             List<RendezVous> rendezVous;
             
@@ -420,12 +496,35 @@ public class RendezVousController {
                 // If logged in as specialiste (including hybrid), only show RDVs assigned to this specialiste
                 rendezVous = RendezVousDAO.getRendezVousBySpecialiste(currentUser.getId());
                 System.out.println("🔍 Specialist " + currentUser.getNomComplet() + " viewing " + rendezVous.size() + " RDVs assigned to them");
+                System.out.println("🔍 Specialist must use action buttons to accept/cancel their assigned RDVs");
+                
+                // If specialist has no RDVs, show guidance message
+                if (rendezVous.isEmpty()) {
+                    System.out.println("🔍 Specialist has no RDVs assigned!");
+                    System.out.println("🔍 Tip: Click 'Actualiser' to assign some RDVs for testing, or ask admin to assign RDVs to you.");
+                    updateStatusLabel("Aucun RDV assigné - Cliquez sur 'Actualiser' pour en assigner");
+                }
+                
+                System.out.println("🔍 DEBUG: First 3 RDV IDs:");
+                for (int i = 0; i < Math.min(3, rendezVous.size()); i++) {
+                    System.out.println("🔍 RDV #" + (i+1) + ": ID=" + rendezVous.get(i).getId() + ", specialiste_id=" + rendezVous.get(i).getSpecialisteId());
+                }
             } else if (currentUser != null && currentUser.isAdmin()) {
                 // Admin can see all RDVs
                 rendezVous = RendezVousDAO.getAllRendezVous();
+            } else if (currentUser != null && currentUser.isPatient()) {
+                // Regular users (patients) can only see their own RDVs
+                rendezVous = RendezVousDAO.getRendezVousByPatient(currentUser.getId());
+                System.out.println("🔍 Patient " + currentUser.getNomComplet() + " viewing " + rendezVous.size() + " RDVs assigned to them");
             } else {
                 // Default - show all RDVs
                 rendezVous = RendezVousDAO.getAllRendezVous();
+            }
+            
+            // Safety check: don't clear if new list is empty and current list has data
+            if (rendezVous.isEmpty() && !rendezVousList.isEmpty()) {
+                System.out.println("🔍 WARNING: New list is empty but current list has " + rendezVousList.size() + " items. Preserving current data.");
+                return; // Don't clear the table
             }
             
             rendezVousList.clear();
@@ -508,6 +607,46 @@ public class RendezVousController {
                 return;
             }
             
+            // Use simplified edit interface for regular users
+            if (currentUser != null && currentUser.isPatient()) {
+                showSimpleEditDialog(selected);
+            } else {
+                showFullEditDialog(selected);
+            }
+            
+        } catch (Exception e) {
+            showError("Erreur", "Impossible d'ouvrir la boîte de dialogue: " + e.getMessage());
+        }
+    }
+    
+    private void showSimpleEditDialog(RendezVous selected) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/edit_rdv.fxml"));
+            Parent root = loader.load();
+            
+            EditRDVController controller = loader.getController();
+            controller.setRendezVous(selected);
+            controller.setCurrentUser(currentUser);
+            controller.setParentController(this);
+            
+            Stage dialog = new Stage();
+            dialog.setTitle("Modifier Rendez-vous");
+            dialog.setScene(new Scene(root));
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setResizable(false);
+            
+            dialog.showAndWait();
+            
+            // Refresh data after dialog closes
+            loadRendezVous();
+            
+        } catch (Exception e) {
+            showError("Erreur", "Impossible d'ouvrir la boîte de dialogue: " + e.getMessage());
+        }
+    }
+    
+    private void showFullEditDialog(RendezVous selected) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/rendezvous_dialog.fxml"));
             Parent root = loader.load();
             
@@ -575,25 +714,12 @@ public class RendezVousController {
                 return;
             }
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/rendezvous_dialog.fxml"));
-            Parent root = loader.load();
-            
-            RendezVousDialogController controller = loader.getController();
-            controller.setMode(RendezVousDialogController.Mode.EDIT);
-            controller.setRendezVous(rdv);
-            controller.setCurrentUser(currentUser);
-            
-            Stage dialog = new Stage();
-            dialog.setTitle("Modifier Rendez-vous");
-            dialog.setScene(new Scene(root));
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.setResizable(false);
-            
-            dialog.getScene().getRoot().setUserData(this);
-            
-            dialog.showAndWait();
-            
-            loadRendezVous();
+            // Use simplified edit interface for regular users
+            if (currentUser != null && currentUser.isPatient()) {
+                showSimpleEditDialog(rdv);
+            } else {
+                showFullEditDialog(rdv);
+            }
             
         } catch (Exception e) {
             showError("Erreur", "Impossible d'ouvrir la boîte de dialogue: " + e.getMessage());
@@ -691,6 +817,45 @@ public class RendezVousController {
     }
     
     // Helper methods for row-specific actions
+    @FXML
+    private void handleAssignRDVs() {
+        assignSomeRDVsToSpecialist();
+    }
+    private void assignSomeRDVsToSpecialist() {
+        try {
+            if (currentUser == null || !currentUser.isSpecialiste()) {
+                return;
+            }
+            
+            // Get all RDVs and assign first 3 unassigned ones to current specialist
+            List<RendezVous> allRDVs = RendezVousDAO.getAllRendezVous();
+            int assignedCount = 0;
+            
+            for (RendezVous rdv : allRDVs) {
+                if (rdv.getSpecialisteId() == null && assignedCount < 3) {
+                    rdv.setSpecialisteId(currentUser.getId());
+                    if (RendezVousDAO.updateRendezVous(rdv)) {
+                        assignedCount++;
+                        System.out.println("🔍 Assigned RDV #" + rdv.getId() + " to " + currentUser.getNomComplet());
+                    }
+                }
+            }
+            
+            if (assignedCount > 0) {
+                showInfo("Succès", assignedCount + " RDVs assignés à " + currentUser.getNomComplet() + "!\nVous pouvez maintenant les confirmer ou les annuler.");
+                System.out.println("🔍 Assignment successful: " + assignedCount + " RDVs assigned");
+                // Reload the RDVs to show the newly assigned ones
+                loadRendezVous();
+                updateStatistics();
+            } else {
+                showInfo("Info", "Aucun RDV disponible à assigner");
+            }
+            
+        } catch (Exception e) {
+            showError("Erreur", "Erreur lors de l'assignation: " + e.getMessage());
+        }
+    }
+    
     private void confirmRendezVous(RendezVous rdv) {
         try {
             if (rdv == null) {
@@ -875,16 +1040,42 @@ public class RendezVousController {
     // Refresh action method
     @FXML
     private void handleRefresh() {
-        loadRendezVous();
+        try {
+            System.out.println("🔍 Refresh clicked for user: " + (currentUser != null ? currentUser.getNomComplet() : "null"));
+            
+            // If specialist has no RDVs, assign some for testing
+            if (currentUser != null && currentUser.isSpecialiste()) {
+                List<RendezVous> currentRDVs = RendezVousDAO.getRendezVousBySpecialiste(currentUser.getId());
+                System.out.println("🔍 Specialist currently has " + currentRDVs.size() + " RDVs");
+                
+                if (currentRDVs.isEmpty()) {
+                    System.out.println("🔍 Specialist has no RDVs, assigning some for testing...");
+                    assignSomeRDVsToSpecialist();
+                } else {
+                    System.out.println("🔍 Specialist has RDVs, normal refresh...");
+                    loadRendezVous();
+                    updateStatistics();
+                    updateStatusLabel("Rendez-vous actualisés");
+                }
+            } else {
+                System.out.println("🔍 Non-specialist user, normal refresh...");
+                loadRendezVous();
+                updateStatistics();
+                updateStatusLabel("Rendez-vous actualisés");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("❌ Error during refresh: " + e.getMessage());
+            e.printStackTrace();
+            updateStatusLabel("Erreur lors de l'actualisation");
+        }
     }
     
-    // Retour action method
     @FXML
     private void handleRetour() {
         // Navigate back to dashboard
         try {
-            Stage stage = (Stage) rendezVousTable.getScene().getWindow();
-            stage.close();
+            NavigationService.getInstance().navigateToDashboard(rendezVousTable, currentUser);
         } catch (Exception e) {
             showError("Erreur", "Impossible de retourner: " + e.getMessage());
         }
@@ -1103,6 +1294,11 @@ public class RendezVousController {
                          rdv.getFormattedDateHeure() + " avec " + rdv.getSpecialisteNom() + ".";
                 type = "warning";
                 break;
+            case "teleconsultation_started":
+                title = "📞 Téléconsultation démarrée";
+                message = "Dr. " + rdv.getSpecialisteNom() + " a démarré votre téléconsultation. Cliquez pour rejoindre l'appel.";
+                type = "success";
+                break;
         }
         
         addNotification(new Notification(title, message, type, currentUser.getId(), rdv.getId()));
@@ -1130,23 +1326,36 @@ public class RendezVousController {
         }
         
         try {
-            // Load consultation interface
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/consultation_interface.fxml"));
-            Parent root = loader.load();
-            
-            // Get controller and pass RDV data
-            ConsultationController controller = loader.getController();
-            controller.setRendezVous(rdv);
-            controller.setCurrentUser(currentUser);
-            controller.setRendezVousController(this); // Pass reference back to this controller
-            
-            // Create and show stage
-            Stage stage = new Stage();
-            stage.setTitle("🩺 Consultation - " + rdv.getPatientNom());
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(true);
-            stage.showAndWait();
+            // Check if it's a teleconsultation
+            if ("téléconsultation".equalsIgnoreCase(rdv.getMode())) {
+                // Start teleconsultation session
+                rdv.startSession();
+                RendezVousDAO.updateRendezVous(rdv);
+                
+                // Open teleconsultation interface for specialist
+                openTeleconsultationInterface(rdv, true);
+                
+                // Notify patient
+                addAppointmentNotification(rdv, "teleconsultation_started");
+            } else {
+                // Regular consultation
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/consultation_interface.fxml"));
+                Parent root = loader.load();
+                
+                // Get controller and pass RDV data
+                ConsultationController controller = loader.getController();
+                controller.setRendezVous(rdv);
+                controller.setCurrentUser(currentUser);
+                controller.setRendezVousController(this); // Pass reference back to this controller
+                
+                // Create and show stage
+                Stage stage = new Stage();
+                stage.setTitle("🩺 Consultation - " + rdv.getPatientNom());
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setResizable(true);
+                stage.showAndWait();
+            }
             
             // Refresh RDV list after consultation closes
             loadRendezVous();
@@ -1158,8 +1367,61 @@ public class RendezVousController {
         }
     }
     
+    // Join teleconsultation method for patients
+    private void joinTeleconsultation(RendezVous rdv) {
+        if (currentUser == null || !currentUser.isPatient()) {
+            showAlert("Erreur", "Seul un patient peut rejoindre une téléconsultation.", Alert.AlertType.ERROR);
+            return;
+        }
+        
+        if (!rdv.isSessionActive()) {
+            showAlert("Erreur", "La téléconsultation n'a pas encore commencé.", Alert.AlertType.ERROR);
+            return;
+        }
+        
+        try {
+            // Open teleconsultation interface for patient
+            openTeleconsultationInterface(rdv, false);
+        } catch (Exception e) {
+            showAlert("Erreur", "Impossible de rejoindre la téléconsultation: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+    
+    // Open teleconsultation interface
+    private void openTeleconsultationInterface(RendezVous rdv, boolean isSpecialist) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/teleconsultation_interface.fxml"));
+            Parent root = loader.load();
+            
+            // Get controller and pass RDV data
+            TeleconsultationController controller = loader.getController();
+            controller.setRendezVous(rdv);
+            controller.setCurrentUser(currentUser);
+            controller.setIsSpecialist(isSpecialist);
+            
+            // Create and show stage
+            Stage stage = new Stage();
+            stage.setTitle("📞 Téléconsultation - " + (isSpecialist ? rdv.getPatientNom() : rdv.getSpecialisteNom()));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.NONE); // Non-modal for real-time communication
+            stage.setResizable(true);
+            stage.show();
+            
+        } catch (Exception e) {
+            showAlert("Erreur", "Impossible d'ouvrir l'interface de téléconsultation: " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+    
     // Method to open prescription interface (called from ConsultationController)
     public void openPrescriptionInterface(RendezVous rdv) {
+        // Only specialists can access prescription interface
+        if (currentUser == null || !currentUser.isSpecialiste()) {
+            showAlert("Accès refusé", "Seul un spécialiste peut accéder à l'interface de prescription.", Alert.AlertType.ERROR);
+            return;
+        }
+        
         try {
             // Load prescription interface
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/prescription_interface.fxml"));

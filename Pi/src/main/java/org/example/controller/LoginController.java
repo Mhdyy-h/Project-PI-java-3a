@@ -212,7 +212,7 @@ public class LoginController {
             updateStatus(result.getMessage(), result.isSuccess());
             if (result.isSuccess()) {
                 rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
-                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+                navigationService.navigateToDashboard(emailField, result.getUser());
             }
         } catch (Exception e) {
             System.err.println("Registration error: " + e.getMessage());
@@ -243,7 +243,7 @@ public class LoginController {
             updateStatus(result.getMessage(), result.isSuccess());
             if (result.isSuccess()) {
                 rateLimiter.resetAttempts(email); // Réinitialiser en cas de succès
-                navigationService.navigateToDashboard((Node) event.getSource(), result.getUser());
+                navigationService.navigateToDashboard(emailField, result.getUser());
             }
         } catch (Exception e) {
             System.err.println("Login error: " + e.getMessage());
@@ -265,7 +265,8 @@ public class LoginController {
 
     @FXML
     public void handleBack(ActionEvent event) {
-        handleRegisterLink(event);
+        isLoginMode = true;
+        setLoginMode(true);
     }
 
     @FXML

@@ -185,7 +185,7 @@ public class DashboardCognitifController {
     @FXML
     public void lancerQuiz() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/QuizView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/QuizView.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) labelElo.getScene().getWindow();
             Scene scene = new Scene(root);
@@ -199,7 +199,7 @@ public class DashboardCognitifController {
     @FXML
     public void ouvrirMultijoueur() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SalonMultijoueur.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SalonMultijoueur.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) labelElo.getScene().getWindow();
             Scene scene = new Scene(root);

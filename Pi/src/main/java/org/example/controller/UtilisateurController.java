@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.example.service.PdfReportService;
+import org.example.service.AvatarService;
 import org.example.service.ValidationResult;
 import org.example.service.ValidationService;
 
@@ -489,7 +491,7 @@ public class UtilisateurController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/utilisateurs.fxml"));
             Parent root = loader.load();
-            UtilisateurController ctrl = loader.getController();
+            UtilisateursController ctrl = loader.getController();
             ctrl.setCurrentUser(currentUser);
             Stage stage = (Stage) nomField.getScene().getWindow();
             Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
@@ -504,12 +506,24 @@ public class UtilisateurController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
             Parent root = loader.load();
-            AdminController ctrl = loader.getController();
+            DashboardController ctrl = loader.getController();
             ctrl.setUser(currentUser);
-            Stage stage = (Stage) searchField.getScene().getWindow();
-            Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
-            stage.setScene(scene);
-            stage.setTitle("BioSync - Administration");
+            
+            // Get current stage from any available UI element
+            Stage stage = null;
+            if (searchField != null && searchField.getScene() != null) {
+                stage = (Stage) searchField.getScene().getWindow();
+            } else if (nomField != null && nomField.getScene() != null) {
+                stage = (Stage) nomField.getScene().getWindow();
+            } else if (statusLabel != null && statusLabel.getScene() != null) {
+                stage = (Stage) statusLabel.getScene().getWindow();
+            }
+            
+            if (stage != null) {
+                Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
+                stage.setScene(scene);
+                stage.setTitle("BioSync - Administration");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -853,6 +867,38 @@ public class UtilisateurController {
         if (field != null) {
             field.setStyle("");
             field.setTooltip(null);
+        }
+    }
+    
+    @FXML
+    private void handleGenerateAvatar() {
+        try {
+            AvatarService avatarService = AvatarService.getInstance();
+            String email = emailField != null ? emailField.getText() : "";
+            
+            if (email.isEmpty()) {
+                updateStatus("Veuillez entrer un email pour générer un avatar", "error");
+                return;
+            }
+            
+            // Generate avatar with random style
+            Image avatarImage = avatarService.generateAvatar(email, "lorelei");
+            
+            if (avatarImage != null) {
+                // Display the avatar
+                if (avatarCircle != null) {
+                    avatarCircle.setFill(new ImagePattern(avatarImage));
+                    avatarCircle.setVisible(true);
+                }
+                if (avatarLabel != null) {
+                    avatarLabel.setVisible(false);
+                }
+                updateStatus("Avatar généré avec succès", "success");
+            } else {
+                updateStatus("Erreur lors de la génération de l'avatar", "error");
+            }
+        } catch (Exception e) {
+            updateStatus("Erreur: " + e.getMessage(), "error");
         }
     }
 }

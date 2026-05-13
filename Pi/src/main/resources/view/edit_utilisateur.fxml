@@ -11,7 +11,7 @@
             fx:controller="org.example.controller.UtilisateurController"
             prefWidth="1100" prefHeight="700"
             style="-fx-background-color: #f0f2f8;"
-            stylesheets="@../styles.css">
+            stylesheets="@../style.css">
 
     <top>
         <HBox alignment="CENTER_LEFT"

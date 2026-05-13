@@ -10,7 +10,7 @@
             fx:controller="org.example.controller.RendezVousController"
             prefWidth="1400" prefHeight="700"
             style="-fx-background-color: #f0f2f8;"
-            stylesheets="@../styles.css">
+            stylesheets="@../style.css">
 
     <top>
         <!-- Page Header Bar -->

@@ -351,7 +351,7 @@ public class SalonMultijoueurController implements MultiplayerService.Multiplaye
     public void retourDashboard() {
         arreterService();
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/DashboardCognitif.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/DashboardCognitif.fxml"));
             Stage stage = (Stage) vueLobby.getScene().getWindow();
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());

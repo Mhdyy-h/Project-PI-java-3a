@@ -341,4 +341,26 @@ public class SpecialisteDAO {
             return false;
         }
     }
+    
+    // Check if specialist entry exists for a user
+    public static boolean specialisteExistsForUser(Integer userId) {
+        String sql = "SELECT COUNT(*) FROM specialiste WHERE utilisateur_id = ?";
+        
+        try (Connection conn = getFreshConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+            return false;
+            
+        } catch (SQLException e) {
+            System.err.println("Error checking if specialist exists for user: " + e.getMessage());
+            return false;
+        }
+    }
 }

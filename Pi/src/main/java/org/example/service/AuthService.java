@@ -69,9 +69,16 @@ public class AuthService {
             return AuthResult.failure("Veuillez remplir tous les champs");
         }
 
+        System.out.println("🔍 AUTH DEBUG: Attempting login for email: " + email);
+        System.out.println("🔍 AUTH DEBUG: Password provided: " + password);
+
         User user = UserDAO.login(email, password);
 
         if (user != null) {
+            System.out.println("✅ AUTH DEBUG: Login successful for user: " + user.getNomComplet());
+            System.out.println("🔍 AUTH DEBUG: User roles: " + user.getRoles());
+            System.out.println("🔍 AUTH DEBUG: isSpecialiste(): " + user.isSpecialiste());
+            
             // Log successful login
             ActivityLogDAO.insertLog(new org.example.model.ActivityLog(
                 user.getId(), user.getNomComplet(), user.getEmail(),
@@ -80,8 +87,18 @@ public class AuthService {
             ));
             return AuthResult.success(user, "Connexion réussie!");
         } else {
+            System.out.println("❌ AUTH DEBUG: Login failed - UserDAO returned null");
+            
             // Log failed login — try to find user by email to get the name
             User found = UserDAO.getUserByEmail(email);
+            if (found != null) {
+                System.out.println("🔍 AUTH DEBUG: Found user in database: " + found.getNomComplet());
+                System.out.println("🔍 AUTH DEBUG: User roles from DB: " + found.getRoles());
+                System.out.println("🔍 AUTH DEBUG: isSpecialiste() from DB: " + found.isSpecialiste());
+            } else {
+                System.out.println("❌ AUTH DEBUG: User not found in database for email: " + email);
+            }
+            
             String nom = found != null ? found.getNomComplet() : "Inconnu";
             String roles = found != null && found.getRoles() != null ? found.getRoles() : "";
             ActivityLogDAO.insertLog(new org.example.model.ActivityLog(

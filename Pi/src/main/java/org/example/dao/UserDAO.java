@@ -44,14 +44,28 @@ public class UserDAO {
 
     public static User login(String email, String motDePasse) {
         String sql = "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ?";
+        System.out.println(" USERDAO DEBUG: Login attempt for email: " + email);
+        System.out.println(" USERDAO DEBUG: Password length: " + (motDePasse != null ? motDePasse.length() : "null"));
+        System.out.println(" USERDAO DEBUG: SQL: " + sql);
+        
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
             ps.setString(2, motDePasse);
+            System.out.println(" USERDAO DEBUG: Prepared statement parameters set");
+            
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapUser(rs);
+                System.out.println(" USERDAO DEBUG: Query executed, checking results...");
+                if (rs.next()) {
+                    System.out.println(" USERDAO DEBUG: User found in database!");
+                    return mapUser(rs);
+                } else {
+                    System.out.println(" USERDAO DEBUG: No results found from query");
+                }
             }
-        } catch (SQLException e) { }
+        } catch (SQLException e) {
+            System.out.println(" USERDAO DEBUG: SQLException: " + e.getMessage());
+        }
         return null;
     }
 
@@ -193,6 +207,40 @@ public class UserDAO {
         } catch (SQLException e) { return false; }
     }
 
+    public static List<User> getAccessiblePatients(User currentUser) {
+        List<User> patients = new ArrayList<>();
+        
+        if (currentUser == null) {
+            // If no current user, return all users with patient role
+            String sql = "SELECT * FROM utilisateur WHERE roles LIKE ? ORDER BY nom_complet";
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, "%ROLE_USER%");
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) patients.add(mapUser(rs));
+                }
+            } catch (SQLException e) { }
+            return patients;
+        }
+        
+        if (currentUser.isPatient()) {
+            // Patient can only see themselves
+            patients.add(currentUser);
+            return patients;
+        }
+        
+        // Admin and specialists see all patients
+        String sql = "SELECT * FROM utilisateur WHERE roles LIKE ? ORDER BY nom_complet";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%ROLE_USER%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) patients.add(mapUser(rs));
+            }
+        } catch (SQLException e) { }
+        return patients;
+    }
+
     private static User mapUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
@@ -202,10 +250,18 @@ public class UserDAO {
         user.setRoles(rs.getString("roles"));
         user.setScoreGlobal(rs.getInt("score_global"));
         user.setPhotoProfil(rs.getString("photo_profil"));
-        Date d = rs.getDate("date_inscription");
-        if (d != null) {
-            user.setDateInscription(String.format("%02d/%02d/%04d", d.getDate(), d.getMonth() + 1, d.getYear() + 1900));
+        
+        // Handle zero date values properly
+        try {
+            Date d = rs.getDate("date_inscription");
+            if (d != null) {
+                user.setDateInscription(String.format("%02d/%02d/%04d", d.getDate(), d.getMonth() + 1, d.getYear() + 1900));
+            }
+        } catch (SQLException e) {
+            // Handle zero date or invalid date
+            System.out.println(" USERDAO DEBUG: Handling invalid date_inscription, setting to null");
+            user.setDateInscription(null);
         }
+        
         return user;
-    }
-}
+    }}

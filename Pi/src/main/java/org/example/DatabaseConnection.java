@@ -61,6 +61,21 @@ public class DatabaseConnection {
         return connection;
     }
 
+    public static Connection getFreshConnection() {
+        try {
+            String url = properties.getProperty("db.url");
+            String username = properties.getProperty("db.username");
+            String password = properties.getProperty("db.password");
+            String driver = properties.getProperty("db.driver");
+
+            Class.forName(driver);
+            return DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("❌ Fresh connection failed: " + e.getMessage());
+            return null;
+        }
+    }
+
     public static void closeConnection() {
         if (connection != null) {
             try {

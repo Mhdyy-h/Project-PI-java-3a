@@ -10,7 +10,7 @@
             fx:controller="org.example.controller.RendezVousDialogController"
             prefWidth="600" prefHeight="700"
             style="-fx-background-color: #f0f2f8;"
-            stylesheets="@../styles.css">
+            stylesheets="@../style.css">
 
     <top>
         <!-- Dialog Header -->

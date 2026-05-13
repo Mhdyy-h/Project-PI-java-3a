@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Pi" />
         <module name="ProjetJDBC" />
+        <module name="ProjetJDBC (1)" />
       </profile>
     </annotationProcessing>
   </component>

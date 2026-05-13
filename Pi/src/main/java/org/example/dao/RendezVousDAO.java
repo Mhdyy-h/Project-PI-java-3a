@@ -63,7 +63,7 @@ public class RendezVousDAO {
     // CREATE
     public static boolean createRendezVous(RendezVous rendezVous) {
         String sql = "INSERT INTO rendez_vous (date_heure, motif, statut, mode, patient_id, specialiste_id) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                     "VALUES (?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = getFreshConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -338,10 +338,10 @@ public class RendezVousDAO {
         return rv;
     }
     
-    // Get rendezvous by patient
+    // Get rendezvous by patient (only unassigned ones that patient can manage)
     public static List<RendezVous> getRendezVousByPatient(Integer patientId) {
         List<RendezVous> rendezVousList = new ArrayList<>();
-        String sql = "SELECT * FROM rendez_vous WHERE patient_id = ? ORDER BY date_heure DESC";
+        String sql = "SELECT * FROM rendez_vous WHERE patient_id = ? AND specialiste_id IS NULL ORDER BY date_heure DESC";
         
         try (Connection conn = getFreshConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

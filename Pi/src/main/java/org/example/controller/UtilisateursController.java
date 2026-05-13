@@ -281,7 +281,7 @@ public class UtilisateursController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/nouvel_utilisateur.fxml"));
             Parent root = loader.load();
-            NouvelUtilisateurController ctrl = loader.getController();
+            UtilisateurController ctrl = loader.getController();
             ctrl.setCurrentUser(currentUser);
             Stage stage = (Stage) searchField.getScene().getWindow();
             Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
@@ -301,9 +301,9 @@ public class UtilisateursController {
     @FXML
     private void handleRetour() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
             Parent root = loader.load();
-            AdminController ctrl = loader.getController();
+            DashboardController ctrl = loader.getController();
             ctrl.setUser(currentUser);
             Stage stage = (Stage) searchField.getScene().getWindow();
             Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());

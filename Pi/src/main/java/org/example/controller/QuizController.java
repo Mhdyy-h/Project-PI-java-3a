@@ -277,5 +277,10 @@ public class QuizController {
             AlertHelper.showError("Erreur", "Une erreur est survenue. Vérifiez votre connexion.");
         }
     }
+
+    @FXML
+    private void handleRetour() {
+        NavigationService.getInstance().navigateToDashboard(quizTable, currentUser);
+    }
 }
 

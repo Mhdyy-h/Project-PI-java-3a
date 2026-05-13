@@ -373,7 +373,7 @@ public class QuizViewController {
 
     private void naviguerVersResultats() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ResultatsSession.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ResultatsSession.fxml"));
             Parent root = loader.load();
             ResultatsSessionController ctrl = loader.getController();
             ctrl.chargerSession(session, reponses, questionsMap, eloAvantSession);

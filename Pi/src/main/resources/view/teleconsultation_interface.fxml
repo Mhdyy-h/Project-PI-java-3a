@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.TeleconsultationController" spacing="10" style="-fx-background-color: #f8f9fa; -fx-padding: 20;">
+    
+    <!-- Header -->
+    <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15; -fx-border-color: #e9ecef; -fx-border-radius: 10;">
+        <Label fx:id="titleLabel" text="Téléconsultation" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        <Label fx:id="participantLabel" text="Avec: " style="-fx-font-size: 14px; -fx-text-fill: #6c757d;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="statusLabel" text="Connexion en cours..." style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffc107; -fx-background-color: #fff3cd; -fx-padding: 5 10; -fx-background-radius: 15;"/>
+    </HBox>
+    
+    <!-- Video Container -->
+    <VBox fx:id="mainContainer" spacing="15" VBox.vgrow="ALWAYS">
+        <HBox fx:id="videoContainer" spacing="15" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-border-color: #e9ecef; -fx-border-radius: 10;">
+            
+            <!-- Local Video (Self) -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS" alignment="CENTER">
+                <Label text="Vous" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #495057;"/>
+                <StackPane style="-fx-background-color: #000; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" StackPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                    <MediaView fx:id="localVideoView" fitWidth="400" fitHeight="300" preserveRatio="true"/>
+                    <VBox alignment="BOTTOM_LEFT" StackPane.alignment="BOTTOM_LEFT">
+                        <Label text="📹 Vous" style="-fx-background-color: rgba(0,0,0,0.7); -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 5; -fx-font-size: 12px;"/>
+                    </VBox>
+                </StackPane>
+            </VBox>
+            
+            <!-- Remote Video (Participant) -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS" alignment="CENTER">
+                <Label text="Participant" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #495057;"/>
+                <StackPane style="-fx-background-color: #000; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" StackPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                    <MediaView fx:id="remoteVideoView" fitWidth="400" fitHeight="300" preserveRatio="true"/>
+                    <VBox alignment="BOTTOM_LEFT" StackPane.alignment="BOTTOM_LEFT">
+                        <Label text="📹 Participant" style="-fx-background-color: rgba(0,0,0,0.7); -fx-text-fill: white; -fx-padding: 5 10; -fx-background-radius: 5; -fx-font-size: 12px;"/>
+                    </VBox>
+                </StackPane>
+            </VBox>
+        </HBox>
+        
+        <!-- Controls -->
+        <HBox fx:id="controlsContainer" spacing="15" alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-border-color: #e9ecef; -fx-border-radius: 10;">
+            
+            <Button fx:id="toggleAudioButton" text="🎤 Audio" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 25; -fx-padding: 10 20; -fx-cursor: hand;">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+            
+            <Button fx:id="toggleVideoButton" text="📹 Vidéo" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 25; -fx-padding: 10 20; -fx-cursor: hand;">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+            
+            <Button fx:id="shareScreenButton" text="🖥️ Partager écran" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 25; -fx-padding: 10 20; -fx-cursor: hand;">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+            
+            <Button fx:id="chatButton" text="💬 Chat" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 25; -fx-padding: 10 20; -fx-cursor: hand;">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <Button fx:id="endCallButton" text="📞 Terminer l'appel" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 25; -fx-padding: 10 20; -fx-cursor: hand;">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+        </HBox>
+        
+        <!-- Appointment Info -->
+        <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15; -fx-border-color: #e9ecef; -fx-border-radius: 10;">
+            <Label text="Informations sur le rendez-vous" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+            <HBox spacing="20">
+                <VBox spacing="5">
+                    <Label text="Motif:" style="-fx-font-weight: bold; -fx-text-fill: #6c757d; -fx-font-size: 12px;"/>
+                    <Label text="Consultation médicale" style="-fx-text-fill: #495057; -fx-font-size: 14px;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Date:" style="-fx-font-weight: bold; -fx-text-fill: #6c757d; -fx-font-size: 12px;"/>
+                    <Label text="--" style="-fx-text-fill: #495057; -fx-font-size: 14px;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Mode:" style="-fx-font-weight: bold; -fx-text-fill: #6c757d; -fx-font-size: 12px;"/>
+                    <Label text="Téléconsultation" style="-fx-text-fill: #495057; -fx-font-size: 14px;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </VBox>
+    
+    <!-- Styles -->
+    <stylesheets>
+        <URL value="@../styles/style.css"/>
+    </stylesheets>
+    
+</VBox>

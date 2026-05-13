@@ -118,21 +118,41 @@ public class User {
 
     public boolean isSpecialiste() {
 
-        if (roles == null)
+        if (roles == null) {
+            System.out.println(" DEBUG: roles is null, returning false");
             return false;
+        }
 
-        String[] rolesArray = roles.split(",");
+        System.out.println(" DEBUG: Checking roles: " + roles);
+
+        // Handle both JSON array format and comma-separated format
+        String[] rolesArray;
+        if (roles.startsWith("[") && roles.endsWith("]")) {
+            // JSON format: ["ROLE_SPECIALISTE","ROLE_USER"]
+            String content = roles.substring(1, roles.length() - 1); // Remove [ and ]
+            rolesArray = content.split(",");
+            System.out.println(" DEBUG: JSON format detected, content: " + content);
+        } else {
+            // Comma-separated format: ROLE_SPECIALISTE,ROLE_USER
+            rolesArray = roles.split(",");
+            System.out.println(" DEBUG: Comma format detected");
+        }
 
         for (String role : rolesArray) {
+            // Clean up quotes and spaces
+            String cleanRole = role.replace("[", "").replace("]", "").replace("\"", "").trim();
+            System.out.println(" DEBUG: Checking role: '" + cleanRole + "'");
 
-            if (role.contains("SPECIALISTE")
-                    || role.contains("ROLE_SPECIALISTE")
-                    || role.contains("dr.SPECIALISTE")) {
+            if (cleanRole.contains("SPECIALISTE")
+                    || cleanRole.contains("ROLE_SPECIALISTE")
+                    || cleanRole.contains("dr.SPECIALISTE")) {
 
+                System.out.println(" DEBUG: SPECIALISTE found! Returning true");
                 return true;
             }
         }
 
+        System.out.println(" DEBUG: No specialist role found, returning false");
         return false;
     }
 

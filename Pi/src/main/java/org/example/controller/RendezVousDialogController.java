@@ -14,8 +14,8 @@ import org.example.dao.UserDAO;
 import org.example.model.RendezVous;
 import org.example.model.Specialiste;
 import org.example.model.User;
-import org.example.service.IntelligentScheduler;
-import org.example.service.AbsencePredictor;
+import org.example.metier.service.IntelligentScheduler;
+import org.example.metier.service.AbsencePredictor;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -94,6 +94,9 @@ public class RendezVousDialogController {
             
             // Load combo box data now that we have the user
             loadComboBoxData();
+            
+            // Apply field restrictions based on user role and current mode
+            handleModeChange();
         }
     }
     
@@ -361,6 +364,9 @@ public class RendezVousDialogController {
         
         System.out.println("Mode changed to: " + selectedMode + ", isPresentiel: " + isPresentiel);
         
+        // Check if current user is a regular user (patient) and mode is EDIT
+        boolean isRegularUserEdit = currentUser != null && currentUser.isPatient() && mode == Mode.EDIT;
+        
         // Show/hide the entire location section
         if (locationSection != null) {
             locationSection.setVisible(isPresentiel);
@@ -378,6 +384,52 @@ public class RendezVousDialogController {
                 lieuTextField.setPromptText("Entrez le lieu du rendez-vous");
             }
             System.out.println("Lieu field disabled: " + !isPresentiel);
+        }
+        
+        // For regular users in EDIT mode, disable specialist selection and only allow time, date, motif
+        if (isRegularUserEdit) {
+            // Disable specialist selection
+            if (specialisteComboBox != null) {
+                specialisteComboBox.setDisable(true);
+                System.out.println("Specialist combo disabled for regular user edit");
+            }
+            
+            // Disable patient selection (auto-selected)
+            if (patientComboBox != null) {
+                patientComboBox.setDisable(true);
+                System.out.println("Patient combo disabled for regular user edit");
+            }
+            
+            // Keep time, date, and motif enabled
+            if (timeComboBox != null) {
+                timeComboBox.setDisable(false);
+                System.out.println("Time combo enabled for regular user edit");
+            }
+            if (datePicker != null) {
+                datePicker.setDisable(false);
+                System.out.println("Date picker enabled for regular user edit");
+            }
+            if (motifTextArea != null) {
+                motifTextArea.setDisable(false);
+                System.out.println("Motif text area enabled for regular user edit");
+            }
+        } else {
+            // Normal mode - enable all fields
+            if (specialisteComboBox != null) {
+                specialisteComboBox.setDisable(false);
+            }
+            if (patientComboBox != null) {
+                patientComboBox.setDisable(false);
+            }
+            if (timeComboBox != null) {
+                timeComboBox.setDisable(false);
+            }
+            if (datePicker != null) {
+                datePicker.setDisable(false);
+            }
+            if (motifTextArea != null) {
+                motifTextArea.setDisable(false);
+            }
         }
     }
     

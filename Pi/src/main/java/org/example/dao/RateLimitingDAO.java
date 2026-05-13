@@ -171,4 +171,23 @@ public class RateLimitingDAO {
         }
         return 0;
     }
+
+    /**
+     * Supprime TOUTES les entrées de rate limiting.
+     * @return true si l'opération a réussi
+     */
+    public static boolean clearAllAttempts() {
+        String sql = "DELETE FROM " + TABLE_NAME;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("[RateLimitingDAO] ✅ " + rowsAffected + " entrées de rate limiting supprimées");
+            return true;
+        } catch (SQLException e) {
+            System.err.println("[RateLimitingDAO] ❌ Erreur clearAllAttempts: " + e.getMessage());
+            return false;
+        }
+    }
 }

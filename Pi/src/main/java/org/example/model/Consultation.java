@@ -18,6 +18,8 @@ public class Consultation {
     private List<Prescription> prescriptions;
     private String statut; // "en_cours", "terminee", "annulee"
     private LocalDateTime dateCreation;
+    private Integer patientId; // Direct link to patient for role-based filtering
+    private Integer specialisteId; // Direct link to specialist for role-based filtering
     
     public Consultation() {
         this.prescriptions = new ArrayList<>();
@@ -102,6 +104,22 @@ public class Consultation {
     
     public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
+    }
+    
+    public Integer getPatientId() {
+        return patientId;
+    }
+    
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
+    }
+    
+    public Integer getSpecialisteId() {
+        return specialisteId;
+    }
+    
+    public void setSpecialisteId(Integer specialisteId) {
+        this.specialisteId = specialisteId;
     }
     
     // Prescription management methods

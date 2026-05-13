@@ -9,10 +9,10 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.controller.AdminController"
+            fx:controller="org.example.controller.DashboardController"
             prefWidth="1100" prefHeight="700"
             style="-fx-background-color: #f0f2f8;"
-            stylesheets="@../styles.css">
+            stylesheets="@../style.css">
 
     <!-- ===== LEFT SIDEBAR ===== -->
     <left>
@@ -91,11 +91,12 @@
                     </VBox>
                 </HBox>
 
-                <!-- Gestion RDV - NOT clickable -->
+                <!-- Gestion RDV - CLICKABLE -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavRendezvous">
                     <Label text="📅" style="-fx-font-size: 14px;"/>
-                    <Label text="Gestion RDV" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <Label text="Gestion RDV" style="-fx-font-size: 13px; -fx-text-fill: #4C6FFF; -fx-font-weight: bold;"/>
                 </HBox>
 
                 <!-- Sports - CLICKABLE -->
@@ -109,11 +110,12 @@
                     </VBox>
                 </HBox>
 
-                <!-- Mental - NOT clickable -->
+                <!-- Mental - CLICKABLE -->
                 <HBox alignment="CENTER_LEFT" spacing="12"
-                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-opacity: 0.5;">
+                      style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
+                      onMouseClicked="#handleNavMental">
                     <Label text="🧠" style="-fx-font-size: 14px;"/>
-                    <Label text="Mental" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <Label text="Mental" style="-fx-font-size: 13px; -fx-text-fill: #4C6FFF; -fx-font-weight: bold;"/>
                 </HBox>
 
                 <!-- IA Mentale - CLICKABLE -->
@@ -121,8 +123,36 @@
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
                       onMouseClicked="#handleNavAi">
                     <Label text="🤖" style="-fx-font-size: 14px;"/>
-                    <Label text="IA Mentale" style="-fx-font-size: 13px; -fx-text-fill: #6b7280;"/>
+                    <Label text="IA Mentale" style="-fx-font-size: 13px; -fx-text-fill: #4C6FFF; -fx-font-weight: bold;"/>
                 </HBox>
+
+                <!-- Consultation -->
+                <Button onAction="#handleNavConsultation"
+                        style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-cursor: hand; -fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-alignment: LEFT;">
+                    <graphic>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="🩺" style="-fx-font-size: 14px;"/>
+                            <VBox spacing="1">
+                                <Label text="Consultation" style="-fx-font-size: 13px; -fx-text-fill: #ef4444; -fx-font-weight: bold;"/>
+                                <Label text="Rendez-vous médicaux" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                            </VBox>
+                        </HBox>
+                    </graphic>
+                </Button>
+
+                <!-- Prescription -->
+                <Button onAction="#handleNavPrescription"
+                        style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-cursor: hand; -fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-alignment: LEFT;">
+                    <graphic>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <Label text="💊" style="-fx-font-size: 14px;"/>
+                            <VBox spacing="1">
+                                <Label text="Prescription" style="-fx-font-size: 13px; -fx-text-fill: #f59e0b; -fx-font-weight: bold;"/>
+                                <Label text="Gestion ordonnances" style="-fx-font-size: 10px; -fx-text-fill: #9ca3af;"/>
+                            </VBox>
+                        </HBox>
+                    </graphic>
+                </Button>
 
                 <HBox alignment="CENTER_LEFT" spacing="12"
                       style="-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-cursor: hand;"
@@ -184,8 +214,8 @@
 
                 <!-- Page Header -->
                 <VBox spacing="4">
-                    <Label text="Administration BioSync" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
-                    <Label text="Gestion globale de la plateforme" style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
+                    <Label fx:id="welcomeLabel" text="Administration BioSync" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+                    <Label fx:id="userInfoLabel" text="Gestion globale de la plateforme" style="-fx-font-size: 13px; -fx-text-fill: #9ca3af;"/>
                 </VBox>
 
                 <!-- Stats Row -->

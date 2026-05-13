@@ -18,7 +18,7 @@ public class PrescriptionDAO {
     
     // Create prescription
     public static boolean createPrescription(Prescription prescription) {
-        String sql = "INSERT INTO prescription (nom_medicament, dose, frequence, duree, instructions, consultation_id, date_creation) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO prescription (nom_medicament, dose, frequence, duree, instructions, consultation_id, date_creation, patient_id, specialiste_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -28,8 +28,28 @@ public class PrescriptionDAO {
             pstmt.setString(3, prescription.getFrequence());
             pstmt.setInt(4, prescription.getDuree());
             pstmt.setString(5, prescription.getInstructions());
-            pstmt.setInt(6, prescription.getConsultation().getId());
+            
+            // consultation_id can be null if prescription is created directly
+            if (prescription.getConsultation() != null) {
+                pstmt.setInt(6, prescription.getConsultation().getId());
+            } else {
+                pstmt.setNull(6, Types.INTEGER);
+            }
+            
             pstmt.setTimestamp(7, Timestamp.valueOf(prescription.getDateCreation()));
+            
+            // patient_id and specialiste_id for role-based filtering
+            if (prescription.getPatientId() != null) {
+                pstmt.setInt(8, prescription.getPatientId());
+            } else {
+                pstmt.setNull(8, Types.INTEGER);
+            }
+            
+            if (prescription.getSpecialisteId() != null) {
+                pstmt.setInt(9, prescription.getSpecialisteId());
+            } else {
+                pstmt.setNull(9, Types.INTEGER);
+            }
             
             int affectedRows = pstmt.executeUpdate();
             
@@ -121,13 +141,10 @@ public class PrescriptionDAO {
         return false;
     }
     
-    // Get all prescriptions for a patient
+    // Get all prescriptions for a patient (using direct patient_id field)
     public static List<Prescription> getPrescriptionsByPatientId(int patientId) {
         List<Prescription> prescriptions = new ArrayList<>();
-        String sql = "SELECT p.* FROM prescription p " +
-                    "JOIN consultation c ON p.consultation_id = c.id " +
-                    "JOIN rendez_vous rv ON c.rendez_vous_id = rv.id " +
-                    "WHERE rv.patient_id = ? ORDER BY p.date_creation DESC";
+        String sql = "SELECT * FROM prescription WHERE patient_id = ? ORDER BY date_creation DESC";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -140,6 +157,26 @@ public class PrescriptionDAO {
             }
         } catch (SQLException e) {
             System.err.println("Error getting patient prescriptions: " + e.getMessage());
+        }
+        return prescriptions;
+    }
+    
+    // Get all prescriptions for a specialist (using direct specialiste_id field)
+    public static List<Prescription> getPrescriptionsBySpecialisteId(int specialisteId) {
+        List<Prescription> prescriptions = new ArrayList<>();
+        String sql = "SELECT * FROM prescription WHERE specialiste_id = ? ORDER BY date_creation DESC";
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, specialisteId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                prescriptions.add(mapResultSetToPrescription(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting specialist prescriptions: " + e.getMessage());
         }
         return prescriptions;
     }
@@ -180,10 +217,23 @@ public class PrescriptionDAO {
         prescription.setInstructions(rs.getString("instructions"));
         prescription.setDateCreation(rs.getTimestamp("date_creation").toLocalDateTime());
         
-        // Get associated consultation
+        // Get patient_id and specialiste_id for role-based filtering
+        int patientId = rs.getInt("patient_id");
+        if (!rs.wasNull()) {
+            prescription.setPatientId(patientId);
+        }
+        
+        int specialisteId = rs.getInt("specialiste_id");
+        if (!rs.wasNull()) {
+            prescription.setSpecialisteId(specialisteId);
+        }
+        
+        // Get associated consultation (if exists)
         int consultationId = rs.getInt("consultation_id");
-        Consultation consultation = ConsultationDAO.getConsultationById(consultationId);
-        prescription.setConsultation(consultation);
+        if (!rs.wasNull()) {
+            Consultation consultation = ConsultationDAO.getConsultationById(consultationId);
+            prescription.setConsultation(consultation);
+        }
         
         return prescription;
     }

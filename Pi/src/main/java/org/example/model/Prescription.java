@@ -15,6 +15,8 @@ public class Prescription {
     private String instructions;
     private Consultation consultation;
     private LocalDateTime dateCreation;
+    private Integer patientId; // Direct link to patient for role-based filtering
+    private Integer specialisteId; // Direct link to specialist for role-based filtering
     
     public Prescription() {
         this.dateCreation = LocalDateTime.now();
@@ -92,6 +94,22 @@ public class Prescription {
     
     public void setDateCreation(LocalDateTime dateCreation) {
         this.dateCreation = dateCreation;
+    }
+    
+    public Integer getPatientId() {
+        return patientId;
+    }
+    
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
+    }
+    
+    public Integer getSpecialisteId() {
+        return specialisteId;
+    }
+    
+    public void setSpecialisteId(Integer specialisteId) {
+        this.specialisteId = specialisteId;
     }
     
     @Override

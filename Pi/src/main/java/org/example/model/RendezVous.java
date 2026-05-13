@@ -17,6 +17,12 @@ public class RendezVous {
     private String specialisteNom;
     private Consultation consultation;
     
+    // Teleconsultation session fields
+    private String sessionId;
+    private LocalDateTime sessionStartTime;
+    private LocalDateTime sessionEndTime;
+    private boolean sessionActive = false;
+    
     // Constructors
     public RendezVous() {}
     
@@ -188,6 +194,55 @@ public class RendezVous {
         return json.toString();
     }
     
+    // Teleconsultation session management methods
+    public String getSessionId() {
+        return sessionId;
+    }
+    
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+    
+    public LocalDateTime getSessionStartTime() {
+        return sessionStartTime;
+    }
+    
+    public void setSessionStartTime(LocalDateTime sessionStartTime) {
+        this.sessionStartTime = sessionStartTime;
+    }
+    
+    public LocalDateTime getSessionEndTime() {
+        return sessionEndTime;
+    }
+    
+    public void setSessionEndTime(LocalDateTime sessionEndTime) {
+        this.sessionEndTime = sessionEndTime;
+    }
+    
+    public boolean isSessionActive() {
+        return sessionActive;
+    }
+    
+    public void setSessionActive(boolean sessionActive) {
+        this.sessionActive = sessionActive;
+    }
+    
+    public void startSession() {
+        this.sessionActive = true;
+        this.sessionStartTime = LocalDateTime.now();
+        this.sessionId = "session_" + this.id + "_" + System.currentTimeMillis();
+    }
+    
+    public void endSession() {
+        this.sessionActive = false;
+        this.sessionEndTime = LocalDateTime.now();
+        this.statut = "terminé";
+    }
+    
+    public boolean isTeleconsultation() {
+        return "téléconsultation".equalsIgnoreCase(mode) || "teleconsultation".equalsIgnoreCase(mode);
+    }
+
     @Override
     public String toString() {
         return "RendezVous{" +
@@ -198,6 +253,7 @@ public class RendezVous {
                 ", mode='" + mode + '\'' +
                 ", patient='" + patientNom + '\'' +
                 ", specialiste='" + specialisteNom + '\'' +
+                ", sessionActive=" + sessionActive +
                 '}';
     }
 }

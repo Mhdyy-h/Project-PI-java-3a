@@ -3,6 +3,7 @@ package org.example.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import org.example.dao.ConsultationDAO;
 import org.example.dao.PrescriptionDAO;
@@ -10,6 +11,7 @@ import org.example.model.Consultation;
 import org.example.model.Prescription;
 import org.example.model.RendezVous;
 import org.example.model.User;
+import org.example.service.NavigationService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +46,11 @@ public class ConsultationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setupButtonActions();
         clearForm();
+        
+        // Set main controller reference for dashboard navigation
+        if (rendezVousController != null) {
+            mainRendezVousController = rendezVousController;
+        }
     }
     
     public void setConsultation(Consultation consultation) {
@@ -70,8 +77,16 @@ public class ConsultationController implements Initializable {
     // Reference to main controller for opening prescription
     private RendezVousController rendezVousController;
     
+    // Reference to main RendezVousController for dashboard navigation
+    private RendezVousController mainRendezVousController;
+    
     public void setRendezVousController(RendezVousController controller) {
         this.rendezVousController = controller;
+        this.mainRendezVousController = controller;
+    }
+    
+    public void setMainRendezVousController(RendezVousController controller) {
+        this.mainRendezVousController = controller;
     }
     
     private void loadRendezVousInfo() {
@@ -185,13 +200,26 @@ public class ConsultationController implements Initializable {
         if (ConsultationDAO.updateConsultation(consultation)) {
             showAlert("Succès", "Consultation terminée avec succès!\n\nRetour à l'interface principale...", Alert.AlertType.INFORMATION);
             
-            // Close the consultation window
+            // Close consultation window
             if (currentStage != null) {
                 currentStage.close();
+            }
+            
+            // Navigate back to dashboard
+            if (rendezVousController != null) {
+                rendezVousController.loadRendezVous();
+            } else {
+                // Navigate to dashboard directly
+                NavigationService.getInstance().navigateToDashboard(saveButton, currentUser);
             }
         } else {
             showAlert("Erreur", "Impossible de terminer la consultation.", Alert.AlertType.ERROR);
         }
+    }
+    
+    @FXML
+    public void handleRetour(javafx.event.ActionEvent event) {
+        finishAndReturn();
     }
     
     private boolean validateForm() {
