@@ -103,7 +103,7 @@ public class CertificationsAdminController {
         actions.setPrefWidth(140);
 
         if (req.getCheminPdf() != null && !req.getCheminPdf().isEmpty()) {
-            Button viewPdfBtn = new Button("📄 Voir");
+            Button viewPdfBtn = new Button("Voir PDF");
             viewPdfBtn.getStyleClass().addAll("btn-view-pdf");
             viewPdfBtn.setOnAction(e -> openPdf(req.getCheminPdf()));
             actions.getChildren().add(viewPdfBtn);
@@ -111,11 +111,11 @@ public class CertificationsAdminController {
 
         boolean isPending = "EN_ATTENTE".equals(req.getStatut());
         if (isPending) {
-            Button acceptBtn = new Button("✅ Accepter");
+            Button acceptBtn = new Button("Accepter");
             acceptBtn.getStyleClass().addAll("btn-accept");
             acceptBtn.setOnAction(e -> handleDecision(req, "ACCEPTE"));
 
-            Button refuseBtn = new Button("❌ Refuser");
+            Button refuseBtn = new Button("Refuser");
             refuseBtn.getStyleClass().addAll("btn-refuse");
             refuseBtn.setOnAction(e -> handleDecision(req, "REFUSE"));
 
@@ -144,7 +144,7 @@ public class CertificationsAdminController {
         if (ok) {
             req.setStatut(decision);
             loadData();
-            statusLabel.setText("✓ Demande " + (decision.equals("ACCEPTE") ? "acceptée" : "refusée") + " — rôle mis à jour.");
+            statusLabel.setText("Demande " + (decision.equals("ACCEPTE") ? "acceptée" : "refusée") + " — rôle mis à jour.");
         } else {
             statusLabel.setText("Erreur lors de la mise à jour.");
         }

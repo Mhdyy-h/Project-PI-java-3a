@@ -290,8 +290,27 @@ public class QuestionManagerController {
 
             chargerQuestions();
             AlertHelper.showSuccess("IA", inserted + " question(s) ajoutée(s).");
+        } catch (java.net.ConnectException e) {
+            AlertHelper.showError("IA Non Disponible", 
+                "Impossible de se connecter à Ollama.\n\n" +
+                "Solutions:\n" +
+                "1. Installer Ollama: https://ollama.ai\n" +
+                "2. Lancer Ollama: 'ollama serve'\n" +
+                "3. Vérifier que le port 11434 est accessible\n\n" +
+                "En attendant, vous pouvez créer les questions manuellement.");
         } catch (Exception e) {
-            AlertHelper.showError("IA", "Erreur génération IA : " + e.getMessage());
+            String errorMsg = e.getMessage();
+            if (errorMsg != null && errorMsg.contains("Failed to connect")) {
+                AlertHelper.showError("IA Non Disponible", 
+                    "Impossible de se connecter à Ollama.\n\n" +
+                    "Solutions:\n" +
+                    "1. Installer Ollama: https://ollama.ai\n" +
+                    "2. Lancer Ollama: 'ollama serve'\n" +
+                    "3. Vérifier que le port 11434 est accessible\n\n" +
+                    "En attendant, vous pouvez créer les questions manuellement.");
+            } else {
+                AlertHelper.showError("IA", "Erreur génération IA : " + errorMsg);
+            }
         }
     }
 

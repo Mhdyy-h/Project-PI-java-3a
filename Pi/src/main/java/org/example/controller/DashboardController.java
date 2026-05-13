@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.User;
+import org.example.service.NavigationService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,6 +39,7 @@ public class DashboardController {
     private Label statusLabel;
     
     private User currentUser;
+    private final NavigationService navigationService = NavigationService.getInstance();
     
     public void setUser(User user) {
         this.currentUser = user;
@@ -119,6 +122,86 @@ public class DashboardController {
         } catch (IOException e) {
             statusLabel.setText("Erreur lors de la déconnexion: " + e.getMessage());
         }
+    }
+    
+    // ==================== NAVIGATION HANDLERS ====================
+    
+    @FXML
+    public void handleNavUtilisateurs(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToVueUtilisateur(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder à la gestion des utilisateurs: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void handleNavCertifications(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToCertificationsAdmin(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder aux certifications: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void handleNavNutrition(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToCoachRepas(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder à la nutrition: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void handleNavSports(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToAfficherSeance(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder aux sports: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void handleNavAi(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToAiChat(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder à l'IA: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void handleNavMentalHealthDashboard(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToMentalHealthDashboard(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder au tableau de bord santé mentale: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    public void handleNavCommunity(MouseEvent event) {
+        try {
+            Node sourceNode = (Node) event.getSource();
+            navigationService.navigateToGroupManager(sourceNode, currentUser);
+        } catch (Exception e) {
+            showError("Erreur de navigation", "Impossible d'accéder à la communauté: " + e.getMessage());
+        }
+    }
+    
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 

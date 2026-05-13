@@ -1,75 +1,29 @@
-<<<<<<< HEAD
-# Fichiers Windows
-NTUSER.DAT
-*.TM.blf
-*.regtrans-ms
-ntuser.ini
-ntuser.dat.LOG1
-ntuser.dat.LOG2
-
-# Dossiers personnels
-AppData/
-Desktop/
-Downloads/
-Documents/
-Music/
-Videos/
-OneDrive/
-Contacts/
-Favorites/
-
-# Java
-target/
-*.class
-*.jar
-.idea/
-*.iml
-
-# Autres projets
-pi_java/
-pidev/
-FirstProject/
-IdeaProjects/Pi/user_data/
-Pi/uploads/
-Pi/user_data/
-=======
+﻿# Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.kotlin
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+# IDE
+.idea/
 *.iml
+*.iws
 *.ipr
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
 .vscode/
 
-### Mac OS ###
+# Java
+*.class
+
+# Logs
+*.log
+Pi/logs/
+
+# Claude Code internal
+.claude/
+Pi/.claude/
+
+# OS
 .DS_Store
->>>>>>> sports
+Thumbs.db
+
+# User data
+Pi/uploads/
+Pi/user_data/

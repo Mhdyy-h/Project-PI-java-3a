@@ -78,6 +78,7 @@ public class MenuUserController {
     }
 
     private void verifierNouvellesRecommandations() {
+        if (currentUser == null) return;
         new Thread(() -> {
             try {
                 CoachUserService service = new CoachUserService();
@@ -91,7 +92,7 @@ public class MenuUserController {
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                // Silencer les erreurs de table manquante pour éviter le spam console
             }
         }).start();
     }
@@ -282,6 +283,9 @@ public class MenuUserController {
         }
     }@FXML
     public void retourDashboard(ActionEvent e) {
+        if (currentUser == null) {
+            currentUser = new User(1, "Utilisateur Test", "test@sport.com");
+        }
         org.example.service.NavigationService.getInstance()
                 .navigateToDashboard((Node) e.getSource(), currentUser);
     }

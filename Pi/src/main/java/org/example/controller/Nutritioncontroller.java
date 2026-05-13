@@ -498,22 +498,8 @@ public class Nutritioncontroller {
 
     @FXML
     private void retournerVersDashboard() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/view/dashboard.fxml"));
-            Parent root = loader.load();
-            AdminController adminController = loader.getController();
-            if (currentUser != null) {
-                adminController.setUser(currentUser);
-            }
-            Stage stage = (Stage) repasTable.getScene().getWindow();
-            stage.setScene(new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight()));
-            stage.setTitle("BioSync - Dashboard");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur",
-                    "Impossible de retourner au dashboard : " + e.getMessage());
-        }
+        org.example.service.NavigationService.getInstance()
+                .navigateToDashboard(repasTable, currentUser);
     }
 
     // ─────────────────────────────────────────────────

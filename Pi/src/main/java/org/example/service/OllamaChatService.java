@@ -42,8 +42,24 @@ public class OllamaChatService {
                 history.subList(1, Math.min(history.size(), 10)).clear();
             }
             return reply;
+        } catch (java.net.ConnectException e) {
+            return "❌ Ollama n'est pas accessible.\n\n" +
+                   "Pour utiliser l'IA:\n" +
+                   "1. Installer Ollama: https://ollama.ai\n" +
+                   "2. Lancer: 'ollama serve'\n" +
+                   "3. Télécharger un modèle: 'ollama pull llama3'\n\n" +
+                   "En attendant, je ne peux pas répondre à vos questions.";
         } catch (Exception e) {
-            return "Erreur Ollama : " + e.getMessage();
+            String errorMsg = e.getMessage();
+            if (errorMsg != null && errorMsg.contains("Failed to connect")) {
+                return "❌ Ollama n'est pas accessible.\n\n" +
+                       "Pour utiliser l'IA:\n" +
+                       "1. Installer Ollama: https://ollama.ai\n" +
+                       "2. Lancer: 'ollama serve'\n" +
+                       "3. Télécharger un modèle: 'ollama pull llama3'\n\n" +
+                       "En attendant, je ne peux pas répondre à vos questions.";
+            }
+            return "Erreur Ollama : " + errorMsg;
         }
     }
 }

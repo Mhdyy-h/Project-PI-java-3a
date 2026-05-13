@@ -242,7 +242,7 @@ public class QuizController {
 
     @FXML
     private void handleDashboardCognitif() {
-        NavigationService.getInstance().navigateToDashboardCognitif(quizTable);
+        NavigationService.getInstance().navigateToDashboardCognitif(quizTable, currentUser);
     }
 
     // ── Actions sur une ligne ────────────────────────────────────

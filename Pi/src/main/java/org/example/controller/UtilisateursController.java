@@ -10,10 +10,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.dao.UserDAO;
 import org.example.model.User;
+import org.example.service.PdfReportService;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -246,7 +249,7 @@ public class UtilisateursController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/edit_utilisateur.fxml"));
             Parent root = loader.load();
-            EditUtilisateurController ctrl = loader.getController();
+            UtilisateurController ctrl = loader.getController();
             ctrl.setData(currentUser, user);
             Stage stage = (Stage) searchField.getScene().getWindow();
             Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
@@ -281,7 +284,8 @@ public class UtilisateursController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/nouvel_utilisateur.fxml"));
             Parent root = loader.load();
-            NouvelUtilisateurController ctrl = loader.getController();
+            UtilisateurController ctrl = loader.getController();
+            ctrl.setMode("create");
             ctrl.setCurrentUser(currentUser);
             Stage stage = (Stage) searchField.getScene().getWindow();
             Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
@@ -295,13 +299,38 @@ public class UtilisateursController {
 
     @FXML
     private void handleExportPdf() {
-        statusLabel.setText("Export PDF - fonctionnalité bientôt disponible.");
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Enregistrer le rapport PDF");
+            fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Fichiers PDF", "*.pdf")
+            );
+
+            String defaultFileName = "BioSync_Utilisateurs_" +
+                java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".pdf";
+            fileChooser.setInitialFileName(defaultFileName);
+
+            File selectedFile = fileChooser.showSaveDialog(searchField.getScene().getWindow());
+            if (selectedFile == null) {
+                return;
+            }
+
+            PdfReportService pdfService = new PdfReportService();
+            pdfService.generateUsersPdf(allUsers, selectedFile.getAbsolutePath());
+
+            statusLabel.setText("PDF exporté avec succès: " + selectedFile.getName());
+            statusLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #10b981;");
+        } catch (Exception e) {
+            statusLabel.setText("Erreur export PDF: " + e.getMessage());
+            statusLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #ef4444;");
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleRetour() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
             Parent root = loader.load();
             AdminController ctrl = loader.getController();
             ctrl.setUser(currentUser);

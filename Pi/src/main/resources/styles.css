@@ -1,0 +1,186 @@
+/* BioSync Global Styles */
+
+/* Sort buttons */
+.sort-active {
+    -fx-background-color: #4C6FFF;
+    -fx-text-fill: white;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.sort-normal {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+}
+
+/* User rows */
+.user-row {
+    -fx-padding: 14 24;
+    -fx-border-color: transparent transparent #f0f2f8 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.user-row-default {
+    -fx-background-color: white;
+}
+
+.user-row-alt {
+    -fx-background-color: #fafbfd;
+}
+
+.user-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.user-email {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9ca3af;
+}
+
+.user-date {
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+}
+
+.score-star {
+    -fx-font-size: 13px;
+    -fx-text-fill: #f59e0b;
+}
+
+.score-value {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+/* Role badges */
+.role-badge {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12;
+    -fx-text-fill: white;
+}
+
+.role-admin {
+    -fx-background-color: #ef4444;
+}
+
+.role-coach {
+    -fx-background-color: #10b981;
+}
+
+.role-specialiste {
+    -fx-background-color: #f59e0b;
+}
+
+.role-utilisateur {
+    -fx-background-color: #6b7280;
+}
+
+/* Avatars */
+.user-avatar {
+    -fx-alignment: center;
+}
+
+.user-avatar-circle {
+}
+
+.user-avatar-initials {
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.avatar-admin {
+    -fx-fill: #ef4444;
+}
+
+.avatar-coach {
+    -fx-fill: #10b981;
+}
+
+.avatar-specialiste {
+    -fx-fill: #f59e0b;
+}
+
+.avatar-default {
+    -fx-fill: #7c3aed;
+}
+
+/* Action buttons */
+.action-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+    -fx-padding: 4 8;
+}
+
+.action-view {
+    -fx-text-fill: #6b7280;
+}
+
+.action-edit {
+    -fx-text-fill: #f59e0b;
+}
+
+.action-delete {
+    -fx-text-fill: #ef4444;
+}
+
+/* Password strength */
+.password-suggest-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #4C6FFF;
+    -fx-font-size: 11px;
+    -fx-cursor: hand;
+}
+
+.eye-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-padding: 0 8;
+}
+
+.password-strength-track {
+    -fx-background-color: #e5e7eb;
+    -fx-background-radius: 3;
+    -fx-pref-height: 6;
+}
+
+.password-strength-fill {
+    -fx-background-radius: 3;
+    -fx-pref-height: 6;
+}
+
+.password-strength-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Status messages */
+.status-success {
+    -fx-text-fill: #10b981;
+}
+
+.status-error {
+    -fx-text-fill: #ef4444;
+}
+
+.status-warning {
+    -fx-text-fill: #f59e0b;
+}

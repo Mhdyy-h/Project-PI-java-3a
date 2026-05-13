@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import org.example.dao.GroupeDAO;
 import org.example.model.Groupe;
+import org.example.model.User;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,6 +24,7 @@ public class GroupFormController {
 
     private String imagePath = "default.png";
     private Groupe existingGroupe = null;
+    private User currentUser = null;
 
     @FXML
     public void initialize() {
@@ -32,8 +34,11 @@ public class GroupFormController {
         imagePreview.setImage(new Image("https://via.placeholder.com/180x120.png?text=No+Image"));
     }
 
-    public void setGroupeData(Groupe g) {
-        this.existingGroupe = g;
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
+    public void setGroupeData(Groupe g) {        this.existingGroupe = g;
         if (formTitle != null) formTitle.setText("Modifier le Groupe");
         nomField.setText(g.getNomGroupe());
         themeCombo.setValue(g.getThematique());
@@ -107,7 +112,10 @@ public class GroupFormController {
     @FXML
     private void handleCancel() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/community_home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/community_home.fxml"));
+            Parent root = loader.load();
+            CommunityController ctrl = loader.getController();
+            ctrl.setCurrentUser(currentUser);
             nomField.getScene().setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();

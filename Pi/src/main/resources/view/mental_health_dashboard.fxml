@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="mainPane"
+            fx:controller="org.example.controller.MentalHealthDashboardController"
+            prefWidth="1200" prefHeight="800"
+            stylesheets="@../styles/mental-wellness.css"
+            style="-fx-background-color: #f0f2f8;">
+    
+    <!-- SIDEBAR GAUCHE -->
+    <left>
+        <VBox prefWidth="260" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 2, 0);">
+            <padding>
+                <Insets top="20" right="0" bottom="20" left="0"/>
+            </padding>
+            
+            <!-- User Profile -->
+            <VBox alignment="CENTER" spacing="12" style="-fx-padding: 0 20 20 20;">
+                <StackPane>
+                    <Circle fx:id="userAvatar" radius="35" fill="#7C6FCD"/>
+                    <Label fx:id="userInitialsLabel" text="AB" 
+                           style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+                </StackPane>
+                <Label fx:id="userNameLabel" text="Utilisateur" 
+                       style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            </VBox>
+            
+            <Separator/>
+            
+            <!-- Navigation Menu -->
+            <VBox spacing="4" style="-fx-padding: 20 10;">
+                
+                <HBox alignment="CENTER_LEFT" spacing="12" 
+                      onMouseClicked="#handleBackToDashboard"
+                      style="-fx-padding: 12 15; -fx-cursor: hand; -fx-background-radius: 8;">
+                    <Label text="🏠" style="-fx-font-size: 18px;"/>
+                    <Label text="Tableau de bord" style="-fx-font-size: 13px;"/>
+                </HBox>
+                
+                <HBox alignment="CENTER_LEFT" spacing="12" 
+                      style="-fx-padding: 12 15; -fx-background-color: #f0f2f8; -fx-background-radius: 8;">
+                    <Label text="🧠" style="-fx-font-size: 18px;"/>
+                    <Label text="Santé Mentale" style="-fx-font-size: 13px; -fx-font-weight: bold;"/>
+                </HBox>
+                
+            </VBox>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            
+            <Separator/>
+            
+            <!-- Logout -->
+            <HBox alignment="CENTER_LEFT" spacing="12" 
+                  onMouseClicked="#handleLogout"
+                  style="-fx-padding: 15; -fx-cursor: hand;">
+                <Label text="🚪" style="-fx-font-size: 18px;"/>
+                <Label text="Déconnexion" style="-fx-font-size: 13px; -fx-text-fill: #dc3545;"/>
+            </HBox>
+        </VBox>
+    </left>
+    
+    <!-- CONTENU PRINCIPAL -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" 
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="24" style="-fx-padding: 30;">
+                
+                <!-- HEADER -->
+                <VBox spacing="8">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="🧠" style="-fx-font-size: 32px;"/>
+                        <Label text="Tableau de Bord - Santé Mentale" 
+                               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                    </HBox>
+                    <Label fx:id="lastAssessmentLabel" text="Dernière évaluation: --" 
+                           style="-fx-text-fill: #666; -fx-font-size: 13px;"/>
+                </VBox>
+                
+                <!-- SÉLECTEUR DE SCÉNARIO (DÉMO) -->
+                <HBox spacing="15" alignment="CENTER_LEFT" 
+                      style="-fx-background-color: #fff3cd; -fx-padding: 15; -fx-background-radius: 8;">
+                    <Label text="🎭 MODE DÉMONSTRATION:" 
+                           style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+                    <ComboBox fx:id="scenarioSelector" prefWidth="150"/>
+                    <Button fx:id="loadDemoButton" text="Charger le scénario" 
+                            style="-fx-background-color: #7C6FCD; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                    <Label text="Sélectionnez un scénario pour voir différents profils de santé mentale" 
+                           style="-fx-text-fill: #856404; -fx-font-size: 12px; -fx-font-style: italic;"/>
+                </HBox>
+                
+                <!-- SCORES PRINCIPAUX -->
+                <GridPane hgap="20" vgap="20">
+                    
+                    <!-- Score Global de Bien-être -->
+                    <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                          style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                        <Label text="Score Global" style="-fx-text-fill: #666; -fx-font-size: 13px;"/>
+                        <HBox alignment="BASELINE_LEFT" spacing="8">
+                            <Label fx:id="wellbeingScoreLabel" text="--/100" 
+                                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #7C6FCD;"/>
+                            <Label fx:id="wellbeingTrendLabel" text="📈" style="-fx-font-size: 20px;"/>
+                        </HBox>
+                        <Label text="Bien-être mental" style="-fx-text-fill: #888; -fx-font-size: 12px;"/>
+                    </VBox>
+                    
+                    <!-- Niveau de Stress -->
+                    <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                          style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                        <Label text="Stress" style="-fx-text-fill: #666; -fx-font-size: 13px;"/>
+                        <HBox alignment="BASELINE_LEFT" spacing="8">
+                            <Label fx:id="stressLevelLabel" text="--/10" 
+                                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #fd7e14;"/>
+                            <Label fx:id="stressTrendLabel" text="➡️" style="-fx-font-size: 20px;"/>
+                        </HBox>
+                        <Label text="Niveau actuel" style="-fx-text-fill: #888; -fx-font-size: 12px;"/>
+                    </VBox>
+                    
+                    <!-- Niveau d'Anxiété -->
+                    <VBox spacing="8" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                          style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                        <Label text="Anxiété" style="-fx-text-fill: #666; -fx-font-size: 13px;"/>
+                        <HBox alignment="BASELINE_LEFT" spacing="8">
+                            <Label fx:id="anxietyLevelLabel" text="--/10" 
+                                   style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #ffc107;"/>
+                            <Label fx:id="anxietyTrendLabel" text="➡️" style="-fx-font-size: 20px;"/>
+                        </HBox>
+                        <Label text="Niveau actuel" style="-fx-text-fill: #888; -fx-font-size: 12px;"/>
+                    </VBox>
+                    
+                    <!-- Niveau de Risque -->
+                    <VBox spacing="8" GridPane.columnIndex="3" GridPane.rowIndex="0"
+                          style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                        <Label text="Niveau de Risque" style="-fx-text-fill: #666; -fx-font-size: 13px;"/>
+                        <VBox spacing="6">
+                            <Label fx:id="riskLevelLabel" text="--" 
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;"/>
+                            <Label fx:id="riskBadge" text="⚪ INCONNU" 
+                                   style="-fx-padding: 6 12; -fx-background-radius: 16; -fx-font-size: 11px;"/>
+                        </VBox>
+                    </VBox>
+                    
+                </GridPane>
+                
+                <!-- INSIGHT IA -->
+                <VBox spacing="12" 
+                      style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="💡" style="-fx-font-size: 24px;"/>
+                        <Label text="Analyse Personnalisée par IA" 
+                               style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1a1a1a;"/>
+                    </HBox>
+                    <TextArea fx:id="insightArea" wrapText="true" editable="false"
+                              prefRowCount="5"
+                              style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 15; -fx-font-size: 14px; -fx-text-fill: #333; -fx-border-color: transparent;"/>
+                </VBox>
+                
+                <!-- GRAPHIQUE DE PROGRESSION -->
+                <VBox spacing="12" 
+                      style="-fx-background-color: white; -fx-padding: 24; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="📊" style="-fx-font-size: 24px;"/>
+                        <Label text="Évolution sur 30 Jours" 
+                               style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1a1a1a;"/>
+                    </HBox>
+                    <LineChart fx:id="progressChart" prefHeight="300" legendVisible="true">
+                        <xAxis>
+                            <NumberAxis fx:id="xAxis" label="Jours" side="BOTTOM" autoRanging="false" 
+                                       lowerBound="0" upperBound="30" tickUnit="5"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis fx:id="yAxis" label="Niveau" side="LEFT" autoRanging="false" 
+                                       lowerBound="0" upperBound="10" tickUnit="1"/>
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+                
+                <!-- RECOMMANDATIONS -->
+                <VBox spacing="12">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="🎯" style="-fx-font-size: 24px;"/>
+                        <Label text="Recommandations Prioritaires" 
+                               style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1a1a1a;"/>
+                    </HBox>
+                    <VBox fx:id="recommendationsContainer" spacing="16"/>
+                </VBox>
+                
+            </VBox>
+        </ScrollPane>
+    </center>
+    
+</BorderPane>

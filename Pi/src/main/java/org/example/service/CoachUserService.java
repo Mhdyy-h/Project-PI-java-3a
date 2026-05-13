@@ -157,7 +157,7 @@ public class CoachUserService {
             ps.close();
             return result > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
             return false;
         }
     }
@@ -190,7 +190,7 @@ public class CoachUserService {
             }
             rs.close(); ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
         }
         return liste;
     }
@@ -206,9 +206,11 @@ public class CoachUserService {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
         }
-    }// Compter recommandations non vues
+    }
+
+    // Compter recommandations non vues
     public int compterNonVues(int userId) {
         try {
             PreparedStatement ps = conn.prepareStatement(
@@ -219,10 +221,12 @@ public class CoachUserService {
             if (rs.next()) return rs.getInt(1);
             rs.close(); ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
         }
         return 0;
-    }// Vérifier si la dernière recommandation envoyée à un user a été vue
+    }
+
+    // Vérifier si la dernière recommandation envoyée à un user a été vue
     public boolean derniereRecoVue(int coachId, int userId) {
         try {
             PreparedStatement ps = conn.prepareStatement(
@@ -235,10 +239,12 @@ public class CoachUserService {
             if (rs.next()) return rs.getBoolean("vue");
             rs.close(); ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
         }
         return false; // pas encore vue ou aucune reco
-    }// User envoie sa réponse au coach
+    }
+
+    // User envoie sa réponse au coach
     public boolean envoyerReponseUser(int recoId, String reponse) {
         try {
             PreparedStatement ps = conn.prepareStatement(
@@ -249,10 +255,11 @@ public class CoachUserService {
             ps.close();
             return result > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getErrorCode() != 1146) e.printStackTrace();
             return false;
         }
     }
+
     public JSONObject getDerniereRecommandation(int coachId, int userId) {
         String sql = "SELECT reponse_user, date_reponse FROM recommandations " +
                 "WHERE coach_id = ? AND user_id = ? " +
@@ -267,10 +274,12 @@ public class CoachUserService {
                         .put("date_reponse", rs.getString("date_reponse") != null ? rs.getString("date_reponse") : "");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            if (e instanceof SQLException && ((SQLException) e).getErrorCode() != 1146) e.printStackTrace();
         }
         return null;
-    }// NOUVEAU — colle ça à la place
+    }
+
+    // NOUVEAU — colle ça à la place
     public List<User> getContactsMessage(int userId) {
         List<User> liste = new ArrayList<>();
         try {
