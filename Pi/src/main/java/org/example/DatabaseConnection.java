@@ -9,7 +9,12 @@ import java.util.Properties;
 
 public class DatabaseConnection {
     private static Connection connection = null;
+    private static Connection testConnection = null;
     private static Properties properties = new Properties();
+
+    public static void setTestConnection(Connection conn) {
+        testConnection = conn;
+    }
 
     static {
         try {
@@ -26,8 +31,10 @@ public class DatabaseConnection {
     }
 
     public static Connection getConnection() {
+        if (testConnection != null) {
+            return testConnection;
+        }
         try {
-            // Check if connection is null or closed
             if (connection == null || connection.isClosed()) {
                 String url = properties.getProperty("db.url");
                 String username = properties.getProperty("db.username");
@@ -36,26 +43,13 @@ public class DatabaseConnection {
 
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, username, password);
-                System.out.println("✅ Database connection established successfully!");
+                System.out.println("Database connection established successfully!");
             }
         } catch (ClassNotFoundException e) {
-            System.err.println("❌ MySQL Driver not found: " + e.getMessage());
-            System.err.println("   Make sure mysql-connector-j is in your dependencies.");
+            System.err.println("MySQL Driver not found: " + e.getMessage());
             connection = null;
         } catch (SQLException e) {
-            System.err.println("❌ Database connection failed: " + e.getMessage());
-            if (e.getMessage().contains("Unknown database")) {
-                System.err.println("\n╔════════════════════════════════════════════════════════════╗");
-                System.err.println("║  LA BASE DE DONNÉES 'biosync' N'EXISTE PAS !              ║");
-                System.err.println("╚════════════════════════════════════════════════════════════╝");
-                System.err.println("\n📋 Pour créer la base de données :");
-                System.err.println("   1. Ouvrez un terminal dans le dossier 'database/'");
-                System.err.println("   2. Exécutez : setup_database.bat");
-                System.err.println("   3. Ou importez manuellement : create_database.sql");
-                System.err.println("\n📖 Consultez database/README.md pour plus d'informations.\n");
-            } else if (e.getMessage().contains("Access denied")) {
-                System.err.println("\n⚠️  Vérifiez vos identifiants MySQL dans config.properties");
-            }
+            System.err.println("Database connection failed: " + e.getMessage());
             connection = null;
         }
         return connection;
