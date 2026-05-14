@@ -9,7 +9,12 @@ import java.util.Properties;
 
 public class DatabaseConnection {
     private static Connection connection = null;
+    private static Connection testConnection = null;
     private static Properties properties = new Properties();
+
+    public static void setTestConnection(Connection conn) {
+        testConnection = conn;
+    }
 
     static {
         try {
@@ -26,6 +31,9 @@ public class DatabaseConnection {
     }
 
     public static Connection getConnection() {
+        if (testConnection != null) {
+            return testConnection;
+        }
         try {
             // Check if connection is null or closed
             if (connection == null || connection.isClosed()) {
